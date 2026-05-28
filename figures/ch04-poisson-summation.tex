@@ -1,0 +1,66 @@
+% figures/ch04-poisson-summation.tex
+% Poisson 求和公式示意：整数格点求和 ↔ Fourier 频率求和
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, font=\small, scale=1.0]
+
+% === 左侧：f 在整数点的求和 ===
+\begin{scope}[xshift=-4cm]
+  \draw[->] (-3.2, 0) -- (3.2, 0) node[right] {$x$};
+  \draw[->] (0, -0.2) -- (0, 2.5) node[above] {$f(x)$};
+
+  % 连续函数曲线（高斯型）
+  \draw[thick, blue!70!black, domain=-3:3, samples=80]
+    plot (\x, {2.0*exp(-0.7*\x*\x)});
+
+  % 整数点上的线段（柱高度硬编码）
+  % n=-3: h=2e^{-6.3}≈0.04, n=-2: h=2e^{-2.8}≈0.12, n=-1: h=2e^{-0.7}≈0.99
+  % n=0: h=2, n=1: h≈0.99, n=2: h≈0.12, n=3: h≈0.04
+  \foreach \n/\h in {-3/0.04, -2/0.12, -1/0.99, 0/2.0, 1/0.99, 2/0.12, 3/0.04}{
+    \draw[red!80!black, line width=2pt] (\n, 0) -- (\n, \h);
+    \fill[red!80!black] (\n, \h) circle (2.5pt);
+  }
+
+  \node[below, font=\footnotesize] at (0, -0.5)
+    {$\displaystyle\sum_{n \in \Z} f(n)$};
+  \node[above right, blue!70!black, font=\footnotesize] at (1.5, 1.6)
+    {$f(x)$};
+\end{scope}
+
+% === 中间等号 ===
+\node[font=\Large] at (0, 1) {$=$};
+\node[font=\footnotesize, text=gray!70!black, align=center] at (0, 0.2)
+  {Poisson\\求和};
+
+% === 右侧：hat{f} 在整数点的求和 ===
+\begin{scope}[xshift=4cm]
+  \draw[->] (-3.2, 0) -- (3.2, 0) node[right] {$\xi$};
+  \draw[->] (0, -0.2) -- (0, 2.5) node[above] {$\hat{f}(\xi)$};
+
+  % Fourier变换后的高斯（宽度不同）
+  \draw[thick, green!50!black, domain=-3:3, samples=80]
+    plot (\x, {1.7*exp(-1.4*\x*\x)});
+
+  % 整数点: n=0: 1.7, n=±1: 1.7e^{-1.4}≈0.42, n=±2: 1.7e^{-5.6}≈0.007
+  \foreach \n/\h in {-2/0.01, -1/0.42, 0/1.7, 1/0.42, 2/0.01}{
+    \draw[orange!80!black, line width=2pt] (\n, 0) -- (\n, \h);
+    \fill[orange!80!black] (\n, \h) circle (2.5pt);
+  }
+
+  \node[below, font=\footnotesize] at (0, -0.5)
+    {$\displaystyle\sum_{n \in \Z} \hat{f}(n)$};
+  \node[above right, green!50!black, font=\footnotesize] at (1.2, 1.2)
+    {$\hat{f}(\xi)$};
+\end{scope}
+
+% === 底部公式 ===
+\node[font=\footnotesize, align=center] at (0, -1.4)
+  {$\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x)\,e^{-2\pi i\xi x}\,dx$};
+
+\end{tikzpicture}
+\caption{Poisson 求和公式的直觉。对光滑衰减函数 $f$，
+在整数格点上的求和 $\sum_{n \in \Z} f(n)$（左，红色竖线）
+等于其 Fourier 变换 $\hat{f}$ 在整数点上的求和 $\sum_{n \in \Z} \hat{f}(n)$（右，橙色竖线）。
+关键步骤：把 $\sum_n f(n+x)$ 展开为 Fourier 级数，再令 $x=0$。}
+\label{fig:poisson-summation}
+\end{figure}

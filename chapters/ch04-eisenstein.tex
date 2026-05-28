@@ -243,8 +243,165 @@ $|c\tau+d|^2 \geq c^2y^2 \geq y^2(c^2+d^2)/2$ 当 $|c| \leq |d|$，
   = 1 - 504q - 16632q^2 - 122976q^3 - \cdots
 \end{align*}
 其中 $\sigma_{k-1}(n) = \sum_{d \mid n} d^{k-1}$。
-系数 $240 = -2k/B_k|_{k=4} = -8/(-1/30) = 240$ ✓，
-$-504 = -2 \cdot 6 / B_6 = -12 / (1/42) = -504$ ✓。
+系数 $240 = -2k/B_k|_{k=4} = -8/(-1/30) = 240$ ($\checkmark$)，
+$-504 = -2 \cdot 6 / B_6 = -12 / (1/42) = -504$ ($\checkmark$)。
 \end{example}
 
 \input{figures/ch04-eisenstein-coefficients}
+
+
+% ============================================================================
+\section{Poisson 求和公式}
+\label{sec:poisson-summation}
+% ============================================================================
+
+Poisson 求和公式是推导 $E_k$ 的 $q$-展开的核心工具，
+也是联系格求和与 Fourier 分析的桥梁。
+它的思想很简单：对一个函数"按整数周期化"，
+有两种方式——直接加格点，或者在频域加频率——结果相同。
+
+\begin{definition}[Fourier 变换]
+\label{def:fourier-transform}
+\index{Fourier 变换 (Fourier transform)}
+设 $f\colon \R \to \C$ 是 Schwartz 函数（光滑且各阶导数迅速衰减）。
+其 \textbf{Fourier 变换}定义为
+\[
+  \hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x)\, e^{-2\pi i \xi x}\, dx.
+\]
+\end{definition}
+
+\begin{example}[高斯函数的 Fourier 变换]
+\label{ex:gaussian-fourier}
+\index{高斯函数 (Gaussian function)}
+取 $f(x) = e^{-\pi x^2}$（高斯函数，满足 $\hat{f} = f$，
+这是 Schwartz 函数中最特别的一个）。直接计算：
+\[
+  \hat{f}(\xi)
+  = \int_{-\infty}^{+\infty} e^{-\pi x^2} e^{-2\pi i \xi x}\, dx.
+\]
+配方：$-\pi x^2 - 2\pi i \xi x = -\pi(x + i\xi)^2 - \pi\xi^2$，故
+\[
+  \hat{f}(\xi) = e^{-\pi \xi^2} \int_{-\infty}^{+\infty} e^{-\pi(x+i\xi)^2}\, dx.
+\]
+通过围道积分（围绕一个矩形区域），积分值等于
+$\int_{-\infty}^{+\infty} e^{-\pi x^2}\, dx = 1$（高斯积分）。
+所以 $\hat{f}(\xi) = e^{-\pi\xi^2} = f(\xi)$：
+\textbf{高斯函数是自己的 Fourier 变换！}
+
+稍作推广：对 $a > 0$，取 $f_a(x) = e^{-\pi a x^2}$，则
+$\hat{f}_a(\xi) = a^{-1/2} e^{-\pi \xi^2/a}$。
+\end{example}
+
+\begin{theorem}[Poisson 求和公式]
+\label{thm:poisson-summation}
+\index{Poisson 求和公式 (Poisson summation formula)}
+设 $f\colon \R \to \C$ 是 Schwartz 函数（或更一般地，$f$ 和 $\hat{f}$ 均绝对可积且连续）。则
+\[
+  \sum_{n \in \Z} f(n) = \sum_{n \in \Z} \hat{f}(n).
+\]
+\end{theorem}
+
+\input{figures/ch04-poisson-summation}
+
+\begin{proof}
+定义周期函数
+\[
+  F(x) = \sum_{n \in \Z} f(x + n).
+\]
+（由 $f$ 的 Schwartz 性质，对每个 $x$ 这个级数绝对收敛，
+且 $F$ 是周期为 $1$ 的光滑函数。）
+
+$F$ 有 Fourier 级数展开：
+\[
+  F(x) = \sum_{m \in \Z} c_m e^{2\pi i mx},
+  \qquad c_m = \int_0^1 F(x) e^{-2\pi imx}\, dx.
+\]
+计算 $c_m$：
+\begin{align}
+  c_m
+  &= \int_0^1 \left(\sum_{n \in \Z} f(x+n)\right) e^{-2\pi imx}\, dx \\
+  &= \sum_{n \in \Z} \int_0^1 f(x+n) e^{-2\pi imx}\, dx \\
+  &= \sum_{n \in \Z} \int_n^{n+1} f(t) e^{-2\pi im(t-n)}\, dt
+    \qquad (t = x + n,\; e^{2\pi imn} = 1) \\
+  &= \int_{-\infty}^{+\infty} f(t) e^{-2\pi imt}\, dt = \hat{f}(m).
+\end{align}
+（交换求和与积分由绝对收敛保证；第三步用了 $e^{2\pi imn} = 1$。）
+
+故 $F(x) = \sum_{m \in \Z} \hat{f}(m) e^{2\pi imx}$。
+令 $x = 0$：
+\[
+  F(0) = \sum_{n \in \Z} f(n) = \sum_{m \in \Z} \hat{f}(m). \qedhere
+\]
+\end{proof}
+
+\textbf{推广：$t > 0$ 的参数化版本。}
+设 $g_t(x) = f(tx)$，则 $\hat{g}_t(\xi) = t^{-1}\hat{f}(\xi/t)$。
+应用 Poisson 求和：
+\[
+  \sum_{n \in \Z} f(nt) = \frac{1}{t} \sum_{n \in \Z} \hat{f}(n/t).
+\]
+这在推导 $\theta$ 函数的变换律时特别有用。
+
+\begin{example}[高斯求和与 $\theta$ 函数]
+\label{ex:theta-poisson}
+\index{theta 函数 (theta function)}\index{θ@$\theta(t)$}
+取 $f(x) = e^{-\pi x^2}$，$\hat{f}(\xi) = e^{-\pi\xi^2}$。
+定义 $\theta(t) = \sum_{n \in \Z} e^{-\pi n^2 t}$（$t > 0$）。
+用参数化 Poisson 求和（$f \to f(x)$，$t \to \sqrt{t}$）：
+\[
+  \theta(t) = \sum_{n \in \Z} e^{-\pi n^2 t}
+  = \frac{1}{\sqrt{t}} \sum_{n \in \Z} e^{-\pi n^2/t}
+  = \frac{1}{\sqrt{t}} \theta(1/t).
+\]
+这就是 $\theta$ 函数的\textbf{函数方程}，
+也是 Riemann $\zeta$ 函数满足对称函数方程的根源：
+\[
+  \theta(t) = \frac{1}{\sqrt{t}} \theta(1/t)
+  \quad \Longrightarrow \quad
+  \xi(s) = \xi(1-s),
+  \quad \xi(s) = \frac{1}{2}s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s).
+\]
+\end{example}
+
+\begin{example}[用 Poisson 求和计算 $\sum_{d \in \Z} (c\tau + d)^{-k}$]
+\label{ex:poisson-for-eisenstein}
+这是推导 $G_k$ 的 $q$-展开的直接预备。
+固定 $c \in \Z_{>0}$，$\tau \in \HH$，计算
+\[
+  S_c(\tau) = \sum_{d \in \Z} \frac{1}{(c\tau + d)^k}.
+\]
+取 $f(x) = (c\tau + x)^{-k}$，$\hat{f}(\xi) = \int_{-\infty}^{+\infty} (c\tau + x)^{-k} e^{-2\pi i \xi x}\, dx$。
+
+令 $z = c\tau + x$（$\im(c\tau) = c\, \im\tau > 0$），$dx = dz$：
+\[
+  \hat{f}(\xi)
+  = e^{-2\pi i \xi(c\tau - c\tau)} \int_{\im(c\tau) + \R} z^{-k} e^{-2\pi i\xi z}\, dz
+  = e^{2\pi i \xi c\tau} \int_{\R + i c\, \im\tau} z^{-k} e^{-2\pi i \xi z}\, dz.
+\]
+
+\textbf{分两种情形：}
+
+\textbf{情形 1（$\xi \leq 0$）}：当 $\xi \leq 0$ 时，
+$e^{-2\pi i\xi z}$ 在上半平面（$\im z > 0$）没有奇点，
+围道可以推到上方无穷远而积分趋于零。
+故 $\hat{f}(\xi) = 0$（$\xi \leq 0$）。
+
+\textbf{情形 2（$\xi > 0$）}：$e^{-2\pi i\xi z}$ 在下半平面衰减，
+围道推到下方，通过 $z = 0$ 处的极点。由留数定理：
+\[
+  \int z^{-k} e^{-2\pi i\xi z}\, dz = -2\pi i \cdot \Res_{z=0}\left(z^{-k} e^{-2\pi i\xi z}\right).
+\]
+在 $z = 0$ 附近展开 $e^{-2\pi i\xi z} = \sum_{j=0}^\infty \frac{(-2\pi i\xi)^j}{j!} z^j$，
+则 $z^{-k} e^{-2\pi i\xi z}$ 在 $z^{-1}$ 处的系数（留数）为
+$\frac{(-2\pi i\xi)^{k-1}}{(k-1)!}$，故
+\[
+  \hat{f}(\xi) = e^{2\pi i\xi c\tau} \cdot (-2\pi i) \cdot \frac{(-2\pi i\xi)^{k-1}}{(k-1)!}
+  = \frac{(-2\pi i)^k \xi^{k-1}}{(k-1)!} e^{2\pi i\xi c\tau}.
+\]
+
+代入 Poisson 求和（注意 $\hat{f}(\xi) = 0$ 对 $\xi \leq 0$，对整数 $\xi = m \geq 1$）：
+\[
+  S_c(\tau) = \sum_{d \in \Z} f(d) = \sum_{m=1}^{\infty} \hat{f}(m)
+  = \frac{(-2\pi i)^k}{(k-1)!} \sum_{m=1}^{\infty} m^{k-1} e^{2\pi i m c\tau}.
+\]
+\end{example}
