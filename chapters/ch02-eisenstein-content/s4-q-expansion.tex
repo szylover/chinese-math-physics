@@ -87,6 +87,79 @@ $1 + 240(q + 9q^2 + 28q^3 + 73q^4 + \cdots)
 = 1 + 240q + 2160q^2 + 6720q^3 + 17520q^4 + \cdots$ \quad $(\checkmark)$
 \end{example}
 
+\textbf{乘积法则与卷积。}
+既然模形式相乘时权会相加，$E_rE_s$ 自然落在 $\Mk_{r+s}(\SL_2(\Z))$ 中。把两边都写成 $q$-展开，就会得到一串显式的卷积恒等式；这正是 CSS 第 I 部分特别强调的“把抽象结构落实到系数计算”的做法。
+
+\begin{proposition}[Eisenstein 级数的卷积公式]
+\label{prop:eisenstein-convolution}
+设 $r,s\ge 4$ 为偶整数。则
+\begin{align}
+  E_r(\tau)E_s(\tau)
+  &= 1
+     - \frac{2r}{B_r}\sum_{n\ge 1}\sigma_{r-1}(n)q^n
+     - \frac{2s}{B_s}\sum_{n\ge 1}\sigma_{s-1}(n)q^n \\
+  &\qquad
+     + \frac{4rs}{B_rB_s}
+       \sum_{n\ge 1}\left(\sum_{m=1}^{n-1}
+       \sigma_{r-1}(m)\sigma_{s-1}(n-m)\right)q^n.
+\end{align}
+因此 $E_rE_s-E_{r+s}$ 是权 $r+s$ 的尖点形式；特别地，若 $\Sk_{r+s}(\SL_2(\Z))=0$，则必有
+\[
+  E_rE_s=E_{r+s}.
+\]
+\end{proposition}
+
+\begin{proof}
+把 \cref{thm:Gk-q-expansion} 后面的标准化公式分别代入并直接相乘即可。由于 $E_rE_s$ 与 $E_{r+s}$ 的常数项都等于 $1$，所以差的常数项为 $0$，从而差是尖点形式。
+\end{proof}
+
+\begin{example}[从 $q$-展开验证乘积关系]
+\label{ex:eisenstein-product-identities}
+由
+\[
+  E_4=1+240q+2160q^2+6720q^3+\cdots
+\]
+直接平方，得到
+\[
+  E_4^2=1+480q+61920q^2+1050240q^3+\cdots.
+\]
+另一方面
+\[
+  E_8=1+480q+61920q^2+1050240q^3+\cdots,
+\]
+所以
+\[
+  E_4^2=E_8.
+\]
+同理，因为 $\Sk_{10}(\SL_2(\Z))=0$，也有 $E_4E_6=E_{10}$。
+\end{example}
+
+\begin{example}[权 $12$ 的第一条非平凡关系]
+\label{ex:weight12-relation}
+这时尖点空间不再消失，而是一维。把前几项乘出来：
+\[
+  E_4^3=1+720q+179280q^2+16954560q^3+\cdots,
+\]
+\[
+  E_6^2=1-1008q+220752q^2+16519104q^3+\cdots.
+\]
+两式相减得到
+\[
+  E_4^3-E_6^2=1728q-41472q^2+435456q^3+\cdots.
+\]
+而
+\[
+  1728\Delta=1728q-41472q^2+435456q^3+\cdots,
+\]
+故
+\[
+  E_4^3-E_6^2=1728\Delta.
+\]
+这说明：从权 $12$ 开始，Eisenstein 部分与尖点部分真正开始发生相互作用。
+\end{example}
+
+\textbf{注。} 半整数权理论里也有与之平行的 Eisenstein 级数，最著名的是 Cohen--Eisenstein 级数 $H_{r+1/2}$。它们的 Fourier 系数不再是简单的除数和，而会涉及二次型表示数与虚二次域类数；从整数权的 $\sigma_{k-1}(n)$ 到半整数权的类数系数，正是很多后续算术现象的源头。
+
 \begin{proposition}[$E_4, E_6$ 与 $\Delta$]
 \label{prop:E4-E6-Delta}
 \index{判别形式 (discriminant form)}\index{Delta@$\Delta(\tau)$}

@@ -158,5 +158,74 @@ $\Mk_k(\Gamma)$ 有一个重要分解：
 $\Sk_k(\Gamma)$（\textbf{尖点形式子空间}）是它的正交补（在 Petersson 内积下，见第三章）。
 这个分解说明 Eisenstein 级数"捕获"了模形式空间的"非尖点"部分。
 
+\subsection*{$L$-函数特殊值、类数公式与 BSD 的原型}
+
+CSS 的一个重要风格，是把 Dirichlet $L$-函数的特殊值看成后面更高阶现象的原型。对次数 $1$ 的 Artin 对象，特殊值给出类数；对次数 $2$ 的模形式和椭圆曲线，Birch--Swinnerton-Dyer 猜想则预言特殊值给出秩、调和子群与 Tate--Shafarevich 群等更精细的不变量。
+
+\begin{definition}[广义 Bernoulli 数]
+\label{def:generalized-bernoulli}
+设 $\chi$ 是导子为 $f$ 的 Dirichlet 特征。定义广义 Bernoulli 数 $B_{m,\chi}$ 使得
+\[
+  \sum_{a=1}^{f}\chi(a)\frac{te^{at}}{e^{ft}-1}
+  = \sum_{m=0}^{\infty} B_{m,\chi}\frac{t^m}{m!}.
+\]
+它们把通常的 Bernoulli 数（对应平凡特征）推广到了带特征的情形。
+\end{definition}
+
+\begin{proposition}[Dirichlet $L$-函数的一般特殊值公式]
+\label{prop:dirichlet-special-values}
+设 $\chi$ 是导子为 $f$ 的原始特征，$m\ge 1$。则
+\[
+  L(1-m,\chi)=-\frac{B_{m,\chi}}{m}.
+\]
+若再记 Gauss 和
+\[
+  \tau(\chi)=\sum_{a=1}^{f}\chi(a)e^{2\pi ia/f},
+\]
+则函数方程把正整数点也化成显式公式：当 $\chi(-1)=(-1)^m$ 时，
+\[
+  L(m,\chi)
+  =(-1)^{1+\frac{m-\epsilon}{2}}\frac{\tau(\chi)}{2}
+   \left(\frac{2\pi i}{f}\right)^m
+   \frac{B_{m,\overline{\chi}}}{m!},
+  \qquad \epsilon\in\{0,1\},\ \chi(-1)=(-1)^\epsilon.
+\]
+因此 $L(m,\chi)$ 总是“$\pi^m$ 乘以代数数”。
+\end{proposition}
+
+\begin{proof}[说明]
+第一条是 Dirichlet $L$-函数在非正整数处的标准插值公式；第二条则由完成 $L$-函数的函数方程把 $L(m,\chi)$ 反射到 $L(1-m,\overline{\chi})$ 得到。对本书后续内容而言，关键不是记住每个常数，而是要记住：\textbf{特殊值可以被完全显式地算出来。}
+\end{proof}
+
+\begin{theorem}[Dirichlet 类数公式]
+\label{thm:dirichlet-class-number}
+设 $D<0$ 是基本判别式，$\chi_D=\left(\frac{D}{\cdot}\right)$ 是对应的二次特征。则
+\[
+  L(1,\chi_D)=\frac{2\pi\,h(D)}{w(D)\sqrt{|D|}},
+\]
+其中 $h(D)$ 是虚二次域 $\Q(\sqrt{D})$ 的类数，$w(D)=|\mathcal{O}_D^\times|$ 是单位个数。
+\end{theorem}
+
+\begin{example}[两个最经典的特殊值]
+\label{ex:quadratic-L-values}
+\leavevmode
+\begin{itemize}
+  \item $D=-4$ 时，$h(-4)=1$，$w(-4)=4$，所以
+    \[
+      L(1,\chi_{-4})=\frac{2\pi}{4\cdot 2}=\frac{\pi}{4}.
+    \]
+    这正是 Leibniz 级数
+    \[
+      1-\frac13+\frac15-\frac17+\cdots=\frac{\pi}{4}.
+    \]
+  \item $D=-3$ 时，$h(-3)=1$，$w(-3)=6$，所以
+    \[
+      L(1,\chi_{-3})=\frac{2\pi}{6\sqrt3}=\frac{\pi}{3\sqrt3}.
+    \]
+\end{itemize}
+\end{example}
+
+\textbf{注。} 这个类数公式可以看成 Birch--Swinnerton-Dyer 猜想的“次数 $1$ 原型”：$L(1,\chi_D)$ 这样的解析量，精确等于类数 $h(D)$ 这样的代数量。到了椭圆曲线情形，BSD 仍然说“特殊值等于算术不变量”，只是右边会变得更复杂。
+
 
 % ============================================================================

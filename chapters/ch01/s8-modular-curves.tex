@@ -80,5 +80,154 @@ $\alpha\tau = a\tau' + b$，$\alpha = c\tau' + d$（$ad - bc = 1$），
 \textbf{(3) 和 (4)}：类似分析。
 \end{proof}
 
+\subsection*{Hauptmodul 与亏格 $0$ 的函数域}
+
+CSS 中反复强调：模曲线除了是参数空间，也有自己的函数域。对亏格 $0$ 的曲线，这个函数域最简单——它总是由一个函数生成。
+
+\begin{definition}[Hauptmodul]
+\label{def:hauptmodul}
+\index{Hauptmodul}
+设 $X$ 是定义在 $\C$ 上的紧黎曼面，且 $\genus(X)=0$。若一个亚纯函数
+\[
+  t\colon X \longrightarrow \mathbb{P}^1(\C)
+\]
+给出双有理同构，等价地说 $\C(X)=\C(t)$，则称 $t$ 为 $X$ 的\textbf{Hauptmodul}（主模）。
+\end{definition}
+
+\begin{proposition}[亏格 $0$ 曲线的函数域]
+\label{prop:genus0-hauptmodul}
+若 $X$ 是亏格 $0$ 的紧黎曼面，则 $X\cong \mathbb{P}^1(\C)$，从而存在 Hauptmodul $t$ 使得
+\[
+  \C(X)=\C(t).
+\]
+
+若 $P\in X$ 是一点，则可取 $t$ 在 $P$ 处有一个单极点、在别处全纯；这样的 $t$ 已经生成整个函数域。
+\end{proposition}
+
+\begin{proof}[证明思路]
+由黎曼面分类，亏格 $0$ 的紧黎曼面与 $\mathbb{P}^1(\C)$ 双全纯同构。把该同构复合到坐标函数 $z$ 上，就得到一个亚纯函数 $t$。而 $\mathbb{P}^1$ 的亚纯函数正是有理函数，所以 $\C(X)$ 同构于 $\C(z)=\C(t)$。
+\end{proof}
+
+对模曲线来说，这个定义尤其重要：当 $X(\Gamma)$ 的亏格为 $0$ 时，我们就能用一个单参数来描述整条曲线，所有模函数都是这个参数的有理函数。
+
+\begin{example}[$j$ 与若干低级别 Hauptmodul]
+\label{ex:hauptmodul-examples}
+\leavevmode
+\begin{itemize}
+  \item 对 $X(1)=\SL_2(\Z)\backslash \HH^*$，经典 $j$-不变量在尖点 $\infty$ 处有简单极点，且没有别的极点，因此
+    \[
+      \C(X(1))=\C(j).
+    \]
+    也就是说，$j(\tau)$ 正是 $X(1)$ 的 Hauptmodul。
+  \item 对经典模曲线 $X(2)$，Hauptmodul 是 Legendre 的 $\lambda(\tau)$。它把带一组有序 $2$-扭点基的椭圆曲线写成
+    \[
+      y^2=x(x-1)(x-\lambda).
+    \]
+  \item 对 $X_0(2)$，一个常用的 Hauptmodul 是
+    \[
+      t_2(\tau)=\left(\frac{\eta(\tau)}{\eta(2\tau)}\right)^{24}=q^{-1}+O(1),
+    \]
+    其中 $\eta(\tau)=q^{1/24}\prod_{n\ge 1}(1-q^n)$ 是 Dedekind $\eta$ 函数。它满足
+    \[
+      j(\tau)=\frac{(t_2+256)^3}{t_2^2},
+      \qquad
+      j(2\tau)=\frac{(t_2+16)^3}{t_2}.
+    \]
+    因而 $j(\tau)$ 与 $j(2\tau)$ 都是 $t_2$ 的有理函数，说明 $\C(X_0(2))=\C(t_2)$。
+  \item 对 $X_0(3)$，类似地可取
+    \[
+      t_3(\tau)=\left(\frac{\eta(\tau)}{\eta(3\tau)}\right)^{12}=q^{-1}+O(1),
+    \]
+    并有
+    \[
+      j(\tau)=\frac{(t_3+27)(t_3+243)^3}{t_3^3}.
+    \]
+    所以当 $X_0(N)$ 亏格为 $0$ 时，确实也存在一个单参数 Hauptmodul 来生成其函数域。
+\end{itemize}
+\end{example}
+
+\subsection*{模点、同源类与扭曲}
+
+前面已经从复环面角度说明了 $\SL_2(\Z)\backslash \HH$ 的意义。把这个结论改写成模曲线语言，就得到最基本的模诠释。
+
+\begin{corollary}[复椭圆曲线的同构类]
+\label{cor:complex-ec-moduli}
+椭圆曲线 $E/\C$ 的同构类与 $Y(1)=\SL_2(\Z)\backslash \HH$ 的点一一对应；加入尖点后，$X(1)$ 只是把退化的结点三次曲线也补进去。
+
+特别地，每个 $E/\C$ 都同构于某个 $E_\tau=\C/(\Z\tau+\Z)$，而且
+\[
+  E_\tau \cong E_{\tau'}
+  \quad\Longleftrightarrow\quad
+  \tau' = \gamma(\tau) \text{ 对某个 } \gamma\in \SL_2(\Z).
+\]
+\end{corollary}
+
+\begin{proof}
+这只是把 \cref{cor:torus-tau,thm:uniformization} 与模曲线记号合在一起重述。
+\end{proof}
+
+\begin{definition}[有理同源类]
+\label{def:q-isogeny-class}
+设 $E,E'/\Q$ 为椭圆曲线。若存在定义在 $\Q$ 上的同源 $E\to E'$，则称它们属于同一个\textbf{有理同源类}（isogeny class）。
+\end{definition}
+
+在模性定理里，真正与一个归一化新形式对应的通常不是单独一条椭圆曲线，而是一个 $\Q$-同源类：同一同源类中的曲线有相同的导子与同一个 Hasse--Weil $L$-函数，只是最小模型、挠点结构或 Tamagawa 数可能不同。
+
+\begin{example}[两个特殊的 $j$ 值]
+\label{ex:j0-j1728}
+\leavevmode
+\begin{itemize}
+  \item $j=1728$：过 $\C$ 同构后，所有这样的椭圆曲线都可写成
+    \[
+      y^2=x^3-x,
+    \]
+    它有额外自同构 $z\mapsto iz$，所以
+    \[
+      \End(E_{\overline{\Q}})\supset \Z[i].
+    \]
+    过 $\Q$ 时，可以写成 $E_A\colon y^2=x^3+Ax$（$A\in \Q^\times$）；并且 $E_A\cong_{\Q}E_{A'}$ 当且仅当 $A'/A\in (\Q^\times)^4$。
+  \item $j=0$：过 $\C$ 同构后，所有这样的椭圆曲线都可写成
+    \[
+      y^2=x^3-1,
+    \]
+    它有额外自同构 $z\mapsto \omega z$（$\omega=e^{2\pi i/3}$），所以
+    \[
+      \End(E_{\overline{\Q}})\supset \Z[\omega].
+    \]
+    过 $\Q$ 时，可以写成 $E_B\colon y^2=x^3+B$（$B\in \Q^\times$）；并且 $E_B\cong_{\Q}E_{B'}$ 当且仅当 $B'/B\in (\Q^\times)^6$。
+\end{itemize}
+
+这两个例子说明：同一个复同构类在 $\Q$ 上往往会裂成许多不同的有理同构类，而这些差别正是由扭曲控制的。
+\end{example}
+
+\begin{definition}[二次扭曲]
+\label{def:quadratic-twist}
+设
+\[
+  E\colon y^2=x^3+Ax+B
+  \qquad (A,B\in \Q,\,4A^3+27B^2\neq 0)
+\]
+且 $d\in \Q^\times$。$E$ 关于 $d$ 的\textbf{二次扭曲}定义为
+\[
+  E^{(d)}\colon y^2=x^3+d^2Ax+d^3B.
+\]
+在 $\overline{\Q}$ 上，取 $\sqrt d$ 后映射
+\[
+  (x,y)\longmapsto (dx,d^{3/2}y)
+\]
+给出 $E\cong E^{(d)}$；但若 $d\notin (\Q^\times)^2$，则它们通常并不同构于 $\Q$。
+\end{definition}
+
+\textbf{注。} 扭曲的统一语言来自 Galois 上同调。固定 $E/\Q$ 后，所有在 $\overline{\Q}$ 上与 $E$ 同构、但在 $\Q$ 上可能不同构的模型，由集合
+\[
+  H^1\bigl(\Gal(\overline{\Q}/\Q),\Aut(E_{\overline{\Q}})\bigr)
+\]
+分类。若 $j(E)\neq 0,1728$，则 $\Aut(E_{\overline{\Q}})=\{\pm 1\}$，于是二次扭曲正对应于
+\[
+  H^1\bigl(\Gal(\overline{\Q}/\Q),\{\pm 1\}\bigr)
+  \cong \Q^\times/(\Q^\times)^2.
+\]
+这就是为什么“按平方类扭曲”会自然出现。
+
 
 % ============================================================================

@@ -137,5 +137,64 @@ Euler 乘积把 $L(s,f)$ 拆成无穷多个"\textbf{局部因子}"之积，
 可以看到局部因子分母的次数刚好给出 $L$-函数的"\textbf{欧拉特征}"。
 \end{example}
 
+\subsection*{把全部 Hecke 算子打包：Hecke 代数}
+
+到这里为止，我们一直一个一个地看 $T_n$。但从 Diamond 的观点看，更自然的对象其实是它们生成的整系数交换代数：单个算子给出单条递推，整座 Hecke 代数才真正组织起全部特征值、同余与局部化信息。
+
+\begin{definition}[Hecke 代数]
+\label{def:hecke-algebra}
+对固定的权 $k$ 与级别 $N$，定义
+\[
+  \mathbb{T}_k(N)=\Z[T_1,T_2,T_3,\ldots]
+  \subset \End_{\C}\bigl(\Sk_k(\GammaO(N))\bigr)
+\]
+为作用在 $\Sk_k(\GammaO(N))$ 上的\textbf{Hecke 代数}。由于 $T_1=\Id$ 且各 $T_n$ 两两交换，它是一个交换 $\Z$-代数。
+\end{definition}
+
+\begin{proposition}[有限秩性]
+\label{prop:hecke-finite-rank}
+$\mathbb{T}_k(N)$ 是有限秩、无挠的 $\Z$-模，而且
+\[
+  \rank_{\Z}\mathbb{T}_k(N)=\dim_{\C}\Sk_k(\GammaO(N)).
+\]
+\end{proposition}
+
+\begin{proof}[证明思路]
+空间 $\Sk_k(\GammaO(N))$ 的复维数有限，记为 $d$，因此 $\End_{\C}(\Sk_k(\GammaO(N)))$ 也是有限维复向量空间；于是由各 $T_n$ 生成的 $\mathbb{T}_k(N)$ 不可能有无限的 $\Z$-秩。另一方面，配对
+\[
+  \mathbb{T}_k(N)\times \Sk_k(\GammaO(N))\longrightarrow \C,
+  \qquad (T,f)\longmapsto a_1(Tf)
+\]
+把 $T_n$ 送到“取第 $n$ 个 Fourier 系数”的泛函，因为 $a_1(T_nf)=a_n(f)$。借助 $q$-展开原理，这个配对足以把 Hecke 代数辨认成尖点形式空间积分结构的对偶，因此其秩恰好等于 $d$。
+\end{proof}
+
+\begin{definition}[局部化与完全化]
+\label{def:hecke-completion}
+设 $\mathfrak{m}\subset \mathbb{T}_k(N)$ 是极大理想。先在 $\mathfrak{m}$ 处局部化，再取 $\mathfrak{m}$-进完备化：
+\[
+  \mathbb{T}_{k,\mathfrak{m}}(N)
+  = \varprojlim_r \bigl(\mathbb{T}_k(N)_{\mathfrak{m}}/\mathfrak{m}^r\bigr).
+\]
+它是一个\textbf{完备局部环}。把所有极大理想处的局部因子放在一起，得到完全化 Hecke 代数
+\[
+  \widehat{\mathbb{T}}_k(N)=\prod_{\mathfrak{m}} \mathbb{T}_{k,\mathfrak{m}}(N).
+\]
+\end{definition}
+
+\begin{proposition}[局部因子的意义]
+\label{prop:hecke-local-factors}
+每个 $\mathbb{T}_{k,\mathfrak{m}}(N)$ 都记录了“模 $\mathfrak{m}$ 意义下彼此同余”的 Hecke 特征值系统。换言之，若两个特征形式的特征值在某个素数 $\ell$ 下同余，它们会落到同一个残差特征值系统，也就由同一个极大理想 $\mathfrak{m}$ 控制。
+\end{proposition}
+
+\begin{proof}[说明]
+极大理想给出一个残差域 $\mathbb{T}_k(N)/\mathfrak{m}$，于是每个 $T_n$ 都有一个“模 $\mathfrak{m}$ 的特征值”。局部化把与这组残差特征值无关的部分都丢掉，完备化则进一步保留它的所有高阶同余信息。
+\end{proof}
+
+\textbf{为什么这对形变理论至关重要？} 给定一个模 $\ell$ 的残差 Galois 表示 $\bar\rho$，几乎所有好素数 $p\nmid N\ell$ 处的迹都应满足
+\[
+  \Tr\bigl(\bar\rho(\Frob_p)\bigr)\equiv T_p \pmod{\mathfrak{m}}.
+\]
+因此一个极大理想 $\mathfrak{m}$ 实际上选中了“一类模 $\ell$ 同余的模形式”。Wiles 在第 10 章里比较的对象，正是这样的局部 Hecke 代数 $\mathbb{T}_{k,\mathfrak{m}}(N)$ 与一个普形变环 $R_{\mathfrak{m}}$；著名的 $R=T$ 定理断言二者相同。也就是说，Hecke 代数不仅编码解析特征值，还同时编码了 Galois 表示的全部可允许形变。
+
 
 % ============================================================================
