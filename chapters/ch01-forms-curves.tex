@@ -1,0 +1,593 @@
+% ============================================================================
+\chapter{模形式、椭圆曲线与模曲线}
+\label{ch:forms-curves}
+% ============================================================================
+% 对应 Diamond \& Shurman Chapter 1
+
+本章同时引入模形式理论的三个核心对象：\textbf{模形式}、\textbf{椭圆曲线}
+和\textbf{模曲线}。这三者之间的深刻联系贯穿全书，并最终在费马大定理的
+证明中扮演关键角色。
+
+我们将看到：模形式是上半平面上具有特殊对称性的全纯函数；
+椭圆曲线是亏格为 $1$ 的代数曲线，同构于复环面 $\C/\Lambda$；
+而模曲线则是参数化椭圆曲线（附加结构）的模空间。
+
+
+% ============================================================================
+\section{模群与上半平面}
+\label{sec:modular-group-action}
+% ============================================================================
+
+\begin{definition}[上半平面]
+\label{def:upper-half-plane}
+\textbf{上半平面}（upper half-plane）定义为
+\[
+  \HH = \{ \tau \in \C \mid \im(\tau) > 0 \}.
+\]
+\end{definition}
+
+\begin{definition}[模群]
+\label{def:modular-group}
+\textbf{模群} $\SL_2(\Z)$ 是所有行列式为 $1$ 的 $2 \times 2$ 整数矩阵组成的群：
+\[
+  \SL_2(\Z) = \left\{
+    \gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+    \;\middle|\; a, b, c, d \in \Z,\; ad - bc = 1
+  \right\}.
+\]
+它通过\textbf{莫比乌斯变换}（Möbius transformation）作用在 $\HH$ 上：
+\[
+  \gamma(\tau) = \frac{a\tau + b}{c\tau + d}.
+\]
+\end{definition}
+
+\begin{proposition}
+\label{prop:mobius-preserves-H}
+莫比乌斯变换保持上半平面不变：若 $\tau \in \HH$，$\gamma \in \SL_2(\Z)$，
+则 $\gamma(\tau) \in \HH$。具体地，
+\[
+  \im(\gamma(\tau)) = \frac{\im(\tau)}{|c\tau + d|^2}.
+\]
+\end{proposition}
+
+\begin{proof}
+设 $\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$，$\tau = x + iy$。
+\begin{align}
+  \gamma(\tau)
+  &= \frac{a\tau + b}{c\tau + d}
+  = \frac{(a\tau + b)\overline{(c\tau + d)}}{|c\tau + d|^2}.
+\end{align}
+分子的虚部为
+\begin{align}
+  \im\bigl((a\tau + b)\overline{(c\tau + d)}\bigr)
+  &= \im\bigl((a\tau + b)(\bar c \bar\tau + \bar d)\bigr) \\
+  &= \im\bigl(ac|\tau|^2 + ad\tau + bc\bar\tau + bd\bigr) \\
+  &= (ad - bc)\im(\tau) = \im(\tau).
+\end{align}
+最后一步用了 $ad - bc = 1$ 以及 $\im(ad\tau + bc\bar\tau) = (ad - bc)y$。
+故 $\im(\gamma(\tau)) = \im(\tau)/|c\tau + d|^2 > 0$。
+\end{proof}
+
+\begin{remark}
+注意 $-I = \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ 作用平凡：
+$(-I)(\tau) = \frac{-\tau}{-1} = \tau$。因此实际上是
+$\PSL_2(\Z) = \SL_2(\Z)/\{\pm I\}$ 在 $\HH$ 上\emph{忠实}地作用。
+\end{remark}
+
+\begin{theorem}[$\SL_2(\Z)$ 的生成元]
+\label{thm:sl2z-generators}
+$\SL_2(\Z)$ 由以下两个矩阵生成：
+\[
+  S = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}, \quad
+  T = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}.
+\]
+它们对应的莫比乌斯变换为
+\[
+  S(\tau) = -\frac{1}{\tau}, \qquad T(\tau) = \tau + 1.
+\]
+\end{theorem}
+
+\begin{proof}
+需要证明任意 $\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)$
+可以写成 $S$ 和 $T$ 的乘积。
+
+我们对 $|c|$ 归纳。
+
+\textbf{基础情形 $c = 0$}：由 $ad = 1$，得 $a = d = \pm 1$。
+\[
+  \begin{pmatrix} 1 & b \\ 0 & 1 \end{pmatrix} = T^b, \quad
+  \begin{pmatrix} -1 & -b \\ 0 & -1 \end{pmatrix} = S^2 T^{-b}.
+\]
+（因为 $S^2 = -I$。）
+
+\textbf{归纳步骤}：设 $c \neq 0$。用带余除法：$a = qc + r$，$0 \leq r < |c|$。
+注意
+\[
+  T^{-q} \gamma
+  = \begin{pmatrix} 1 & -q \\ 0 & 1 \end{pmatrix}
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+  = \begin{pmatrix} a - qc & b - qd \\ c & d \end{pmatrix}
+  = \begin{pmatrix} r & b-qd \\ c & d \end{pmatrix}.
+\]
+再左乘 $S$：
+\[
+  S \cdot T^{-q} \gamma
+  = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+    \begin{pmatrix} r & b-qd \\ c & d \end{pmatrix}
+  = \begin{pmatrix} -c & -d \\ r & b-qd \end{pmatrix}.
+\]
+新矩阵的左下角元素为 $r$，且 $0 \leq r < |c|$。
+由归纳假设，$ST^{-q}\gamma$ 可用 $S, T$ 表示，故 $\gamma$ 也可以。
+\end{proof}
+
+
+% ============================================================================
+\section{基本域}
+\label{sec:fundamental-domain}
+% ============================================================================
+
+\begin{definition}[基本域]
+\label{def:fundamental-domain}
+群 $G$ 作用在空间 $X$ 上时，一个\textbf{基本域}（fundamental domain）是
+$X$ 的子集 $\mathcal{F}$，使得：
+\begin{enumerate}
+  \item $X = \bigcup_{\gamma \in G} \gamma(\overline{\mathcal{F}})$
+    （覆盖性）；
+  \item $\gamma(\mathcal{F}) \cap \mathcal{F} = \emptyset$ 对所有
+    $\gamma \neq \Id$（内部不重叠）。
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[$\SL_2(\Z)$ 的标准基本域]
+\label{thm:fundamental-domain}
+\[
+  \mathcal{F} = \left\{\tau \in \HH \;\middle|\;
+    |\tau| > 1,\; -\frac{1}{2} < \Re(\tau) < \frac{1}{2}
+  \right\}
+\]
+（即开域，边界按约定选取一半）是 $\SL_2(\Z)$ 作用在 $\HH$ 上的基本域。
+更精确地：$\overline{\mathcal{F}}$ 的闭包为
+\[
+  \overline{\mathcal{F}} = \left\{\tau \in \HH \;\middle|\;
+    |\tau| \geq 1,\; -\frac{1}{2} \leq \Re(\tau) \leq \frac{1}{2}
+  \right\},
+\]
+且 $\HH = \bigcup_{\gamma \in \SL_2(\Z)} \gamma(\overline{\mathcal{F}})$。
+\end{theorem}
+
+\begin{proof}
+\textbf{覆盖性}：给定 $\tau \in \HH$，我们找 $\gamma \in \SL_2(\Z)$
+使得 $\gamma(\tau) \in \overline{\mathcal{F}}$。
+
+由\cref{prop:mobius-preserves-H}，$\im(\gamma(\tau)) = \im(\tau)/|c\tau + d|^2$。
+对固定的 $\tau$，$|c\tau + d|^2 = (cx + d)^2 + c^2 y^2 \geq c^2 y^2$，
+只有有限多对 $(c,d)$ 使得 $|c\tau + d| \leq 1/y$（即使虚部增大）。
+因此 $\{\im(\gamma(\tau)) \mid \gamma \in \SL_2(\Z)\}$ 有最大值，
+设在 $\gamma_0$ 处取到。
+
+先用 $T^n$（$n$ 适当）使得 $\Re(\gamma_0(\tau)) \in [-1/2, 1/2]$。
+设结果为 $\tau' = T^n \gamma_0(\tau)$。
+
+若 $|\tau'| < 1$，则 $S(\tau') = -1/\tau'$ 满足
+$\im(S(\tau')) = \im(\tau')/|\tau'|^2 > \im(\tau')$，
+矛盾于 $\im(\tau')$ 已是最大值。故 $|\tau'| \geq 1$，
+即 $\tau' \in \overline{\mathcal{F}}$。
+
+\textbf{内部不重叠}：设 $\tau, \tau' \in \mathcal{F}$（开域内部），
+$\gamma(\tau) = \tau'$，$\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+\neq \pm I$。不妨设 $\im(\tau') \geq \im(\tau)$，即
+$|c\tau + d|^2 \leq 1$。
+
+由 $\tau \in \mathcal{F}$，$\im(\tau) > \sqrt{3}/2$。
+若 $|c| \geq 2$，则 $|c\tau + d| \geq |c|\im(\tau) > \sqrt{3} > 1$，矛盾。
+若 $|c| = 1$，则 $|c\tau + d|^2 = |\tau + d|^2 \leq 1$（当 $c = 1$），
+但 $|\tau + d|^2 = (x + d)^2 + y^2$。由 $|x| < 1/2$ 和 $y > \sqrt{3}/2$，
+\[
+  |\tau + d|^2 \geq y^2 > 3/4.
+\]
+若 $d = 0$，则 $|\tau|^2 \leq 1$，但 $\tau \in \mathcal{F}$ 要求
+$|\tau| > 1$，矛盾。
+类似分析 $d = \pm 1$ 的情形均导致 $\tau$ 在 $\mathcal{F}$ 的边界上而非内部。
+若 $c = 0$，则 $\gamma = \pm T^b$，$\tau' = \tau \pm b$，
+由 $|\Re(\tau)|, |\Re(\tau')| < 1/2$ 得 $b = 0$，$\gamma = \pm I$。
+\end{proof}
+
+\begin{remark}
+$\overline{\mathcal{F}}$ 形如一个无限高的"拱门"：底部弧线是单位圆
+$|\tau| = 1$ 的一段，两侧是 $\Re(\tau) = \pm 1/2$ 的垂线。
+两个特殊点 $i$ 和 $\rho = e^{2\pi i/3} = (-1+i\sqrt{3})/2$ 是
+$\SL_2(\Z)$ 的\textbf{椭圆不动点}：$S(i) = i$，$(ST)(ρ) = ρ$。
+\end{remark}
+
+
+% ============================================================================
+\section{尖点}
+\label{sec:cusps}
+% ============================================================================
+
+\begin{definition}[扩展上半平面与尖点]
+\label{def:cusps}
+\textbf{扩展上半平面}定义为
+\[
+  \HH^* = \HH \cup \Q \cup \{\infty\} = \HH \cup \mathbb{P}^1(\Q).
+\]
+$\SL_2(\Z)$ 的作用自然延拓到 $\mathbb{P}^1(\Q)$ 上：
+$\gamma(\infty) = a/c$，$\gamma(-d/c) = \infty$。
+
+$\mathbb{P}^1(\Q)$ 中的点称为\textbf{尖点}（cusps）。
+\end{definition}
+
+\begin{proposition}
+\label{prop:cusps-transitive}
+$\SL_2(\Z)$ 在 $\mathbb{P}^1(\Q)$ 上的作用是传递的，即所有尖点都等价。
+\end{proposition}
+
+\begin{proof}
+任取 $a/c \in \Q$（$\gcd(a,c) = 1$），由 Bézout 恒等式，存在 $b, d \in \Z$
+使得 $ad - bc = 1$。则
+$\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)$
+满足 $\gamma(\infty) = a/c$。
+\end{proof}
+
+
+% ============================================================================
+\section{模形式的定义}
+\label{sec:modular-forms-def}
+% ============================================================================
+
+\begin{definition}[权 $k$ 的弱模形式]
+\label{def:weakly-modular}
+设 $k \in \Z$。全纯函数 $f\colon \HH \to \C$ 称为权 $k$ 的
+\textbf{弱模形式}（weakly modular form），若对所有
+$\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)$，
+\[
+  f(\gamma(\tau)) = (c\tau + d)^k f(\tau).
+\]
+由\cref{thm:sl2z-generators}，这等价于同时满足：
+\begin{enumerate}
+  \item $f(\tau + 1) = f(\tau)$（由 $T$ 给出）；
+  \item $f(-1/\tau) = \tau^k f(\tau)$（由 $S$ 给出）。
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+条件 (1) 意味着 $f$ 有以 $q = e^{2\pi i\tau}$ 为变量的 Fourier 展开，
+称为 \textbf{$q$-展开}（$q$-expansion）：
+\[
+  f(\tau) = \sum_{n \in \Z} a_n q^n, \quad q = e^{2\pi i\tau}.
+\]
+\end{remark}
+
+\begin{definition}[模形式与尖点形式]
+\label{def:modular-form}
+权 $k$ 的\textbf{模形式}（modular form）是权 $k$ 的弱模形式 $f$，
+且 $f$ 在尖点 $\infty$ 处\textbf{全纯}，即 $q$-展开中 $a_n = 0$ 对所有 $n < 0$：
+\[
+  f(\tau) = \sum_{n=0}^{\infty} a_n q^n.
+\]
+权 $k$ 的模形式空间记为 $\Mk_k(\SL_2(\Z))$。
+
+若进一步 $a_0 = 0$（即 $f$ 在尖点处消失），则 $f$ 称为
+\textbf{尖点形式}（cusp form）。尖点形式空间记为 $\Sk_k(\SL_2(\Z))$。
+\end{definition}
+
+\begin{example}[Eisenstein 级数]
+\label{ex:eisenstein-preview}
+对偶整数 $k \geq 4$，\textbf{Eisenstein 级数}
+\[
+  G_k(\tau) = \sum_{\substack{(c,d) \in \Z^2 \\ (c,d) \neq (0,0)}}
+  \frac{1}{(c\tau + d)^k}
+\]
+是权 $k$ 的模形式。我们将在\cref{ch:eisenstein}中详细讨论。
+规范化版本 $E_k = G_k / (2\zeta(k))$ 的 $q$-展开为
+\[
+  E_k(\tau) = 1 - \frac{2k}{B_k} \sum_{n=1}^{\infty} \sigma_{k-1}(n) q^n,
+\]
+其中 $B_k$ 是 Bernoulli 数，$\sigma_{k-1}(n) = \sum_{d \mid n} d^{k-1}$。
+\end{example}
+
+\begin{example}[判别形式 $\Delta$]
+\label{ex:discriminant-form}
+\textbf{判别形式}
+\[
+  \Delta(\tau) = \frac{1}{1728}\bigl(E_4(\tau)^3 - E_6(\tau)^2\bigr)
+  = q \prod_{n=1}^{\infty}(1 - q^n)^{24}
+  = \sum_{n=1}^{\infty} \tau(n) q^n
+\]
+是权 $12$ 的尖点形式，其中 $\tau(n)$ 是 \textbf{Ramanujan $\tau$-函数}。
+$\Delta$ 在 $\HH$ 上无零点。
+\end{example}
+
+\begin{example}[$j$-不变量]
+\label{ex:j-invariant-function}
+\textbf{$j$-不变量}
+\[
+  j(\tau) = \frac{E_4(\tau)^3}{\Delta(\tau)} = \frac{1}{q} + 744 + 196884q + \cdots
+\]
+是 $\SL_2(\Z)$ 的一个\textbf{模函数}（权 $0$ 的亚纯模形式），
+它建立了 $\SL_2(\Z) \backslash \HH$ 到 $\C$ 的双射。
+\end{example}
+
+
+% ============================================================================
+\section{同余子群}
+\label{sec:congruence-subgroups}
+% ============================================================================
+
+\begin{definition}[同余子群]
+\label{def:congruence-subgroups}
+设 $N$ 为正整数。定义以下 $\SL_2(\Z)$ 的子群：
+\begin{align}
+  \Gamma(N) &= \left\{
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)
+    \;\middle|\;
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+    \equiv \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \pmod{N}
+  \right\}, \\[6pt]
+  \GammaI(N) &= \left\{
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)
+    \;\middle|\;
+    a \equiv d \equiv 1,\; c \equiv 0 \pmod{N}
+  \right\}, \\[6pt]
+  \GammaO(N) &= \left\{
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)
+    \;\middle|\;
+    c \equiv 0 \pmod{N}
+  \right\}.
+\end{align}
+包含关系为 $\Gamma(N) \trianglelefteq \GammaI(N) \trianglelefteq \GammaO(N)
+\leq \SL_2(\Z)$。
+
+更一般地，$\SL_2(\Z)$ 的子群 $\Gamma$ 若包含某个 $\Gamma(N)$，
+则称为\textbf{同余子群}（congruence subgroup），满足此条件的最小 $N$ 称为
+$\Gamma$ 的\textbf{级}（level）。
+\end{definition}
+
+\begin{proposition}[指标公式]
+\label{prop:index-formulas}
+\leavevmode
+\begin{enumerate}
+  \item $[\SL_2(\Z) : \Gamma(N)] = N^3 \prod_{p \mid N}(1 - 1/p^2)$
+    （$N \geq 1$）。
+  \item $[\SL_2(\Z) : \GammaI(N)] = N^2 \prod_{p \mid N}(1 - 1/p^2)$
+    （$N \geq 1$）。
+  \item $[\SL_2(\Z) : \GammaO(N)] = N \prod_{p \mid N}(1 + 1/p)$
+    （$N \geq 1$）。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+考虑约化同态 $\SL_2(\Z) \to \SL_2(\Z/N\Z)$。
+
+\textbf{(1)}：$\Gamma(N) = \ker(\SL_2(\Z) \to \SL_2(\Z/N\Z))$。
+此约化同态是满射（这需要证明，我们在习题中给出提示）。
+故 $[\SL_2(\Z) : \Gamma(N)] = \#\SL_2(\Z/N\Z)$。
+由中国剩余定理，$\#\SL_2(\Z/N\Z) = \prod_{p^e \| N} \#\SL_2(\Z/p^e\Z)$。
+而 $\#\SL_2(\Z/p^e\Z) = p^{3e} \prod_{p \mid p^e}(1 - 1/p^2)
+= p^{3(e-1)} \cdot p^3(1 - 1/p^2) = p^{3e}(1 - 1/p^2)$。
+
+\textbf{(2)}：$\GammaI(N)/\Gamma(N) \cong \Z/N\Z$
+（通过映射 $\gamma \mapsto b \bmod N$），故
+$[\SL_2(\Z) : \GammaI(N)] = [\SL_2(\Z) : \Gamma(N)]/N$。
+
+\textbf{(3)}：$\GammaO(N)/\GammaI(N) \cong (\Z/N\Z)^\times$
+（通过映射 $\gamma \mapsto d \bmod N$），故
+$[\SL_2(\Z) : \GammaO(N)] = [\SL_2(\Z) : \GammaI(N)]/\varphi(N)$。
+化简得 $N \prod_{p \mid N}(1 + 1/p)$。
+\end{proof}
+
+\begin{definition}[同余子群上的模形式]
+\label{def:modular-forms-congruence}
+设 $\Gamma$ 为同余子群。权 $k$ 的\textbf{模形式} $f \in \Mk_k(\Gamma)$
+是全纯函数 $f\colon \HH \to \C$，满足：
+\begin{enumerate}
+  \item 对所有 $\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+    \in \Gamma$，
+    \[
+      f(\gamma(\tau)) = (c\tau + d)^k f(\tau);
+    \]
+  \item $f$ 在 $\Gamma$ 的每个尖点处全纯。
+\end{enumerate}
+若 $f$ 在所有尖点处消失，则 $f$ 是\textbf{尖点形式}，$f \in \Sk_k(\Gamma)$。
+\end{definition}
+
+
+% ============================================================================
+\section{复环面}
+\label{sec:complex-tori}
+% ============================================================================
+
+\begin{definition}[格与复环面]
+\label{def:lattice-torus}
+$\C$ 中的一个\textbf{格}（lattice）是
+$\Lambda = \Z\omega_1 + \Z\omega_2$（$\omega_1/\omega_2 \notin \R$）。
+对应的\textbf{复环面}为商群 $\C/\Lambda$，它是一个亏格 $1$ 的紧黎曼面。
+\end{definition}
+
+\begin{proposition}[复环面的同构分类]
+\label{prop:torus-isomorphism}
+$\C/\Lambda \cong \C/\Lambda'$（作为复 Lie 群）当且仅当
+$\Lambda' = \alpha\Lambda$ 对某 $\alpha \in \C^*$。
+\end{proposition}
+
+\begin{proof}
+设 $\varphi\colon \C/\Lambda \to \C/\Lambda'$ 为全纯群同构。
+提升到万有覆盖 $\C$，得到全纯函数 $\tilde\varphi\colon \C \to \C$，
+满足 $\tilde\varphi(z + \omega) - \tilde\varphi(z) \in \Lambda'$ 对所有
+$\omega \in \Lambda$。
+
+由于 $z \mapsto \tilde\varphi(z + \omega) - \tilde\varphi(z)$ 连续且值在离散集
+$\Lambda'$ 中，它必为常数。对 $\omega$ 求导得
+$\tilde\varphi'(z + \omega) = \tilde\varphi'(z)$，即 $\tilde\varphi'$ 以 $\Lambda$
+为周期。由\cref{thm:elliptic-basic}(1)（全纯椭圆函数为常数），
+$\tilde\varphi'(z) = \alpha$（常数）。故 $\tilde\varphi(z) = \alpha z + \beta$。
+由 $\tilde\varphi(\Lambda) \subset \Lambda'$ 和满射性，$\alpha\Lambda = \Lambda'$。
+\end{proof}
+
+\begin{corollary}
+\label{cor:torus-tau}
+每个复环面同构于 $\C/\Lambda_\tau$（$\Lambda_\tau = \Z\tau + \Z$，
+$\tau \in \HH$）。两个环面 $\C/\Lambda_\tau$ 和 $\C/\Lambda_{\tau'}$
+同构当且仅当 $\tau' = \gamma(\tau)$ 对某 $\gamma \in \SL_2(\Z)$。
+
+因此，复环面的同构类由 $\SL_2(\Z) \backslash \HH$ 的点参数化。
+\end{corollary}
+
+\begin{proof}
+设 $\Lambda = \Z\omega_1 + \Z\omega_2$，$\im(\omega_1/\omega_2) > 0$。
+取 $\alpha = 1/\omega_2$，则 $\alpha\Lambda = \Z(\omega_1/\omega_2) + \Z
+= \Lambda_\tau$（$\tau = \omega_1/\omega_2 \in \HH$）。
+
+$\C/\Lambda_\tau \cong \C/\Lambda_{\tau'}$ 当且仅当
+$\Lambda_{\tau'} = \alpha \Lambda_\tau$ 对某 $\alpha \in \C^*$。
+设 $\alpha \tau = a\tau' + b$，$\alpha = c\tau' + d$（$a,b,c,d \in \Z$），
+则 $\tau = (a\tau' + b)/(c\tau' + d)$。由 $\im(\tau) > 0$、$\im(\tau') > 0$，
+要求 $ad - bc = 1$。
+\end{proof}
+
+
+% ============================================================================
+\section{复环面与椭圆曲线}
+\label{sec:tori-and-ec}
+% ============================================================================
+
+\begin{theorem}[均匀化定理]
+\label{thm:uniformization}
+在 $\C$ 上，复环面 $\C/\Lambda$ 与椭圆曲线之间有经典的一一对应：
+
+\textbf{从环面到曲线}：Weierstrass $\wp$ 函数给出同构
+\[
+  \C/\Lambda \xrightarrow{\;\sim\;} E_\Lambda(\C), \quad
+  z \mapsto [\wp(z;\Lambda) : \wp'(z;\Lambda) : 1],
+\]
+其中 $E_\Lambda\colon Y^2 = 4X^3 - g_2(\Lambda)X - g_3(\Lambda)$，
+$g_2 = 60G_4(\Lambda)$，$g_3 = 140G_6(\Lambda)$。
+
+\textbf{从曲线到环面}：给定 $\C$ 上的椭圆曲线 $E$，存在唯一的格 $\Lambda$
+（在相似变换下）使得 $E(\C) \cong \C/\Lambda$。
+\end{theorem}
+
+\begin{proof}
+第一个方向已在\cref{thm:weierstrass-properties}中证明。
+
+第二个方向：设 $E\colon y^2 = 4x^3 - Ax - B$（$A^3 - 27B^2 \neq 0$）。
+需要找格 $\Lambda$ 使得 $g_2(\Lambda) = A$，$g_3(\Lambda) = B$。
+这等价于要求 $j(\Lambda) = 1728 A^3/(A^3 - 27B^2)$。
+
+$j\colon \SL_2(\Z) \backslash \HH \to \C$ 是双射（\cref{ex:j-invariant-function}），
+故存在唯一的 $\tau \in \mathcal{F}$ 使得 $j(\tau)$ 等于所需值。
+然后对 $\Lambda_\tau$ 做适当缩放使 $g_2, g_3$ 匹配。
+\end{proof}
+
+\begin{definition}[同源]
+\label{def:isogeny}
+设 $E_1, E_2$ 为椭圆曲线。一个\textbf{同源}（isogeny）
+$\varphi\colon E_1 \to E_2$ 是满足 $\varphi(O) = O$ 的代数群态射。
+
+在复环面语言中，$\C/\Lambda_1 \to \C/\Lambda_2$ 的同源对应于
+$\alpha \in \C^*$ 使得 $\alpha\Lambda_1 \subset \Lambda_2$，
+映射为 $z \mapsto \alpha z$。同源的\textbf{度}为 $[\Lambda_2 : \alpha\Lambda_1]$。
+\end{definition}
+
+
+% ============================================================================
+\section{模曲线与模空间}
+\label{sec:modular-curves-moduli}
+% ============================================================================
+
+\begin{definition}[模曲线]
+\label{def:modular-curves}
+对同余子群 $\Gamma$，定义\textbf{（开）模曲线}
+\[
+  Y(\Gamma) = \Gamma \backslash \HH.
+\]
+特别地，$Y_0(N) = \GammaO(N) \backslash \HH$，
+$Y_1(N) = \GammaI(N) \backslash \HH$，
+$Y(N) = \Gamma(N) \backslash \HH$。
+
+通过添加尖点得到\textbf{（紧化）模曲线}
+\[
+  X(\Gamma) = \Gamma \backslash \HH^*.
+\]
+$X(\Gamma)$ 是紧黎曼面（将在\cref{ch:riemann-surfaces}中详细讨论）。
+\end{definition}
+
+\begin{theorem}[模诠释]
+\label{thm:moduli-interpretation}
+模曲线参数化带附加结构的椭圆曲线（在 $\C$ 上）：
+\begin{enumerate}
+  \item $Y(1) = \SL_2(\Z) \backslash \HH$ 参数化复环面的同构类
+    （\cref{cor:torus-tau}）。通过 $j$-不变量，$Y(1) \cong \C$。
+  \item $Y_0(N)$ 参数化 $\{(E, C)\}$ 的同构类，其中 $E$ 是椭圆曲线，
+    $C \subset E$ 是 $N$ 阶循环子群（等价于核为 $\Z/N\Z$ 的同源
+    $E \to E/C$）。
+  \item $Y_1(N)$ 参数化 $\{(E, P)\}$ 的同构类，其中 $P \in E$ 是
+    $N$ 阶点。
+  \item $Y(N)$ 参数化 $\{(E, (P, Q))\}$ 的同构类，其中 $(P, Q)$ 是
+    $E[N]$ 的一组有序基。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[解释]
+\textbf{(2)}：设 $\tau \in \HH$，对应环面 $E_\tau = \C/\Lambda_\tau$
+（$\Lambda_\tau = \Z\tau + \Z$）。取 $C = \langle 1/N \rangle \subset E_\tau$，
+即 $C = \frac{1}{N}\Z/\Z$ 是 $N$ 阶循环子群。
+
+何时 $(E_\tau, C_\tau) \cong (E_{\tau'}, C_{\tau'})$？
+需要 $\alpha \in \C^*$ 使得 $\alpha\Lambda_\tau = \Lambda_{\tau'}$
+且 $\alpha C_\tau = C_{\tau'}$。写出条件：
+$\alpha\tau = a\tau' + b$，$\alpha = c\tau' + d$（$ad - bc = 1$），
+且 $\alpha \cdot \frac{1}{N} \equiv \frac{j}{N} \pmod{\Lambda_{\tau'}}$
+对某 $j$ 与 $N$ 互素。
+
+这等价于 $\frac{c\tau' + d}{N} \in \frac{1}{N}\Z + \Lambda_{\tau'}$，
+即 $c \equiv 0 \pmod{N}$。
+故等价关系正是 $\GammaO(N)$ 的作用。
+
+\textbf{(3) 和 (4)}：类似分析。
+\end{proof}
+
+
+% ============================================================================
+\section{习题}
+\label{sec:ch1-exercises}
+% ============================================================================
+
+\begin{exercise}
+\label{ex:ch1-sl2z-1}
+验证 $S^2 = -I$，$(ST)^3 = -I$。
+由此说明 $\PSL_2(\Z) = \SL_2(\Z)/\{\pm I\}$ 的表现为
+$\langle \bar{S}, \bar{T} \mid \bar{S}^2 = (\bar{S}\bar{T})^3 = 1 \rangle$。
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ch1-fund-domain}
+画出 $\GammaO(2)$ 的基本域。
+（提示：$[\SL_2(\Z) : \GammaO(2)] = 3$，基本域是 $\SL_2(\Z)$ 基本域的
+$3$ 个拷贝的并。）
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ch1-cusps-gamma0}
+证明 $\GammaO(N)$ 在 $\mathbb{P}^1(\Q)$ 上的作用不再传递（当 $N > 1$）。
+确定 $\GammaO(N)$ 的尖点等价类个数（用 $N$ 的因子表达）。
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ch1-weight-k}
+证明：若 $k$ 为奇数，则 $\Mk_k(\SL_2(\Z)) = 0$。
+（提示：用 $-I \in \SL_2(\Z)$ 的变换律。）
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ch1-surjection}
+证明约化同态 $\SL_2(\Z) \to \SL_2(\Z/N\Z)$ 是满射。
+（提示：先证 $N = p$ 素数的情形，利用 Hensel 引理或中国剩余定理。）
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ch1-isogeny-degree}
+设 $\Lambda = \Z\tau + \Z$。证明：$\C/\Lambda$ 到自身的度为 $n$ 的同源
+恰好对应于满足 $\alpha\Lambda \subset \Lambda$、$[\Lambda : \alpha\Lambda] = n$
+的 $\alpha \in \C$。当 $\Lambda$ 没有复乘（CM）时，说明这样的 $\alpha$ 必为整数。
+\end{exercise}

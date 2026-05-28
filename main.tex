@@ -13,13 +13,10 @@
 % --- 封面 ---
 \begin{titlepage}
   \begin{tikzpicture}[remember picture, overlay]
-    % 顶部窄线
     \fill[black!60] (current page.north west) rectangle
       ([yshift=-0.6cm]current page.north east);
-    % 深蓝标题色带
     \fill[blue!40!black] ([yshift=-2.5cm]current page.north west) rectangle
       ([yshift=-7.5cm]current page.north east);
-    % 底部窄线
     \fill[black!60] ([yshift=1.8cm]current page.south west) rectangle
       ([yshift=2.2cm]current page.south east);
   \end{tikzpicture}
@@ -50,90 +47,28 @@
 \newpage
 
 % ============================================================================
-% 第一部分：预备知识
+% 正文：对应 Diamond & Shurman 九章 + FLT
 % ============================================================================
-\part{预备知识}
 
-\include{chapters/ch01-complex-analysis}
-\include{chapters/ch02-elliptic-curves-intro}
-
-% ============================================================================
-% 第二部分：$\SL_2(\Z)$ 上的模形式
-% ============================================================================
-\part{$\SL_2(\Z)$ 上的模形式}
-
-\include{chapters/ch03-modular-group}
-\include{chapters/ch04-modular-forms-sl2z}
-\include{chapters/ch05-eisenstein-series}
-\include{chapters/ch06-dimension-formula}
-
-% ============================================================================
-% 第三部分：同余子群上的模形式
-% ============================================================================
-\part{同余子群上的模形式}
-
-\include{chapters/ch07-congruence-subgroups}
-\include{chapters/ch08-modular-forms-congruence}
-\include{chapters/ch09-dirichlet-characters}
-
-% ============================================================================
-% 第四部分：Hecke 理论
-% ============================================================================
-\part{Hecke 理论}
-
-\include{chapters/ch10-hecke-operators}
-\include{chapters/ch11-petersson-inner-product}
-\include{chapters/ch12-newforms}
-
-% ============================================================================
-% 第五部分：$L$-函数与 Theta 函数
-% ============================================================================
-\part{$L$-函数与 Theta 函数}
-
-\include{chapters/ch13-l-functions}
-\include{chapters/ch14-functional-equation}
-\include{chapters/ch15-theta-functions}
-
-% ============================================================================
-% 第六部分：模曲线
-% ============================================================================
-\part{模曲线}
-
-\include{chapters/ch16-modular-curves-riemann}
-\include{chapters/ch17-modular-curves-algebraic}
-\include{chapters/ch18-moduli-interpretation}
-
-% ============================================================================
-% 第七部分：椭圆曲线与 Galois 表示
-% ============================================================================
-\part{椭圆曲线与 Galois 表示}
-
-\include{chapters/ch19-elliptic-curve-arithmetic}
-\include{chapters/ch20-galois-representations}
-\include{chapters/ch21-eichler-shimura}
-
-% ============================================================================
-% 第八部分：模性定理与费马大定理
-% ============================================================================
-\part{模性定理与费马大定理}
-
-\include{chapters/ch22-modularity-conjecture}
-\include{chapters/ch23-wiles-proof}
-\include{chapters/ch24-flt}
+\include{chapters/ch01-forms-curves}          % D&S Ch1
+\include{chapters/ch02-riemann-surfaces}      % D&S Ch2
+\include{chapters/ch03-dimension}             % D&S Ch3
+\include{chapters/ch04-eisenstein}            % D&S Ch4
+\include{chapters/ch05-hecke}                 % D&S Ch5
+\include{chapters/ch06-jacobians}             % D&S Ch6
+\include{chapters/ch07-algebraic-curves}      % D&S Ch7
+\include{chapters/ch08-eichler-shimura-l}     % D&S Ch8
+\include{chapters/ch09-galois}                % D&S Ch9
+\include{chapters/ch10-modularity-flt}        % FLT
 
 % ============================================================================
 % 附录
 % ============================================================================
 \appendix
-\part{附录}
 
 \include{chapters/app-a-algebra}
-\include{chapters/app-b-representation-theory}
+\include{chapters/app-b-complex-analysis}
 \include{chapters/app-c-history}
-
-% --- 参考文献 ---
-\bibliographystyle{plain}
-% \bibliography{refs}  % 待添加 refs.bib
 
 % --- 索引 ---
 \printindex
