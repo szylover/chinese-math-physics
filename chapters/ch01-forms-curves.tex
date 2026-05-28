@@ -68,10 +68,41 @@
 故 $\im(\gamma(\tau)) = \im(\tau)/|c\tau + d|^2 > 0$。
 \end{proof}
 
-\begin{remark}
-注意 $-I = \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ 作用平凡：
+\begin{remark}[为什么用 $\SL_2$ 而非 $\GL_2$]
+\label{rem:why-sl2}
+$\GL_2(\Z)$ 包含行列式为 $\pm 1$ 的矩阵。行列式为 $-1$ 的矩阵
+（如 $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$）对应变换
+$\tau \mapsto -\tau$，把上半平面映到\emph{下}半平面。由上面的证明，
+$\im(\gamma(\tau)) = (ad - bc)\im(\tau)/|c\tau + d|^2$，
+只有 $ad - bc = +1$（即 $\det \gamma = 1$）时虚部才保持正性。
+\end{remark}
+
+\begin{remark}[$-I$ 的作用与 $\PSL_2(\Z)$]
+\label{rem:psl2}
+$-I = \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$ 作用平凡：
 $(-I)(\tau) = \frac{-\tau}{-1} = \tau$。因此实际上是
 $\PSL_2(\Z) = \SL_2(\Z)/\{\pm I\}$ 在 $\HH$ 上\emph{忠实}地作用。
+\end{remark}
+
+\begin{remark}[群作用的基本概念]
+\label{rem:group-action}
+回顾群作用的定义。群 $G$ \textbf{作用在}（acts on）集合 $X$ 上，
+是指一个映射 $G \times X \to X$（记 $(g, x) \mapsto g \cdot x$），满足：
+\begin{enumerate}
+  \item \textbf{单位元}：$e \cdot x = x$，对所有 $x \in X$；
+  \item \textbf{相容性}：$(g_1 g_2) \cdot x = g_1 \cdot (g_2 \cdot x)$，
+    对所有 $g_1, g_2 \in G$，$x \in X$。
+\end{enumerate}
+相关概念：
+\begin{itemize}
+  \item \textbf{轨道}（orbit）：$G \cdot x = \{g \cdot x \mid g \in G\}$；
+  \item \textbf{稳定子}（stabilizer）：
+    $G_x = \{g \in G \mid g \cdot x = x\}$，是 $G$ 的子群；
+  \item \textbf{商空间}（quotient）：
+    $G \backslash X = \{G \cdot x \mid x \in X\}$，所有轨道的集合。
+\end{itemize}
+轨道-稳定子定理：$\#(G \cdot x) = [G : G_x]$（$G$ 有限时）。
+后续的模曲线 $\SL_2(\Z) \backslash \HH$ 就是这里的商空间。
 \end{remark}
 
 \begin{theorem}[$\SL_2(\Z)$ 的生成元]
@@ -85,7 +116,27 @@ $\SL_2(\Z)$ 由以下两个矩阵生成：
 \[
   S(\tau) = -\frac{1}{\tau}, \qquad T(\tau) = \tau + 1.
 \]
+注意 $S$ 在 $\SL_2(\Z)$ 中阶为 $4$（$S^2 = -I$，$S^4 = I$），
+在 $\PSL_2(\Z)$ 中阶为 $2$。
 \end{theorem}
+
+\begin{remark}[$S$ 与 $T$ 的几何直觉]
+\label{rem:S-T-geometry}
+\leavevmode
+\begin{itemize}
+  \item $T(\tau) = \tau + 1$：水平平移。将竖直带
+    $\{-1/2 < \Re(\tau) \leq 1/2\}$ 左右"复制粘贴"铺满整个上半平面。
+  \item $S(\tau) = -1/\tau$：关于单位圆的反演（加上实轴的反射）。
+    关键性质：$|S(\tau)| = 1/|\tau|$，因此
+    \begin{itemize}
+      \item 单位圆 $|\tau| = 1$ 被映到\emph{自身}；
+      \item 单位圆外部（$|\tau| > 1$）映到内部（$|S(\tau)| < 1$），反之亦然。
+    \end{itemize}
+    这解释了基本域 $\mathcal{F}$ 的形状：
+    底边是单位圆弧（$S$ 的分界线），两侧是 $\Re(\tau) = \pm 1/2$
+    （$T$ 的分界线）。
+\end{itemize}
+\end{remark}
 
 \begin{proof}
 需要证明任意 $\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \SL_2(\Z)$
