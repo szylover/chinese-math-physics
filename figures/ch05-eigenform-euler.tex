@@ -1,0 +1,38 @@
+% TikZ figure: Euler product decomposition of L-function
+% Shows how multiplicativity of a_n leads to Euler product L(f,s)
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=3pt, fill=blue!10, minimum width=2.6cm, minimum height=0.8cm, font=\small},
+  arrow/.style={->, thick, >=stealth},
+  label/.style={font=\small\itshape}
+]
+
+% Title node
+\node[font=\bfseries\small] at (4, 3.6) {特征形式的 $L$-函数乘积展开};
+
+% Left: Dirichlet series
+\node[box, fill=orange!15] (dirichlet) at (0, 2) {$L(f,s) = \sum_{n=1}^{\infty} \frac{a_n}{n^s}$};
+
+% Arrow
+\draw[arrow] (dirichlet) -- node[above, label] {乘性} (3.5, 2);
+
+% Right: Euler product
+\node[box, fill=green!15, minimum width=3.6cm] (euler) at (5.8, 2) {$\prod_p \frac{1}{1 - a_p p^{-s} + p^{k-1-2s}}$};
+
+% Below: two cases
+\node[box, fill=blue!8, minimum width=2.8cm] (good) at (1.8, 0.3) {好素数 $p \nmid N$: $\frac{1}{1-a_p p^{-s}+p^{k-1-2s}}$};
+\node[box, fill=red!8, minimum width=2.8cm] (bad) at (6.0, 0.3) {坏素数 $p \mid N$: $\frac{1}{1 - a_p p^{-s}}$};
+
+\draw[arrow, dashed] (euler.south) -- ++(0,-0.4) -| (good.north);
+\draw[arrow, dashed] (euler.south) -- ++(0,-0.4) -| (bad.north);
+
+% Multiplicativity condition
+\node[draw, dashed, rounded corners, fill=yellow!10, font=\small, text width=7cm, align=left]
+  at (3.9, -1.5) {乘性：$\gcd(m,n)=1 \Rightarrow a_{mn}=a_m a_n$\\
+  完全乘性：$a_{p^r} = a_p \cdot a_{p^{r-1}} - p^{k-1} a_{p^{r-2}}$};
+
+\end{tikzpicture}
+\caption{$L(f,s)$ 的 Euler 乘积分解：乘性的 Fourier 系数导致 $L$-函数写成素数处局部因子之积。}
+\label{fig:eigenform-euler}
+\end{figure}
