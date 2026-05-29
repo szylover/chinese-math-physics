@@ -1,0 +1,786 @@
+\chapter{第6章：Jacobi 簇 习题}
+\difficultykey
+
+\section{基础题 \easy}
+
+\begin{problem}{ch06-01}
+\textbf{$J_0(11)$ 的椭圆曲线模型。}
+记 $E_{11}$ 为与 $X_0(11)$ 同构的椭圆曲线模型
+\[
+E_{11}: y^2+y=x^3-x^2-10x-20.
+\]
+验证它的 $j$-不变量为
+\[
+j(E_{11})=-\frac{2^{12}31^3}{11^5}.
+\]
+\end{problem}
+\begin{solution}
+把方程写成一般 Weierstrass 形式
+\[
+y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6
+\]
+可读出
+\[
+a_1=0,\ a_2=-1,\ a_3=1,\ a_4=-10,\ a_6=-20.
+\]
+于是
+\[
+b_2=a_1^2+4a_2=-4,
+\quad
+b_4=2a_4+a_1a_3=-20,
+\quad
+b_6=a_3^2+4a_6=-79.
+\]
+再算
+\[
+c_4=b_2^2-24b_4=16+480=496=2^4\cdot 31,
+\]
+以及判别式
+\[
+\Delta=-161051=-11^5.
+\]
+所以
+\[
+j(E_{11})=\frac{c_4^3}{\Delta}=\frac{496^3}{-11^5}
+=-\frac{2^{12}31^3}{11^5}.
+\]
+这正是所求。注意这里用的是 $X_0(11)$ 的最常见最小模型，而不是同源类中的其它曲线模型。
+\end{solution}
+
+\begin{problem}{ch06-02}
+\textbf{Abel--Jacobi 映射。}
+设
+\[
+\phi:X_0(11)\to J_0(11),\qquad P\mapsto [(P)-(\infty)].
+\]
+说明 $\phi$ 是双有理同构，并验证 $\phi(\infty)=O$。
+\end{problem}
+\begin{solution}
+因为 $g_0(11)=1$，曲线 $X_0(11)$ 本身就是一条椭圆曲线；
+其 Jacobian $J_0(11)=\mathrm{Pic}^0(X_0(11))$ 也是一条椭圆曲线。
+对任意带有有理点的亏格 $1$ 曲线，Abel--Jacobi 映射
+\[
+P\longmapsto [(P)-(P_0)]
+\]
+都是把曲线与其 Jacobian 识别起来的同构。
+
+这里基点取 $P_0=\infty$，故
+\[
+\phi(\infty)=[(\infty)-(\infty)]=0=O.
+\]
+由于源与靶都是一维光滑射影曲线，且该映射非平凡、次数为 $1$，因此它是双有理同构；
+对椭圆曲线来说，双有理同构自动就是代数同构。
+\end{solution}
+
+\begin{problem}{ch06-03}
+\textbf{$\dim J_0(N)$ 的几个例子。}
+利用
+\[
+\dim J_0(N)=g_0(N)=\dim S_2(\GammaO(N))
+\]
+求 $N=11,17,19,23,37$ 时 $\dim J_0(N)$。
+\end{problem}
+\begin{solution}
+由第 5 章的维数公式可得
+\[
+\dim S_2(\GammaO(11))=1,
+\quad
+\dim S_2(\GammaO(17))=1,
+\quad
+\dim S_2(\GammaO(19))=1,
+\]
+\[
+\dim S_2(\GammaO(23))=2,
+\quad
+\dim S_2(\GammaO(37))=2.
+\]
+因此
+\[
+\dim J_0(11)=\dim J_0(17)=\dim J_0(19)=1,
+\]
+\[
+\dim J_0(23)=\dim J_0(37)=2.
+\]
+也就是说，前面三个 Jacobian 是椭圆曲线，后面两个是二维 Abel 簇。
+\end{solution}
+
+\begin{problem}{ch06-04}
+\textbf{$T_2$ 在 $J_0(11)$ 上的作用。}
+把 $J_0(11)$ 视为椭圆曲线 $E_{11}$。问：Hecke 算子 $T_2$ 在其余切空间/上同调上的本征值是什么整数？
+\end{problem}
+\begin{solution}
+$J_0(11)$ 对应唯一的权 $2$ 新形式
+\[
+f_{11}=q-2q^2-q^3+2q^4+q^5+\cdots.
+\]
+Hecke 算子 $T_p$ 在对应的微分 $f_{11}(q)\,dq/q$ 上按系数 $a_p(f_{11})$ 作用。
+因此
+\[
+T_2\text{ 的本征值 }=a_2(f_{11})=-2.
+\]
+由于 $J_0(11)$ 是一维 Abel 簇，其解析表示也是一维，所以这个本征值就完全描述了 $T_2$ 在 $H^0(X_0(11),\Omega^1)$ 乃至 $H^1$ 上的作用。
+\end{solution}
+
+\begin{problem}{ch06-05}
+\textbf{$J_0(37)$ 的分解。}
+说明 $J_0(37)$ 可分解成两个椭圆曲线因子，并写出一组常用的方程代表。
+\end{problem}
+\begin{solution}
+因为
+\[
+\dim S_2(\GammaO(37))=2,
+\]
+而该二维空间分解成两个有理新形式方向，所以
+\[
+J_0(37)\sim E_1\times E_2
+\]
+（同源意义下）。常用的一组代表是
+\[
+E_1: y^2+y=x^3-x,
+\qquad
+E_2: y^2+y=x^3-x^2-2x-1.
+\]
+它们都是导子 $37$ 的椭圆曲线，对应两条不同的新形式方向。
+因此 $J_0(37)$ 的 Hecke 作用可以分别投影到这两个椭圆曲线商上理解。
+\end{solution}
+
+\begin{problem}{ch06-06}
+\textbf{$T_5(J_0(11))$ 的 Galois 作用。}
+对 $\ell=5$，说明 $J_0(11)[5]=E_{11}[5]$ 作为抽象群同构于
+\[
+(\Z/5\Z)^2,
+\]
+并讨论它的 $G_\Q$-作用。
+\end{problem}
+\begin{solution}
+任何椭圆曲线的 $5$-挠子群在代数闭包上都同构于
+\[
+E[5](\overline{\Q})\cong (\Z/5\Z)^2.
+\]
+因此 $J_0(11)[5]$ 作为抽象群确实是二维 $\F_5$-向量空间。
+
+但作为 $G_\Q$-模，它不一定平凡。对 $E_{11}=X_0(11)$，由于存在一个有理 $5$-挠点，
+$E_{11}[5]$ 中有一个一维子空间被 $G_\Q$ 固定。因此其模 $5$ 表示是可约的，具有形如
+\[
+0\to \Z/5\Z\to E_{11}[5]\to \mu_5\to 0
+\]
+的结构；这里商的行列式由模 $5$ 分圆特征给出。
+所以“群结构是 $(\Z/5)^2$”与“Galois 作用非平凡”并不矛盾。
+\end{solution}
+
+\begin{problem}{ch06-07}
+\textbf{Weil 配对的一个例子。}
+对椭圆曲线 $E$ 的 $N$-挠点，Weil 配对给出
+\[
+e_N:E[N]\times E[N]\to \mu_N.
+\]
+请说明其反对称性，并给出一个具体解释。
+\end{problem}
+\begin{solution}
+Weil 配对满足
+\[
+e_N(P,Q)=e_N(Q,P)^{-1},
+\qquad e_N(P,P)=1.
+\]
+因此它是“交替的”或“反对称的”。
+
+几何上可把它理解为：若 $P,Q$ 生成 $E[N]$ 的两个独立方向，则 $e_N(P,Q)$ 衡量了这两个方向在 $N$-次除子数据中的相互扭转。
+例如选一组基 $P,Q$ 使
+\[
+E[N]\cong (\Z/N\Z)P\oplus(\Z/N\Z)Q,
+\]
+则可归一化成
+\[
+e_N(P,Q)=\zeta_N,
+\qquad e_N(Q,P)=\zeta_N^{-1}.
+\]
+这正体现了交换 $P,Q$ 会把定向反过来。
+\end{solution}
+
+\begin{problem}{ch06-08}
+\textbf{$J_0(11)(\Q)$ 是有限群。}
+利用 $J_0(11)\cong E_{11}$ 且
+\[
+E_{11}(\Q)\cong \Z/5\Z
+\]
+说明 $J_0(11)(\Q)$ 是有限群。
+\end{problem}
+\begin{solution}
+既然 $J_0(11)$ 与椭圆曲线 $E_{11}$ 同构，而后者的有理点群满足
+\[
+E_{11}(\Q)\cong \Z/5\Z,
+\]
+它就完全由一个五阶挠点生成，没有自由部分。
+因此
+\[
+J_0(11)(\Q)\cong \Z/5\Z
+\]
+是一个有限群，阶为 $5$。
+这也是 Jacobian 的 Mordell--Weil 群在最简单情形下的一次完全显式计算。
+\end{solution}
+
+\begin{problem}{ch06-09}
+\textbf{退化映射在 Jacobian 上。}
+设 $p\nmid N$ 为素数。写出两条退化映射
+\[
+\alpha,\beta:X_0(Np)\to X_0(N)
+\]
+在 Jacobian 上诱导的拉回与推前映射。
+\end{problem}
+\begin{solution}
+在模解释下，$X_0(Np)$ 的点是 $(E,C_N,C_p)$，其中 $C_N$ 是 $N$-循环子群，$C_p$ 是与之相容的 $p$-循环子群。
+两条退化映射分别是
+\[
+\alpha(E,C_N,C_p)=(E,C_N),
+\]
+和把椭圆曲线按 $C_p$ 商掉后的
+\[
+\beta(E,C_N,C_p)=\bigl(E/C_p,\ (C_N+C_p)/C_p\bigr).
+\]
+于是 Jacobian 上有
+\[
+\alpha^*,\beta^*:J_0(N)\to J_0(Np),
+\qquad
+\alpha_*,\beta_*:J_0(Np)\to J_0(N).
+\]
+其中 $^*$ 表示拉回（对除子或 Picard 群），$_*$ 表示推前（或迹映射）。
+这四个映射共同控制旧形式嵌入与 Hecke 算子的几何实现。
+\end{solution}
+
+\begin{problem}{ch06-10}
+\textbf{Hecke 算子的几何定义。}
+说明当 $p\nmid N$ 时，$T_p$ 可由退化映射写成
+\[
+T_p=\beta_*\circ \alpha^*
+\]
+（等价地也可写成 $\alpha_*\circ\beta^*$）。并在 $J_0(11)$ 上求 $T_2$ 的作用。
+\end{problem}
+\begin{solution}
+几何上，$T_p$ 对应“先把 level $N$ 的点提升到带一个附加 $p$-子群的数据，再把这些数据投回 level $N$”。
+这正由退化映射的拉回和推前组合实现：
+\[
+T_p=\beta_*\alpha^*.
+\]
+它与解析上的 Hecke 双陪集定义一致。
+
+对 $J_0(11)$，空间只有一个新形式方向，所以 $T_2$ 只能按标量作用。
+该标量正是唯一新形式的系数
+\[
+a_2(f_{11})=-2.
+\]
+因此在 $J_0(11)$ 上，$T_2$ 就是乘法映射 $[-2]$。
+\end{solution}
+
+\section{进阶题 \medium}
+
+\begin{problem}{ch06-11}
+\textbf{复解析描述。}
+完整证明
+\[
+J_0(N)(\C)\cong S_2(\GammaO(N))^*/H_1(X_0(N),\Z).
+\]
+\end{problem}
+\begin{solution}
+第一步，把权 $2$ 尖点形式与全纯微分识别：
+\[
+S_2(\GammaO(N))\cong H^0(X_0(N),\Omega^1),
+\qquad
+f\mapsto 2\pi i f(\tau)\,d\tau.
+\]
+因为尖点形式在尖点处 vanishing，所以上式在紧化后的模曲线上仍全纯。
+
+第二步，对每条整数同调类 $\gamma\in H_1(X_0(N),\Z)$ 定义周期泛函
+\[
+\omega\longmapsto \int_\gamma \omega.
+\]
+这给出嵌入
+\[
+H_1(X_0(N),\Z)\hookrightarrow H^0(X_0(N),\Omega^1)^*=S_2(\GammaO(N))^*.
+\]
+其像就是周期格。
+
+第三步，复 Abel 定理说明
+\[
+\mathrm{Pic}^0(X_0(N))(\C)
+\]
+等于全纯微分对偶空间模掉所有周期：
+\[
+\mathrm{Pic}^0(X_0(N))(\C)
+\cong H^0(X_0(N),\Omega^1)^*/H_1(X_0(N),\Z).
+\]
+而 $\mathrm{Pic}^0(X_0(N))$ 正是 $J_0(N)$，所以得到
+\[
+J_0(N)(\C)\cong S_2(\GammaO(N))^*/H_1(X_0(N),\Z).
+\]
+这把 Jacobian 具体实现成一个复环面。
+\end{solution}
+
+\begin{problem}{ch06-12}
+\textbf{为什么周期像是格？}
+证明 $H_1(X_0(N),\Z)$ 嵌入到 $S_2(\GammaO(N))^*$ 的像是离散且余紧的格。
+\end{problem}
+\begin{solution}
+$H_1(X_0(N),\Z)$ 是秩 $2g$ 的自由阿贝尔群，其中 $g=g_0(N)=\dim_\C S_2(\GammaO(N))$。
+经过周期映射
+\[
+\gamma\mapsto \left(\omega\mapsto \int_\gamma \omega\right)
+\]
+后，得到 $S_2^*\cong \C^g$ 中的一个秩 $2g$ 的加法子群。
+
+该群离散，是因为若一列整数循环的周期趋于零，则它们在实向量空间
+$H_1(X_0(N),\R)$ 中趋于零；但整数格在有限维实向量空间中本来就是离散的。
+
+该群余紧，是因为实维数匹配：
+\[
+\dim_\R S_2^*=2g,
+\qquad \mathrm{rank}\,H_1(X_0(N),\Z)=2g.
+\]
+一个满秩离散子群在有限维实向量空间中必为格，因此商
+\[
+S_2(\GammaO(N))^*/H_1(X_0(N),\Z)
+\]
+是紧复环面。
+\end{solution}
+
+\begin{problem}{ch06-13}
+\textbf{Hecke 在整数同调上的整作用。}
+证明 $T_n$ 把 $H_1(X_0(N),\Z)$ 映到自身。
+\end{problem}
+\begin{solution}
+Hecke 算子由有限对应给出：
+\[
+X_0(N) \xleftarrow{\pi_1} C_n \xrightarrow{\pi_2} X_0(N).
+\]
+于是同调上的作用是
+\[
+T_n=(\pi_2)_*\pi_1^*.
+\]
+这里 $\pi_1^*$ 把整数循环拉回为整数循环的和，$(\pi_2)_*$ 再把这些分支映回去，仍得到整数系数的 1-循环。
+故
+\[
+T_n\bigl(H_1(X_0(N),\Z)\bigr)\subseteq H_1(X_0(N),\Z).
+\]
+
+用模符号语言看更直观：Manin 符号由有理端点路径生成，Hecke 算子把一个符号送成有限多个符号之和，系数全在 $\Z$ 中。
+所以 Hecke 作用天然保持整数结构。
+\end{solution}
+
+\begin{problem}{ch06-14}
+\textbf{特征 Abel 簇的分解定理。}
+说明为什么
+\[
+J_0(N)\sim \prod_f A_f
+\]
+其中 $f$ 跑遍权 $2$ 新形式，而在 $\GammaO(N)$ 情形下重数 $m_f=1$。
+\end{problem}
+\begin{solution}
+Hecke 代数 $\mathbb T$ 在
+\[
+S_2(\GammaO(N))
+\]
+上是交换半单的，因此可把该空间分解成新形式本征子空间之直和。
+Eichler--Shimura 把每个本征子空间实现成 Jacobian 中的一个 Abel 子商 $A_f$。
+于是有同源分解
+\[
+J_0(N)\sim \prod_f A_f^{m_f}.
+\]
+
+对 $\GammaO(N)$，权 $2$ 新形式在 Jacobian 中出现的次数由多重性一定理给出，恰好等于 $1$。
+直观地说，每个新形式只贡献一个独立的微分方向，其复共轭已包含在同一个 Abel 簇的 Betti 实现中，不会再额外重复。
+所以
+\[
+J_0(N)\sim \prod_f A_f.
+\]
+\end{solution}
+
+\begin{problem}{ch06-15}
+\textbf{$N=37$ 的两个新形式。}
+写出 $S_2(\GammaO(37))$ 中两个有理新形式的前几项，并说明它们对应两个椭圆曲线因子。
+\end{problem}
+\begin{solution}
+可取两条归一化新形式为
+\[
+f_1=q-2q^2-3q^3+2q^4-2q^5+6q^6-q^7+O(q^8),
+\]
+\[
+f_2=q+q^3-2q^4+O(q^5).
+\]
+两者的 Fourier 系数都落在 $\Q$ 中，因此它们的 Hecke 域满足
+\[
+K_{f_1}=K_{f_2}=\Q.
+\]
+由 Shimura 构造，对每个 $f_i$ 都得到一个一维 Abel 簇 $A_{f_i}$，即一条椭圆曲线。
+所以
+\[
+J_0(37)\sim A_{f_1}\times A_{f_2}=E_1\times E_2.
+\]
+这正是上一题所述的分解在具体水平 $37$ 的显式版本。
+\end{solution}
+
+\begin{problem}{ch06-16}
+\textbf{$N=11$ 处的 N\'eron 模型。}
+说明 $E_{11}=X_0(11)$ 在 $p=11$ 处的 N\'eron 模型特殊纤维属于哪一类。
+\end{problem}
+\begin{solution}
+对
+\[
+E_{11}: y^2+y=x^3-x^2-10x-20
+\]
+有最小判别式
+\[
+\Delta=-11^5,
+\qquad \ord_{11}(N)=1.
+\]
+因此它是半稳定的坏约化，而且因为导子指数恰为 $1$，故属于乘法约化。
+更精确地，Kodaira 符号是
+\[
+I_5,
+\]
+也就是说特殊纤维是一个由 $5$ 个射影直线组成的环形配置。
+对该模型，LMFDB/Cremona 记载其在 $11$ 处是 split multiplicative reduction。
+所以 N\'eron 模型的特殊纤维类型是：\textbf{分裂乘法约化，Kodaira 型 $I_5$。}
+\end{solution}
+
+\begin{problem}{ch06-17}
+\textbf{从 $J_0(N)$ 到模椭圆曲线。}
+证明若 $E/\Q$ 是导子 $N$ 的模椭圆曲线，则存在满射
+\[
+\phi:J_0(N)\to E.
+\]
+\end{problem}
+\begin{solution}
+模性定理说明存在一个权 $2$ 新形式 $f_E\in S_2(\GammaO(N))$，使得
+\[
+L(E,s)=L(f_E,s).
+\]
+Hecke 代数作用在 $J_0(N)$ 上，并对新形式给出一个特征同态
+\[
+\mathbb T\to \mathcal O_{K_{f_E}}.
+\]
+令 $I=\Ann(f_E)$，则商
+\[
+A_{f_E}=J_0(N)/IJ_0(N)
+\]
+是附着于 $f_E$ 的 Abel 簇。
+
+若 $f_E$ 的系数域是 $\Q$，则 $A_{f_E}$ 一维，因而是一条椭圆曲线；并且它与 $E$ 有相同的 $L$-函数，所以按 Faltings 同构判别，$A_{f_E}$ 与 $E$ 同源。
+于是复合映射
+\[
+J_0(N)\twoheadrightarrow A_{f_E}\twoheadrightarrow E
+\]
+给出所需满射。
+这就是模参数化的 Jacobian 版本。
+\end{solution}
+
+\begin{problem}{ch06-18}
+\textbf{挠子群上的 Galois 作用。}
+说明 $G_\Q$ 如何作用在 $J_0(N)[\ell]$ 上，并解释这与每个新形式的 $\rho_{f,\ell}$ 的关系。
+\end{problem}
+\begin{solution}
+因为 $J_0(N)$ 定义在 $\Q$ 上，任意 $\sigma\in G_\Q$ 作用于点坐标，从而稳定所有满足
+\[
+\ell P=0
+\]
+的点，所以得到表示
+\[
+\rho_{J_0(N),\ell}:G_\Q\to \GL(J_0(N)[\ell]).
+\]
+
+另一方面，Hecke 分解给出
+\[
+J_0(N)\sim \prod_f A_f,
+\]
+因此 Tate 模和模 $\ell$ 挠子群也相应分解：
+\[
+T_\ell(J_0(N))\otimes \Q_\ell\cong \bigoplus_f V_{f,\ell}.
+\]
+其中每个 $V_{f,\ell}$ 正是新形式 $f$ 的 $\ell$-进表示（或其若干拷贝）。
+在模 $\ell$ 层面，这意味着 $J_0(N)[\ell]$ 的 Galois 作用可分解成若干不可约块，而每一块都与某个 $\rho_{f,\ell}$ 对应。
+\end{solution}
+
+\begin{problem}{ch06-19}
+\textbf{$J_0(N)(\Q)_{\mathrm{tors}}$ 的有限性。}
+证明 Jacobian 的有理挠子群是有限群。
+\end{problem}
+\begin{solution}
+对任意数域上的 Abel 簇 $A$，Mordell--Weil 定理给出
+\[
+A(\Q)\cong \Z^r\oplus A(\Q)_{\mathrm{tors}}.
+\]
+因此挠子子群自动有限。
+
+若想看得更具体，可取一个坏约化以外的素数 $p$。约化映射
+\[
+A(\Q)_{\mathrm{tors}}\hookrightarrow A(\F_p)
+\]
+在与 $p$ 互素的部分上是单射，而 $A(\F_p)$ 是有限群，于是所有挠点都被一个有限群控制住。
+应用于 $A=J_0(N)$ 即得
+\[
+J_0(N)(\Q)_{\mathrm{tors}}\text{ 有限}.
+\]
+\end{solution}
+
+\begin{problem}{ch06-20}
+\textbf{Manin--Drinfeld 定理的一个版本。}
+说明为什么尖点差
+\[
+[(\infty)]-[(0)]\in J_0(N)(\Q)
+\]
+总是挠元。
+\end{problem}
+\begin{solution}
+Manin--Drinfeld 定理断言：任意两个有理尖点之差在 Jacobian 中都是挠元。
+证明思路是把 Hecke 算子作用在尖点子群上，利用其本征值全是整数且与 Eisenstein 部分兼容，
+从而说明尖点差被某个非零 Hecke 多项式湮灭。
+
+更直观地说，尖点类全部来自边界；而边界同调在 Hecke 作用下形成一个有限生成的 Eisenstein 模。
+模掉尖点形式方向后，它只能留下有限挠信息，于是尖点差必为挠元。
+因此
+\[
+[(\infty)]-[(0)]\in J_0(N)(\Q)_{\mathrm{tors}}.
+\]
+\end{solution}
+
+\begin{problem}{ch06-21}
+\textbf{$J_0(11)$ 中尖点差的阶。}
+直接说明
+\[
+[(\infty)]-[(0)]\in J_0(11)(\Q)
+\]
+的阶为 $5$。
+\end{problem}
+\begin{solution}
+我们已知
+\[
+J_0(11)(\Q)\cong E_{11}(\Q)\cong \Z/5\Z.
+\]
+因此任一非零有理挠点都必须是 $5$ 阶。
+而两个尖点不线性等价，否则 $X_0(11)$ 上会存在以这两个点为零极点的一次函数，这与亏格 $1$ 不符。
+所以
+\[
+[(\infty)]-[(0)]\neq 0.
+\]
+它既是非零有理点，又落在一个五阶循环群中，因此其阶只能是 $5$。
+\end{solution}
+
+\begin{problem}{ch06-22}
+\textbf{Jacobian 的自对偶性。}
+解释为什么
+\[
+J_0(N)^\vee\cong J_0(N)
+\]
+意味着 $J_0(N)$ 是 principally polarized Abel 簇。
+\end{problem}
+\begin{solution}
+任意光滑射影曲线 $X$ 的 Jacobian 都带有天然的 theta 极化，给出一个同态
+\[
+\lambda:J(X)\to J(X)^\vee.
+\]
+对 Jacobian 而言，这个同态是同构，因此称为主极化。
+
+所以对 $X_0(N)$ 有
+\[
+J_0(N)^\vee\cong J_0(N),
+\]
+并不是说“任何 Abel 簇都自对偶”，而是说 Jacobian 携带了一个特别好的极化，使其与对偶簇自然识别。
+这正是 principally polarized Abel variety 的定义。
+\end{solution}
+
+\begin{problem}{ch06-23}
+\textbf{Weil 配对的非退化性。}
+证明
+\[
+e_N:J_0(N)[N]\times J_0(N)[N]\to \mu_N
+\]
+是反对称且非退化的。
+\end{problem}
+\begin{solution}
+反对称性来自 Poincar\'e 线丛或除子理论中的交换法则：
+\[
+e_N(P,Q)=e_N(Q,P)^{-1}.
+\]
+特别地 $e_N(P,P)=1$。
+
+非退化性则表示：若某个 $P\in J_0(N)[N]$ 满足
+\[
+e_N(P,Q)=1\quad\text{对所有 }Q\in J_0(N)[N],
+\]
+那么 $P=0$。
+这是因为 Jacobian 的主极化把 $J_0(N)[N]$ 与其 Cartier 对偶识别起来，而 Weil 配对正是这个识别在 $N$-挠层面上的显式形式。
+
+因此它既是交替双线性，又是完美配对；换言之，
+\[
+J_0(N)[N]\cong \Hom(J_0(N)[N],\mu_N).
+\]
+\end{solution}
+
+\begin{problem}{ch06-24}
+\textbf{$J_0(37)$ 的 $\ell$-进表示分解。}
+写出 $\rho_{J_0(37),\ell}$ 按 $J_0(37)\sim E_1\times E_2$ 的分解形式。
+\end{problem}
+\begin{solution}
+由于同源分解
+\[
+J_0(37)\sim E_1\times E_2,
+\]
+Tate 模也随之分解为直和：
+\[
+T_\ell(J_0(37))\otimes \Q_\ell
+\cong
+T_\ell(E_1)\otimes \Q_\ell\ \oplus\ T_\ell(E_2)\otimes \Q_\ell.
+\]
+于是对应的 Galois 表示满足
+\[
+\rho_{J_0(37),\ell}
+\cong
+\rho_{E_1,\ell}\oplus \rho_{E_2,\ell}.
+\]
+每个 $\rho_{E_i,\ell}$ 都是二维表示，因此总维数是 $4=2g$，与 $g=2$ 一致。
+从 Hecke 角度看，这就是把 $J_0(37)$ 的表示分成两个新形式方向。
+\end{solution}
+
+\begin{problem}{ch06-25}
+\textbf{模参数化的次数与 Manin 常数。}
+陈述模参数化
+\[
+\phi:X_0(N)\to E
+\]
+的次数与 Manin 常数 $c_E$ 的关系，并说明 Edixhoven 定理在半稳定情形说了什么。
+\end{problem}
+\begin{solution}
+若 $f_E$ 是与 $E$ 对应的归一化新形式，则模参数化满足
+\[
+\phi^*(\omega_E)=c_E\cdot 2\pi i f_E(\tau)\,d\tau,
+\]
+其中 $c_E\in \Z$ 就是 Manin 常数。
+它衡量的是：从 Jacobian/newform 方向拉回来的标准微分，与椭圆曲线 N\'eron 微分之间差了多少整数倍。
+参数化次数与 Petersson 范数、周期及 $c_E$ 一起出现在精确公式中。
+
+Edixhoven 定理说明：对半稳定椭圆曲线，
+\[
+c_E=1.
+\]
+这正是 Manin 猜想在半稳定情形下的证明。于是半稳定时，模参数化在微分层面没有额外的整数扭曲。
+\end{solution}
+
+\section{挑战题 \hard}
+
+\begin{problem}{ch06-26}
+\textbf{Eichler--Shimura 关系。}
+解释为什么对 $p\nmid N\ell$，在 $T_\ell(J_0(N))$ 上有
+\[
+T_p=\Frob_p+\langle p\rangle\Frob_p^{-1}.
+\]
+\end{problem}
+\begin{solution}
+这是 Eichler--Shimura 关系的 Jacobian 版本。证明思路是：
+\begin{itemize}
+  \item 先把 $T_p$ 写成模曲线上的有限对应；
+  \item 再把该对应约化到 $\F_p$ 上；
+  \item 观察对应的两条分支恰好由 Frobenius 与 Verschiebung 描述；
+  \item 在带有 Nebentypus 时，Verschiebung 部分产生菱形算子 $\langle p\rangle$。
+\end{itemize}
+于是对同调或 Tate 模的作用得到
+\[
+T_p=\Frob_p+\langle p\rangle\Frob_p^{-1}.
+\]
+在权 $2$ 新形式方向上，这退化成熟悉的局部特征多项式
+\[
+X^2-a_pX+p\chi(p)=0.
+\]
+因此它正是模形式 Hecke 特征值与 Galois Frobenius 特征值之间的桥梁。
+\end{solution}
+
+\begin{problem}{ch06-27}
+\textbf{坏素数处的约化类型。}
+说明为什么 $J_0(N)$ 在坏素数处的约化类型与水平 $N$ 的整除情况密切相关：
+一次整除通常对应乘法约化，更高次幂整除时会出现更复杂的加性行为。
+\end{problem}
+\begin{solution}
+模曲线的积分模型在坏素数处的奇性反映了 level 结构在该素数上的退化方式。
+若 $p\parallel N$，则 level 结构只“坏一次”，局部模型通常呈半稳定结点型，因此 Jacobian 倾向于出现乘法约化。
+这就是很多半稳定椭圆曲线在导子中指数为 $1$ 时呈乘法约化的原因。
+
+当 $p^2\mid N$ 时，局部模型出现更严重的碰撞与自交，特殊纤维不再是简单结点拼接，
+从而 Jacobian 的约化也会出现加性成分和更复杂的群方案结构。
+严格证明需要 Deligne--Rapoport 或 Katz--Mazur 的积分模型理论，但直觉非常清楚：
+水平越“深”，坏约化越复杂。
+\end{solution}
+
+\begin{problem}{ch06-28}
+\textbf{从 $J_0(N)$ 中切出 $A_f$。}
+对归一化特征新形式 $f$，说明如何把 $A_f$ 构造成 $J_0(N)$ 的 Abel 簇商。
+\end{problem}
+\begin{solution}
+Hecke 代数 $\mathbb T$ 作用在 $J_0(N)$ 上，而新形式 $f$ 给出一个特征同态
+\[
+\lambda_f:\mathbb T\to K_f,
+\qquad T_n\mapsto a_n(f).
+\]
+令
+\[
+I_f=\ker(\lambda_f)=\Ann(f).
+\]
+则 $I_f$ 在 $J_0(N)$ 上的像 $I_fJ_0(N)$ 是一个 Abel 子簇，故可取商
+\[
+A_f:=J_0(N)/I_fJ_0(N).
+\]
+这个商恰好保留了所有在 $f$-方向上按 $a_n(f)$ 作用的 Hecke 信息，而把其余本征方向全部杀掉。
+因此 $A_f$ 就是“从 Jacobian 中切出 $f$ 所对应部分”的几何实现。
+\end{solution}
+
+\begin{problem}{ch06-29}
+\textbf{$K_f\hookrightarrow \End^0(A_f)$。}
+说明为什么新形式的系数域可以嵌入到
+\[
+\End^0(A_f)=\End(A_f)\otimes \Q.
+\]
+\end{problem}
+\begin{solution}
+因为 $A_f$ 是通过 Hecke 代数在 $f$-本征方向上的作用定义出来的，而
+\[
+\mathbb T/I_f
+\]
+通过 $\lambda_f$ 映入系数域 $K_f$。
+另一方面，$\mathbb T$ 对 $J_0(N)$ 的作用会下降到 $A_f$ 上，于是得到
+\[
+\mathbb T/I_f\hookrightarrow \End(A_f).
+\]
+张量 $\Q$ 后便有
+\[
+K_f\hookrightarrow \End^0(A_f).
+\]
+这表明 $A_f$ 带有由 Hecke 本征值生成的额外内自同构。
+特别地，当 $K_f=\Q$ 时没有额外乘法；当 $K_f$ 更大时，$A_f$ 往往携带实乘法或更丰富的端同构结构。
+\end{solution}
+
+\begin{problem}{ch06-30}
+\textbf{用 $J_0(N)$ 的分解重述模性定理。}
+说明如何利用
+\[
+J_0(N)\sim \prod_f A_f
+\]
+来理解半稳定椭圆曲线 $E/\Q$ 的模性
+\[
+L(E,s)=L(f_E,s).
+\]
+\end{problem}
+\begin{solution}
+若 $E/\Q$ 半稳定且导子为 $N$，模性定理说存在权 $2$ 新形式 $f_E$ 使
+\[
+L(E,s)=L(f_E,s).
+\]
+从 Jacobian 角度看，这意味着在分解
+\[
+J_0(N)\sim \prod_f A_f
+\]
+中，恰有一个因子 $A_{f_E}$ 与 $E$ 同源。
+于是 $E$ 不是“外加”到模曲线理论里的，而是已经内嵌在 $J_0(N)$ 的 Hecke 本征分解里。
+
+反过来，只要从分解中找到一个一维因子 $A_f$，它就是一条椭圆曲线，并满足
+\[
+L(A_f,s)=L(f,s).
+\]
+因此“椭圆曲线的模性”等价于“它出现在某个 $J_0(N)$ 的新形式因子中”。
+这正是几何语言下对模性定理最干净的重述之一。
+\end{solution}
