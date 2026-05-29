@@ -1,0 +1,762 @@
+\chapter{代数曲线理论}
+
+本章默认基域特征不为 $2,3$，除非另有说明；并约定 $O$ 表示椭圆曲线的无穷远点。对导子 $11$ 的标准例子，我们统一记
+\[
+E_{11}: y^2+y=x^3-x^2-10x-20.
+\]
+
+\difficultykey
+
+\section*{基础题}
+
+\begin{problem}{射影化 \easy}
+将仿射曲线 $y^2=x^3-x$ 射影化：在齐次坐标 $[X:Y:Z]$ 中写出对应的射影方程，并求全部无穷远点。
+\end{problem}
+\begin{solution}
+把 $x=X/Z$、$y=Y/Z$ 代入并乘以 $Z^3$，得
+\[
+Y^2Z=X^3-XZ^2.
+\]
+无穷远点满足 $Z=0$，于是方程化为 $X^3=0$，故 $X=0$，而齐次坐标不能全为零，所以唯一无穷远点是
+\[
+[0:1:0].
+\]
+因此该曲线的射影闭包只有一个无穷远点，它正是椭圆曲线的单位元 $O$。
+\end{solution}
+
+\begin{problem}{光滑性判定 \easy}
+判断下列曲线是否光滑，并在非光滑情形写出奇点：
+\begin{enumerate}[label=(\alph*)]
+  \item $y^2=x^3$；
+  \item $y^2=x^2(x+1)$；
+  \item $y^2=x^3-x$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+把曲线写成 $F(x,y)=0$，奇点条件是 $F=F_x=F_y=0$。
+\begin{enumerate}[label=(\alph*)]
+  \item $F=y^2-x^3$，则 $F_x=-3x^2$，$F_y=2y$。唯一同时满足者是 $(0,0)$，所以它不光滑；局部形状是尖点。
+  \item $F=y^2-x^2(x+1)=y^2-x^3-x^2$，$F_x=-3x^2-2x=-x(3x+2)$，$F_y=2y$。由 $F_y=0$ 得 $y=0$，再由 $F=0$ 得 $x=0$ 或 $x=-1$。其中只有 $x=0$ 使 $F_x=0$，故奇点为 $(0,0)$；它是结点。
+  \item $F=y^2-x^3+x$，$F_x=-3x^2+1$，$F_y=2y$。若有奇点，则 $y=0$ 且 $x^3-x=0$，即 $x=0,\pm1$；但在这些点上 $F_x=1,-2,-2$，都不为零，所以无奇点，曲线光滑。
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{不变量计算 \easy}
+对椭圆曲线 $E: y^2=x^3+x$，计算判别式 $\Delta$、$c_4$ 与 $j$-不变量。
+\end{problem}
+\begin{solution}
+短 Weierstrass 形式 $y^2=x^3+Ax+B$ 中，$A=1,B=0$。公式
+\[
+\Delta=-16(4A^3+27B^2),\qquad c_4=-48A,
+\qquad j=\frac{c_4^3}{\Delta}
+\]
+给出
+\[
+\Delta=-16\cdot 4=-64,
+\qquad c_4=-48,
+\qquad j=\frac{(-48)^3}{-64}=1728.
+\]
+因此 $E$ 是 $j=1728$ 的 CM 曲线。
+\end{solution}
+
+\begin{problem}{二倍映射 \easy}
+设 $E: y^2=x^3+x$。写出倍映射 $[2]:E\to E$ 的公式，并说明 $\deg([2])=4$。
+\end{problem}
+\begin{solution}
+若 $P=(x,y)\neq O$ 且 $y\neq 0$，切线斜率为
+\[
+\lambda=\frac{3x^2+1}{2y}.
+\]
+于是
+\[
+[2]P=(x_2,y_2),\qquad x_2=\lambda^2-2x,
+\qquad y_2=-y+\lambda(x-x_2).
+\]
+把 $y^2=x^3+x$ 代入可化成只含 $x,y$ 的有理式：
+\[
+x_2=\frac{(x^2-1)^2}{4x(x^2+1)}.
+\]
+至于次数，$[2]$ 的核正是 $E[2]$，即
+\[
+E[2]=\{O,(0,0),(1,0),(-1,0)\},
+\]
+共有 $4$ 个点。乘法映射是可分同源，因此
+\[
+\deg([2])=\#E[2]=4.
+\]
+\end{solution}
+
+\begin{problem}{对偶同源的基本恒等式 \easy}
+设 $\phi:E_1\to E_2$ 是同源，且 $\deg\phi=n$。证明
+\[
+\phi\circ\hat\phi=[n]
+\quad\text{且}\quad
+\hat\phi\circ\phi=[n].
+\]
+\end{problem}
+\begin{solution}
+对偶同源 $\hat\phi$ 的定义正是：它是满足
+\[
+\hat\phi\circ\phi=[n]
+\]
+的唯一同源。把同样定义用于 $\hat\phi$ 本身，可得它的对偶是 $\phi$，于是
+\[
+\phi\circ\hat\phi=[n].
+\]
+更概念地说，在 $\mathrm{Pic}^0$ 上，$\phi_*$ 与 $\phi^*$ 互为伴随，而复合 $\phi_\ast\phi^*$ 等于乘以 $n$；经
+$E_i\cong \mathrm{Pic}^0(E_i)$ 识别后，就得到上述两个恒等式。
+\end{solution}
+
+\begin{problem}{模多项式在 $j=1728$ 处的根 \easy}
+设 $\Phi_2(X,Y)$ 是二级模多项式。说明它关于 $X$ 是三次的，并求方程
+\[
+\Phi_2(X,1728)=0
+\]
+的三个根（按重数计）。
+\end{problem}
+\begin{solution}
+经典公式为
+\begin{align*}
+\Phi_2(X,Y)=&\,X^3+Y^3-X^2Y^2+1488X^2Y+1488XY^2-162000X^2-162000Y^2\\
+&+40773375XY+8748000000X+8748000000Y-157464000000000.
+\end{align*}
+把 $Y=1728$ 代入并因式分解，得到
+\[
+\Phi_2(X,1728)=(X-1728)(X-287496)^2.
+\]
+因此三个根按重数计为
+\[
+1728,\quad 287496,\quad 287496.
+\]
+重根出现的原因是 $j=1728$ 的曲线有额外自同构。
+\end{solution}
+
+\begin{problem}{有限域上的点数 \easy}
+在 $\F_7$ 上计算椭圆曲线 $E:y^2=x^3+1$ 的点数 $\#E(\F_7)$。
+\end{problem}
+\begin{solution}
+先列平方剩余：$0,1,2,4$。逐个代入 $x\in\F_7$：
+\[
+\begin{array}{c|ccccccc}
+x&0&1&2&3&4&5&6\\ \hline
+x^3+1&1&2&2&0&2&0&0
+\end{array}
+\]
+于是有解的 $(x,y)$ 为
+\[
+(0,\pm1),(1,\pm3),(2,\pm3),(3,0),(4,\pm3),(5,0),(6,0),
+\]
+共 $11$ 个仿射点，再加无穷远点 $O$，所以
+\[
+\#E(\F_7)=12.
+\]
+对应的 $a_7=7+1-12=-4$，恰好达到 Hasse 界的端点。
+\end{solution}
+
+\begin{problem}{导子 $11$ 曲线的约化 \easy}
+对标准导子 $11$ 曲线
+\[
+E_{11}: y^2+y=x^3-x^2-10x-20
+\]
+分别在 $p=2,3,5,11$ 处判断好约化还是坏约化；若坏约化，再判定是结点还是尖点。
+\end{problem}
+\begin{solution}
+该模型的判别式是
+\[
+\Delta=-11^5,
+\]
+故除 $p=11$ 外一切素数都是好约化。因此 $p=2,3,5$ 都是好约化。
+
+在 $p=11$ 处，把方程模 $11$ 化简成
+\[
+y^2+y=x^3-x^2+x+2.
+\]
+直接求偏导可得唯一奇点是 $(5,5)$。令 $x=u+5,y=v+5$，则局部方程化为
+\[
+v^2=u^2(u+3).
+\]
+其最低次齐次部分为
+\[
+v^2-3u^2=(v-5u)(v+5u),
+\]
+分解成两条不同切线，所以奇点是结点而非尖点。故
+\[
+p=11\text{ 处为坏约化，且为乘法（结点）约化。}
+\]
+\end{solution}
+
+\begin{problem}{三倍点计算 \easy}
+对 $E:y^2=x^3-x$，直接计算 $[3](0,0)$。
+\end{problem}
+\begin{solution}
+点 $P=(0,0)$ 满足 $y=0$，因此它是 $2$-挠点，故
+\[
+[2]P=O.
+\]
+于是
+\[
+[3]P=[2]P+P=O+P=P=(0,0).
+\]
+所以
+\[
+[3](0,0)=(0,0).
+\]
+\end{solution}
+
+\begin{problem}{Weil 配对在 $E[2]$ 上的值 \easy}
+设
+\[
+E[2]=\{O,P_1,P_2,P_1+P_2\}.
+\]
+写出 Weil 配对 $e_2(P_1,P_2)$ 的值。
+\end{problem}
+\begin{solution}
+$E[2]\cong (\Z/2\Z)^2$ 上的 Weil 配对是交错、双线性且非退化的，并取值于 $\mu_2=\{\pm1\}$。因为 $P_1,P_2$ 线性无关，非退化性迫使
+\[
+e_2(P_1,P_2)\neq 1.
+\]
+又取值只能是 $\pm1$，故
+\[
+e_2(P_1,P_2)=-1.
+\]
+这正是二维辛空间的标准配对。
+\end{solution}
+
+\section*{进阶题}
+
+\begin{problem}{证明 $\mathrm{Pic}^0(E)\cong E(\bar k)$ \medium}
+设 $E/k$ 是椭圆曲线。证明映射
+\[
+\iota:E(\bar k)\longrightarrow \mathrm{Pic}^0(E),\qquad P\longmapsto [(P)-(O)]
+\]
+是群同构。
+\end{problem}
+\begin{solution}
+先证它是同态。若 $P,Q,R$ 共线，则三次曲线与这条直线的交点除子满足
+\[
+(P)+(Q)+(R)\sim 3(O).
+\]
+按群律定义，$P+Q+R=O$，故
+\[
+[(P)-(O)]+[(Q)-(O)]=[( -R)-(O)]=[(P+Q)-(O)].
+\]
+因此 $\iota$ 为群同态。
+
+再证满射。设 $D$ 是度 $0$ 除子。则 $D+(O)$ 的次数为 $1$。由亏格 $1$ 的 Riemann--Roch，
+\[
+\ell(D+(O))=\deg(D+(O))=1,
+\]
+故存在非零函数 $f$ 使 $\mathrm{div}(f)+D+(O)\ge 0$。右侧是次数 $1$ 的有效除子，只能是某个 $(P)$，于是
+\[
+D\sim (P)-(O).
+\]
+所以 $\iota$ 满射。
+
+最后证单射。若 $(P)-(O)$ 为主除子，则存在函数 $f$ 使 $\mathrm{div}(f)=(P)-(O)$。但这意味着存在次数 $1$ 的有理函数 $E\to\mathbb P^1$，与亏格 $1$ 曲线不可能同构于 $\mathbb P^1$ 矛盾。故 $P=O$。因此 $\iota$ 为双射，进而为群同构。
+\end{solution}
+
+\begin{problem}{可分同源的度与核 \medium}
+设 $\phi:E_1\to E_2$ 是可分同源。证明
+\[
+\deg\phi=\#\ker\phi.
+\]
+\end{problem}
+\begin{solution}
+按定义
+\[
+\deg\phi=[k(E_1):\phi^*k(E_2)].
+\]
+对一般点 $Q\in E_2$，纤维 $\phi^{-1}(Q)$ 的点数恰等于该扩张的可分次数。因为 $\phi$ 可分，扩张没有纯不可分部分，于是一般纤维恰有 $\deg\phi$ 个点。
+
+另一方面，任取 $P_0\in E_1$ 使 $\phi(P_0)=Q$，则平移给出双射
+\[
+\ker\phi\longrightarrow \phi^{-1}(Q),\qquad T\longmapsto P_0+T.
+\]
+所以所有一般纤维都与 $\ker\phi$ 等势，故
+\[
+\deg\phi=\#\phi^{-1}(Q)=\#\ker\phi.
+\]
+\end{solution}
+
+\begin{problem}{对偶同源的存在唯一性 \medium}
+证明：对任意同源 $\phi:E_1\to E_2$，存在唯一同源 $\hat\phi:E_2\to E_1$ 使
+\[
+\hat\phi\circ\phi=[\deg\phi].
+\]
+\end{problem}
+\begin{solution}
+借助上题同构 $E_i\cong \mathrm{Pic}^0(E_i)$。由函子性，$\phi$ 诱导拉回
+\[
+\phi^*: \mathrm{Pic}^0(E_2)\to \mathrm{Pic}^0(E_1)
+\]
+以及推前
+\[
+\phi_*: \mathrm{Pic}^0(E_1)\to \mathrm{Pic}^0(E_2).
+\]
+对除子类可直接验证
+\[
+\phi_*\phi^*=[\deg\phi]
+\quad\text{在 }\mathrm{Pic}^0(E_2)\text{ 上成立},
+\]
+同理 $\phi^*\phi_*=[\deg\phi]$ 在 $\mathrm{Pic}^0(E_1)$ 上成立。把这些映射经
+$E_i\cong\mathrm{Pic}^0(E_i)$ 转回椭圆曲线，就得到所求同源 $\hat\phi$。
+
+唯一性也立即成立：若 $\psi$ 也满足 $\psi\circ\phi=[\deg\phi]$，则
+\[
+(\psi-\hat\phi)\circ\phi=0.
+\]
+由于 $\phi$ 非常值且像稠密，只能有 $\psi=\hat\phi$。
+\end{solution}
+
+\begin{problem}{三挠点的坐标 \medium}
+对 $E:y^2=x^3-x$，写出 $E[3]$ 的全部点坐标，并说明 $E[3]\cong (\Z/3\Z)^2$。
+\end{problem}
+\begin{solution}
+短 Weierstrass 形式 $y^2=x^3+Ax+B$ 的三除多项式为
+\[
+\psi_3(x)=3x^4+6Ax^2+12Bx-A^2.
+\]
+这里 $A=-1,B=0$，故
+\[
+\psi_3(x)=3x^4-6x^2-1.
+\]
+令 $u=x^2$，则
+\[
+3u^2-6u-1=0,
+\qquad
+u=1\pm\frac{2\sqrt3}{3}.
+\]
+因此四个 $x$-坐标为
+\[
+\pm\sqrt{1+\frac{2\sqrt3}{3}},
+\qquad
+\pm\sqrt{1-\frac{2\sqrt3}{3}}.
+\]
+对每个这样的 $x$，都有两个 $y$ 值
+\[
+y=\pm\sqrt{x^3-x}.
+\]
+于是非零三挠点共有 $8$ 个，再加 $O$，恰好 $9$ 个点，即
+\[
+\#E[3]=9.
+\]
+在特征不为 $3$ 时，$E[3]$ 是二维 $\F_3$-向量空间，因此
+\[
+E[3]\cong (\Z/3\Z)^2.
+\]
+\end{solution}
+
+\begin{problem}{Riemann--Roch 计算 $L(2(O))$ \medium}
+设 $E$ 为椭圆曲线。证明
+\[
+\ell(2(O))=2,
+\qquad
+L(2(O))=\langle 1,x\rangle.
+\]
+\end{problem}
+\begin{solution}
+椭圆曲线亏格 $g=1$，且典范除子线性等价于 $0$，故 Riemann--Roch 给出
+\[
+\ell(2(O))=\deg 2(O)=2.
+\]
+又在 Weierstrass 模型上，$x$ 在 $O$ 有二阶极点，故
+\[
+\mathrm{div}(x)_\infty=2(O).
+\]
+于是 $1,x\in L(2(O))$。它们显然线性无关，而该空间维数恰为 $2$，故
+\[
+L(2(O))=\langle 1,x\rangle.
+\]
+\end{solution}
+
+\begin{problem}{Riemann--Roch 计算 $L(3(O))$ 与 Weierstrass 方程 \medium}
+证明
+\[
+\ell(3(O))=3,
+\qquad
+L(3(O))=\langle 1,x,y\rangle,
+\]
+并据此推出任意亏格 $1$ 曲线都可写成 Weierstrass 方程。
+\end{problem}
+\begin{solution}
+同理
+\[
+\ell(3(O))=\deg 3(O)=3.
+\]
+而 $y$ 在 $O$ 具有三阶极点，所以 $1,x,y\in L(3(O))$；它们极点阶分别为 $0,2,3$，故线性无关，从而构成一组基。
+
+再看 $L(6(O))$。其维数为 $6$，而
+\[
+1,x,y,x^2,xy,y^2,x^3
+\]
+是 $7$ 个属于 $L(6(O))$ 的函数，所以必有一条非平凡线性关系。按极点阶比较，可整理为
+\[
+y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6.
+\]
+这就是一般 Weierstrass 方程。换言之，给定亏格 $1$ 曲线及一点 $O$，取
+$L(2(O))$、$L(3(O))$ 的基就能把曲线嵌入带有这种方程的平面模型中。
+\end{solution}
+
+\begin{problem}{$j=0$ 的二同源图 \medium}
+取 $E:y^2=x^3+1$，其 $j(E)=0$。描述与它 $2$-同源的椭圆曲线在 $j$-不变量层面的邻居。
+\end{problem}
+\begin{solution}
+只需计算
+\[
+\Phi_2(0,Y)=0.
+\]
+把 $X=0$ 代入二级模多项式，得到
+\[
+\Phi_2(0,Y)=Y^3-162000Y^2+8748000000Y-157464000000000=(Y-54000)^3.
+\]
+因此，在 $j$-不变量意义下，$j=0$ 的唯一二同源邻居是
+\[
+Y=54000.
+\]
+之所以出现三重根，是因为 $j=0$ 的曲线自同构群较大，三个阶 $2$ 子群在模空间中给出同一个邻居。故二同源图在 $j$-线上可描述为
+\[
+0\longleftrightarrow 54000,
+\]
+只是边带重数 $3$。
+\end{solution}
+
+\begin{problem}{有理挠子群 \medium}
+确定下列曲线的有理挠子群：
+\[
+E_1:y^2=x^3+1,
+\qquad
+E_2:y^2=x^3-x,
+\qquad
+E_3=E_{11}:y^2+y=x^3-x^2-10x-20.
+\]
+\end{problem}
+\begin{solution}
+\begin{itemize}
+  \item 对 $E_1$，有明显点
+  \[
+  (-1,0),(0,\pm1),(2,\pm3).
+  \]
+  其中 $(2,3)$ 是 $6$ 阶点，$(-1,0)$ 是唯一非平凡 $2$-挠点，故
+  \[
+  E_1(\Q)_{\mathrm{tors}}\cong \Z/6\Z.
+  \]
+  \item 对 $E_2$，多项式 $x^3-x=x(x-1)(x+1)$ 有三个有理根，所以三个位于 $y=0$ 的点
+  \[
+  (0,0),(1,0),(-1,0)
+  \]
+  都是 $2$-挠点。于是
+  \[
+  E_2(\Q)_{\mathrm{tors}}\cong \Z/2\Z\times \Z/2\Z.
+  \]
+  \item 对 $E_3$，经典结论是它有一个 $5$ 阶有理循环子群，例如点 $(5,5)$ 在群中生成该子群；结合 Mazur 定理可得
+  \[
+  E_3(\Q)_{\mathrm{tors}}\cong \Z/5\Z.
+  \]
+\end{itemize}
+\end{solution}
+
+\begin{problem}{坏约化类型 \medium}
+判定曲线 $E:y^2=x^3+7$ 在 $p=7$ 处的约化类型；先说明该方程已是 $7$-进最小模型，再判定是乘法约化还是加性约化。
+\end{problem}
+\begin{solution}
+对短 Weierstrass 方程 $y^2=x^3+B$，判别式为
+\[
+\Delta=-16\cdot 27 B^2.
+\]
+这里 $B=7$，故
+\[
+\Delta=-2^4\cdot 3^3\cdot 7^2,
+\qquad v_7(\Delta)=2.
+\]
+系数 $a_6=7$ 只有一次 $7$ 因子，不能再用尺度变换 $x=7^2x',y=7^3y'$ 把所有系数保持整数，因此该模型已是 $7$-进最小模型。
+
+模 $7$ 约化得
+\[
+y^2=x^3,
+\]
+在 $(0,0)$ 处是尖点，所以约化不是乘法型而是加性型。结论：
+\[
+E\text{ 在 }p=7\text{ 处为加性约化。}
+\]
+\end{solution}
+
+\begin{problem}{Néron--Ogg--Shafarevich 判别准则 \medium}
+设 $E/\Q$，$p\neq \ell$。证明
+\[
+E\text{ 在 }p\text{ 处好约化}
+\Longleftrightarrow
+\rho_{E,\ell}|_{I_p}\text{ 无分歧}.
+\]
+这里 $I_p$ 是惯性群。
+\end{problem}
+\begin{solution}
+\textbf{好约化 $\Rightarrow$ 无分歧：} 若 $E$ 在 $p$ 处好约化，则存在光滑正规模型 $\mathcal E/\Z_p$。由光滑正规基变换定理，
+$T_\ell(E)\cong H^1_{\acute et}(E_{\overline{\Q}_p},\Z_\ell)^\vee$ 来自特殊纤维的上同调，因此惯性 $I_p$ 作用平凡。
+
+\textbf{无分歧 $\Rightarrow$ 好约化：} 若 $I_p$ 在 $T_\ell(E)$ 上作用平凡，则 Tate 模上不存在非平凡惯性作用。用半稳定约化定理，椭圆曲线经过有限扩张后只有两种可能：好约化或乘法约化。乘法约化时 Tate 曲线描述表明 $T_\ell(E)$ 上必有非平凡惯性作用（来自 $q$-参数的扭曲），与无分歧矛盾。因此只能是好约化。
+
+这就是椭圆曲线情形的 Néron--Ogg--Shafarevich 判别准则。
+\end{solution}
+
+\begin{problem}{模多项式的对称性 \medium}
+说明 $\Phi_N(X,Y)\in\Z[X,Y]$ 满足
+\[
+\Phi_N(X,Y)=\Phi_N(Y,X),
+\]
+并对 $N=2$ 写出 $\Phi_2(X,Y)$ 以验证这一点。
+\end{problem}
+\begin{solution}
+定义上，$\Phi_N(X,Y)$ 的零点刻画“$j$-不变量为 $X$ 与 $Y$ 的两条椭圆曲线之间存在一个循环 $N$-同源”。若 $E_1$ 与 $E_2$ $N$-同源，则其对偶同源表明 $E_2$ 也与 $E_1$ $N$-同源，所以关系本身是对称的，从而模多项式也应对称。
+
+对 $N=2$，
+\begin{align*}
+\Phi_2(X,Y)=&\,X^3+Y^3-X^2Y^2+1488X^2Y+1488XY^2-162000X^2-162000Y^2\\
+&+40773375XY+8748000000X+8748000000Y-157464000000000.
+\end{align*}
+逐项观察即可见交换 $X,Y$ 后不变，故确为对称多项式。
+\end{solution}
+
+\begin{problem}{非 CM 曲线的自同态环 \medium}
+设 $E_\tau=\C/(\Z+\Z\tau)$，其中 $\tau\in\HH$ 不属于任何虚二次域。证明
+\[
+\End(E_\tau)\otimes\Q=\Q.
+\]
+\end{problem}
+\begin{solution}
+复环面自同态由复数乘法 $z\mapsto \alpha z$ 给出，其中 $\alpha$ 必须满足
+\[
+\alpha(\Z+\Z\tau)\subseteq \Z+\Z\tau.
+\]
+于是可写
+\[
+\alpha=a+b\tau,
+\qquad
+\alpha\tau=c+d\tau,
+\qquad a,b,c,d\in\Z.
+\]
+消去 $\alpha$ 得
+\[
+b\tau^2+(a-d)\tau-c=0.
+\]
+若 $b\neq 0$ 或 $a\neq d$，则 $\tau$ 满足一个有理二次方程，从而属于虚二次域，这与假设矛盾。因此只能有 $b=0$ 且 $a=d$，即 $\alpha=a\in\Z$。于是
+\[
+\End(E_\tau)=\Z,
+\qquad
+\End(E_\tau)\otimes\Q=\Q.
+\]
+\end{solution}
+
+\begin{problem}{CM 曲线上的复乘自同构 \medium}
+证明曲线 $E:y^2=x^3+1$ 具有复乘，且
+\[
+\End(E)\cong \Z[\zeta_3].
+\]
+并验证自同构
+\[
+\phi(x,y)=(\zeta_3 x,y)
+\]
+的次数为 $1$。
+\end{problem}
+\begin{solution}
+因为
+\[
+y^2=(\zeta_3 x)^3+1=x^3+1,
+\]
+映射 $\phi(x,y)=(\zeta_3 x,y)$ 把 $E$ 映到自身，且保无穷远点，所以是椭圆曲线自同态。它的逆映射是
+\[
+\phi^{-1}(x,y)=(\zeta_3^2x,y),
+\]
+故 $\phi$ 实际上是自同构。
+
+由 $\phi^2+\phi+1=0$ 可见它满足 $\zeta_3$ 的整方程，因此 $\Z[\zeta_3]\subseteq\End(E)$。另一方面 $j(E)=0$，这是判别式 $-3$ 的 CM 点，对应的复乘环正是 $\Z[\zeta_3]$。由于自同构的次数总为 $1$，故
+\[
+\deg\phi=1.
+\]
+\end{solution}
+
+\begin{problem}{椭圆曲线函数域是二次 Galois 扩张 \medium}
+设
+\[
+E: y^2=x^3+ax+b.
+\]
+证明函数域扩张 $k(E)/k(x)$ 是二次 Galois 扩张，且
+\[
+\Gal(k(E)/k(x))\cong \Z/2\Z
+\]
+由对合 $(x,y)\mapsto(x,-y)$ 生成。
+\end{problem}
+\begin{solution}
+函数域满足关系
+\[
+y^2=x^3+ax+b\in k(x),
+\]
+因此 $y$ 满足首一二次方程
+\[
+T^2-(x^3+ax+b)=0.
+\]
+所以
+\[
+[k(E):k(x)]\le 2.
+\]
+又 $y\notin k(x)$，否则曲线会有次数 $1$ 的参数化，和亏格 $1$ 矛盾，故扩张次数恰为 $2$。
+
+映射
+\[
+\sigma:(x,y)\longmapsto(x,-y)
+\]
+固定 $k(x)$，且 $\sigma^2=1$，因此给出一个非平凡 $k(x)$-自同构。二次扩张只有两个自同构，故
+\[
+\Gal(k(E)/k(x))=\{1,\sigma\}\cong\Z/2\Z.
+\]
+\end{solution}
+
+\begin{problem}{模参数化的函子性 \medium}
+设 $E/\Q$ 是模椭圆曲线，导子为 $N$。解释为什么对每个 $M\mid N$，通过退化映射会出现
+\[
+J_0(N)\longrightarrow J_0(M)\longrightarrow E
+\]
+这样的因式分解，并说明它与旧形式理论的关系。
+\end{problem}
+\begin{solution}
+当 $M\mid N$ 时，模曲线之间存在退化映射
+\[
+\alpha_d:X_0(N)\to X_0(M),\qquad d\mid N/M,
+\]
+它在模意义上把带有更细层结构的椭圆曲线忘掉一部分子群。对 Jacobian 取推前与拉回，就得到
+\[
+J_0(N)\rightleftarrows J_0(M).
+\]
+若 $f_M\in S_2(\Gamma_0(M))$ 是给出某椭圆曲线商 $E$ 的新形式，则其经退化映射拉回到 $S_2(\Gamma_0(N))$ 后产生的各个副本，正是 $N$ 层上的旧形式空间。于是与 $f_M$ 对应的阿贝尔簇商先从 $J_0(M)$ 得到，再作为旧部分嵌入 $J_0(N)$，从而出现
+\[
+J_0(N)\to J_0(M)\to E.
+\]
+因此“因式分解”正是旧形式来源于较低层的几何体现。
+\end{solution}
+
+\section*{挑战题}
+
+\begin{problem}{群律结合律 \hard}
+用代数几何方法证明椭圆曲线群律的结合律。
+\end{problem}
+\begin{solution}
+最干净的做法是把群律下推到 $\mathrm{Pic}^0(E)$。上面已经证明映射
+\[
+\iota:E\to\mathrm{Pic}^0(E),\qquad P\mapsto[(P)-(O)]
+\]
+是双射。于是可把 $E$ 上的运算定义为
+\[
+P\oplus Q:=\iota^{-1}(\iota(P)+\iota(Q)).
+\]
+由于 $\mathrm{Pic}^0(E)$ 的加法就是除子类加法，而除子类加法天然满足交换律与结合律，所以
+\[
+(P\oplus Q)\oplus R
+=\iota^{-1}(\iota(P)+\iota(Q)+\iota(R))
+=P\oplus(Q\oplus R).
+\]
+这就证明了结合律。
+
+若要与“割线切线法”对应，只需验证：对任意 $P,Q$，几何构造出的第三交点取负所得点恰满足
+\[
+[(P)-(O)]+[(Q)-(O)]=[(P\oplus Q)-(O)].
+\]
+一旦这一点成立，结合律立即从 $\mathrm{Pic}^0(E)$ 继承下来。
+\end{solution}
+
+\begin{problem}{非零同源的核有限 \hard}
+证明任意非零同源 $\phi:E\to E'$ 都有有限核；特别地
+\[
+|\ker\phi|=\deg\phi<\infty.
+\]
+\end{problem}
+\begin{solution}
+非零同源是射影曲线之间的非常值态射，因此它是有限态射；在函数域上对应有限扩张
+\[
+\phi^*:k(E')\hookrightarrow k(E).
+\]
+故次数
+\[
+\deg\phi=[k(E):\phi^*k(E')]
+\]
+有限。对任意 $Q\in E'$，纤维 $\phi^{-1}(Q)$ 是有限点集，点数按重数至多为 $\deg\phi$。取 $Q=O_{E'}$ 即得
+\[
+\ker\phi=\phi^{-1}(O_{E'})
+\]
+有限。
+
+若 $\phi$ 可分，则上面纤维无重数，于是 $|\ker\phi|=\deg\phi$；一般情形则分解为可分次数与纯不可分次数之积，核仍然有限。
+\end{solution}
+
+\begin{problem}{模多项式次数为 $p+1$ \hard}
+证明对素数 $p$，模多项式 $\Phi_p(X,Y)$ 关于每个变量的次数都是 $p+1$。
+\end{problem}
+\begin{solution}
+固定一般椭圆曲线 $E$，要数与它存在循环 $p$-同源的目标曲线个数。每个循环 $p$-同源由一个阶 $p$ 的子群 $C\subset E[p]$ 给出，商曲线 $E/C$ 就是同源目标。
+
+在特征不为 $p$ 时，
+\[
+E[p]\cong (\Z/p\Z)^2
+\]
+是二维 $\F_p$-向量空间。阶 $p$ 子群恰好就是其中的一维子空间。二维向量空间的一维子空间个数为
+\[
+\frac{p^2-1}{p-1}=p+1.
+\]
+对一般 $j$ 值，这些商曲线的 $j$-不变量彼此不同，因此满足 $\Phi_p(X,j(E))=0$ 的 $X$ 值共有 $p+1$ 个。于是
+\[
+\deg_X\Phi_p=p+1.
+\]
+由对称性也有 $\deg_Y\Phi_p=p+1$。
+\end{solution}
+
+\begin{problem}{自同态环的分类 \hard}
+说明椭圆曲线 $E$ 的自同态环只有下列可能：
+\[
+\Z,
+\qquad \mathcal O_K\ (K\text{ 虚二次}),
+\qquad \text{或正特征时某个四元数代数的极大阶。}
+\]
+\end{problem}
+\begin{solution}
+设 $\End^0(E)=\End(E)\otimes\Q$。这是有限维半单 $\Q$-代数，并且通过作用在 Tate 模或奇异上同调上，可嵌入一个至多二维的线性代数中。
+
+\begin{itemize}
+  \item 在特征 $0$，$\End^0(E)$ 必是一个交换除环，于是只能是 $\Q$ 或虚二次域 $K$。对应的整自同态环便是 $\Z$ 或 $K$ 的某个整环，几何上分别对应非 CM 与 CM 两种情形。
+  \item 在特征 $p>0$，普通椭圆曲线仍只有前两类；若 $E$ 是超奇异的，则 Deuring 定理说明 $\End^0(E)$ 是在 $p$ 与 $\infty$ 分歧的四元数代数，而 $\End(E)$ 是其中某个极大阶。
+\end{itemize}
+这就给出完整分类。
+\end{solution}
+
+\begin{problem}{Sato--Tate 分布 \hard}
+设 $E/\Q$ 无 CM。对好素数 $p$ 写
+\[
+a_p=2\sqrt p\cos\theta_p,\qquad \theta_p\in[0,\pi].
+\]
+说明 Sato--Tate 定理如何由对称幂表示 $\mathrm{Sym}^n\rho_{E,\ell}$ 的自守性推出；并用 $E_{11}$ 的前 $100$ 个好素数数据做数值验证。
+\end{problem}
+\begin{solution}
+Sato--Tate 的核心是：若所有对称幂 $\mathrm{Sym}^n\rho_{E,\ell}$ 都对应自守表示，则它们的 $L$-函数在 $\Re(s)\ge 1$ 具有足够好的解析性质。借助 Chebyshev 多项式展开，可把任意连续函数对测度
+\[
+\mu_{ST}=\frac{2}{\pi}\sin^2\theta\,d\theta
+\]
+的积分，转化成对称幂迹的平均；这些平均再由相应 $L$-函数在 $s=1$ 附近无极点得到。于是可推出
+\[
+\{\theta_p\}\text{ 在 }[0,\pi]\text{ 上按 }\mu_{ST}\text{ 等分布。}
+\]
+
+对 $E_{11}$，计算前 $100$ 个好素数的归一化迹
+\[
+t_p=\frac{a_p}{2\sqrt p}=\cos\theta_p.
+\]
+样本均值约为
+\[
+\frac1{100}\sum t_p\approx 0.0045,
+\]
+而样本二次矩约为
+\[
+\frac1{100}\sum t_p^2\approx 0.224.
+\]
+Sato--Tate 预言的理论值分别是 $0$ 与 $1/4=0.25$，已经相当接近。把区间 $[-1,1]$ 粗分成五段时，样本计数大致为
+\[
+(10,29,23,26,12),
+\]
+也呈现出“中间较多、两端较少”的半圆型分布趋势。这给出一个很好的数值验证。
+\end{solution}

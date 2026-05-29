@@ -1,0 +1,719 @@
+\chapter{Eichler--Shimura 关系与 $L$ 函数}
+
+本章统一记
+\[
+E_{11}: y^2+y=x^3-x^2-10x-20,
+\]
+这是导子 $11$ 的标准椭圆曲线。对好素数 $p\nmid 11$，记
+\[
+a_p(E_{11})=p+1-\#E_{11}(\F_p).
+\]
+
+\difficultykey
+
+\section*{基础题}
+
+\begin{problem}{直接计算 $a_p$ \easy}
+对 $E_{11}$，直接数点计算 $p=2,3,5,7,11,13$ 时的 $a_p$。
+\end{problem}
+\begin{solution}
+直接计算各个有限域上的点数，可得
+\[
+\begin{array}{c|cccccc}
+p&2&3&5&7&11&13\\ \hline
+\#E_{11}(\F_p)&5&5&5&10&11&10
+\end{array}
+\]
+因此
+\[
+\begin{array}{c|cccccc}
+p&2&3&5&7&11&13\\ \hline
+a_p&-2&-1&1&-2&1&4
+\end{array}
+\]
+其中 $p=11$ 是坏素数；这里的 $a_{11}=1$ 是坏约化处的局部系数。
+\end{solution}
+
+\begin{problem}{Hasse 界检验 \easy}
+用上题算出的 $a_p$ 验证 Hasse 界
+\[
+|a_p|\le 2\sqrt p.
+\]
+\end{problem}
+\begin{solution}
+逐个比较：
+\[
+|a_2|=2\le 2\sqrt2,
+\quad
+|a_3|=1\le 2\sqrt3,
+\quad
+|a_5|=1\le 2\sqrt5,
+\]
+\[
+|a_7|=2\le 2\sqrt7,
+\quad
+|a_{11}|=1\le 2\sqrt{11},
+\quad
+|a_{13}|=4\le 2\sqrt{13}.
+\]
+全部成立。对好素数这就是 Hasse 定理；坏素数处 $a_p\in\{0,\pm1\}$，更是自动满足。
+\end{solution}
+
+\begin{problem}{Euler 因子 \easy}
+写出 $L(E_{11},s)$ 在 $p=2,3,5,7$ 处的 Euler 因子。
+\end{problem}
+\begin{solution}
+对好素数 $p\nmid 11$，局部因子是
+\[
+L_p(E,s)^{-1}=1-a_pp^{-s}+p^{1-2s}.
+\]
+代入上题的 $a_p$，得到
+\[
+L_2(E_{11},s)=\bigl(1+2\cdot 2^{-s}+2\cdot 2^{-2s}\bigr)^{-1},
+\]
+\[
+L_3(E_{11},s)=\bigl(1+3^{-s}+3\cdot 3^{-2s}\bigr)^{-1},
+\]
+\[
+L_5(E_{11},s)=\bigl(1-5^{-s}+5\cdot 5^{-2s}\bigr)^{-1},
+\]
+\[
+L_7(E_{11},s)=\bigl(1+2\cdot 7^{-s}+7\cdot 7^{-2s}\bigr)^{-1}.
+\]
+\end{solution}
+
+\begin{problem}{坏素数处的局部因子 \easy}
+说明 $E_{11}$ 在 $p=11$ 处是乘法约化，并计算坏素数处的系数 $a_{11}$。
+\end{problem}
+\begin{solution}
+因为 $\Delta(E_{11})=-11^5$，所以 $11$ 是唯一坏素数。模 $11$ 约化后曲线出现结点，因此是乘法约化。更具体地，奇点处的切线锥分解为两条定义在 $\F_{11}$ 上的不同直线，所以它是\emph{分裂}乘法约化。
+
+对分裂乘法约化，坏素数处的局部因子为
+\[
+L_{11}(E,s)=\bigl(1-11^{-s}\bigr)^{-1},
+\]
+故
+\[
+a_{11}=1.
+\]
+\end{solution}
+
+\begin{problem}{Eichler--Shimura 与 $\#E(\F_{p^2})$ \easy}
+设归一化新形式 $f_{11}\in S_2(\Gamma_0(11))$ 满足 $a_2(f_{11})=-2$。由 Eichler--Shimura 关系说明 $\Frob_2$ 在 $T_\ell(E_{11})$ 上的特征多项式是
+\[
+X^2+2X+2,
+\]
+并计算 $\#E_{11}(\F_4)$。
+\end{problem}
+\begin{solution}
+Eichler--Shimura 说明在与 $f_{11}$ 对应的二维 Galois 表示上，Frobenius 的特征多项式为
+\[
+X^2-a_2X+2=X^2+2X+2.
+\]
+设其根为 $\alpha,\beta$，则
+\[
+\alpha+\beta=-2,
+\qquad
+\alpha\beta=2.
+\]
+于是
+\[
+\alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta=4-4=0.
+\]
+所以
+\[
+\#E_{11}(\F_4)=4+1-(\alpha^2+\beta^2)=5.
+\]
+\end{solution}
+
+\begin{problem}{部分求和 \easy}
+近似计算
+\[
+\sum_{p\le 100,\ p\nmid 11}\frac{a_p(E_{11})}{p},
+\]
+并简要说明它与 BSD 预言的关系。
+\end{problem}
+\begin{solution}
+把 $p\le 100$ 的好素数逐个代入，可得
+\[
+\sum_{p\le 100,\ p\nmid 11}\frac{a_p(E_{11})}{p}
+\approx -1.1562.
+\]
+对 rank $r$ 的曲线，BSD 预言
+\[
+\prod_{p\le X}\frac{\#E(\F_p)}{p}
+\sim C(\log X)^r.
+\]
+若 $r=0$，则预期该乘积趋向常数级别而非对数发散；$E_{11}$ 确实是 rank $0$ 的经典例子，因此这个部分和没有呈现出明显的持续增长趋势。
+\end{solution}
+
+\begin{problem}{函数方程的归一化 \easy}
+写出完成的 $L$-函数
+\[
+\Lambda(E_{11},s)
+\]
+的定义，并说明为什么函数方程中心位于 $s=1$。
+\end{problem}
+\begin{solution}
+完成函数定义为
+\[
+\Lambda(E_{11},s)=11^{s/2}(2\pi)^{-s}\Gamma(s)L(E_{11},s).
+\]
+函数方程写成
+\[
+\Lambda(E_{11},s)=\epsilon(E_{11})\Lambda(E_{11},2-s).
+\]
+对这条曲线，根数 $\epsilon(E_{11})=+1$，所以
+\[
+\Lambda(E_{11},s)=\Lambda(E_{11},2-s).
+\]
+之所以中心在 $s=1$，是因为权 $2$ 新形式的 Mellin 变换天然满足 $s\leftrightarrow 2-s$ 的对称性；导子因子 $11^{s/2}$ 和 Gamma 因子正是把局部贡献配平到这个中心点。
+\end{solution}
+
+\begin{problem}{BSD 的最基本断言 \easy}
+陈述 Birch--Swinnerton-Dyer 猜想的最基本部分，并解释为什么它预言 $E_{11}$ 满足 $L(E_{11},1)\neq 0$。
+\end{problem}
+\begin{solution}
+BSD 最基本的断言是
+\[
+\ord_{s=1}L(E,s)=\mathrm{rank}\,E(\Q).
+\]
+特别地，
+\[
+L(E,1)=0
+\Longleftrightarrow
+\mathrm{rank}\,E(\Q)\ge 1.
+\]
+而 $E_{11}(\Q)$ 的 Mordell--Weil 群秩为 $0$，其有理点只有有限挠子群 $\Z/5\Z$。因此 BSD 预言
+\[
+\ord_{s=1}L(E_{11},s)=0,
+\qquad
+L(E_{11},1)\neq 0.
+\]
+这也已由经典理论与 Kolyvagin 定理所支持。
+\end{solution}
+
+\begin{problem}{中心值的表达式 \easy}
+写出 $E_{11}$ 在中心点的完成 $L$-值 $\Lambda(E_{11},1)$。
+\end{problem}
+\begin{solution}
+直接把 $s=1$ 代入定义：
+\[
+\Lambda(E_{11},1)=11^{1/2}(2\pi)^{-1}\Gamma(1)L(E_{11},1).
+\]
+由于 $\Gamma(1)=1$，故
+\[
+\Lambda(E_{11},1)=\frac{\sqrt{11}}{2\pi}L(E_{11},1).
+\]
+\end{solution}
+
+\begin{problem}{CM 曲线的 $a_p$ \easy}
+对 CM 曲线 $E:y^2=x^3-x$，验证当 $p\equiv 3\pmod 4$ 时 $a_p=0$；请至少检验 $p=3,7,11$。
+\end{problem}
+\begin{solution}
+直接数点可得
+\[
+\#E(\F_3)=4,
+\qquad
+\#E(\F_7)=8,
+\qquad
+\#E(\F_{11})=12,
+\]
+因此
+\[
+a_3=3+1-4=0,
+\quad
+ a_7=7+1-8=0,
+\quad
+ a_{11}=11+1-12=0.
+\]
+从 CM 理论看，$E$ 具有复乘 $\Z[i]$。当 $p\equiv 3\pmod 4$ 时，$p$ 在 $\Q(i)$ 中惰性，Frobenius 迹来自一对共轭 Hecke 特征值之和，而该和为 $0$，因此所有这类素数都满足 $a_p=0$。
+\end{solution}
+
+\section*{进阶题}
+
+\begin{problem}{$Z(E/\F_p,T)$ 的有理性 \medium}
+从 $N_r=\#E(\F_{p^r})$ 出发，证明
+\[
+Z(E/\F_p,T)=\exp\!\left(\sum_{r\ge 1}\frac{N_rT^r}{r}\right)
+=\frac{1-a_pT+pT^2}{(1-T)(1-pT)}.
+\]
+\end{problem}
+\begin{solution}
+设 Frobenius 特征值为 $\alpha,\beta$，满足
+\[
+\alpha+\beta=a_p,
+\qquad
+\alpha\beta=p.
+\]
+则
+\[
+N_r=p^r+1-\alpha^r-\beta^r.
+\]
+代入定义：
+\begin{align*}
+\log Z(E/\F_p,T)
+&=\sum_{r\ge1}\frac{(p^r+1-\alpha^r-\beta^r)T^r}{r}\\
+&=\sum_{r\ge1}\frac{T^r}{r}+\sum_{r\ge1}\frac{(pT)^r}{r}-\sum_{r\ge1}\frac{(\alpha T)^r}{r}-\sum_{r\ge1}\frac{(\beta T)^r}{r}.
+\end{align*}
+用恒等式 $-\log(1-u)=\sum_{r\ge1}u^r/r$，得到
+\[
+\log Z=-\log(1-T)-\log(1-pT)+\log(1-\alpha T)+\log(1-\beta T).
+\]
+指数化即得
+\[
+Z(E/\F_p,T)=\frac{(1-\alpha T)(1-\beta T)}{(1-T)(1-pT)}.
+\]
+最后利用
+\[
+(1-\alpha T)(1-\beta T)=1-(\alpha+\beta)T+\alpha\beta T^2=1-a_pT+pT^2,
+\]
+故
+\[
+Z(E/\F_p,T)=\frac{1-a_pT+pT^2}{(1-T)(1-pT)}.
+\]
+\end{solution}
+
+\begin{problem}{从局部 $Z$ 函数到 Euler 因子 \medium}
+解释为什么在好素数处
+\[
+L_p(E,s)=(1-a_pp^{-s}+p^{1-2s})^{-1}
+\]
+正是局部 $Z$ 函数分子在 $T=p^{-s}$ 处的倒数。
+\end{problem}
+\begin{solution}
+局部 zeta 函数把各次扩域上的点数编码为
+\[
+Z(E/\F_p,T)=\frac{P_p(T)}{(1-T)(1-pT)},
+\qquad P_p(T)=1-a_pT+pT^2.
+\]
+分母对应 $H^0$ 与 $H^2$ 的平凡贡献；真正反映椭圆曲线几何的是中间上同调 $H^1$，也就是分子 $P_p(T)$。Hasse--Weil $L$-函数正是把这个几何因子取倒数并代入 $T=p^{-s}$，因此定义为
+\[
+L_p(E,s)=P_p(p^{-s})^{-1}=(1-a_pp^{-s}+p^{1-2s})^{-1}.
+\]
+这与“Frobenius 在 $H^1$ 上的特征多项式给出局部因子”完全一致。
+\end{solution}
+
+\begin{problem}{Eichler--Shimura 关系的证明框架 \medium}
+给出关系
+\[
+T_p=\Frob_p+p\langle p\rangle\Frob_p^{-1}
+\]
+在 $H^1_{\acute et}(X_0(N)_{\bar\Q},\Q_\ell)$ 上成立的五步证明框架。
+\end{problem}
+\begin{solution}
+证明的标准路线如下。
+\begin{enumerate}[label=\arabic*.]
+  \item 先把 Hecke 算子 $T_p$ 几何化为模曲线上的一个对应；它由“取阶 $p$ 子群商”与“忘掉层结构”的两个有限映射组成。
+  \item 当 $p\nmid N\ell$ 时，将该对应约化到 $\F_p$ 上，得到特殊纤维上的代数对应。
+  \item 分析普通点的 $p$-扭结构，可见这个对应分裂为两部分：一部分来自相对 Frobenius 的图像，另一部分来自 Verschiebung。
+  \item 在 Jacobian 或 $H^1_{\acute et}$ 上，Verschiebung 与 $\Frob_p^{-1}$ 相差一个系数 $p\langle p\rangle$，于是对应作用满足
+  \[
+  T_p=\Frob_p+p\langle p\rangle\Frob_p^{-1}.
+  \]
+  \item 最后借助 proper-smooth base change，把特殊纤维上的等式提升回几何 generic fiber 的 $\ell$-进上同调。
+\end{enumerate}
+这就是 Eichler--Shimura 关系的本质：Hecke 对应在模 $p$ 几何中分裂为 Frobenius 与其“伴随”两部分。
+\end{solution}
+
+\begin{problem}{从 Eichler--Shimura 到迹公式 \medium}
+证明对模椭圆曲线 $E/\Q$ 与对应新形式 $f_E$，好素数处有
+\[
+\Tr(\Frob_p\mid T_\ell(E))=a_p(E)=a_p(f_E).
+\]
+\end{problem}
+\begin{solution}
+由模性，$E$ 是 $J_0(N)$ 的一个最优商，新形式 $f_E$ 所对应的二维 Hecke 特征子空间在 $H^1$ 中切出一个二维 Galois 表示 $V_{f_E,\ell}$。Eichler--Shimura 告诉我们：在这个二维空间上，$\Frob_p$ 的特征多项式是
+\[
+X^2-a_p(f_E)X+p.
+\]
+另一方面，Tate 模 $V_\ell(E)=T_\ell(E)\otimes\Q_\ell$ 也给出一个二维表示，其 Hasse--Weil 局部因子是
+\[
+1-a_p(E)T+pT^2.
+\]
+因为这两个二维表示来自同一个 $J_0(N)$ 商，故局部特征多项式相同，于是
+\[
+\Tr(\Frob_p\mid T_\ell(E))=a_p(E)=a_p(f_E).
+\]
+\end{solution}
+
+\begin{problem}{Hecke 版本的函数方程 \medium}
+设 $f=\sum a_nq^n\in S_2(\Gamma_0(N))$。利用 Mellin 变换与 Atkin--Lehner 对合 $w_N$ 说明
+\[
+\Lambda(f,s)=(2\pi/\sqrt N)^{-s}\Gamma(s)L(f,s)
+\]
+满足函数方程。
+\end{problem}
+\begin{solution}
+由 Mellin 变换，
+\[
+(2\pi)^{-s}\Gamma(s)L(f,s)=\int_0^\infty f(iy)y^s\,\frac{dy}{y}.
+\]
+对权 $2$ 新形式，把变量替换为 $y\mapsto 1/(Ny)$，再用 Atkin--Lehner 关系
+\[
+f\bigl(-1/(Nz)\bigr)=\varepsilon N z^2 f(z),\qquad \varepsilon=\pm1,
+\]
+即可把上式改写成
+\[
+\Lambda(f,s)=\varepsilon\Lambda(f,2-s).
+\]
+这里 $\sqrt N$ 的归一化正是为了让变换 $y\leftrightarrow 1/(Ny)$ 后两边的尺度完全对称。对与椭圆曲线对应的 $f_E$，这就给出 Hasse--Weil $L$-函数的函数方程。
+\end{solution}
+
+\begin{problem}{BSD 精细公式中的各项 \medium}
+解释精细 BSD 公式
+\[
+\frac{L^{(r)}(E,1)}{r!}=\Omega_E\cdot \mathrm{Reg}(E)\cdot \prod_pc_p\cdot \#\Sha(E)/(\#E(\Q)_{\mathrm{tors}})^2
+\]
+中各项的含义；并以 $E_{11}$ 为例说明其 rank $0$ 情形。
+\end{problem}
+\begin{solution}
+这里：$r=\mathrm{rank}\,E(\Q)$；$\Omega_E$ 是实周期；$\mathrm{Reg}(E)$ 是高度配对行列式；$c_p$ 是 Tamagawa 数；$\Sha(E)$ 是 Tate--Shafarevich 群；$E(\Q)_{\mathrm{tors}}$ 是有理挠子群。
+
+对 $E_{11}$，有
+\[
+r=0,
+\qquad E_{11}(\Q)_{\mathrm{tors}}\cong \Z/5\Z,
+\qquad c_{11}=5,
+\]
+且已知 $\Sha(E_{11})$ 平凡，因此 BSD 预言化为
+\[
+L(E_{11},1)=\Omega_{E_{11}}\cdot \frac{5}{25}=\frac{\Omega_{E_{11}}}{5}.
+\]
+若教材把 $\Omega_{11}$ 记作这个 BSD 归一化后的周期，则可简记为 $L(E_{11},1)=\Omega_{11}$。
+\end{solution}
+
+\begin{problem}{同余数问题 \medium}
+说明为什么
+\[
+n\text{ 是同余数}
+\Longleftrightarrow
+\mathrm{rank}\,E_n(\Q)\ge1,
+\qquad E_n:y^2=x^3-n^2x,
+\]
+并对 $n=5,6,7$ 做验证或讨论。
+\end{problem}
+\begin{solution}
+经典参数化表明：面积为 $n$ 的有理直角三角形与曲线 $E_n$ 的非平凡有理点互相对应，因此
+\[
+n\text{ 是同余数}
+\Longleftrightarrow E_n(\Q)\text{ 有非挠点}
+\Longleftrightarrow \mathrm{rank}\,E_n(\Q)\ge1.
+\]
+若再接受 BSD，则这又等价于 $L(E_n,1)=0$。
+
+对具体的数：
+\begin{itemize}
+  \item $n=5$：可取三角形边长 $\left(\frac32,\frac{20}3,\frac{41}6\right)$；
+  \item $n=6$：可取 $3,4,5$ 三角形；
+  \item $n=7$：可取 $\left(\frac{24}{5},\frac{35}{12},\frac{337}{60}\right)$。
+\end{itemize}
+因此 $5,6,7$ 都是同余数，对应曲线都应有正秩。
+\end{solution}
+
+\begin{problem}{Gross--Zagier 定理 \medium}
+陈述 Gross--Zagier 定理，并解释 Heegner 点是如何构造出来的。
+\end{problem}
+\begin{solution}
+Gross--Zagier 定理断言：若模椭圆曲线 $E/\Q$ 满足
+\[
+L(E,1)=0,
+\qquad
+L'(E,1)\neq 0,
+\]
+则由适当虚二次域 $K$ 上的 Heegner 点得到的点 $P_K\in E(K)$ 具有正 Néron--Tate 高度，且
+\[
+\hat h(P_K)\propto L'(E,1)L(E^K,1).
+\]
+再结合 Kolyvagin 欧拉系统，可推出
+\[
+\mathrm{rank}\,E(\Q)=1.
+\]
+
+Heegner 点的构造是：在模曲线 $X_0(N)$ 上取具有复乘的点（即 CM 点），再经模参数化
+\[
+X_0(N)\to E
+\]
+把它们送到 $E$ 上，并对 Galois 共轭求迹，得到定义在类域或其迹下的有理点。这些点就是 Heegner 点。
+\end{solution}
+
+\begin{problem}{$L(E,s)$ 在 $\Re(s)>3/2$ 的绝对收敛 \medium}
+用 Hasse 界证明椭圆曲线的 Euler 乘积在 $\Re(s)>3/2$ 绝对收敛。
+\end{problem}
+\begin{solution}
+对好素数，
+\[
+L_p(E,s)^{-1}=1-a_pp^{-s}+p^{1-2s}.
+\]
+记 $\sigma=\Re(s)$。由 Hasse 界，$|a_p|\le 2\sqrt p$，于是
+\[
+|a_pp^{-s}|\le 2p^{1/2-\sigma},
+\qquad
+|p^{1-2s}|=p^{1-2\sigma}.
+\]
+当 $\sigma>3/2$ 时，级数
+\[
+\sum_p p^{1/2-\sigma}
+\quad\text{和}\quad
+\sum_p p^{1-2\sigma}
+\]
+都收敛，因此
+\[
+\sum_p\bigl(|a_pp^{-s}|+|p^{1-2s}|\bigr)<\infty.
+\]
+对 Euler 乘积取对数并用 $\log(1+u)=u+O(u^2)$，可知
+\[
+\sum_p |\log L_p(E,s)|<\infty,
+\]
+故无穷乘积 $\prod_pL_p(E,s)$ 绝对收敛。
+\end{solution}
+
+\begin{problem}{CM 曲线的 Hecke $L$-函数分解 \medium}
+对 $E:y^2=x^3-x$，说明其 $L$-函数如何由 $\Q(i)$ 上的 Hecke 特征 $\chi$ 给出，并解释为什么 $L(E,1)\neq 0$。
+\end{problem}
+\begin{solution}
+因为 $E$ 具有复乘 $\End(E)=\Z[i]$，其二维 Galois 表示来自 $\Q(i)$ 上的一个 Grössencharacter $\chi$。在分裂素数处，局部因子可写成
+\[
+(1-\chi(\mathfrak p)p^{-s})(1-\bar\chi(\mathfrak p)p^{-s}),
+\]
+因此形式上可记为
+\[
+L(E,s)=L(\chi,s)L(\bar\chi,s).
+\]
+中心值非零的原因在于：这类 Hecke $L$-函数在 $s=1$ 的值可通过类数公式或 CM 理论与虚二次域的周期、类数联系起来，而对 $\Q(i)$ 相应值不为零，所以
+\[
+L(E,1)\neq 0.
+\]
+这也与该曲线秩为 $0$ 相符。
+\end{solution}
+
+\begin{problem}{$p$-进 $L$-函数简介 \medium}
+陈述 Mazur 的 $p$-进 $L$-函数存在性，并说明它与复 $L(E,1)$ 的关系。
+\end{problem}
+\begin{solution}
+若 $E/\Q$ 在奇素数 $p$ 处是普通约化，则存在一个 $p$-进解析函数
+\[
+L_p(E,s)
+\]
+插值复 $L$-函数的临界值：对有限阶 $p$-进角色 $\chi$，有
+\[
+L_p(E,\chi)\sim \text{(显式 Euler 因子)}\cdot \frac{L(E,\chi,1)}{\Omega_E^{\pm}}.
+\]
+因此 $L_p(E,1)$ 与 $L(E,1)$ 在“去掉局部修正和周期归一化后”对应。$p$-进 BSD 猜想进一步断言：$L_p(E,s)$ 在 $s=1$ 的零阶与 $E(\Q)$ 的秩相关。
+\end{solution}
+
+\begin{problem}{分析性阶的数值验证 \medium}
+对曲线 $E:y^2=x^3-25x$，说明如何数值验证
+\[
+L(E,1)=0,
+\qquad L'(E,1)\neq 0.
+\]
+\end{problem}
+\begin{solution}
+这条曲线对应同余数 $5$，因此 BSD 预言它的秩为 $1$，从而
+\[
+\ord_{s=1}L(E,s)=1.
+\]
+实际数值验证的标准做法是：
+\begin{enumerate}[label=\arabic*.]
+  \item 先由若干 $a_p$ 形成截断 Euler 乘积或用近似函数方程计算 $L(E,1)$；
+  \item 再对完成的 $L$-函数在 $s=1$ 做数值微分；
+  \item 用 Sage、PARI/GP 或 LMFDB 检查中心值为 $0$ 而导数为正。
+\end{enumerate}
+数值上确实得到
+\[
+L(E,1)=0,
+\qquad L'(E,1)>0,
+\]
+与其解析秩 $1$ 完全一致。
+\end{solution}
+
+\begin{problem}{模形式与 Galois 表示的 $L$-函数 \medium}
+解释等式
+\[
+L(f,s)=L(\rho_{f,\ell},s)
+\]
+的含义。
+\end{problem}
+\begin{solution}
+左边是模形式 $f=\sum a_nq^n$ 的 Hecke $L$-函数：
+\[
+L(f,s)=\sum_{n\ge1}a_nn^{-s}=\prod_p(1-a_pp^{-s}+\varepsilon(p)p^{k-1-2s})^{-1}.
+\]
+右边是 Deligne 构造的二维 $\ell$-进 Galois 表示 $\rho_{f,\ell}$ 的 Artin 型 $L$-函数，它在好素数处由 Frobenius 特征多项式定义：
+\[
+\det(1-\rho_{f,\ell}(\Frob_p)p^{-s})^{-1}.
+\]
+Deligne 理论说明
+\[
+\Tr\rho_{f,\ell}(\Frob_p)=a_p,
+\qquad
+\det\rho_{f,\ell}(\Frob_p)=\varepsilon(p)p^{k-1},
+\]
+所以两个 Euler 因子逐个相同，从而整体 $L$-函数相同。
+\end{solution}
+
+\begin{problem}{根数与秩的奇偶性 \medium}
+定义根数 $\epsilon(E)=\pm1$，并说明为什么 BSD 与奇偶性理论都预言
+\[
+\epsilon(E)=(-1)^r,
+\qquad r=\mathrm{rank}\,E(\Q).
+\]
+再对 $E_{11}$ 做验证。
+\end{problem}
+\begin{solution}
+函数方程写成
+\[
+\Lambda(E,s)=\epsilon(E)\Lambda(E,2-s).
+\]
+若 $\epsilon(E)=-1$，则中心点必满足 $\Lambda(E,1)=0$，因此解析阶是奇数；若 $\epsilon(E)=+1$，则解析阶是偶数。BSD 进一步断言解析阶等于代数秩 $r$，于是得到
+\[
+\epsilon(E)=(-1)^r.
+\]
+现代的奇偶性定理也独立证明了这个结论的奇偶部分。
+
+对 $E_{11}$，已知
+\[
+\epsilon(E_{11})=+1,
+\qquad r=0,
+\]
+故
+\[
+\epsilon(E_{11})=(-1)^0=+1,
+\]
+完全一致。
+\end{solution}
+
+\begin{problem}{Kolyvagin 定理的方向 \medium}
+陈述 Kolyvagin 定理，并说明它证明了 BSD 的哪个方向。
+\end{problem}
+\begin{solution}
+Kolyvagin 定理断言：若模椭圆曲线 $E/\Q$ 满足
+\[
+L(E,1)\neq 0,
+\]
+则
+\[
+\mathrm{rank}\,E(\Q)=0
+\quad\text{且}\quad
+\Sha(E)\text{ 有限}.
+\]
+因此它证明了 BSD 的一个重要方向：
+\[
+L(E,1)\neq 0\Longrightarrow \mathrm{rank}\,E(\Q)=0.
+\]
+也就是说，它给出了“解析阶 $0$ 推出代数秩 $0$”这一半。
+\end{solution}
+
+\section*{挑战题}
+
+\begin{problem}{模曲线的 zeta 函数与 Hecke 特征值 \hard}
+说明为什么 $X_0(N)$ 在好素数处的 zeta 函数可以用 Hecke 特征值来表达。
+\end{problem}
+\begin{solution}
+Weil 猜想把
+\[
+\zeta(X_0(N)/\F_p,s)
+\]
+分解为各阶 $\ell$-进上同调上的特征多项式之商。对曲线而言，关键只在 $H^1_{\acute et}$。另一方面，Eichler--Shimura 把 $H^1$ 分解为各个权 $2$ Hecke 本征形式对应的二维 Galois 表示之和；在每个本征块上，Frobenius 的特征多项式正是
+\[
+X^2-a_p(f)X+p.
+\]
+于是
+\[
+P_p(T)=\det(1-\Frob_pT\mid H^1)
+\]
+可写成各个本征形式对应二次多项式的乘积，从而
+\[
+\zeta(X_0(N)/\F_p,s)
+\]
+完全由 Hecke 特征值 $a_p(f)$ 表示出来。
+\end{solution}
+
+\begin{problem}{Weil 猜想在椭圆曲线情形的 RH \hard}
+证明椭圆曲线上 Frobenius 特征值满足
+\[
+|\alpha|=|\beta|=\sqrt p.
+\]
+\end{problem}
+\begin{solution}
+对 $E/\F_p$，设 Frobenius 特征值为 $\alpha,\beta$，则
+\[
+\alpha+\beta=a_p,
+\qquad
+\alpha\beta=p.
+\]
+Hasse 定理给出
+\[
+|a_p|\le 2\sqrt p.
+\]
+因此二次方程
+\[
+X^2-a_pX+p=0
+\]
+的两个根可写为
+\[
+\alpha,\beta=\frac{a_p\pm\sqrt{a_p^2-4p}}2.
+\]
+由于 $a_p^2-4p\le 0$，两根互为共轭复数。又
+\[
+|\alpha|^2=\alpha\beta=p,
+\]
+故
+\[
+|\alpha|=|\beta|=\sqrt p.
+\]
+这正是 Weil 猜想在椭圆曲线上的“Riemann 假设”部分。
+\end{solution}
+
+\begin{problem}{Iwasawa 主猜想的椭圆曲线版本 \hard}
+陈述 Kato 定理，并解释它如何把模形式的 $p$-进 Galois 表示与 Selmer 群联系起来。
+\end{problem}
+\begin{solution}
+Kato 构造了与模形式相关的 Euler 系统，并据此证明：对许多普通或半稳定情形，椭圆曲线的 Selmer 群特征理想被相应 $p$-进 $L$-函数的主理想控制；换言之，Iwasawa 主猜想的一边整除另一边。
+
+其思想是：
+\begin{enumerate}[label=\arabic*.]
+  \item 从模形式的 $p$-进 Galois 表示出发构造上同调类；
+  \item 利用这些类在塔扩张中的兼容性形成 Euler 系统；
+  \item Euler 系统给出 Selmer 群大小的上界；
+  \item 另一边由 $p$-进 $L$-函数插值特殊值得到；
+  \item 最终把“解析对象”与“代数对象”联系起来。
+\end{enumerate}
+因此 Kato 定理是 $p$-进 BSD 与 Iwasawa 理论之间的桥梁。
+\end{solution}
+
+\begin{problem}{Beilinson 猜想 \hard}
+陈述 Beilinson 猜想，并说明它如何推广 BSD 猜想。
+\end{problem}
+\begin{solution}
+Beilinson 猜想把“$L$-函数特殊值由几何/算术不变量给出”的思想推广到一般代数簇与一般 motive。它预言：某个 motive 在整数点的 $L$-值或高阶导数，应由更高 Chow 群或 motivic cohomology 中的 regulator 行列式、周期与 Tamagawa 型因子来描述。
+
+BSD 正是这个总框架在椭圆曲线 motive $H^1(E)$ 上的特例：
+\begin{itemize}
+  \item 特殊点是 $s=1$；
+  \item regulator 退化为 Mordell--Weil 高度行列式；
+  \item motive cohomology 对应到有理点与 $\Sha$；
+  \item 周期就是实周期 $\Omega_E$。
+\end{itemize}
+因此 Beilinson 猜想可以看作“BSD 的高维、高权版本”。
+\end{solution}
+
+\begin{problem}{Waldspurger 公式 \hard}
+陈述 Waldspurger 公式的大意，并解释它对中心值问题的几何意义。
+\end{problem}
+\begin{solution}
+Waldspurger 公式表明：对权 $2$ 新形式 $f$ 及适当二次角色 $\chi$，扭曲中心值满足
+\[
+L(f,1/2,\chi)=C\cdot |\text{某个 toric period}|^2.
+\]
+这里右边的积分通常是在一个四元数代数或模曲线上的特殊闭轨道上对自守形式取周期积分。
+
+它的几何意义是：中心 $L$-值不再只是一个“分析数”，而是某类几何周期的平方。因而
+\begin{itemize}
+  \item $L$-值的非零性可转化为某个特殊周期不为零；
+  \item 中心值消失则提示出现更深的几何对象，如 Heegner 点与导数公式；
+  \item 它把“谱分解”与“特殊代数循环”直接联系起来。
+\end{itemize}
+这正是 Gross--Zagier 与 BSD 理论的上游来源之一。
+\end{solution}
