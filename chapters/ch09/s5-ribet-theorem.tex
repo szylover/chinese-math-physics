@@ -90,13 +90,56 @@ Frey 曲线的每个奇坏素数都可以从级别中一个个删掉。
 等价地，$J_0(N)[\mathfrak n]^2\to J_0(Np)[\mathfrak m]$ 在与 $\mathfrak m$ 相容的极大理想处是单射。
 \end{theorem}
 
-\begin{proof}[作用说明]
-这一定理保证 old 部分不会把 residual 信息“吞掉”。
-Ribet 证明最关键的困难，
-正是要说明若 $\rhobar$ 在 $p$ 处无分歧，
-那么它在级别 $Np$ 上出现时，必然已经在 old 部分留下痕迹。
-Ihara 引理排除了 old/new 交叉里潜藏的额外扭点，
-从而使 level lowering 真正可行。
+\begin{proof}
+记
+\[
+\delta=\alpha^*+\beta^* \colon J_0(N)^2 \longrightarrow J_0(Np)
+\]
+为两条退化映射诱导的和映射，并记 $A_{\mathrm{old}}=\mathrm{im}(\delta)$ 为 $p$-old 子簇。证明分四步进行。
+
+\textbf{第 $1$ 步：退化映射的代数结构。}
+两条退化映射 $\alpha,\beta\colon X_0(Np)\to X_0(N)$ 在 Jacobian 上诱导出 pullback 映射 $\alpha^*,\beta^*$。由定义，$A_{\mathrm{old}}$ 恰由这两份来自级别 $N$ 的拷贝张成，而 $p$-new 商则是 $J_0(Np)/A_{\mathrm{old}}$。因为 $\alpha,\beta$ 都是有限态射，$\delta$ 是一个像为 $A_{\mathrm{old}}$ 的 isogeny，其核是一个有限群方案；所以要证明命题中的单射，只需证明这个有限核在非 Eisenstein 极大理想局部化后消失。
+
+\textbf{第 $2$ 步：$\mathfrak{m}$-扭点的控制。}
+设 $\bar\rho_{\mathfrak{m}}$ 为与 $\mathfrak{m}$ 对应的残余表示。因为 $\mathfrak{m}$ 非 Eisenstein，$\bar\rho_{\mathfrak{m}}$ 绝对不可约，于是 Hecke 代数在 $J_0(Np)[\mathfrak{m}]$ 上的作用是忠实的，且这个扭点群由若干份 $\bar\rho_{\mathfrak{m}}$ 组成。换句话说，若 $\ker(\delta)[\mathfrak{n}]$ 非零，那么它会在 old 部分里制造出一个新的 Hecke 稳定残余子表示；这正是 old/new 之间出现额外交叉关系的情形，而 Ihara 引理的目标就是排除这种非 Eisenstein 交叉。
+
+\textbf{第 $3$ 步：若存在非平凡核，则必然是 Eisenstein。}
+设 $x=(x_1,x_2)\in J_0(N)^2[\mathfrak{n}]$ 满足 $\delta(x)=0$，即
+\[
+\alpha^*x_1=-\beta^*x_2.
+\]
+由于核是 Hecke 稳定的，它特别对 $U_p$ 稳定。另一方面，在由 $\alpha^*,\beta^*$ 张成的 $p$-old 部分上，$U_p$ 的标准矩阵（取基 $\alpha^*,\beta^*$）为
+\[
+U_p=
+\begin{pmatrix}
+T_p & 1\\
+-p & 0
+\end{pmatrix}.
+\]
+把它限制到 $\mathfrak{n}$-局部部分，其中 $T_p$ 按标量 $a_p$ 作用，就得到特征多项式
+\[
+X^2-a_pX+p,
+\]
+这与前一节由 Frobenius 关系得到的多项式完全一致。若 $\alpha^*x_1=-\beta^*x_2$ 提供了一个非零核向量，那么在上述二维 old 空间里就得到与 $(1,-1)$ 同方向的不变量；直接计算
+\[
+U_p(1,-1)=(a_p-1,-p)
+\]
+可知这只有在 $a_p\equiv p+1$ 时才可能再次落在同一直线上。于是
+\[
+X^2-a_pX+p=(X-1)(X-p),
+\]
+这正是 Eisenstein 情形的特征多项式。换言之，任何非平凡核都迫使该极大理想是 Eisenstein 的。
+
+\textbf{第 $4$ 步：结论。}
+现在 $\mathfrak{m}$ 按假设是非 Eisenstein 的，所以第 $3$ 步的情形不可能发生。因此
+\[
+\ker(\delta)[\mathfrak{n}]=0,
+\]
+从而诱导映射
+\[
+J_0(N)^2[\mathfrak{n}] \hookrightarrow J_0(Np)[\mathfrak{m}]
+\]
+必为单射。这就是所需的 Ihara 引理。
 \end{proof}
 
 \begin{proposition}[Carayol 的导子--级别对应]
@@ -162,6 +205,57 @@ Atkin--Lehner 理论说明：
 这正是“Steinberg 局部型在 residual 世界里看不见 $p$”的精确意义。
 \end{proof}
 
+\begin{lemma}[Steinberg 局部条件与无分歧性的冲突]
+\label{lem:ch09-steinberg-unramified-conflict}
+设 $f$ 是 $p$-new 新形式，$\ell \nmid p$。若 $\bar\rho_{f,\ell}|_{D_p}$ 在 $p$ 处无分歧，则
+$\bar\rho_{f,\ell}|_{D_p}$ 必为两个无分歧特征之直和；换言之，Steinberg 型扩张在模 $\ell$ 后只能裂开。
+\end{lemma}
+
+\begin{proof}
+证明分三步进行。
+
+\textbf{第 $1$ 步：$p$-new 迫使局部表示是 Steinberg 扩张。}
+由 \cref{prop:ch09-steinberg-local}，存在两个 $D_p$ 上的一维特征 $\chi,\psi$，使得
+\[
+0\to K_{f,\lambda}(\chi)\to V_\lambda(f)\to K_{f,\lambda}(\psi)\to 0
+\]
+是一个非裂开的扩张，并且
+\[
+\chi\psi^{-1}=\chi_\ell,
+\]
+其中 $\chi_\ell$ 是 $\ell$-进分圆特征。因为这里 $p\neq \ell$，分圆特征在惯性群 $I_p$ 上本来就是平凡的，所以惯性作用表现为一个上三角幺幂矩阵；非裂开意味着对应的扩张类在 $H^1(D_p,K_{f,\lambda}(1))$ 中非零，这正是 Steinberg 型局部单调不平凡的具体表达。
+
+\textbf{第 $2$ 步：模 $\ell$ 以后得到残余扩张。}
+对上式模 $\lambda$ 约化，得到短正合列
+\[
+0\to \bar\chi\to \bar\rho_{f,\ell}|_{D_p}\to \bar\psi\to 0.
+\]
+因此对任意 $\sigma\in I_p$，在某个合适基下可写成
+\[
+\bar\rho_{f,\ell}(\sigma)=
+\begin{pmatrix}
+1 & c(\sigma)\\
+0 & 1
+\end{pmatrix},
+\]
+其中 $c\colon I_p\to \F_\ell$ 是扩张类在惯性上的像。若假设 $\bar\rho_{f,\ell}|_{D_p}$ 无分歧，那么惯性必须平凡作用，于是 $c(\sigma)=0$ 对所有 $\sigma\in I_p$ 成立，故该扩张在惯性上看起来已经裂开；特别地，$\bar\chi$ 与 $\bar\psi$ 都是无分歧特征。
+
+\textbf{第 $3$ 步：比较 Frobenius，推出扩张只能裂开。}
+由 $\chi\psi^{-1}=\chi_\ell$ 模 $\lambda$ 后得到
+\[
+\bar\chi\,\bar\psi^{-1}=\bar\chi_\ell.
+\]
+把它取值在 Frobenius 元上，可得
+\[
+\bar\chi(\Frob_p)\bar\psi(\Frob_p)^{-1}\equiv p \pmod{\ell}.
+\]
+若 $\ell\nmid p-1$，则 $p\not\equiv 1\pmod{\ell}$，所以 $\bar\chi\neq \bar\psi$；这时一个无分歧的上三角表示自动半单，因而只能是两个不同无分歧特征的直和，不可能保留非平凡 Steinberg 扩张类。若 $\ell\mid p-1$，则 $\bar\chi_\ell=1$，于是 $\bar\chi=\bar\psi$；但是此时任何仍然非裂开的自扩张都会在惯性上给出一个非零类 $I_p\to \F_\ell$，与上一步的“无分歧即惯性平凡”矛盾。故在这两种情形下，残余扩张都只能裂开，于是
+\[
+\bar\rho_{f,\ell}|_{D_p}\cong \bar\chi\oplus \bar\psi,
+\]
+其中 $\bar\chi,\bar\psi$ 都无分歧。
+\end{proof}
+
 接下来给出本章所需的 Ribet 定理版本。
 
 \begin{theorem}[Ribet 水平下降]
@@ -186,9 +280,9 @@ $\ell\neq p$，
 \end{theorem}
 
 \begin{proof}
-证明分四步。
+证明分四步进行。
 
-\textbf{第一步：把 residual 表示变成 Hecke 极大理想。}
+\textbf{第 $1$ 步：把 residual 表示变成 Hecke 极大理想。}
 由第\ref{sec:ch09-modular-galois}节，
 $f$ 给出一个 Hecke 特征值系统
 \[
@@ -204,52 +298,30 @@ $f$ 给出一个 Hecke 特征值系统
 绝对不可约性保证 $\mathfrak m$ 是非 Eisenstein 极大理想，
 因此 $J_0(Np)[\mathfrak m]$ 真正携带一份二维非平凡 residual 表示。
 
-\textbf{第二步：利用无分歧性把 $\mathfrak m$ 推离 $p$-new 部分。}
-因为 $f$ 在 $p$ 处是 Steinberg 型，
-由 \cref{prop:ch09-steinberg-local}，
-$\rho_{f,\lambda}|_{D_p}$ 是一条非平凡扩张。
-若模 $\ell$ 后在 $p$ 处无分歧，
-则这条扩张在 residual 世界里裂开，
-所以 $p$ 处的单值子必须满足“没有单调递增的 monodromy”这一条件。
-几何上，这意味着 $J_0(Np)[\mathfrak m]$ 中的 $\mathfrak m$-扭点不能完全落在真正的 $p$-new 单值部分里；
-否则其惯性作用仍会记住 Steinberg 的非平凡 monodromy。
-换句话说，
-$\mathfrak m$ 在 $J_0(Np)$ 上的出现，
-必然与 $p$-old 几何发生交叉。
+\textbf{第 $2$ 步：利用无分歧性把 $\mathfrak m$ 推离 $p$-new 部分。}
+反设 $\mathfrak m$ 只出现在 $p$-new 部分。则该局部化必由某个 $p$-new 新形式的 Galois 表示提供。对这类表示，\cref{prop:ch09-steinberg-local} 说明其 $D_p$-限制是 Steinberg 型，也就是说它来自一个非裂开的上三角扩张，局部单调非平凡。现在应用 \cref{lem:ch09-steinberg-unramified-conflict}：若其残余表示在 $p$ 处无分歧，则这个 Steinberg 扩张在模 $\ell$ 后只能裂开，而且裂开后得到的只是两个无分歧特征之和。这样的局部表示已经不再携带 $p$-new 部分特有的非平凡单调数据，因此不能单独支撑一个绝对不可约的非 Eisenstein 极大理想。故 $\mathfrak m$ 不可能纯粹来自 $p$-new 部分；它必定也在 $p$-old 部分出现。
 
-\textbf{第三步：用 Ihara 引理控制 old/new 交叉。}
-考虑退化映射诱导的和映射
+\textbf{第 $3$ 步：用 Ihara 引理控制 old/new 交叉。}
+现在看两条退化映射
+\[
+  \alpha,\beta\colon X_0(Np)\to X_0(N),
+\]
+它们在 Jacobian 上给出
 \[
   \delta=\alpha^*+\beta^*\colon J_0(N)^2\to J_0(Np).
 \]
-Ihara 引理断言：
-当把它限制到非 Eisenstein 极大理想 $\mathfrak m$ 的扭点时，
-核只可能来自 Eisenstein 部分。
-由于这里 $\mathfrak m$ 非 Eisenstein，
-便得到
-\[
-  J_0(N)[\mathfrak n]^2\hookrightarrow J_0(Np)[\mathfrak m]
-\]
-的注入，其中 $\mathfrak n$ 是 $\mathbb T(N)$ 中与 $\mathfrak m$ 相容的极大理想。
-因此，
-凡是在 $J_0(Np)[\mathfrak m]$ 中出现的那份二维 residual 表示，
-实际上已经来自级别 $N$ 的 old 部分，
-于是也出现在 $J_0(N)$ 上。
+其像就是 $p$-old 部分。若 old/new 之间还存在额外交叉，那么就会在 $\ker(\delta)$ 中出现非零的 $\mathfrak n$-扭点。\cref{thm:ch09-ihara-lemma} 的证明说明：这种核一旦存在，$U_p$ 在 old 部分上的矩阵关系就迫使特征多项式退化成 $(X-1)(X-p)$，从而对应 Eisenstein 极大理想。由于当前的 $\mathfrak m$ 非 Eisenstein，这种核不可能存在。所以 $\mathfrak m$ 在 old 部分的出现必然来自级别 $N$ 中某个真正的 Hecke 极大理想 $\mathfrak n$，而不是 old/new 交叉制造出的伪解。
 
-\textbf{第四步：从 Jacobian 回到新形式。}
-既然 $\mathfrak n$ 出现在 $J_0(N)$ 的 Tate 模或扭点中，
-第\ref{sec:ch09-modular-galois}节的构造反过来说明：
-必存在某个级别 $N$ 的 Hecke 特征值系统，
-其在几乎所有好素数处满足
+\textbf{第 $4$ 步：从 Jacobian 回到新形式。}
+于是 $J_0(N)[\mathfrak n]$ 非零，故级别 $N$ 的 Hecke 代数中存在与 $\mathfrak m$ 相容的特征系统。取与之对应的归一化特征模形式 $g$，则对所有 $r\nmid Np\ell$，都有
 \[
-  a_q(g)\equiv a_q(f)\pmod \ell.
+  a_r(g)\equiv a_r(f)\pmod{\ell}.
 \]
-Deligne--Serre 提升引理与 Hecke 代数的半单性允许我们把这个特征值系统提升为真正的归一化新形式 $g\in \Sk_2(\GammaO(N))$。
-于是
+Čebotarev 密度定理遂给出
 \[
   \rhobar_{g,\ell}\cong \rhobar_{f,\ell}.
 \]
-定理得证。
+这就把级别从 $Np$ 降到了 $N$。
 \end{proof}
 
 \textbf{注。}

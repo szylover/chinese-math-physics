@@ -69,6 +69,82 @@ Deligne 便得到一般的权 $k\ge 2$ 定理。
 先处理权 $2$ 的情形。
 这已经足以覆盖模椭圆曲线与费马大定理的应用。
 
+\begin{lemma}[Eichler--Shimura 关系，$\ell$-进上同调版本]
+\label{lem:ch09-eichler-shimura-etale}
+设 $p \nmid N\ell$。在 $H^1_{\acute{e}t}(X_0(N)_{\bar{\Q}}, \Z_\ell)$ 上有
+\[
+T_p = \Frob_p + p\Frob_p^{-1}.
+\]
+若保留一般 Nebentypus 的记号，则第二项常写成 $\langle p \rangle \Frob_p^{-1}$；在本章讨论的平凡特征情形，这正是上式中的 $p\Frob_p^{-1}$。
+\end{lemma}
+
+\begin{proof}
+证明分五步进行。
+
+\textbf{第 $1$ 步：把 $T_p$ 写成对应。}
+令 $Z_p$ 为参数化三元组 $(E,C,D)$ 的模曲线，其中 $(E,C)$ 表示 $X_0(N)$ 上一点，而 $D \subset E[p]$ 是一个阶为 $p$ 的有限平坦子群。两个自然投影
+\[
+\pi_1(E,C,D)=(E,C),\qquad \pi_2(E,C,D)=\bigl(E/D,(C+D)/D\bigr)
+\]
+给出 $Z_p \subset X_0(N)\times X_0(N)$ 的一个有限对应。对几何点 $(E,C)$ 而言，$E[p]$ 的阶为 $p$ 的循环子群恰好有 $p+1$ 个，所以 $\pi_1$ 的次数为 $p+1$；同理固定目标点以后，原像由所有阶为 $p$ 的 isogeny 组成，$\pi_2$ 的次数也为 $p+1$。按第 $7$ 章对 Hecke 对应的定义，$T_p$ 在 $H^1$ 上的作用就是
+\[
+T_p=(\pi_2)_*\circ \pi_1^*.
+\]
+这一步把解析定义的 Hecke 算子变成了一个纯几何的 pull--push 算子。
+
+\textbf{第 $2$ 步：把该对应降到 $\F_p$ 上分析。}
+取 $X_0(N)$ 在 $\Z_{(p)}$ 上的光滑整模型，并把 $Z_p$ 延拓到该整模型上。由于 $p \nmid N$，特殊纤维 $X_0(N)_{\F_p}$ 仍然是光滑曲线。现在看 ordinary 点 $(E,C)$。这时
+\[
+E[p]\cong \mu_p\oplus \Z/p\Z,
+\]
+因而阶为 $p$ 的子群分成两类：唯一的连通子群 $\mu_p=\ker(F\colon E\to E^{(p)})$，以及其余 $p$ 个 étale 子群，它们都同构于 $\Z/p\Z$。把 $E$ 除以前者，得到的正是 Frobenius 商 $E^{(p)}$；把 $E$ 除以后者，则得到 Verschiebung 支所对应的那一族 $p$-isogeny。于是，在 ordinary locus 上，$Z_p$ 分裂成两支对应之和
+\[
+Z_p=\Gamma_F+\Gamma_V,
+\]
+其中 $\Gamma_F$ 是 Frobenius 图形的闭包，$\Gamma_V$ 是 Verschiebung 图形的闭包。ordinary locus 在特殊纤维中稠密，而两边都是具有同一双次数 $(p+1,p+1)$ 的闭对应，因此这个等式延拓到整个 $X_0(N)_{\F_p}$ 上；在 supersingular 点处，两支可能相交，但对应的循环仍然由其在稠密 ordinary locus 上的限制唯一确定。
+
+\textbf{第 $3$ 步：计算两支对应在上同调上的作用。}
+对任一有限态射 $u\colon X\to X$，其图形对应在 $H^1$ 上给出由 $u$ 诱导的算子。应用到这里，Frobenius 支给出 $F^*$，也就是几何 Frobenius $\Frob_p$ 在 $H^1_{\acute{e}t}$ 上的作用。另一方面，Verschiebung $V$ 与 Frobenius 满足
+\[
+V\circ F=[p]
+\]
+作为 Jacobian 上的自同态。对第一上同调取 pullback，得到
+\[
+F^*\circ V^*=[p]^*.
+\]
+而在 $H^1$ 上，乘法 $[p]$ 的 pullback 恰好是乘以 $p$，故
+\[
+F^*V^*=p\,\mathrm{Id}.
+\]
+由于 $F^*$ 在 $\ell$-进上同调上可逆，立刻得到
+\[
+V^*=p(F^*)^{-1}=p\Frob_p^{-1}.
+\]
+换言之，Verschiebung 支恰好贡献第二项 $p\Frob_p^{-1}$。
+
+\textbf{第 $4$ 步：把两支加起来。}
+由第 $2$ 步的对应分解和第 $3$ 步的作用计算，$T_p$ 在特殊纤维上的作用等于
+\[
+T_p=\Gamma_F+\Gamma_V=F^*+V^*=\Frob_p+p\Frob_p^{-1}.
+\]
+光滑 proper base change 保证 $H^1_{\acute{e}t}(X_0(N)_{\bar{\Q}},\Z_\ell)$ 与特殊纤维的 $\ell$-进上同调自然识别，而且该识别与 Hecke 对应以及 Frobenius 作用相容，所以同一等式也成立在 $X_0(N)_{\bar{\Q}}$ 的上同调上。
+
+\textbf{第 $5$ 步：转到 $f$ 的 Galois 表示。}
+Jacobian 的 Tate 模与模曲线的第一上同调之间有标准的 Hecke 相容识别；取 $A_f$ 对应的 isotypic 部分，就得到一个 Hecke 稳定的二维 $K_{f,\lambda}$-空间 $V_\lambda(A_f)$。在这个空间上，$T_p$ 按标量 $a_p(f)$ 作用，因此上式限制后变为
+\[
+a_p(f)\,\mathrm{Id}=\rho_{f,\lambda}(\Frob_p)+p\,\rho_{f,\lambda}(\Frob_p)^{-1}.
+\]
+两边右乘 $\rho_{f,\lambda}(\Frob_p)$，便得到
+\[
+\rho_{f,\lambda}(\Frob_p)^2-a_p(f)\rho_{f,\lambda}(\Frob_p)+p\,\mathrm{Id}=0.
+\]
+由于 $V_\lambda(A_f)$ 是二维空间，这个首一二次多项式正是 $\rho_{f,\lambda}(\Frob_p)$ 的特征多项式，于是
+\[
+\det\bigl(X-\rho_{f,\lambda}(\Frob_p)\bigr)=X^2-a_p(f)X+p.
+\]
+这正是 Deligne 在权 $2$ 情形得到的 Frobenius 特征多项式。
+\end{proof}
+
 \begin{theorem}[Deligne 定理的权 $2$ 情形]
 \label{thm:ch09-deligne-weight-two}
 设 $f\in \Sk_2(\GammaO(N))$ 是归一化特征新形式，
@@ -127,21 +203,24 @@ Galois 作用与 Hecke 作用彼此交换，
 对 $p\nmid N\ell$，
 Abel 簇 $A_f$ 在 $p$ 处好约化，
 故由 N\'eron--Ogg--Shafarevich 判别准则，
-$\rho_{f,\lambda}$ 在 $p$ 处无分歧。
-另一方面，第\ref{ch:eichler-shimura}章的 Eichler--Shimura 关系说明：
-在 $V_\ell(A_f)$ 上，
-Hecke 算子 $T_p$ 与 Frobenius 满足
+$\rho_{f,\lambda}$ 在 $D_p$ 上无分歧，特别是 Frobenius 共轭类 $\rho_{f,\lambda}(\Frob_p)$ 定义良好。
+再由 \cref{lem:ch09-eichler-shimura-etale}，在 $H^1_{\acute{e}t}(X_0(N)_{\bar{\Q}},\Q_\ell)$ 上有
 \[
   T_p=\Frob_p+p\Frob_p^{-1}.
 \]
-限制到 $f$ 的 $\lambda$-分量后，
-$T_p$ 按标量 $a_p(f)$ 作用，
-故 Frobenius 的特征多项式满足
+把这一等式限制到 $A_f$ 的 $\lambda$-分量，利用 $T_p$ 在该分量上按标量 $a_p(f)$ 作用，得到
 \[
-  X^2-a_p(f)X+p.
+  a_p(f)\,\mathrm{Id}=\rho_{f,\lambda}(\Frob_p)+p\,\rho_{f,\lambda}(\Frob_p)^{-1}.
 \]
-于是迹等于 $a_p(f)$，行列式等于 $p$。
-这就证明了三条性质。
+两边右乘 $\rho_{f,\lambda}(\Frob_p)$，即得
+\[
+  \rho_{f,\lambda}(\Frob_p)^2-a_p(f)\rho_{f,\lambda}(\Frob_p)+p\,\mathrm{Id}=0.
+\]
+因为 $V_\lambda(A_f)$ 本身就是二维空间，这个首一二次多项式只能是 $\rho_{f,\lambda}(\Frob_p)$ 的特征多项式：
+\[
+  \det\bigl(X-\rho_{f,\lambda}(\Frob_p)\bigr)=X^2-a_p(f)X+p.
+\]
+于是迹等于 $a_p(f)$，行列式等于 $p$，三条性质同时成立。
 \end{proof}
 
 \textbf{注。}
@@ -275,6 +354,43 @@ Frobenius 矩阵可逆。
 两边右乘 $\rho_{f,\lambda}(\Frob_p)^{-1}$，
 就得到第二个等式。
 \end{proof}
+
+\begin{example}[级别 $11$ 新形式的 Frobenius 特征多项式]
+\label{ex:ch09-level11-frobenius}
+取 $S_2(\Gamma_0(11))$ 中唯一的归一化新形式
+\[
+f(q)=q-2q^2-q^3+2q^4+q^5+\cdots.
+\]
+已知 $a_2(f)=-2$，$a_3(f)=-1$，$a_5(f)=1$。因此由 \cref{thm:ch09-deligne-weight-two}，对任意 $\ell\neq 2,3,5$，Frobenius 元的特征多项式分别为
+\[
+\det\bigl(X-\rho_{f,\ell}(\Frob_2)\bigr)=X^2+2X+2,
+\]
+\[
+\det\bigl(X-\rho_{f,\ell}(\Frob_3)\bigr)=X^2+X+3,
+\]
+\[
+\det\bigl(X-\rho_{f,\ell}(\Frob_5)\bigr)=X^2-X+5.
+\]
+
+把它与对应的模椭圆曲线
+\[
+A_f=J_0(11)=E_{11}\colon y^2+y=x^3-x^2-10x-20
+\]
+比较。对椭圆曲线有标准公式 $a_p(E_{11})=p+1-\#E_{11}(\F_p)$，于是
+\[
+\#E_{11}(\F_2)=2+1-(-2)=5,\qquad
+\#E_{11}(\F_3)=3+1-(-1)=5,\qquad
+\#E_{11}(\F_5)=5+1-1=5.
+\]
+这些点数还可以直接数出来：
+在 $\F_2$ 上，方程化为 $y^2+y=x^3-x^2$，其中 $x=0,1$ 时右端都等于 $0$，而 $y=0,1$ 都满足 $y^2+y=0$，故有 $4$ 个仿射点，加上无穷远点共 $5$ 个；
+在 $\F_3$ 上，只有 $x=1,2$ 时右端为 $0$，而 $y=0,2$ 给出解，故也有 $4$ 个仿射点，加上无穷远点共 $5$ 个；
+在 $\F_5$ 上，只有 $x=0,1$ 时右端为 $0$，而同样只有 $y=0,4$ 满足 $y^2+y=0$，故总点数仍为 $5$。
+因此这三个点数与上面的 Frobenius 特征多项式完全一致，具体体现了
+\[
+a_p(f)=a_p(E_{11})=p+1-\#E_{11}(\F_p).
+\]
+\end{example}
 
 \subsection*{补充：Langlands--Tunnell 定理与权 $1$ 起点}
 Wiles 证明最微妙的一步之一，
