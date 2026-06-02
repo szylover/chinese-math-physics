@@ -931,3 +931,479 @@ a_1u_1+\cdots+a_ru_r-b_1v_1-\cdots-b_sv_s=0.
   \item \hard 设 $V$ 是所有从 $\N$ 到 $\F$ 的函数组成的空间。证明其中的多项式函数集合构成 $V$ 的一个真子空间，并说明该子空间仍是无限维的。
 \end{enumerate}
 
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  基础题  1–30
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{解答.}
+设 $u=(u_1,\dots,u_n)$，$v=(v_1,\dots,v_n)$，$w=(w_1,\dots,w_n)\in\R^n$，$a,b\in\R$。
+\begin{enumerate}[label=(\arabic*)]
+  \item $u+v=(u_i+v_i)=(v_i+u_i)=v+u$。
+  \item $(u+v)+w=((u_i+v_i)+w_i)=(u_i+(v_i+w_i))=u+(v+w)$。
+  \item 零向量 $\mathbf{0}=(0,\dots,0)$ 满足 $v+\mathbf{0}=(v_i+0)=v$。
+  \item $-v=(-v_1,\dots,-v_n)$ 满足 $v+(-v)=(v_i-v_i)=\mathbf{0}$。
+  \item $a(u+v)=(a(u_i+v_i))=(au_i+av_i)=au+av$。
+  \item $(a+b)v=((a+b)v_i)=(av_i+bv_i)=av+bv$。
+  \item $a(bv)=(a(bv_i))=((ab)v_i)=(ab)v$。
+  \item $1\cdot v=(1\cdot v_i)=(v_i)=v$。
+\end{enumerate}
+八条公理均成立，故 $\R^n$ 是 $\R$ 上的向量空间。
+
+\item \textbf{解答.}
+将 $\C^n$ 视为 $\C$ 上的向量空间时，标量为复数，加法与数乘按分量进行，维数为 $n$。将 $\C^n$ 视为 $\R$ 上的向量空间时，标量为实数，数乘仅允许用实数，维数为 $2n$（因每个复分量 $z_k=x_k+\mathrm{i}y_k$ 贡献两个实自由度）。
+
+\item \textbf{解答.}
+\begin{proof}
+验证三条子空间判定准则：
+\begin{itemize}
+  \item 零向量：取 $x=0$，得 $(0,0)\in U$。
+  \item 加法封闭：$(x,2x)+(y,2y)=(x+y,2(x+y))\in U$。
+  \item 数乘封闭：$c(x,2x)=(cx,2cx)\in U$。
+\end{itemize}
+故 $U$ 是子空间。基：向量 $(1,2)$ 非零且 $U=\mathrm{span}\{(1,2)\}$，故 $\{(1,2)\}$ 是 $U$ 的一组基。
+\end{proof}
+
+\item \textbf{解答.}
+$S$ 不是子空间。零向量 $(0,0)$ 满足 $0+0=0\ne 1$，故 $(0,0)\notin S$，子空间必须包含零向量，矛盾。
+
+\item \textbf{解答.}
+\begin{proof}
+验证：零多项式次数为 $-\infty\le 3$，故 $0\in\F[x]_{\le 3}$。若 $\deg f\le 3$ 且 $\deg g\le 3$，则 $\deg(f+g)\le\max(\deg f,\deg g)\le 3$；若 $c\in\F$，则 $\deg(cf)\le 3$（或 $cf=0$）。故 $\F[x]_{\le 3}$ 是 $\F[x]$ 的子空间。基为 $\{1,x,x^2,x^3\}$（显然张成且线性无关）。
+\end{proof}
+
+\item \textbf{解答.}
+不是子空间。首先零多项式不属于该集合（零多项式通常不称为"非零多项式"），违反含零条件。其次对加法也不封闭：$x+(-x)=0$，而两个非零多项式之和可以为零。
+
+\item \textbf{解答.}
+由 $z=-x-y$，解空间中每个向量写为
+\[
+(x,y,z)=x(1,0,-1)+y(0,1,-1),\qquad x,y\in\R.
+\]
+故解空间为 $\mathrm{span}\{(1,0,-1),\,(0,1,-1)\}$。这两个向量显然线性无关（互非倍数），故 $\{(1,0,-1),(0,1,-1)\}$ 是一组基，维数为 $2$。
+
+\item \textbf{解答.}
+注意到 $(1,0,1)+(0,1,1)=(1,1,2)$，即存在非平凡线性关系
+\[
+1\cdot(1,0,1)+1\cdot(0,1,1)+(-1)\cdot(1,1,2)=\mathbf{0},
+\]
+故三向量\textbf{线性相关}。
+
+\item \textbf{解答.}
+设 $a(1+x)+b(x+x^2)+c(1+2x+x^2)=0$，比较各次系数：
+\[
+\text{常数项：}a+c=0,\quad
+x\text{ 项：}a+b+2c=0,\quad
+x^2\text{ 项：}b+c=0.
+\]
+由第一、三式得 $a=b=-c$，代入第二式得 $-c-c+2c=0$，恒成立。取 $c=1$ 得非零解 $a=-1,b=-1$，故三多项式\textbf{线性相关}（实为 $(1+x)+(x+x^2)=1+2x+x^2$）。
+
+\item \textbf{解答.}
+\begin{proof}
+设 $a\sin x+b\cos x=0$ 对所有 $x\in\R$ 成立。取 $x=0$：$b=0$；取 $x=\tfrac{\pi}{2}$：$a=0$。故唯一使等式恒成立的系数为 $a=b=0$，即 $\sin x$ 与 $\cos x$ 线性无关。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设向量组 $\{v_1,\dots,v_r\}$ 中 $v_k=\mathbf{0}$。令 $c_k=1$，其余系数取 $0$，则
+\[
+0\cdot v_1+\cdots+0\cdot v_{k-1}+1\cdot v_k+0\cdot v_{k+1}+\cdots+0\cdot v_r=1\cdot\mathbf{0}=\mathbf{0},
+\]
+是非平凡线性组合，故向量组线性相关。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+若 $a=0$，则 $w=\mathbf{0}$，而 $0\cdot v+1\cdot w=\mathbf{0}$ 是非平凡关系（系数 $(0,1)\ne(0,0)$）。若 $a\ne 0$，则 $(-a)\cdot v+1\cdot w=-av+av=\mathbf{0}$，系数 $(-a,1)\ne(0,0)$（因 $a\ne 0$）。故在两种情况下 $\{v,w\}$ 均线性相关。
+\end{proof}
+
+\item \textbf{解答.}
+注意 $(1,1,0)=(1,0,0)+(0,1,0)$，故 $(1,1,0)$ 可由其他向量线性表示。去掉 $(1,1,0)$ 后，$\{(1,0,0),(0,1,0),(0,0,1)\}$ 恰为 $\R^3$ 的标准基，线性无关，且不能再去掉任何一个（否则张成空间维数下降）。故极大线性无关子集为
+\[
+\{(1,0,0),\,(0,1,0),\,(0,0,1)\}.
+\]
+
+\item \textbf{解答.}
+计算 $(1,0,1,0)+(0,1,0,1)=(1,1,1,1)$，故第三个向量是前两个之和，张成空间由前两个向量即可生成。前两个向量线性无关（互非数量倍），故张成空间的一组基为
+\[
+\{(1,0,1,0),\,(0,1,0,1)\}.
+\]
+
+\item \textbf{解答.}
+设 $(3,5)=a(1,0)+b(1,1)$，则 $a+b=3$，$b=5$，解得 $b=5$，$a=-2$。
+故 $(3,5)$ 在基 $\mathcal{B}$ 下的坐标为 $(-2,5)$。
+
+\item \textbf{解答.}
+$2-3x+x^2=2\cdot 1+(-3)\cdot x+1\cdot x^2$，故在基 $\mathcal{B}=\{1,x,x^2\}$ 下的坐标为 $(2,-3,1)$。
+
+\item \textbf{解答.}
+在 $\mathcal{B}=\{(1,0),(1,1)\}$ 下：设 $(2,1)=a(1,0)+b(1,1)$，得 $a+b=2$，$b=1$，即 $a=1$。坐标为 $(1,1)_{\mathcal{B}}$。
+
+在 $\mathcal{C}=\{(1,1),(0,1)\}$ 下：设 $(2,1)=a(1,1)+b(0,1)$，得 $a=2$，$a+b=1$，即 $b=-1$。坐标为 $(2,-1)_{\mathcal{C}}$。
+
+\item \textbf{解答.}
+\begin{proof}
+设 $U,W$ 均为 $V$ 的子空间。验证 $U\cap W$ 的三条准则：
+\begin{itemize}
+  \item $\mathbf{0}\in U$ 且 $\mathbf{0}\in W$，故 $\mathbf{0}\in U\cap W$。
+  \item 若 $u,v\in U\cap W$，则 $u+v\in U$（因 $U$ 是子空间）且 $u+v\in W$，故 $u+v\in U\cap W$。
+  \item 若 $u\in U\cap W$，$c\in\F$，则 $cu\in U$ 且 $cu\in W$，故 $cu\in U\cap W$。
+\end{itemize}
+故 $U\cap W$ 是 $V$ 的子空间。
+\end{proof}
+
+\item \textbf{解答.}
+对任意 $(a,b)\in\R^2$，写 $(a,b)=(a-b,0)+(b,b)$，其中 $(a-b,0)\in U$，$(b,b)\in W$。故 $U+W=\R^2$。
+
+\item \textbf{解答.}
+是，$\R^2=U\oplus W$。由第19题知 $U+W=\R^2$。又若 $(x,0)=(y,y)\in U\cap W$，则 $y=0$，故 $U\cap W=\{\mathbf{0}\}$。两个条件均满足，故为直和。
+
+\item \textbf{解答.}
+由维数公式，
+\[
+\dim(U+W)=\dim U+\dim W-\dim(U\cap W)=2+3-1=4.
+\]
+
+\item \textbf{解答.}
+一维向量空间 $V$ 的全部子空间恰好是 $\{\mathbf{0}\}$ 和 $V$ 本身。理由：设 $W$ 是 $V$ 的非零子空间，取任意 $v\in W$，$v\ne\mathbf{0}$。由于 $\dim V=1$，$v$ 张成 $V$（否则 $V$ 有两个线性无关向量，维数 $\ge 2$），故 $W\supseteq\mathrm{span}\{v\}=V$，即 $W=V$。
+
+\item \textbf{解答.}
+\begin{proof}
+零矩阵是对角矩阵，对角矩阵之和仍对角，对角矩阵的数量倍仍对角，故 $\Mat_2(\R)$ 中全体对角矩阵 $D$ 是子空间。
+一组基为
+\[
+\left\{E_{11}=\mat{1&0\\0&0},\;E_{22}=\mat{0&0\\0&1}\right\}.
+\]
+任意对角矩阵 $\mat{a&0\\0&b}=aE_{11}+bE_{22}$，且 $E_{11},E_{22}$ 线性无关，故这是一组基，$\dim D=2$。
+\end{proof}
+
+\item \textbf{解答.}
+$\mathrm{Sym}_2(\R)$ 的一般元素形如 $\mat{a&b\\b&c}$，由参数 $a,b,c$ 自由确定。一组基为
+\[
+\left\{E_1=\mat{1&0\\0&0},\;E_2=\mat{0&1\\1&0},\;E_3=\mat{0&0\\0&1}\right\}.
+\]
+这三个矩阵线性无关（无平凡关系）且张成 $\mathrm{Sym}_2(\R)$，故 $\dim\mathrm{Sym}_2(\R)=3$。
+
+\item \textbf{解答.}
+$\mathrm{Skew}_3(\R)$ 的一般元素形如 $\mat{0&a&b\\-a&0&c\\-b&-c&0}$，由 $a,b,c$ 自由确定。记 $F_{ij}=E_{ij}-E_{ji}$（$E_{ij}$ 为矩阵单位），则一组基为
+\[
+\left\{F_{12}=\mat{0&1&0\\-1&0&0\\0&0&0},\;
+F_{13}=\mat{0&0&1\\0&0&0\\-1&0&0},\;
+F_{23}=\mat{0&0&0\\0&0&1\\0&-1&0}\right\}.
+\]
+故 $\dim\mathrm{Skew}_3(\R)=3$。
+
+\item \textbf{解答.}
+$(a,b)+U=\{(a+x,b):x\in\R\}$，这是平面 $\R^2$ 中纵坐标为 $b$、平行于 $x$ 轴的水平直线。
+
+\item \textbf{解答.}
+由商空间的维数公式，$\dim(\R^3/U)=\dim\R^3-\dim U=3-2=1$。
+
+\item \textbf{解答.}
+\begin{proof}
+自然投影 $\pi(v)=v+U$。商空间 $V/U$ 的零元为 $0+U=U$。故
+\[
+\pi(v)=U\iff v+U=U\iff v\in U.
+\]
+（等价性：$v+U=U$ 当且仅当 $v=v-0\in U$。）
+\end{proof}
+
+\item \textbf{解答.}
+齐次线性方程组 $Ax=\mathbf{0}$ 的解集：零向量满足方程；两个解之和仍满足（$A(x+y)=Ax+Ay=0$）；解的数量倍仍满足（$A(cx)=c(Ax)=0$）。故解集是子空间。
+非齐次方程组 $Ax=b$（$b\ne\mathbf{0}$）的解集：零向量不满足（$A\mathbf{0}=\mathbf{0}\ne b$），故不是子空间。
+
+\item \textbf{解答.}
+常数函数全体 $C=\{f:\R\to\C\mid f\equiv c,\ c\in\C\}$ 在逐点加法与数乘下构成 $\C$ 上的向量空间（等同于将 $c\in\C$ 对应常数函数 $f\equiv c$）。函数 $f\equiv 1$ 张成 $C$（任意常数函数是它的数量倍），且 $f\equiv 1\ne 0$，故 $\{f\equiv 1\}$ 是一组基，$\dim_{\C}C=1$。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  进阶题  31–50
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{解答.}
+\begin{proof}
+设 $S=\{w_1,\dots,w_n\}$ 张成 $V$，$T=\{v_1,\dots,v_k\}\subseteq S$ 是极大线性无关子集。$T$ 线性无关已知，只需证 $T$ 张成 $V$。对任意 $w_j\in S\setminus T$，集合 $T\cup\{w_j\}$ 由极大性线性相关，故 $w_j\in\mathrm{span}(T)$。因此 $S\subseteq\mathrm{span}(T)$，从而 $V=\mathrm{span}(S)\subseteq\mathrm{span}(T)$，即 $T$ 张成 $V$，$T$ 是一组基。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $S=\{v_1,\dots,v_n\}$ 张成 $V$，且删去任一 $v_k$ 后 $S\setminus\{v_k\}$ 不再张成 $V$。假设 $S$ 线性相关，则存在不全为零的 $c_i$ 使 $\sum c_iv_i=\mathbf{0}$，设 $c_k\ne 0$。则
+\[
+v_k=-c_k^{-1}\sum_{i\ne k}c_iv_i\in\mathrm{span}(S\setminus\{v_k\}),
+\]
+故 $S\setminus\{v_k\}$ 仍张成 $V$，与假设矛盾。故 $S$ 线性无关。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $v_1,\dots,v_r$ 线性相关，存在不全为零的 $c_i$ 满足 $\sum_{i=1}^r c_iv_i=\mathbf{0}$。令 $k=\max\{i:c_i\ne 0\}$。则
+\[
+c_kv_k=-\sum_{i=1}^{k-1}c_iv_i,\quad\text{故}\quad v_k=\sum_{i=1}^{k-1}\!\left(-c_k^{-1}c_i\right)v_i\in\mathrm{span}(v_1,\dots,v_{k-1}).
+\]
+（当 $k=1$ 时，$c_1v_1=\mathbf{0}$ 且 $c_1\ne 0$，故 $v_1=\mathbf{0}\in\mathrm{span}(\emptyset)=\{\mathbf{0}\}$。）
+\end{proof}
+
+\item \textbf{解答.}
+$\{1,x^2\}$ 在 $\R[x]_{\le 4}$（维数 $5$）中线性无关。将其扩充：加入 $x,x^3,x^4$，所得集合 $\{1,x,x^2,x^3,x^4\}$ 是 $\R[x]_{\le 4}$ 的标准基，线性无关且张成全空间，故这是一组基。
+
+\item \textbf{解答.}
+$U$ 的一组基为 $\{(1,1,0,0),(0,0,1,1)\}$（显然线性无关）。加入 $(1,0,0,0),(0,0,1,0)$ 后，对矩阵
+\[
+\begin{pmatrix}1&1&0&0\\0&0&1&1\\1&0&0&0\\0&0&1&0\end{pmatrix}
+\]
+作行变换 $R_3\leftarrow R_3-R_1$，$R_4\leftarrow R_4-R_2$，得
+\[
+\begin{pmatrix}1&1&0&0\\0&0&1&1\\0&-1&0&0\\0&0&0&-1\end{pmatrix},
+\]
+秩为 $4$，故四个向量线性无关，构成 $\R^4$ 的一组基
+\[
+\{(1,1,0,0),\,(0,0,1,1),\,(1,0,0,0),\,(0,0,1,0)\}.
+\]
+
+\item \textbf{解答.}
+\begin{proof}
+设 $U$ 是有限维 $V$（$\dim V=n$）的子空间。$U$ 中任意线性无关组也是 $V$ 中的线性无关组，故大小不超过 $n$。从零出发，若 $U\ne\{\mathbf{0}\}$，则逐步取 $U$ 中不在当前张成空间的向量加入；由大小上界 $n$，此过程在有限步内终止，所得线性无关组张成 $U$，即为 $U$ 的有限基。故 $U$ 有限维。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由维数公式 $\dim(U\cap W)=\dim U+\dim W-\dim(U+W)$，以及 $U+W\subseteq V$ 故 $\dim(U+W)\le\dim V$，得
+\[
+\dim(U\cap W)\ge\dim U+\dim W-\dim V>0.
+\]
+故 $U\cap W$ 含非零向量，即 $U\cap W\ne\{\mathbf{0}\}$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由维数公式，
+\[
+\dim(U+W)=\dim U+\dim W-\dim(U\cap W)=\dim U+\dim W-0=\dim V.
+\]
+又 $U+W\subseteq V$，故 $U+W=V$（有限维空间中子空间维数等于全空间维数则相等）。结合 $U\cap W=\{\mathbf{0}\}$，得 $V=U\oplus W$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+$\Char(\F)\ne 2$ 保证 $2$ 在 $\F$ 中可逆。对 $A\in\Mat_2(\F)$，令
+\[
+S=\frac{A+A^T}{2},\qquad K=\frac{A-A^T}{2}.
+\]
+则 $S^T=S$（对称），$K^T=-K$（斜对称），$A=S+K$。
+
+唯一性：设 $A=S_1+K_1=S_2+K_2$（$S_i$ 对称，$K_i$ 斜对称），则 $C:=S_1-S_2=K_2-K_1$ 同时满足 $C^T=C$ 与 $C^T=-C$，故 $C=-C$，即 $2C=\mathbf{0}$。因 $\Char(\F)\ne 2$，得 $C=\mathbf{0}$，即 $S_1=S_2$，$K_1=K_2$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+以 $n$ 阶情形证明。对任意 $A\in\Mat_n(\F)$，令 $S=\frac{A+A^T}{2}\in\mathrm{Sym}_n(\F)$ 且 $K=\frac{A-A^T}{2}\in\mathrm{Skew}_n(\F)$（同第39题），故 $\Mat_n(\F)=\mathrm{Sym}_n(\F)+\mathrm{Skew}_n(\F)$。若 $C\in\mathrm{Sym}_n\cap\mathrm{Skew}_n$，则 $C^T=C=-C$，$\Char\ne 2$ 给出 $C=\mathbf{0}$，故交为零，即得直和。
+
+维数：$\mathrm{Sym}_n(\F)$ 由上三角（含对角）元素自由确定，$\dim\mathrm{Sym}_n=\frac{n(n+1)}{2}$；$\mathrm{Skew}_n(\F)$ 由严格上三角元素自由确定，$\dim\mathrm{Skew}_n=\frac{n(n-1)}{2}$。两者之和为 $n^2=\dim\Mat_n$，与直和维数公式吻合。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $p(x)=\sum_{k=0}^n a_kx^k\in\R[x]_{\le n}$。令 $p_e(x)=\sum_{k\text{ 偶}}a_kx^k\in E$，$p_o(x)=\sum_{k\text{ 奇}}a_kx^k\in O$，则 $p=p_e+p_o$，故 $\R[x]_{\le n}=E+O$。若 $q\in E\cap O$，则 $q$ 只含偶次项（由 $q\in E$）又只含奇次项（由 $q\in O$），故 $q=0$，$E\cap O=\{\mathbf{0}\}$。因此 $\R[x]_{\le n}=E\oplus O$。
+\end{proof}
+
+\item \textbf{解答.}
+令 $v_i=e_i-e_{i+1}\in\F^n$ 对 $i=1,\dots,n-1$，其中 $e_j$ 为标准基向量。每个 $v_i\in U$（其坐标和为 $1-1=0$）。
+
+线性无关：设 $\sum_{i=1}^{n-1}c_iv_i=\mathbf{0}$，比较第 $k$ 个分量（$1\le k\le n-1$）得 $c_k-c_{k-1}=0$（约定 $c_0=0$），故 $c_1=c_2=\cdots=c_{n-1}=0$。
+
+张成 $U$：设 $u=(u_1,\dots,u_n)\in U$（$\sum u_j=0$），验证 $u=\sum_{i=1}^{n-1}(\sum_{j=1}^iu_j)\,v_i$（直接展开即得）。
+
+故 $\{e_1-e_2,e_2-e_3,\dots,e_{n-1}-e_n\}$ 是 $U$ 的一组基，$\dim U=n-1$。
+
+\item \textbf{解答.}
+\begin{proof}
+任意 $v=(x_1,\dots,x_5)\in\R^5$ 可写成
+\[
+v=(x_1e_1+x_2e_2)+(x_3e_3+x_4e_4+x_5e_5),
+\]
+前者属于 $U$，后者属于 $W$，故 $U+W=\R^5$。若 $v\in U\cap W$，则 $v_3=v_4=v_5=0$（由 $v\in U$）且 $v_1=v_2=0$（由 $v\in W$），故 $v=\mathbf{0}$，$U\cap W=\{\mathbf{0}\}$。由此得 $\R^5=U\oplus W$。
+\end{proof}
+
+\item \textbf{解答.}
+$\dim V=6$，$\dim U=3$，故 $\dim(V/U)=3$。$V/U$ 的一组基为
+\[
+\{x^3+U,\;x^4+U,\;x^5+U\}.
+\]
+张成性：任意 $f+U\in V/U$，$f=\sum_{k=0}^5 a_kx^k$，故 $f+U=a_3(x^3+U)+a_4(x^4+U)+a_5(x^5+U)$。
+
+线性无关：若 $\sum_{k=3}^5 a_k(x^k+U)=U$，则 $\sum_{k=3}^5a_kx^k\in U=\F[x]_{\le 2}$，故 $a_3=a_4=a_5=0$。
+
+\item \textbf{解答.}
+\begin{proof}
+由商空间维数公式 $\dim(V/U)=\dim V-\dim U$：
+
+$(\Rightarrow)$ 若 $\dim(V/U)=1$，则 $\dim U=\dim V-1<\dim V$，故 $U\ne V$，即 $U$ 是真子空间。
+
+$(\Leftarrow)$ 若 $U\subsetneq V$ 且 $\dim U=\dim V-1$，则 $\dim(V/U)=1$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $v+U=v'+U$，$w+U=w'+U$，即 $v-v'\in U$ 且 $w-w'\in U$。
+
+加法：$(v+w)-(v'+w')=(v-v')+(w-w')\in U$（$U$ 加法封闭），故 $(v+w)+U=(v'+w')+U$。
+
+数乘：$cv-cv'=c(v-v')\in U$（$U$ 数乘封闭），故 $c(v+U)=cv+U=cv'+U=c(v'+U)$。
+
+因此定义与代表元的选取无关，加法与数乘定义良好。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $V=U\oplus W$，对每个 $v\in V$，存在唯一 $u\in U$，$w\in W$ 使 $v=u+w$。则
+\[
+v+U=(u+w)+U=w+(u+U)=w+U
+\]
+（因 $u\in U$，$u+U=U$）。故陪集 $v+U=w+U$ 中含有 $w\in W$。若另有 $w'\in W\cap(v+U)$，则 $w'-v\in U$，故 $w'-(u+w)=w'-u-w\in U$，即 $w'-w\in U$。又 $w'-w\in W$，故 $w'-w\in U\cap W=\{\mathbf{0}\}$，即 $w'=w$，唯一性得证。
+
+映射 $\varphi:W\to V/U$，$w\mapsto w+U$ 是线性映射：$\varphi(c_1w_1+c_2w_2)=(c_1w_1+c_2w_2)+U=c_1(w_1+U)+c_2(w_2+U)$。由上述唯一性知 $\varphi$ 是单射；由 $V=U+W$ 知 $\varphi$ 是满射。故 $\varphi$ 是线性同构，$V/U\cong W$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\{u_1,\dots,u_r,v_1,\dots,v_s\}$ 是 $V$ 的基，$\{u_1,\dots,u_r\}$ 是 $U$ 的基。
+
+张成：对任意 $v+U\in V/U$，写 $v=\sum a_iu_i+\sum b_jv_j$，则 $v+U=\sum b_j(v_j+U)$。
+
+线性无关：设 $\sum b_j(v_j+U)=U$，即 $\sum b_jv_j\in U=\mathrm{span}(u_1,\dots,u_r)$，故 $\sum b_jv_j=\sum c_iu_i$，即 $\sum c_iu_i-\sum b_jv_j=\mathbf{0}$。因 $\{u_i,v_j\}$ 是 $V$ 的基，所有系数为零，特别地所有 $b_j=0$。
+
+故 $\{v_1+U,\dots,v_s+U\}$ 是 $V/U$ 的一组基。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由题设 $M_k(\Gamma)=S_k(\Gamma)\oplus\C E_k$。由于 $E_k\ne 0$，$\C E_k=\mathrm{span}\{E_k\}$ 是一维子空间。由直和的维数可加性，
+\[
+\dim M_k(\Gamma)=\dim S_k(\Gamma)+\dim(\C E_k)=\dim S_k(\Gamma)+1. \qedhere
+\]
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+令 $t=\dim(U\cap W)$，取 $U\cap W$ 的一组基 $\{w_1,\dots,w_t\}$。将其扩充为 $U$ 的基 $\{w_1,\dots,w_t,u_1,\dots,u_p\}$（$p=\dim U-t$），以及 $W$ 的基 $\{w_1,\dots,w_t,v_1,\dots,v_q\}$（$q=\dim W-t$）。令 $\mathcal{B}=\{w_1,\dots,w_t,u_1,\dots,u_p,v_1,\dots,v_q\}$。
+
+张成 $U+W$：任意 $u+v$（$u\in U,v\in W$）均是 $\mathcal{B}$ 中向量的线性组合，故 $\mathcal{B}$ 张成 $U+W$。
+
+线性无关：设 $\sum a_iw_i+\sum b_ju_j+\sum c_kv_k=\mathbf{0}$。令 $x=\sum a_iw_i+\sum b_ju_j$，则 $x=-\sum c_kv_k$，故 $x\in U\cap W$。写 $x=\sum d_iw_i$，则 $\sum c_kv_k+\sum d_iw_i=\mathbf{0}$，由 $\{w_i,v_k\}$ 线性无关得 $c_k=0$ 且 $d_i=0$，从而 $x=\mathbf{0}$，再由 $\{w_i,u_j\}$ 线性无关得 $a_i=b_j=0$。
+
+故 $|\mathcal{B}|=t+p+q=\dim(U+W)$，且
+\[
+\dim(U+W)=t+p+q=\dim U+\dim W-t=\dim U+\dim W-\dim(U\cap W). \qedhere
+\]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  挑战题  51–60
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{解答.}
+\begin{proof}
+反设 $\F[x]$ 有限维，$\dim\F[x]=n$。考虑向量组 $\{1,x,x^2,\dots,x^n\}$，共 $n+1$ 个元素。若 $\sum_{k=0}^n a_kx^k=0$（零多项式），则各次系数均为零，故 $a_0=\cdots=a_n=0$，即该向量组线性无关，但其大小 $n+1>\dim\F[x]=n$，矛盾。故 $\F[x]$ 不是有限维向量空间。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+验证 $V$ 是向量空间：$V$ 中两个有限非零序列之和仍有限非零，数量倍同理，零元为全零序列，其余公理继承自 $\F^{\N}$，故 $V$ 是向量空间。
+
+可数基：令 $e_k=(0,\dots,0,1,0,\dots)$（第 $k$ 位为 $1$，$k=0,1,2,\dots$）。
+
+线性无关：设有限和 $\sum_{k=0}^m c_ke_k=(c_0,c_1,\dots,c_m,0,\dots)=\mathbf{0}$，则 $c_k=0$ 对所有 $k$。
+
+张成 $V$：任意 $v=(a_0,\dots,a_n,0,0,\dots)\in V$ 写为有限和 $\sum_{k=0}^n a_ke_k$。
+
+故 $\{e_k\}_{k\ge 0}$ 是 $V$ 的一组可数基。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+不妨设 $a_1<a_2<\cdots<a_r$。设 $\sum_{i=1}^r c_ie^{a_ix}=0$ 对所有 $x\in\R$ 成立。
+
+对等式两边乘以 $e^{-a_1x}$，得
+\[
+c_1+\sum_{i=2}^r c_ie^{(a_i-a_1)x}=0.
+\]
+令 $x\to-\infty$：因 $a_i-a_1>0$（$i\ge 2$），各 $e^{(a_i-a_1)x}\to 0$，故 $c_1=0$。
+
+将方程变为 $\sum_{i=2}^r c_ie^{a_ix}=0$，再乘以 $e^{-a_2x}$，同理令 $x\to-\infty$ 得 $c_2=0$。依此类推，$c_1=c_2=\cdots=c_r=0$，故这些函数线性无关。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+向量空间 $V$ 是有限维的，当且仅当存在有限子集张成 $V$（此为有限维的定义或等价特征）。$V$ 是无限维，即对任意有限子集 $S=\{v_1,\dots,v_n\}\subseteq V$，均有 $\mathrm{span}(S)\subsetneq V$（否则 $\dim V\le n<\infty$，矛盾）。故不存在有限子集能张成整个 $V$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+对真子空间的个数 $m$ 用归纳法证明 $V\ne\bigcup_{i=1}^m U_i$。
+
+$m=1$：$U_1\subsetneq V$ 故 $V\ne U_1$。
+
+$m\ge 2$：由归纳假设，$\exists\, a\in V\setminus\bigcup_{i=1}^{m-1}U_i$；又 $U_m\subsetneq V$，故 $\exists\, b\in V\setminus U_m$。对 $t\in\F$ 考虑向量 $C_t=a+tb$。
+
+对每个 $i<m$：$a\notin U_i$，故至多一个 $t$ 使 $C_t\in U_i$（若 $C_t,C_s\in U_i$ 且 $t\ne s$，则 $(t-s)b\in U_i$，$b\in U_i$，再得 $a=C_t-tb\in U_i$，矛盾）。
+
+对 $U_m$：$b\notin U_m$，同理至多一个 $t$ 使 $C_t\in U_m$。
+
+因此至多 $m$ 个 $t$ 为"坏值"。由 $|\F|=\infty$，存在 $t_0$ 使 $C_{t_0}\notin\bigcup_{i=1}^m U_i$，矛盾。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+对任意 $f\in\F[x]$，设 $f(x)=a_0+a_1x+\cdots+a_nx^n$，则
+\[
+f(x)=a_0+x\cdot(a_1+a_2x+\cdots+a_nx^{n-1}),
+\]
+即 $f(x)=a_0\cdot 1+x\cdot g(x)$ 其中 $g=a_1+\cdots+a_nx^{n-1}\in\F[x]$，故 $xg\in U$，从而 $f+U=a_0(1+U)$，$V/U=\mathrm{span}(1+U)$。
+
+又 $1\notin U=x\F[x]$（$U$ 中每个多项式常数项为零），故 $1+U\ne U$，$1+U\ne\mathbf{0}_{V/U}$，即 $1+U$ 非零。故 $V/U$ 是一维向量空间。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由 $M_*(\SL_2(\Z))=\C[E_4,E_6]$ 且 $E_4,E_6$ 代数无关（即 $\C[E_4,E_6]$ 是多项式环，两者之间无代数关系），$k$ 次齐次部分 $M_k(\SL_2(\Z))$ 由次数为 $k$（其中 $E_4$ 贡献权 $4$，$E_6$ 贡献权 $6$）的单项式 $\{E_4^aE_6^b:4a+6b=k,\,a,b\ge 0\}$ 张成。
+
+由于 $\C[E_4,E_6]$ 是多项式环，不同单项式线性无关，故这些单项式构成 $M_k(\SL_2(\Z))$ 的一组基，从而
+\[
+\dim M_k(\SL_2(\Z))=\bigl|\{(a,b)\in\Z_{\ge 0}^2:4a+6b=k\}\bigr|. \qedhere
+\]
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由题设 $M_k(\SL_2(\Z))=S_k(\SL_2(\Z))\oplus\C E_k$（$k\ge 4$ 偶数），其中 $E_k$ 是非零 Eisenstein 级数，故 $\C E_k$ 是一维子空间。由直和的维数可加性，
+\[
+\dim M_k(\SL_2(\Z))=\dim S_k(\SL_2(\Z))+1,
+\]
+即 $\dim S_k(\SL_2(\Z))=\dim M_k(\SL_2(\Z))-1$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $E=\{f\in\F[x]:f\text{ 只含偶次项}\}$，$O=\{f\in\F[x]:f\text{ 只含奇次项}\}$。它们均是 $\F[x]$ 的子空间。
+
+$\F[x]=E+O$：任意 $f=\sum_{k\ge 0}a_kx^k$，令 $f_e=\sum_{k\text{ 偶}}a_kx^k\in E$，$f_o=\sum_{k\text{ 奇}}a_kx^k\in O$，则 $f=f_e+f_o$。
+
+$E\cap O=\{\mathbf{0}\}$：若 $g\in E\cap O$，则 $g$ 的奇次系数全为零（由 $g\in E$）且偶次系数全为零（由 $g\in O$），故 $g=0$。
+
+综合得 $\F[x]=E\oplus O$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $W$ 为 $V=\F^\N$（从 $\N$ 到 $\F$ 的函数空间）中的多项式函数集合，即 $W=\{n\mapsto p(n):p\in\F[x]\}$。
+
+$W$ 是子空间：零多项式对应零函数；两多项式函数之和仍是多项式函数；数量倍同理。
+
+$W\subsetneq V$：定义 $f:\N\to\F$ 为 $f(0)=1$，$f(n)=0$（$n\ge 1$）。若 $f=p$ 对某 $p\in\F[x]$，则 $p$ 在正整数点处全为零，即 $p$ 有无穷多根，故 $p=0$；但 $p(0)=0\ne 1=f(0)$，矛盾。故 $f\notin W$，$W\subsetneq V$。
+
+$W$ 无限维：考虑二项式系数函数 $C_k:\N\to\F$，$C_k(n)=\binom{n}{k}$（$k=0,1,2,\dots$），每个 $C_k$ 是 $n$ 的 $k$ 次多项式函数，故 $C_k\in W$。若 $\sum_{k=0}^m a_kC_k=0$（零函数），则对 $n=0,1,\dots,m$，利用 $C_k(j)=\binom{j}{k}$（$j<k$ 时为 $0$，$j=k$ 时为 $1$）所形成的下三角方程组，逐步得 $a_0=a_1=\cdots=a_m=0$。故 $\{C_k\}_{k\ge 0}$ 是 $W$ 中的无穷线性无关集，$\dim W=\infty$。
+\end{proof}
+
+\end{enumerate}

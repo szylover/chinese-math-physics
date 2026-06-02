@@ -1423,3 +1423,1195 @@ g\bigl(X(1)\bigr)=1+\frac1{12}-\frac14-\frac13-\frac12=0.
   \]
   即它同构于一个阶 $2$ 循环群与一个阶 $3$ 循环群的自由积。
 \end{enumerate}
+
+\section*{习题解答}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+\item \textbf{解答.} 由
+\[
+S=\mat{0&-1\\ 1&0},\qquad T=\mat{1&1\\ 0&1}
+\]
+直接计算得
+\[
+S^2=\mat{-1&0\\ 0&-1}=-I,\qquad
+S^3=S^2S=\mat{0&1\\ -1&0},
+\]
+\[
+T^2=\mat{1&2\\ 0&1},\qquad
+T^{-3}=\mat{1&-3\\ 0&1}.
+\]
+又
+\[
+\det(S^2)=\det(S^3)=\det(T^2)=\det(T^{-3})=1,
+\]
+且各矩阵条目都在 $\Z$ 中，所以它们都属于 $\SL_2(\Z)$。
+
+\item \textbf{解答.} 有
+\[
+ST=\mat{0&-1\\ 1&0}\mat{1&1\\ 0&1}
+=\mat{0&-1\\ 1&1},
+\]
+\[
+TS=\mat{1&1\\ 0&1}\mat{0&-1\\ 1&0}
+=\mat{1&-1\\ 1&0}.
+\]
+因此
+\[
+ST\neq TS.
+\]
+
+\item \textbf{解答.} 设
+\[
+A=\mat{a&b\\ c&d}\in \SL_2(\Z),
+\]
+则 $\det A=ad-bc=1$。于是
+\[
+A\mat{d&-b\\ -c&a}
+=\mat{ad-bc&-ab+ab\\ cd-dc&-cb+ad}
+=\mat{1&0\\ 0&1}=I.
+\]
+同理
+\[
+\mat{d&-b\\ -c&a}A=I.
+\]
+故
+\[
+A^{-1}=\mat{d&-b\\ -c&a}.
+\]
+
+\item \textbf{解答.} 令
+\[
+D=\operatorname{diag}(\lambda,1,\dots,1),\qquad \lambda\in F^\times.
+\]
+则
+\[
+D^{-1}=\operatorname{diag}(\lambda^{-1},1,\dots,1),
+\]
+所以 $D\in \GL_n(F)$。对角矩阵的行列式等于对角元之积，故
+\[
+\det D=\lambda\cdot 1\cdots 1=\lambda.
+\]
+
+\item \textbf{解答.} 由定义
+\[
+\GL_1(\F_5)=\F_5^\times=\{1,2,3,4\}.
+\]
+而 $\SL_1(\F_5)$ 由行列式等于 $1$ 的 $1\times1$ 矩阵组成，因此
+\[
+\SL_1(\F_5)=\{1\}.
+\]
+
+\item \textbf{解答.} 在 $\F_2^2$ 中，可逆矩阵的两列必须线性无关。第一列可任取非零向量，共
+\[
+2^2-1=3
+\]
+种。取定第一列后，第二列不能落在它张成的一维子空间中；该子空间有 $2$ 个向量，所以第二列有
+\[
+2^2-2=2
+\]
+种。故
+\[
+|\GL_2(\F_2)|=3\cdot 2=6.
+\]
+
+\item \textbf{解答.} 同理，在 $\F_3^2$ 中，第一列有
+\[
+3^2-1=8
+\]
+种非零选法。第二列不能在第一列张成的直线中；该直线有 $3$ 个向量，所以第二列有
+\[
+3^2-3=6
+\]
+种。故
+\[
+|\GL_2(\F_3)|=8\cdot 6=48.
+\]
+行列式映射
+\[
+\det:\GL_2(\F_3)\to \F_3^\times
+\]
+满射，而 $|\F_3^\times|=2$，其核为 $\SL_2(\F_3)$，所以
+\[
+|\SL_2(\F_3)|=\frac{48}{2}=24.
+\]
+
+\item \textbf{解答.} 行列式给出群同态
+\[
+\det:\GL_n(F)\longrightarrow F^\times.
+\]
+由定义
+\[
+\SL_n(F)=\{A\in \GL_n(F):\det A=1\}=\ker(\det).
+\]
+群同态的核总是正规子群，故
+\[
+\SL_n(F)\trianglelefteq \GL_n(F).
+\]
+
+\item \textbf{解答.} 固定 $A\in \GL_n(\R)$。若 $B\in A\SL_n(\R)$，则可写成 $B=AM$，其中 $M\in \SL_n(\R)$，故
+\[
+\det B=\det A\det M=\det A.
+\]
+因此同一个左陪集 $A\SL_n(\R)$ 中所有矩阵的行列式都与 $\det A$ 相同，特别具有相同符号。故行列式为正的矩阵与行列式为负的矩阵不可能落在同一左陪集里。
+
+\item \textbf{解答.} 由
+\[
+S^2=-I,
+\]
+故
+\[
+-I=S^2.
+\]
+
+\item \textbf{解答.} 先算
+\[
+ST=\mat{0&-1\\ 1&1}.
+\]
+于是
+\[
+(ST)^2=\mat{0&-1\\ 1&1}\mat{0&-1\\ 1&1}
+=\mat{-1&-1\\ 1&0},
+\]
+再乘一次得
+\[
+(ST)^3=\mat{-1&-1\\ 1&0}\mat{0&-1\\ 1&1}
+=\mat{-1&0\\ 0&-1}=-I.
+\]
+
+\item \textbf{解答.} 由
+\[
+T^m=\mat{1&m\\ 0&1},\qquad S^{-1}=-S=\mat{0&1\\ -1&0},
+\]
+得
+\[
+ST^m=\mat{0&-1\\ 1&0}\mat{1&m\\ 0&1}
+=\mat{0&-1\\ 1&m},
+\]
+故
+\[
+ST^mS^{-1}
+=\mat{0&-1\\ 1&m}\mat{0&1\\ -1&0}
+=\mat{1&0\\ -m&1}.
+\]
+
+\item \textbf{解答.} 记
+\[
+\GammaO(2)=\left\{\mat{a&b\\ c&d}\in \SL_2(\Z):c\equiv 0\pmod 2\right\}.
+\]
+单位元 $I$ 显然在其中。若
+\[
+A=\mat{a&b\\ c&d},\qquad B=\mat{a'&b'\\ c'&d'}\in \GammaO(2),
+\]
+则
+\[
+AB=\mat{aa'+bc'&ab'+bd'\\ ca'+dc'&cb'+dd'},
+\]
+其左下角为 $ca'+dc'$，仍被 $2$ 整除，所以 $AB\in\GammaO(2)$。又
+\[
+A^{-1}=\mat{d&-b\\ -c&a},
+\]
+其左下角为 $-c$，仍被 $2$ 整除，所以 $A^{-1}\in\GammaO(2)$。故 $\GammaO(2)$ 是 $\SL_2(\Z)$ 的子群。
+
+\item \textbf{解答.} 先算行列式：
+\[
+\det\mat{1&2\\ 3&7}=1,\qquad
+\det\mat{5&1\\ 4&1}=1,\qquad
+\det\mat{6&5\\ 10&11}=16\neq 1.
+\]
+所以第三个矩阵不在 $\SL_2(\Z)$，因而不属于 $\GammaO(3),\GammaI(4),\Gamma(5)$ 中的任何一个。
+
+对第一个矩阵 $\mat{1&2\\ 3&7}$，有 $c=3\equiv0\pmod 3$，故属于 $\GammaO(3)$；但
+\[
+c=3\not\equiv 0\pmod 4,
+\]
+故不属于 $\GammaI(4)$；又它模 $5$ 不与 $I$ 同余，故不属于 $\Gamma(5)$。
+
+对第二个矩阵 $\mat{5&1\\ 4&1}$，有
+\[
+c=4\not\equiv0\pmod 3,
+\]
+故不属于 $\GammaO(3)$；而
+\[
+a=5\equiv1,\quad d=1\equiv1,\quad c=4\equiv0\pmod 4,
+\]
+故属于 $\GammaI(4)$；又 $a=5\equiv0\not\equiv1\pmod 5$，故不属于 $\Gamma(5)$。
+
+综上，
+\[
+\mat{1&2\\ 3&7}\in \GammaO(3),\ \notin \GammaI(4),\ \notin \Gamma(5),
+\]
+\[
+\mat{5&1\\ 4&1}\notin \GammaO(3),\ \in \GammaI(4),\ \notin \Gamma(5),
+\]
+\[
+\mat{6&5\\ 10&11}\notin \GammaO(3),\ \notin \GammaI(4),\ \notin \Gamma(5).
+\]
+
+\item \textbf{解答.} 逐项模约化得
+\[
+\mat{7&4\\ 6&5}\equiv \mat{1&1\\ 0&2}\pmod 3,
+\qquad
+\mat{7&4\\ 6&5}\equiv \mat{2&4\\ 1&0}\pmod 5.
+\]
+
+\item \textbf{解答.} 设正三角形顶点为 $v_1,v_2,v_3$，群 $C_3=\langle r\rangle$ 由 $120^\circ$ 旋转生成。旋转可把任一顶点送到任一顶点，所以对每个顶点
+\[
+\Orb(v_i)=\{v_1,v_2,v_3\}.
+\]
+若 $r^k$ 固定某个顶点，则旋转角只能是 $0^\circ$，故 $r^k=e$。因此
+\[
+\Stab(v_i)=\{e\}.
+\]
+
+\item \textbf{解答.} 固定一个顶点 $v$。在 $D_4$ 中能固定 $v$ 的对称只有两个：恒等变换，以及经过 $v$ 与对角顶点所连对角线的反射。其余旋转和反射都会移动 $v$。故
+\[
+|\Stab(v)|=2.
+\]
+
+\item \textbf{解答.} 在自然作用下，$S_3$ 可把 $1$ 送到 $1,2,3$ 中任意一点，所以
+\[
+\Orb(1)=\{1,2,3\}.
+\]
+稳定子由所有固定 $1$ 的置换组成，只能在 $\{2,3\}$ 上作置换，因此
+\[
+\Stab(1)=\{\Id,(23)\}.
+\]
+
+\item \textbf{解答.} 由作用公式，
+\[
+S\cdot i=\frac{0\cdot i-1}{1\cdot i+0}=-\frac1i=i,
+\]
+故 $S$ 固定点 $i$。
+
+而
+\[
+T\cdot z=z+1.
+\]
+若 $T$ 在 $\HH$ 上有不动点 $z$，则 $z+1=z$，矛盾。所以 $T$ 在 $\HH$ 上没有不动点。
+
+\item \textbf{解答.} 设 $z=x+iy\in\HH$，其中 $y>0$。则
+\[
+z+1=(x+1)+iy,
+\]
+故
+\[
+\Im(z+1)=y=\Im z.
+\]
+又
+\[
+-\frac1z=-\frac{x-iy}{x^2+y^2}=\frac{-x+iy}{x^2+y^2},
+\]
+因此
+\[
+\Im\!\left(-\frac1z\right)=\frac{y}{x^2+y^2}
+=\frac{\Im z}{|z|^2}.
+\]
+
+\item \textbf{解答.} 点 $2i$ 满足
+\[
+|2i|=2\ge 1,\qquad |\Re(2i)|=0\le \frac12,
+\]
+所以 $2i\in\mathcal F$。因此可取所用矩阵为单位矩阵
+\[
+I=\mat{1&0\\ 0&1},
+\]
+并有
+\[
+I\cdot 2i=2i.
+\]
+
+\item \textbf{解答.} 设
+\[
+z=\frac{3+i}{2}.
+\]
+先用 $T^{-1}$：
+\[
+T^{-1}\cdot z=z-1=\frac{1+i}{2}.
+\]
+此时
+\[
+\left|\frac{1+i}{2}\right|=\frac1{\sqrt2}<1.
+\]
+再用 $S$：
+\[
+S\cdot \frac{1+i}{2}=-\frac{1}{(1+i)/2}=-1+i.
+\]
+最后用 $T$：
+\[
+T\cdot(-1+i)=i.
+\]
+而 $i\in\mathcal F$，故所求矩阵可取
+\[
+\gamma=TST^{-1}=\mat{1&-2\\ 1&-1},
+\]
+并且
+\[
+\gamma\cdot \frac{3+i}{2}=i.
+\]
+
+\item \textbf{解答.} 矩阵
+\[
+S=\mat{0&-1\\ 1&0}
+\]
+作用为
+\[
+S\cdot z=-\frac1z.
+\]
+在尖点上延拓后，
+\[
+S\cdot \infty=0,\qquad S\cdot 0=\infty.
+\]
+故 $0$ 与 $\infty$ 属于同一 $\SL_2(\Z)$-轨道，也就是同一尖点。
+
+\item \textbf{解答.} 记
+\[
+z\sim w \iff \exists\,\gamma\in\SL_2(\Z)\ \text{使}\ w=\gamma\cdot z.
+\]
+验证三条性质：
+
+反身性：取 $\gamma=I$，则 $z=I\cdot z$，故 $z\sim z$。
+
+对称性：若 $w=\gamma\cdot z$，则
+\[
+z=\gamma^{-1}\cdot w,
+\]
+且 $\gamma^{-1}\in\SL_2(\Z)$，故 $w\sim z$。
+
+传递性：若 $w=\gamma_1\cdot z$ 且 $u=\gamma_2\cdot w$，则
+\[
+u=\gamma_2\cdot(\gamma_1\cdot z)=(\gamma_2\gamma_1)\cdot z,
+\]
+而 $\gamma_2\gamma_1\in\SL_2(\Z)$，故 $z\sim u$。
+
+所以 $\sim$ 是等价关系。
+
+\item \textbf{解答.} 定义
+\[
+\Stab(x)=\{g\in G:g\cdot x=x\}.
+\]
+先有
+\[
+\Id\cdot x=x,
+\]
+故 $\Id\in\Stab(x)$。若 $g,h\in\Stab(x)$，则
+\[
+(gh)\cdot x=g\cdot(h\cdot x)=g\cdot x=x,
+\]
+所以 $gh\in\Stab(x)$。若 $g\in\Stab(x)$，则 $g\cdot x=x$，两边左乘 $g^{-1}$ 得
+\[
+g^{-1}\cdot x=x,
+\]
+故 $g^{-1}\in\Stab(x)$。因此 $\Stab(x)$ 是 $G$ 的子群。
+
+\item \textbf{解答.} 由
+\[
+A=\mat{a&b\\ 1&d}\in\SL_2(\Z)
+\]
+知
+\[
+ad-b=1\quad\Longrightarrow\quad b=ad-1.
+\]
+而
+\[
+T^aST^d
+=\mat{1&a\\ 0&1}\mat{0&-1\\ 1&0}\mat{1&d\\ 0&1}
+=\mat{a&ad-1\\ 1&d}.
+\]
+因此
+\[
+A=T^aST^d.
+\]
+
+\item \textbf{解答.} 设
+\[
+A=\mat{a&b\\ c&d}\in\SL_2(\Z),\qquad c\neq 0.
+\]
+对任意整数 $q$，
+\[
+T^{-q}A=\mat{a-qc&b-qd\\ c&d},
+\]
+从而
+\[
+ST^{-q}A=\mat{-c&-d\\ a-qc&b-qd}.
+\]
+所以 $ST^{-q}A$ 的左下角就是 $a-qc$。由整数除法，可取 $q\in\Z$ 使
+\[
+\left|\frac ac-q\right|\le \frac12.
+\]
+于是
+\[
+|a-qc|=|c|\left|\frac ac-q\right|\le \frac{|c|}{2}<|c|.
+\]
+这就证明了存在这样的整数 $q$。
+
+\item \textbf{解答.} 因为 $\SL_2(\Z)$ 由 $S,T$ 生成，而模 $2$ 约化映射
+\[
+\rho_2:\SL_2(\Z)\to \SL_2(\Z/2\Z)
+\]
+是满射，所以 $\SL_2(\Z/2\Z)$ 由 $\bar S=\rho_2(S)$ 与 $\bar T=\rho_2(T)$ 生成。
+
+若要直接看，也可算出
+\[
+|\SL_2(\Z/2\Z)|=|\GL_2(\F_2)|=6,
+\]
+而由 $\bar S,\bar T$ 可得到 $I,\bar S,\bar T,\bar S\bar T,\bar T\bar S,\bar S\bar T\bar S$ 六个不同元素，故它们确实生成整个群。
+
+\item \textbf{解答.} 同理，由 $\SL_2(\Z)=\langle S,T\rangle$ 且
+\[
+\rho_3:\SL_2(\Z)\to \SL_2(\Z/3\Z)
+\]
+是满射，立刻得到 $\SL_2(\Z/3\Z)$ 由 $\bar S,\bar T$ 生成。
+
+\item \textbf{解答.} 由定义，
+\[
+\rho_N\!\left(\mat{a&b\\ c&d}\right)=\mat{\bar a&\bar b\\ \bar c&\bar d}.
+\]
+因此
+\[
+A\in\ker(\rho_N)
+\iff \bar a=\bar d=1,\ \bar b=\bar c=0
+\iff A\equiv I\pmod N.
+\]
+而这正是 $\Gamma(N)$ 的定义，所以
+\[
+\ker(\rho_N)=\Gamma(N).
+\]
+
+\item \textbf{解答.} 由上一题，
+\[
+\Gamma(N)=\ker(\rho_N).
+\]
+群同态的核总是正规子群，故
+\[
+\Gamma(N)\trianglelefteq \SL_2(\Z).
+\]
+
+\item \textbf{解答.} 指标公式给出
+\[
+[\SL_2(\Z):\GammaO(N)]
+=N\prod_{p\mid N}\left(1+\frac1p\right).
+\]
+当 $N=2$ 时，
+\[
+[\SL_2(\Z):\GammaO(2)]
+=2\left(1+\frac12\right)=3.
+\]
+
+\item \textbf{解答.} 由指标公式，
+\[
+[\SL_2(\Z):\GammaO(3)]
+=3\left(1+\frac13\right)=4.
+\]
+
+\item \textbf{解答.} 由指标公式，
+\[
+[\SL_2(\Z):\GammaO(4)]
+=4\left(1+\frac12\right)=6.
+\]
+
+\item \textbf{解答.} 因为 $6=2\cdot 3$，故
+\[
+[\SL_2(\Z):\GammaO(6)]
+=6\left(1+\frac12\right)\left(1+\frac13\right)
+=6\cdot \frac32\cdot \frac43=12.
+\]
+
+\item \textbf{解答.} 由公式
+\[
+[\SL_2(\Z):\GammaI(N)]
+=N^2\prod_{p\mid N}\left(1-\frac1{p^2}\right),
+\]
+取 $N=5$ 得
+\[
+[\SL_2(\Z):\GammaI(5)]
+=25\left(1-\frac1{25}\right)=24.
+\]
+
+\item \textbf{解答.} 考虑群同态
+\[
+\GammaO(N)\longrightarrow (\Z/N\Z)^\times,\qquad
+\mat{a&b\\ c&d}\longmapsto \bar a.
+\]
+因为在 $\GammaO(N)$ 中有 $c\equiv 0\pmod N$ 且 $ad-bc=1$，故
+\[
+\bar a\,\bar d=1,
+\]
+所以 $\bar a\in(\Z/N\Z)^\times$。其核恰为满足
+\[
+a\equiv d\equiv 1,\qquad c\equiv 0\pmod N
+\]
+的矩阵，即 $\GammaI(N)$。该映射满射，因此
+\[
+[\GammaO(N):\GammaI(N)]
+=|(\Z/N\Z)^\times|
+=\varphi(N).
+\]
+
+\item \textbf{解答.} 设 $G=C_p$，轨道个数为 $r$。对任意非单位元 $g\in C_p$，它固定的点恰是被整个 $C_p$ 固定的点，因此
+\[
+|\Fix(g)|=|\Fix(C_p)|\qquad (g\neq 1).
+\]
+由 Burnside 引理，
+\[
+r=\frac1p\Bigl(|X|+(p-1)|\Fix(C_p)|\Bigr).
+\]
+右边必须是整数，所以
+\[
+|X|+(p-1)|\Fix(C_p)|\equiv 0\pmod p.
+\]
+即
+\[
+|X|-|\Fix(C_p)|\equiv 0\pmod p,
+\]
+故
+\[
+|X|\equiv |\Fix(C_p)|\pmod p.
+\]
+
+\item \textbf{解答.} 设
+\[
+X=\{(m,n)\in\Z^2:\gcd(m,n)=1\}.
+\]
+取任意 $(m,n)\in X$。由 Bézout 等式，存在整数 $x,y$ 使
+\[
+my-nx=1.
+\]
+于是
+\[
+A=\mat{m&x\\ n&y}\in \SL_2(\Z),
+\]
+并且
+\[
+A\binom10=\binom mn.
+\]
+因此每个原始向量都在 $(1,0)^t$ 的轨道中，即该作用是传递的。
+
+\item \textbf{解答.} 设 $z=x+iy$。取整数 $n$ 为最接近 $-x$ 的整数，则
+\[
+|x+n|\le \frac12.
+\]
+而
+\[
+\Re(z+n)=x+n,
+\]
+所以
+\[
+|\Re(z+n)|\le \frac12.
+\]
+
+\item \textbf{解答.} 由
+\[
+S\cdot w=-\frac1w
+\]
+以及虚部变换公式，
+\[
+\Im(S\cdot w)=\frac{\Im w}{|w|^2}.
+\]
+若 $|w|<1$，则 $1/|w|^2>1$，故
+\[
+\Im(S\cdot w)=\frac{\Im w}{|w|^2}>\Im w.
+\]
+
+\item \textbf{解答.} 给定 $z\in\HH$。在其 $\SL_2(\Z)$-轨道中取虚部最大的点 $w$。由上一题，可再取整数 $n$，使
+\[
+|\Re(w+n)|\le \frac12.
+\]
+因为 $T^n$ 不改变虚部，所以仍可记该点为 $w$，并有
+\[
+|\Re w|\le \frac12.
+\]
+若 $|w|<1$，则由上一题
+\[
+\Im(S\cdot w)>\Im w,
+\]
+与 $w$ 的虚部最大矛盾。故必有 $|w|\ge 1$。于是
+\[
+w\in\mathcal F.
+\]
+所以每个 $z\in\HH$ 都与 $\mathcal F$ 中某点等价。
+
+\item \textbf{解答.} 设
+\[
+z,w\in\mathcal F^\circ,\qquad w=\gamma\cdot z,\qquad \gamma=\mat{a&b\\ c&d}.
+\]
+由本章定理，只要 $z\in\mathcal F^\circ$，若 $(c,d)\neq(0,\pm1)$，便有
+\[
+|cz+d|>1.
+\]
+于是
+\[
+\Im w=\frac{\Im z}{|cz+d|^2}<\Im z.
+\]
+把同样论证应用于 $\gamma^{-1}$，又得 $\Im z<\Im w$，矛盾。故只可能
+\[
+c=0,\qquad d=\pm1.
+\]
+再由 $\det\gamma=1$ 得 $a=d=\pm1$，故
+\[
+\gamma=\pm\mat{1&n\\ 0&1}
+\]
+对某个 $n\in\Z$。在 $\HH$ 上 $-I$ 作用平凡，所以
+\[
+w=z+n.
+\]
+但 $z,w\in\mathcal F^\circ$ 都满足 $|\Re|<1/2$，只能有 $n=0$，故
+\[
+w=z.
+\]
+
+\item \textbf{解答.} 标准基本域
+\[
+\mathcal F=\left\{z\in\HH:|z|\ge1,\ |\Re z|\le \frac12\right\}
+\]
+有两类边界配对：
+
+其一，竖边
+\[
+\Re z=-\frac12\quad\text{与}\quad \Re z=\frac12
+\]
+由平移
+\[
+T:z\mapsto z+1
+\]
+配对，因为
+\[
+T\cdot\left(-\frac12+iy\right)=\frac12+iy.
+\]
+
+其二，圆弧边界
+\[
+|z|=1,\qquad -\frac12\le \Re z\le \frac12
+\]
+由
+\[
+S:z\mapsto -\frac1z
+\]
+配对；当 $|z|=1$ 时，
+\[
+S\cdot z=-\frac1z=-\bar z,
+\]
+它把圆弧左半边送到右半边，右半边送到左半边。
+
+特殊点中，
+\[
+S\cdot i=i,
+\]
+所以 $i$ 是阶 $2$ 椭圆点；两端点
+\[
+\omega=\frac{-1+\sqrt3\,i}{2},\qquad \omega+1=\frac{1+\sqrt3\,i}{2}
+\]
+分别落在两侧竖边上，由 $T$ 识别，而 $\omega$ 又满足 $(ST)\cdot\omega=\omega$。
+
+\item \textbf{解答.} 先看 $i$。由
+\[
+S\cdot i=i
+\]
+知 $\bar S$ 在 $\PSL_2(\Z)$ 中属于 $\Stab(i)$。又 $\bar S^2=\Id$，所以它给出一个阶 $2$ 元。若 $\bar\gamma\in\PSL_2(\Z)$ 也固定 $i$，则它是有限阶元；而标准基本域中通过 $i$ 的唯一非平凡边识别来自 $S$，故
+\[
+\Stab(i)=\{1,\bar S\},
+\]
+其阶为 $2$。
+
+再看
+\[
+\omega=e^{2\pi i/3}=\frac{-1+\sqrt3\,i}{2}.
+\]
+由
+\[
+(ST)\cdot\omega=\omega,\qquad (\overline{ST})^3=\Id
+\]
+知 $\overline{ST}\in\Stab(\omega)$ 且其阶为 $3$。标准基本域中通过 $\omega$ 的非平凡识别正对应三块小三角形绕点拼接，因此
+\[
+\Stab(\omega)=\{1,\overline{ST},\overline{(ST)^2}\},
+\]
+其阶为 $3$。
+
+\item \textbf{解答.} 因为
+\[
+T:z\mapsto z+1,
+\]
+所以可取竖条带
+\[
+D=\{z\in\HH:0\le \Re z<1\}
+\]
+为 $\langle T\rangle$ 的一个基本域。确实，对任意 $z=x+iy\in\HH$，存在唯一整数 $n$ 使
+\[
+x-n\in[0,1),
+\]
+从而
+\[
+T^{-n}\cdot z=z-n\in D.
+\]
+若 $z,z'\in D$ 且 $z'=T^m\cdot z=z+m$，则两点实部都在 $[0,1)$ 中，只能有 $m=0$。故该表示唯一，所以 $D$ 是基本域。
+
+\item \textbf{解答.} 因为
+\[
+T^2:z\mapsto z+2,
+\]
+故可取
+\[
+D_2=\{z\in\HH:0\le \Re z<2\}
+\]
+为 $\langle T^2\rangle$ 的一个基本域。证明与上一题相同：任意点可唯一平移入该条带。
+
+与上一题比较，$\langle T^2\rangle$ 在 $\langle T\rangle$ 中指数为 $2$，所以其基本域正好可看成上一题基本域的两个相邻副本之并：
+\[
+D_2=D\cup T\cdot D.
+\]
+
+\item \textbf{解答.} 约化映射
+\[
+\rho_N:\SL_2(\Z)\to \SL_2(\Z/N\Z)
+\]
+满射，且 $\GammaO(N)$ 的像正是 $\SL_2(\Z/N\Z)$ 在 $\mathbf P^1(\Z/N\Z)$ 上固定点 $[1:0]$ 的稳定子：因为
+\[
+\mat{a&b\\ c&d}\binom10=\binom ac,
+\]
+固定 $[1:0]$ 当且仅当 $c\equiv0\pmod N$。故
+\[
+[\SL_2(\Z):\GammaO(N)]
+=[\SL_2(\Z/N\Z):\Stab([1:0])]
+=\bigl|\mathbf P^1(\Z/N\Z)\bigr|.
+\]
+若 $N=p^r$，则
+\[
+\bigl|\mathbf P^1(\Z/p^r\Z)\bigr|=p^r+p^{r-1}=p^r\left(1+\frac1p\right).
+\]
+再由中国剩余定理的乘法性，
+\[
+\bigl|\mathbf P^1(\Z/N\Z)\bigr|
+=N\prod_{p\mid N}\left(1+\frac1p\right).
+\]
+于是
+\[
+[\SL_2(\Z):\GammaO(N)]
+=N\prod_{p\mid N}\left(1+\frac1p\right).
+\]
+
+\item \textbf{解答.} 因为 $8=2^3$，所以
+\[
+\bigl|\mathbf P^1(\Z/8\Z)\bigr|
+=2^3+2^2=8+4=12.
+\]
+因此
+\[
+[\SL_2(\Z):\GammaO(8)]=12.
+\]
+
+\item \textbf{解答.} 因为 $\GammaO(N)$ 在 $\SL_2(\Z)$ 中是有限指标子群，设
+\[
+[\SL_2(\Z):\GammaO(N)]=r,
+\]
+取一组左陪集代表 $\gamma_1,\dots,\gamma_r$，则
+\[
+\gamma_1\mathcal F,\dots,\gamma_r\mathcal F
+\]
+的并经边界适当识别后给出 $\GammaO(N)$ 的一个基本域。所以它必由有限个 $\SL_2(\Z)$ 的标准基本域拼接而成。
+
+对 $N=2$，指标为
+\[
+[\SL_2(\Z):\GammaO(2)]=3,
+\]
+故基本域可由 $3$ 个标准基本域拼接而成；例如可取陪集代表
+\[
+I,\ S,\ TS.
+\]
+
+对 $N=3$，指标为
+\[
+[\SL_2(\Z):\GammaO(3)]=4,
+\]
+故基本域可由 $4$ 个标准基本域拼接而成；例如可取陪集代表
+\[
+I,\ S,\ TS,\ T^{-1}S.
+\]
+把这些像沿公共边拼接，就得到常见的 $\GammaO(2)$ 与 $\GammaO(3)$ 基本域草图。
+
+\item \textbf{解答.} 设
+\[
+T_A(z)=\frac{az+b}{cz+d}\qquad \left(A=\mat{a&b\\ c&d},\ \det A\neq0\right).
+\]
+则
+\[
+T_A\circ T_B=T_{AB},
+\]
+所以闭合性与结合律都来自矩阵乘法。单位元是
+\[
+T_I(z)=z.
+\]
+若 $\det A\neq0$，则
+\[
+T_A^{-1}=T_{A^{-1}},
+\]
+故每个元素都可逆，因此 $\mathcal M$ 在复合下成群。
+
+再定义
+\[
+\Phi:\GL_2(\R)\to\mathcal M,\qquad A\mapsto T_A.
+\]
+这是满同态，且
+\[
+T_{\lambda A}=T_A\qquad (\lambda\in\R^\times).
+\]
+反之，若 $T_A=T_B$，则
+\[
+\frac{az+b}{cz+d}=\frac{a'z+b'}{c'z+d'}
+\]
+对所有 $z$ 成立，交叉相乘比较系数可得 $B=\lambda A$。故
+\[
+\ker\Phi=\R^\times I.
+\]
+因此
+\[
+\mathcal M\cong \GL_2(\R)/\R^\times I=\PGL_2(\R).
+\]
+
+\item \textbf{解答.} 对
+\[
+A=\mat{a&b\\ c&d}\in\SL_2(\R),
+\]
+作用定义为
+\[
+A\cdot z=\frac{az+b}{cz+d}.
+\]
+若 $\lambda\neq0$，则
+\[
+\frac{\lambda az+\lambda b}{\lambda cz+\lambda d}=\frac{az+b}{cz+d},
+\]
+故非零标量倍给出同一个 Möbius 变换。特别地，在 $\SL_2(\R)$ 中只有 $\pm I$ 是标量矩阵，而
+\[
+(-I)\cdot z=z.
+\]
+因此该作用的核恰为 $\{\pm I\}$，从而它通过商群
+\[
+\PSL_2(\R)=\SL_2(\R)/\{\pm I\}
+\]
+因子化。
+
+\item \textbf{解答.} 严格地说，本章命题的结论对 $\gamma\neq\pm I$ 成立；因为 $\pm I$ 都固定整个 $\HH$，但
+\[
+|\tr(\pm I)|=2.
+\]
+对非标量情形，设
+\[
+\gamma=\mat{a&b\\ c&d}\in\SL_2(\Z),\qquad \gamma\neq\pm I.
+\]
+不动点方程为
+\[
+\frac{az+b}{cz+d}=z
+\iff cz^2+(d-a)z-b=0.
+\]
+其判别式为
+\[
+(d-a)^2+4bc=(a+d)^2-4(ad-bc)=\tr(\gamma)^2-4.
+\]
+该二次方程在 $\HH$ 中有解，当且仅当它有非实共轭根，即判别式小于 $0$。故
+\[
+\gamma\ \text{在}\ \HH\ \text{中有不动点}
+\iff \tr(\gamma)^2-4<0
+\iff |\tr(\gamma)|<2.
+\]
+所以题中结论对 $\gamma\neq\pm I$ 正确；$\pm I$ 是仅有的例外。
+
+\item \textbf{解答.} 严格表述应为：在 $\PSL_2(\Z)$ 中，每个非平凡有限阶元素都共轭于 $\bar S$ 或 $\overline{ST}$；提回到 $\SL_2(\Z)$ 时，除中心元 $-I$ 外，非中心有限阶元都与 $\pm S$ 或 $\pm ST$ 同类。
+
+证明如下。设 $\bar\gamma\in\PSL_2(\Z)$ 为非平凡有限阶元，则它在 $\HH$ 上的作用有不动点 $z$。取 $\delta\in\PSL_2(\Z)$ 使 $\delta z\in\overline{\mathcal F}$。于是
+\[
+\delta\bar\gamma\delta^{-1}
+\]
+固定 $\overline{\mathcal F}$ 中某点。标准基本域中只有两个椭圆点：$i$ 与 $\omega$。前者的稳定子由 $\bar S$ 生成，后者的稳定子由 $\overline{ST}$ 生成。故
+\[
+\delta\bar\gamma\delta^{-1}
+\]
+必属于这两个循环群之一，从而 $\bar\gamma$ 共轭于 $\bar S$ 或 $\overline{ST}$。
+
+\item \textbf{解答.} 任取 $\GammaO(N)$ 的一个尖点，可写成既约分数
+\[
+\frac ac\in \mathbf P^1(\Q),\qquad \gcd(a,c)=1,
+\]
+其中 $\infty$ 视为 $1/0$。令
+\[
+d=\gcd(c,N).
+\]
+要证它与某个分母整除 $N$ 的分数等价。写
+\[
+c=dc_1,\qquad N=dN_1,\qquad \gcd(c_1,N_1)=1.
+\]
+由 Bézout 定理可取整数 $u,v$ 使
+\[
+uN_1+vc_1=1.
+\]
+于是矩阵
+\[
+\gamma=\mat{u&*\\ Nv&*}\in \GammaO(N)
+\]
+可适当补成行列式 $1$。计算
+\[
+\gamma\cdot \frac ac=\frac{ua+*c}{Nva+*c}.
+\]
+其分母与 $d$ 同比例，因此约分后得到某个
+\[
+\frac{a'}d
+\]
+的形式，其中 $d\mid N$。所以每个尖点都可由某个有理数 $a/c$ 表示，且 $c\mid N$。
+
+\item \textbf{解答.} 由上一题，每个尖点都可表示成
+\[
+\frac ad,\qquad d\mid N,\qquad \gcd(a,d)=1.
+\]
+对固定的 $d\mid N$，设
+\[
+g=\gcd(d,N/d).
+\]
+标准尖点分类告诉我们：两个分数
+\[
+\frac ad,\qquad \frac{a'}d
+\]
+在 $\GammaO(N)$ 下等价，当且仅当
+\[
+a\equiv a'\pmod g.
+\]
+因此，对该固定分母 $d$，不同尖点个数正好是模 $g$ 的可逆剩余类个数，即
+\[
+\varphi(g)=\varphi\!\bigl(\gcd(d,N/d)\bigr).
+\]
+对所有 $d\mid N$ 求和，得到
+\[
+\nu_{\infty}(N)=\sum_{d\mid N}\varphi\!\bigl(\gcd(d,N/d)\bigr).
+\]
+
+\item \textbf{解答.} 当 $N=11$ 时，因子只有 $1,11$，故
+\[
+\nu_\infty(11)
+=\varphi(\gcd(1,11))+\varphi(\gcd(11,1))
+=\varphi(1)+\varphi(1)=2.
+\]
+所以 $\GammaO(11)$ 有两个尖点。一组代表元可取
+\[
+\infty,\qquad 0.
+\]
+因为对素数 $p$，$\GammaO(p)$ 的尖点正对应分母 $1$ 与分母 $p$ 两类。
+
+\item \textbf{解答.} 把 $\PSL_2(\Z)$ 的标准基本域 $\mathcal F$ 分成两块双曲三角形，它们的角分别为
+\[
+\frac{\pi}{2},\qquad \frac{\pi}{3},\qquad 0.
+\]
+若 $\bar\Gamma\subseteq \PSL_2(\Z)$ 的指标为 $\mu$，则 $\bar\Gamma\backslash\HH$ 可由 $2\mu$ 个这样的三角形拼成。用 orbifold Euler 特征计数，可得
+\[
+\chi_{\mathrm{orb}}(\bar\Gamma\backslash\HH)
+=\mu\left(\frac12+\frac13-1\right)
+=-\frac{\mu}{6}.
+\]
+紧化后，每个阶 $2$ 椭圆点贡献 $1/2$，每个阶 $3$ 椭圆点贡献 $2/3$，每个尖点贡献 $1$。于是
+\[
+2-2g=-\frac{\mu}{6}+\frac{\nu_2}{2}+\frac{2\nu_3}{3}+\nu_\infty.
+\]
+移项化简即得
+\[
+g=1+\frac{\mu}{12}-\frac{\nu_2}{4}-\frac{\nu_3}{3}-\frac{\nu_\infty}{2}.
+\]
+
+\item \textbf{解答.} 对 $\GammaO(11)$，有
+\[
+\mu=[\PSL_2(\Z):\overline{\GammaO(11)}]
+=11\left(1+\frac1{11}\right)=12.
+\]
+由上一题，
+\[
+\nu_\infty(11)=2.
+\]
+又
+\[
+11\equiv 3\pmod 4,
+\]
+故同余式 $x^2+1\equiv0\pmod{11}$ 无解，所以 $\nu_2=0$。并且
+\[
+11\equiv 2\pmod 3,
+\]
+故 $x^2+x+1\equiv0\pmod{11}$ 无解，所以 $\nu_3=0$。代入亏格公式：
+\[
+g=1+\frac{12}{12}-0-0-\frac22=1.
+\]
+因此
+\[
+g(X_0(11))=1.
+\]
+
+\item \textbf{解答.} 来自 $i$ 的椭圆点等价于存在 $\gamma\in\SL_2(\Z)$ 使
+\[
+\gamma S\gamma^{-1}\in \GammaO(N),
+\]
+因为 $S$ 固定 $i$。设
+\[
+\gamma=\mat{a&b\\ c&d},
+\]
+直接计算得
+\[
+\gamma S\gamma^{-1}
+=\mat{ac+bd&-(a^2+b^2)\\ c^2+d^2&-(ac+bd)}.
+\]
+故其落在 $\GammaO(N)$ 中当且仅当
+\[
+c^2+d^2\equiv 0\pmod N.
+\]
+由于 $\gcd(c,d)=1$，对每个素因子 $p\mid N$，$d$ 在模 $p$ 下不全为零，可写成
+\[
+\left(c d^{-1}\right)^2+1\equiv 0\pmod N.
+\]
+所以阶 $2$ 椭圆点存在当且仅当
+\[
+x^2+1\equiv 0\pmod N
+\]
+可解。
+
+这个同余可解当且仅当：$4\nmid N$，且每个奇素因子 $p\mid N$ 都满足
+\[
+p\equiv 1\pmod 4.
+\]
+因此
+\[
+X_0(N)\ \text{没有来自 }i\text{ 的椭圆点}
+\]
+当且仅当
+\[
+4\mid N\quad\text{或}\quad \exists\,p\mid N,\ p\equiv 3\pmod 4.
+\]
+
+\item \textbf{解答.} 同理，来自 $\omega$ 的椭圆点等价于存在 $\gamma\in\SL_2(\Z)$ 使
+\[
+\gamma(ST)\gamma^{-1}\in \GammaO(N),
+\]
+因为 $ST$ 固定 $\omega$。设
+\[
+\gamma=\mat{a&b\\ c&d},
+\]
+直接计算可得该共轭矩阵的左下角为
+\[
+c^2-cd+d^2.
+\]
+故存在阶 $3$ 椭圆点当且仅当
+\[
+c^2-cd+d^2\equiv 0\pmod N.
+\]
+把 $x\equiv -cd^{-1}\pmod N$ 代入，可改写为
+\[
+x^2+x+1\equiv 0\pmod N.
+\]
+因此阶 $3$ 椭圆点存在当且仅当该同余可解。
+
+它可解当且仅当：$9\nmid N$，且每个素因子 $p\neq 3$ 都满足
+\[
+p\equiv 1\pmod 3.
+\]
+故
+\[
+X_0(N)\ \text{没有来自 }\omega\text{ 的椭圆点}
+\]
+当且仅当
+\[
+9\mid N\quad\text{或}\quad \exists\,p\mid N,\ p\equiv 2\pmod 3.
+\]
+
+\item \textbf{解答.} 射影直线
+\[
+\mathbf P^1(\F_3)=\{[1:0],[0:1],[1:1],[1:2]\}
+\]
+共有 $4$ 个点。$\SL_2(\F_3)$ 对列向量左乘，因而作用在 $\mathbf P^1(\F_3)$ 上。
+
+传递性：任取 $[u:v]\in\mathbf P^1(\F_3)$，因为 $(u,v)\neq(0,0)$，可取 $(x,y)$ 使
+\[
+uy-vx=1.
+\]
+则
+\[
+A=\mat{u&x\\ v&y}\in\SL_2(\F_3),
+\]
+且
+\[
+A\cdot [1:0]=[u:v].
+\]
+故作用是传递的。
+
+稳定子：固定点 $[1:0]$ 的稳定子为所有满足 $c=0$ 的矩阵，即
+\[
+\Stab([1:0])=
+\left\{\mat{a&b\\ 0&a^{-1}}:a\in\F_3^\times,\ b\in\F_3\right\}.
+\]
+其大小为
+\[
+|\F_3^\times|\cdot |\F_3|=2\cdot 3=6.
+\]
+
+\item \textbf{解答.} 直接按列计数。设
+\[
+A=\mat{a&b\\ c&d}\in \SL_2(\F_q).
+\]
+第一列 $(a,c)^t$ 不能为零，因此有
+\[
+q^2-1
+\]
+种选法。固定第一列后，第二列必须满足
+\[
+ad-bc=1.
+\]
+这是关于 $(b,d)$ 的一个非齐次线性方程，恰有 $q$ 个解：
+
+若 $c\neq0$，任取 $d\in\F_q$，则
+\[
+b=(ad-1)c^{-1}
+\]
+唯一确定；
+
+若 $c=0$，则 $a\neq0$，任取 $b\in\F_q$，而
+\[
+d=a^{-1}
+\]
+唯一确定。
+
+所以每个非零第一列对应恰好 $q$ 个第二列，故
+\[
+|\SL_2(\F_q)|=(q^2-1)\cdot q=q(q^2-1).
+\]
+
+\item \textbf{解答.} 设 $\gamma\in\Gamma(N)$ 且 $\gamma$ 有有限阶，其中 $N\ge 3$。由于 $\Gamma(N)$ 正规，其像 $\bar\gamma\in\PSL_2(\Z)$ 也是有限阶元。若 $\bar\gamma\neq 1$，则由前题，$\bar\gamma$ 共轭于 $\bar S$ 或 $\overline{ST}$。因为 $\bar\Gamma(N)$ 正规，这将迫使 $\bar S$ 或 $\overline{ST}$ 落在 $\bar\Gamma(N)$ 中。于是存在符号 $\varepsilon=\pm1$ 使
+\[
+\varepsilon S\in \Gamma(N)\quad\text{或}\quad \varepsilon ST\in \Gamma(N).
+\]
+但当 $N\ge3$ 时，
+\[
+\pm S\not\equiv I\pmod N,\qquad \pm ST\not\equiv I\pmod N,
+\]
+矛盾。故只能有 $\bar\gamma=1$，即
+\[
+\gamma=\pm I.
+\]
+又
+\[
+-I\not\equiv I\pmod N \qquad (N\ge3),
+\]
+所以 $\gamma=I$。因此 $\Gamma(N)$ 没有非平凡有限阶元，即 $\Gamma(N)$ 是无挠群。
+
+\item \textbf{解答.} 在 $\PSL_2(\Z)$ 中记
+\[
+u=\bar S,\qquad v=\overline{ST}.
+\]
+则
+\[
+u^2=1,\qquad v^3=1.
+\]
+因此由自由积的泛性质，存在满同态
+\[
+C_2*C_3\longrightarrow \PSL_2(\Z),\qquad
+u\mapsto \bar S,\ v\mapsto \overline{ST}.
+\]
+
+只需证它是单射。取标准基本域内部一点 $z_0\in\mathcal F^\circ$。把 $\HH$ 用 $\PSL_2(\Z)$ 的标准三角剖分铺开后，非平凡既约词（在 $u,v$ 中）会把包含 $z_0$ 的基本三角形送到另一个不同的三角形；因此它不可能固定 $z_0$，从而在 $\PSL_2(\Z)$ 中不等于单位元。故除了
+\[
+u^2=1,\qquad v^3=1
+\]
+之外没有别的关系。
+
+因此
+\[
+\PSL_2(\Z)\cong C_2*C_3.
+\]
+\end{enumerate}

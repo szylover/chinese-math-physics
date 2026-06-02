@@ -1153,3 +1153,967 @@ K_f=\Q\bigl(a_n(f):n\ge 1\bigr)
   \item \hard 证明：若 $\mathbb{T}_{N,\Q}$ 是有限维交换半单 $\Q$-代数，则它同构于若干数域的直积；解释这与 Hecke 本征形式分解的关系。
   \item \hard 设 $R$ 为交换环。证明 $\Spec(R/I)$ 与 $\{\mathfrak p\in \Spec(R)\mid I\subset \mathfrak p\}$ 作为拓扑空间同胚，并说明这一结论如何推广了“理想对应定理”。
 \end{enumerate}
+
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+  \item \textbf{解答.} 设 $0,0'$ 都是加法零元，则
+  \[
+  0=0+0'=0'.
+  \]
+  故加法零元唯一。若 $b,c$ 都是 $a$ 的加法逆元，则
+  \[
+  b=b+0=b+(a+c)=(b+a)+c=0+c=c.
+  \]
+  故加法逆元也唯一。
+
+  \item \textbf{解答.} 由 $1+(-1)=0$，对任意 $a\in R$ 有
+  \[
+  a+(-1)a=1a+(-1)a=(1+(-1))a=0a=0.
+  \]
+  因而 $(-1)a$ 是 $a$ 的加法逆元，故 $(-1)a=-a$。
+
+  \item \textbf{解答.} 若 $\overline a=\overline{a'}$、$\overline b=\overline{b'}$ 于 $\Z/n\Z$ 中相等，则
+  \[
+  n\mid(a-a'),\qquad n\mid(b-b').
+  \]
+  因此
+  \[
+  (a+b)-(a'+b')=(a-a')+(b-b')
+  \]
+  也被 $n$ 整除，所以 $\overline{a+b}=\overline{a'+b'}$。又
+  \[
+  ab-a'b'=a(b-b')+b'(a-a')
+  \]
+  也被 $n$ 整除，所以 $\overline{ab}=\overline{a'b'}$。故加法与乘法都良定。
+
+  \item \textbf{解答.} 取
+  \[
+  A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+  B=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+  \]
+  则
+  \[
+  AB=\begin{pmatrix}0&1\\0&0\end{pmatrix}=B,\qquad
+  BA=\begin{pmatrix}0&0\\0&0\end{pmatrix}.
+  \]
+  所以 $AB\neq BA$，故 $\Mat_2(\R)$ 不是交换环。
+
+  \item \textbf{解答.} $\Z[i]=\{a+bi:a,b\in\Z\}$ 在加法下封闭，因为
+  \[
+  (a+bi)+(c+di)=(a+c)+(b+d)i\in\Z[i].
+  \]
+  在取负下封闭，因为
+  \[
+  -(a+bi)=(-a)+(-b)i\in\Z[i].
+  \]
+  在乘法下封闭，因为
+  \[
+  (a+bi)(c+di)=(ac-bd)+(ad+bc)i\in\Z[i].
+  \]
+  它含有 $0=0+0i$ 与 $1=1+0i$。加法、乘法继承自 $\C$ 的通常运算，满足环公理；又复数乘法交换，所以 $\Z[i]$ 是交换环。
+
+  \item \textbf{解答.} 对
+  \[
+  \Z[\sqrt{-5}]=\{a+b\sqrt{-5}:a,b\in\Z\},
+  \]
+  有
+  \[
+  (a+b\sqrt{-5})+(c+d\sqrt{-5})=(a+c)+(b+d)\sqrt{-5}\in\Z[\sqrt{-5}],
+  \]
+  \[
+  -(a+b\sqrt{-5})=(-a)+(-b)\sqrt{-5}\in\Z[\sqrt{-5}],
+  \]
+  \[
+  (a+b\sqrt{-5})(c+d\sqrt{-5})=(ac-5bd)+(ad+bc)\sqrt{-5}\in\Z[\sqrt{-5}].
+  \]
+  且 $0,1\in \Z[\sqrt{-5}]$。故它是 $\C$ 的子环，从而是交换环。
+
+  \item \textbf{解答.} 取
+  \[
+  f(x,y)=x+y,\qquad g(x,y)=x^2+y^2.
+  \]
+  则 $\deg f=1$，$\deg g=2$，且
+  \[
+  fg=(x+y)(x^2+y^2)=x^3+x^2y+xy^2+y^3.
+  \]
+  此乘积的总次数为 $3=1+2$，符合要求。
+
+  \item \textbf{解答.} 已知 $1\in S$，且 $S$ 对减法与乘法封闭。先证 $0\in S$：因为
+  \[
+  0=1-1\in S.
+  \]
+  若 $a\in S$，则
+  \[
+  -a=0-a\in S.
+  \]
+  因而 $S$ 对加法也封闭，因为
+  \[
+  a+b=a-(-b)\in S.
+  \]
+  所以 $S$ 对加法、乘法、取负封闭，且含 $1$，故 $S$ 是 $R$ 的子环。
+
+  \item \textbf{解答.} $2\Z$ 不是 $\Z$ 的子环，因为子环必须含单位元 $1$，但 $1\notin 2\Z$。  
+  另一方面，$2\Z$ 是 $\Z$ 的理想：它是加法子群，且对任意 $m\in\Z$、$2k\in2\Z$，
+  \[
+  m(2k)=2(mk)\in 2\Z.
+  \]
+  故 $2\Z$ 是理想。
+
+  \item \textbf{解答.} 在 $\Z$ 中，
+  \[
+  (12)+(18)=(\gcd(12,18))=(6),
+  \]
+  因为 $6=18-12\in (12)+(18)$，且 $12,18$ 都是 $6$ 的倍数，所以两边相等。  
+  又
+  \[
+  (12)\cap(18)=(\operatorname{lcm}(12,18))=(36),
+  \]
+  因为同时是 $12$ 与 $18$ 的倍数当且仅当是 $36$ 的倍数。
+
+  \item \textbf{解答.} $n\Z$ 是加法子群，因为
+  \[
+  nk-n\ell=n(k-\ell)\in n\Z.
+  \]
+  对任意 $m\in\Z$ 与 $nk\in n\Z$，有
+  \[
+  m(nk)=n(mk)\in n\Z.
+  \]
+  故 $n\Z$ 对环中元素乘法封闭，因此是 $\Z$ 的理想。
+
+  \item \textbf{解答.} 若 $(a)=R$，则 $1\in(a)$，故存在 $r\in R$ 使
+  \[
+  ar=1.
+  \]
+  因而 $a$ 是单位。  
+  反之，若 $a$ 是单位，设 $ar=1$，则对任意 $x\in R$，
+  \[
+  x=1x=(ar)x=a(rx)\in(a),
+  \]
+  所以 $(a)=R$。
+
+  \item \textbf{解答.} 自然投影
+  \[
+  \varphi:\Z\to \Z/6\Z,\qquad n\mapsto \overline n
+  \]
+  的核是
+  \[
+  \Ker\varphi=\{n\in\Z: \overline n=\overline0\}=6\Z=(6).
+  \]
+  它显然满射，所以
+  \[
+  \Ima\varphi=\Z/6\Z.
+  \]
+
+  \item \textbf{解答.} 评价同态
+  \[
+  \operatorname{ev}_2:\Q[x]\to\Q,\qquad f(x)\mapsto f(2)
+  \]
+  的核为所有满足 $f(2)=0$ 的多项式。由因式定理，
+  \[
+  f(2)=0 \Longleftrightarrow x-2\mid f(x).
+  \]
+  因而
+  \[
+  \Ker(\operatorname{ev}_2)=(x-2).
+  \]
+
+  \item \textbf{解答.} 在商环 $\Q[x]/(x^2-1)$ 中，
+  \[
+  \bigl(x+(x^2-1)\bigr)^2=x^2+(x^2-1).
+  \]
+  又因 $x^2-1\in(x^2-1)$，故 $x^2\equiv 1\pmod{x^2-1}$，于是
+  \[
+  \bigl(x+(x^2-1)\bigr)^2=1+(x^2-1).
+  \]
+
+  \item \textbf{解答.} 设 $\overline e\in\Z/8\Z$ 满足 $\overline e^2=\overline e$，即
+  \[
+  e^2\equiv e\pmod 8\Longleftrightarrow e(e-1)\equiv0\pmod 8.
+  \]
+  逐一检查 $e=0,1,\dots,7$：
+  \[
+  0^2\equiv0,\quad 1^2\equiv1,\quad
+  2^2\equiv4,\quad 3^2\equiv1,\quad 4^2\equiv0,
+  \]
+  \[
+  5^2\equiv1,\quad 6^2\equiv4,\quad 7^2\equiv1 \pmod 8.
+  \]
+  只有 $\overline0,\overline1$ 满足条件。故全部幂等元为
+  \[
+  \overline0,\ \overline1.
+  \]
+
+  \item \textbf{解答.} 定义
+  \[
+  \psi:\Z/(p)\to \Z/p\Z,\qquad n+(p)\mapsto \overline n.
+  \]
+  若 $n+(p)=m+(p)$，则 $p\mid(n-m)$，故 $\overline n=\overline m$，所以 $\psi$ 良定。它显然保加法与乘法，且双射。故
+  \[
+  \Z/(p)\cong \Z/p\Z.
+  \]
+
+  \item \textbf{解答.} 在 $\Z$ 中，真理想 $(n)$ 是素理想当且仅当 $n$ 为素数的正负号；极大理想也同样如此。  
+  因而：
+  \[
+  (7)\ \text{是素理想且是极大理想},
+  \]
+  \[
+  (9)\ \text{不是素理想，也不是极大理想},
+  \]
+  \[
+  (15)\ \text{不是素理想，也不是极大理想}.
+  \]
+  例如 $3\cdot3=9\in(9)$ 但 $3\notin(9)$；$3\cdot5=15\in(15)$ 但 $3,5\notin(15)$。
+
+  \item \textbf{解答.} 在 $\Q[x]$ 中，
+  \[
+  \Q[x]/(x)\cong \Q
+  \]
+  是域，所以 $(x)$ 是极大理想。  
+  又 $x^2+1$ 在 $\Q[x]$ 中无有理根，且次数为 $2$，故不可约。因此
+  \[
+  \Q[x]/(x^2+1)
+  \]
+  是域，所以 $(x^2+1)$ 也是极大理想。
+
+  \item \textbf{解答.} 域 $\F$ 没有零因子，所以它是整环。由“$P$ 为素理想当且仅当 $R/P$ 为整环”，取 $P=(0)$ 得
+  \[
+  \F/(0)\cong \F
+  \]
+  是整环，故 $(0)$ 是素理想。
+
+  \item \textbf{解答.} 域 $\F$ 的理想只有 $(0)$ 与 $\F$。因此在真理想中，$(0)$ 已经没有更大的真理想，故 $(0)$ 是极大理想；且这是唯一的极大理想。
+
+  \item \textbf{解答.} 若 $P=R$，则
+  \[
+  R/P=R/R=0
+  \]
+  是零环，而本章中的整环要求 $1\neq0$，故零环不是整环。既然题设 $R/P$ 是整环，就不可能有 $P=R$。因此 $P$ 必是真理想。
+
+  \item \textbf{解答.} 若 $u\in\Z$ 是单位，则存在 $v\in\Z$ 使 $uv=1$。取绝对值：
+  \[
+  |u||v|=1.
+  \]
+  因为 $|u|,|v|\in\N$，只能有 $|u|=|v|=1$，故 $u=\pm1$。  
+  反之，$1$ 与 $-1$ 都显然可逆，逆元分别是 $1,-1$。所以 $\Z$ 的全部单位恰为
+  \[
+  \pm1.
+  \]
+
+  \item \textbf{解答.} 设 $u=a+bi\in\Z[i]$ 是单位，则存在 $v$ 使 $uv=1$。取范数
+  \[
+  N(u)N(v)=N(1)=1,\qquad N(a+bi)=a^2+b^2.
+  \]
+  因而 $N(u)=1$，即
+  \[
+  a^2+b^2=1.
+  \]
+  其整数解只有 $(\pm1,0),(0,\pm1)$。所以 $\Z[i]$ 的单位为
+  \[
+  \pm1,\ \pm i.
+  \]
+
+  \item \textbf{解答.} 在 $\Z$ 中，非零非单位元 $n$ 不可约当且仅当 $|n|$ 是通常意义下的素数；素元也同样如此。故
+  \[
+  2,3,5
+  \]
+  都是不可约元，也是素元。  
+  而
+  \[
+  6=2\cdot3
+  \]
+  是两个非单位之积，所以 $6$ 不可约。又
+  \[
+  6\mid 2\cdot3,\qquad 6\nmid 2,\qquad 6\nmid 3,
+  \]
+  故 $6$ 也不是素元。
+
+  \item \textbf{解答.} $\Q$ 是域，而对域 $\F$，多项式环 $\F[x]$ 是欧几里得整环，欧几里得函数可取次数 $\deg$。因此 $\Q[x]$ 是欧几里得整环，从而是 PID。
+
+  \item \textbf{解答.} 用带余除法：
+  \[
+  x^3-1=x(x^2-1)+(x-1).
+  \]
+  所以
+  \[
+  \gcd(x^3-1,x^2-1)=\gcd(x^2-1,x-1).
+  \]
+  又
+  \[
+  x^2-1=(x+1)(x-1),
+  \]
+  因而最大公因子可取首一多项式
+  \[
+  x-1.
+  \]
+
+  \item \textbf{解答.} 在 $\Z[i]$ 中作欧几里得算法。先算
+  \[
+  \frac{3+2i}{1+4i}=\frac{(3+2i)(1-4i)}{17}=\frac{11-10i}{17}\approx 0.647-0.588i.
+  \]
+  取最邻近高斯整数 $1-i$，则
+  \[
+  3+2i=(1-i)(1+4i)+(-2-i).
+  \]
+  再算
+  \[
+  \frac{1+4i}{-2-i}=\frac{(1+4i)(-2+i)}{5}=\frac{-6-7i}{5}\approx -1.2-1.4i.
+  \]
+  取商 $-1-i$，得
+  \[
+  1+4i=(-1-i)(-2-i)+i.
+  \]
+  最后
+  \[
+  -2-i=(-1+2i)i+0.
+  \]
+  故最后一个非零余数是 $i$，它是单位，所以 $\gcd(3+2i,1+4i)$ 与 $i$ 关联。通常可取
+  \[
+  \gcd(3+2i,1+4i)=1
+  \]
+  （相差单位因子）。
+
+  \item \textbf{解答.} 在 $\Z[\sqrt{-5}]$ 中有
+  \[
+  6=2\cdot3=(1+\sqrt{-5})(1-\sqrt{-5}).
+  \]
+  取范数
+  \[
+  N(a+b\sqrt{-5})=a^2+5b^2.
+  \]
+  则
+  \[
+  N(2)=4,\quad N(3)=9,\quad N(1\pm\sqrt{-5})=6.
+  \]
+  若 $2=\alpha\beta$ 且两因子都非单位，则 $N(\alpha),N(\beta)>1$ 且
+  \[
+  N(\alpha)N(\beta)=4,
+  \]
+  只能都等于 $2$；但方程 $a^2+5b^2=2$ 无整数解，故 $2$ 不可约。类似地，$3$ 不可约，因为 $a^2+5b^2=3$ 无整数解。  
+  对 $1\pm\sqrt{-5}$，若可约，则某因子范数只能是 $2$ 或 $3$，同样不可能，故也不可约。  
+  又单位只有 $\pm1$，所以这两种分解中的因子两两不关联，故这是两种不同的不可约分解。
+
+  \item \textbf{解答.} 由前两个同余可先解得
+  \[
+  x\equiv 5\cdot1+10\cdot2=25\equiv1\pmod 6
+  \]
+  也可直接用 CRT 组装：
+  \[
+  x\equiv 1\cdot15+2\cdot10+3\cdot6=15+20+18=53\pmod{30}.
+  \]
+  因而
+  \[
+  x\equiv 53\equiv 23\pmod{30}.
+  \]
+  检验：
+  \[
+  23\equiv1\pmod2,\qquad 23\equiv2\pmod3,\qquad 23\equiv3\pmod5.
+  \]
+  所以解为
+  \[
+  x\equiv 23\pmod{30}.
+  \]
+
+  \item \textbf{解答.} 设 $I,J$ 是交换环 $R$ 的理想。  
+  对 $I+J=\{a+b:a\in I,b\in J\}$，若 $a_1+b_1,a_2+b_2\in I+J$，则
+  \[
+  (a_1+b_1)-(a_2+b_2)=(a_1-a_2)+(b_1-b_2)\in I+J.
+  \]
+  且对任意 $r\in R$，
+  \[
+  r(a+b)=ra+rb\in I+J.
+  \]
+  故 $I+J$ 是理想。  
+  对 $I\cap J$，若 $x,y\in I\cap J$，则 $x-y\in I$ 且 $x-y\in J$，故 $x-y\in I\cap J$；又对任意 $r\in R$，$rx\in I$ 且 $rx\in J$，故 $rx\in I\cap J$。所以 $I\cap J$ 也是理想。
+
+  \item \textbf{解答.} 设 $I$ 是 $\Z$ 的理想。若 $I=(0)$，则 $I=0\Z$。若 $I\neq(0)$，则 $I$ 中有正整数；取其中最小正整数 $n$。  
+  先证 $n\Z\subset I$：因 $n\in I$ 且 $I$ 是理想。  
+  再证 $I\subset n\Z$：任取 $a\in I$，作整数除法
+  \[
+  a=qn+r,\qquad 0\le r<n.
+  \]
+  因为 $a,qn\in I$，故
+  \[
+  r=a-qn\in I.
+  \]
+  由 $n$ 的最小正性，只能有 $r=0$。于是 $a=qn\in n\Z$。  
+  故 $I=n\Z$。
+
+  \item \textbf{解答.} 设 $I$ 是 $\F[x]$ 的理想。若 $I=(0)$，则已是主理想。若 $I\neq(0)$，取 $I$ 中非零多项式里次数最小者 $f$。显然 $(f)\subset I$。  
+  任取 $g\in I$，由带余除法，
+  \[
+  g=qf+r,\qquad r=0\ \text{或}\ \deg r<\deg f.
+  \]
+  由于 $g,qf\in I$，故 $r=g-qf\in I$。由 $f$ 的次数极小性，只能 $r=0$。所以 $g=qf\in(f)$。  
+  因而 $I=(f)$，故 $\F[x]$ 的每个理想都是主理想。
+
+  \item \textbf{解答.} 设 $\pi:R\to R/I$ 为自然投影。若 $J$ 是满足 $I\subset J\subset R$ 的理想，则
+  \[
+  J/I=\{j+I:j\in J\}
+  \]
+  是 $R/I$ 的理想。反过来，若 $K$ 是 $R/I$ 的理想，则其原像
+  \[
+  \pi^{-1}(K)=\{r\in R:\pi(r)\in K\}
+  \]
+  是包含 $I$ 的理想。  
+  这两个构造互为逆：对 $J\supset I$，
+  \[
+  \pi^{-1}(J/I)=J;
+  \]
+  对 $K\subset R/I$，
+  \[
+  \pi(\pi^{-1}(K))=K.
+  \]
+  故 $R/I$ 的理想与包含 $I$ 的理想一一对应。
+
+  \item \textbf{解答.} 先设 $I$ 极大。对任意 $a+I\neq I$，即 $a\notin I$，理想 $I+aR$ 严格包含 $I$。由极大性，
+  \[
+  I+aR=R.
+  \]
+  故存在 $i\in I,r\in R$ 使
+  \[
+  i+ar=1.
+  \]
+  模 $I$ 得
+  \[
+  (a+I)(r+I)=1+I.
+  \]
+  所以每个非零元都可逆，$R/I$ 是域。  
+  反之，若 $R/I$ 是域，而 $I\subset J\subset R$ 为理想，则 $J/I$ 是 $R/I$ 的理想。域只有两个理想，故
+  \[
+  J/I=0 \quad\text{或}\quad J/I=R/I,
+  \]
+  即 $J=I$ 或 $J=R$。故 $I$ 极大。
+
+  \item \textbf{解答.} 设 $M$ 是 PID $R$ 的非零极大理想。由于 $R$ 是 PID，存在非零元 $a$ 使
+  \[
+  M=(a).
+  \]
+  我们证 $a$ 不可约。若 $a=bc$，其中 $b,c$ 都非单位，则
+  \[
+  (a)\subset (b)\subset R.
+  \]
+  这里 $(a)\subsetneq (b)$：若相等，则 $b\in(a)$，故 $b=ar=bcr$，因 $R$ 为整环且 $b\neq0$，可消去 $b$ 得 $1=cr$，这与 $c$ 非单位矛盾。又 $(b)\neq R$，否则 $b$ 是单位。  
+  这与 $M=(a)$ 的极大性矛盾。故 $a$ 不可约。记 $p=a$，则
+  \[
+  M=(p),
+  \]
+  其中 $p$ 为不可约元。
+
+  \item \textbf{解答.} 设 $R$ 是整环，$p$ 是素元。若 $ab\in(p)$，则存在 $c$ 使
+  \[
+  ab=pc,
+  \]
+  即 $p\mid ab$。由 $p$ 为素元，得 $p\mid a$ 或 $p\mid b$，即
+  \[
+  a\in(p)\quad\text{或}\quad b\in(p).
+  \]
+  因而 $(p)$ 满足素理想定义。又 $p$ 非单位，故 $(p)\neq R$。所以 $(p)$ 是素理想。
+
+  \item \textbf{解答.} 设 $R$ 是 UFD，$p$ 是不可约元。若 $p\mid ab$，把 $a,b$ 分解成不可约元乘积：
+  \[
+  a=u\,p_1\cdots p_r,\qquad b=v\,q_1\cdots q_s,
+  \]
+  其中 $u,v$ 为单位。于是
+  \[
+  ab=uv\,p_1\cdots p_r q_1\cdots q_s.
+  \]
+  又因为 $p\mid ab$，存在 $c$ 使 $ab=pc$。把 $c$ 也分解为不可约元乘积。由唯一分解性，左边的不可约分解中必有一个因子与 $p$ 关联，因此 $p$ 与某个 $p_i$ 或某个 $q_j$ 关联。于是
+  \[
+  p\mid a\quad\text{或}\quad p\mid b.
+  \]
+  故 $p$ 是素元。
+
+  \item \textbf{解答.} 先证“不可约 $\Rightarrow$ 素”。设 $p$ 为 PID 中的不可约元，且 $p\mid ab$。若 $p\nmid a$，则理想 $(p,a)$ 只能是整个环；否则若 $(p,a)=(d)$，则 $d\mid p$，由 $p$ 不可约知 $d$ 不是单位就与 $p$ 关联，从而 $a\in(p)$，矛盾。因此 $(p,a)=R$，存在 $x,y$ 使
+  \[
+  px+ay=1.
+  \]
+  乘以 $b$ 得
+  \[
+  pbx+aby=b.
+  \]
+  右边两项都被 $p$ 整除，故 $p\mid b$。  
+  再证存在性：若有非零非单位元不能分解成不可约元乘积，则取其中生成的主理想按包含极大者 $(a)$。$a$ 不是不可约元，故
+  \[
+  a=bc
+  \]
+  且 $b,c$ 都非单位，于是
+  \[
+  (a)\subsetneq (b),\qquad (a)\subsetneq (c).
+  \]
+  由极大性，$b,c$ 都能分解，于是 $a$ 也能分解，矛盾。  
+  唯一性：若
+  \[
+  a=p_1\cdots p_r=q_1\cdots q_s
+  \]
+  是两个不可约分解，由上一步不可约元皆素，故 $p_1\mid q_1\cdots q_s$ 时必整除某个 $q_j$，于是 $p_1$ 与该 $q_j$ 关联。消去后归纳，得分解在重排与关联意义下唯一。故 PID 是 UFD。
+
+  \item \textbf{解答.} 设 $R$ 是 ED，$a,b\in R$，不全为零。理想
+  \[
+  I=(a,b)=aR+bR
+  \]
+  非零。由于 ED 是 PID，存在 $d$ 使
+  \[
+  I=(d).
+  \]
+  因而 $d\in I$，故存在 $x,y\in R$ 使
+  \[
+  d=ax+by.
+  \]
+  这就是贝祖等式。又因为 $a,b\in(d)$，故 $d\mid a$ 且 $d\mid b$。  
+  若 $c$ 也是 $a,b$ 的公因子，则 $a,b\in(c)$，所以
+  \[
+  I=(a,b)\subset(c).
+  \]
+  于是 $d\in(c)$，即 $c\mid d$。故 $d$ 是最大公因子。若 $a=b=0$，可取 $\gcd(0,0)=0$。
+
+  \item \textbf{解答.} 设
+  \[
+  \alpha=a+bi,\qquad \beta=c+di.
+  \]
+  则
+  \[
+  \alpha\beta=(ac-bd)+(ad+bc)i.
+  \]
+  所以
+  \[
+  N(\alpha\beta)=(ac-bd)^2+(ad+bc)^2.
+  \]
+  展开得
+  \[
+  (ac-bd)^2+(ad+bc)^2
+  =a^2c^2-2abcd+b^2d^2+a^2d^2+2abcd+b^2c^2
+  \]
+  \[
+  =a^2(c^2+d^2)+b^2(c^2+d^2)
+  =(a^2+b^2)(c^2+d^2)
+  =N(\alpha)N(\beta).
+  \]
+  故范数具有乘法性。
+
+  \item \textbf{解答.} 设 $\pi\in\Z[i]$ 且
+  \[
+  N(\pi)=p
+  \]
+  为通常素数。若 $\pi=\alpha\beta$，则由范数乘法性，
+  \[
+  p=N(\pi)=N(\alpha)N(\beta).
+  \]
+  因为 $N(\alpha),N(\beta)$ 都是正整数，而 $p$ 是素数，所以
+  \[
+  N(\alpha)=1\quad\text{或}\quad N(\beta)=1.
+  \]
+  范数为 $1$ 的高斯整数恰是单位，故 $\alpha$ 或 $\beta$ 是单位。于是 $\pi$ 不可约。
+
+  \item \textbf{解答.} 在 $\R[x]$ 中，$x^2+1$ 次数为 $2$。若它可约，则必有一次因子，从而有实根。但
+  \[
+  x^2+1=0 \Longrightarrow x^2=-1
+  \]
+  在 $\R$ 中无解，所以 $x^2+1$ 在 $\R[x]$ 中不可约。  
+  在 $\C[x]$ 中，
+  \[
+  x^2+1=(x-i)(x+i),
+  \]
+  故它在 $\C[x]$ 中可约。
+
+  \item \textbf{解答.} 对
+  \[
+  f(x)=x^3-2
+  \]
+  取素数 $p=2$。其首项系数 $1$ 不被 $2$ 整除；其余系数 $0,0,-2$ 都被 $2$ 整除；常数项 $-2$ 不被 $2^2=4$ 整除。由 Eisenstein 判别法，$x^3-2$ 在 $\Q[x]$ 中不可约。
+
+  \item \textbf{解答.} 对
+  \[
+  f(x)=x^4+10x+5
+  \]
+  取素数 $p=5$。首项系数 $1$ 不被 $5$ 整除；其余系数 $0,0,0,10,5$ 都被 $5$ 整除；常数项 $5$ 不被 $25$ 整除。故由 Eisenstein 判别法，$x^4+10x+5$ 在 $\Q[x]$ 中不可约。
+
+  \item \textbf{解答.} 先处理原始多项式情形。设 $f\in\Z[x]$ 原始，且
+  \[
+  f=gh\qquad (g,h\in\Q[x]),\ \deg g,\deg h>0.
+  \]
+  取最小正整数 $b,d$ 使 $G=bg,\ H=dh$ 都在 $\Z[x]$ 中且原始。于是
+  \[
+  bd\,f=GH.
+  \]
+  由 Gauss 引理，原始多项式之积仍原始，所以 $GH$ 原始；但 $bd\,f$ 的内容是 $bd$，故只能有 $bd=1$。于是 $g,h\in\Z[x]$，从而 $f$ 在 $\Z[x]$ 中可约。  
+  对一般 $f$，写
+  \[
+  f=c(f)\,f_0,
+  \]
+  其中 $f_0$ 原始。若 $f$ 在 $\Q[x]$ 中可约，则 $f_0$ 也在 $\Q[x]$ 中可约。由上一步，
+  \[
+  f_0=GH,\qquad G,H\in\Z[x],\ \deg G,\deg H>0.
+  \]
+  于是
+  \[
+  f=(c(f)G)H
+  \]
+  是 $\Z[x]$ 中两个正次数多项式之积。
+
+  \item \textbf{解答.} 设
+  \[
+  I=(x,2)\subset \Z[x].
+  \]
+  若 $I$ 是主理想，设 $I=(f)$。因为 $x,2\in(f)$，所以 $f\mid x$ 且 $f\mid2$ 于 $\Z[x]$ 中。  
+  由 $f\mid2$，得 $\deg f=0$，即 $f=\pm1$ 或 $\pm2$。若 $f=\pm1$，则 $I=\Z[x]$，不可能；若 $f=\pm2$，则
+  \[
+  (f)=(2),
+  \]
+  但 $x\notin(2)$。矛盾。故 $I$ 不是主理想。
+
+  \item \textbf{解答.} 由自然投影
+  \[
+  \Z[x]\to \Z[x]/(2,x)
+  \]
+  可见
+  \[
+  \Z[x]/(2,x)\cong \F_2.
+  \]
+  这是一个域，所以 $(2,x)$ 本身就是极大理想。若 $\mathfrak m$ 是包含 $(2,x)$ 的极大理想，则对应于商域 $\F_2$ 的极大理想；但域只有零理想这一真理想，因此只能有
+  \[
+  \mathfrak m=(2,x).
+  \]
+  故所有包含 $(2,x)$ 的极大理想只有一个，即
+  \[
+  (2,x).
+  \]
+
+  \item \textbf{解答.} 若 $\Z[x]$ 是 PID，则每个理想都是主理想。但上一题已证
+  \[
+  (2,x)
+  \]
+  不是主理想，矛盾。故 $\Z[x]$ 不是 PID。
+
+  \item \textbf{解答.} 先设 $(m,n)=1$。元素 $(\overline1,\overline1)\in \Z/m\Z\times\Z/n\Z$ 的阶是
+  \[
+  \operatorname{lcm}(m,n)=mn,
+  \]
+  因为 $m,n$ 互素。该群总共有 $mn$ 个元素，所以它由 $(\overline1,\overline1)$ 生成，是循环群。  
+  反之，若 $\Z/m\Z\times\Z/n\Z$ 是循环群，则其中某元素 $(\overline a,\overline b)$ 的阶为 $mn$。但
+  \[
+  \operatorname{ord}(\overline a,\overline b)=\operatorname{lcm}(\operatorname{ord}(\overline a),\operatorname{ord}(\overline b))
+  \le \operatorname{lcm}(m,n)=\frac{mn}{(m,n)}.
+  \]
+  因为左边等于 $mn$，故必须有 $(m,n)=1$。
+
+  \item \textbf{解答.} 把 $m,n$ 看成 $\Z$ 中的理想 $(m),(n)$。若 $(m,n)=1$，则存在 $u,v\in\Z$ 使
+  \[
+  um+vn=1,
+  \]
+  即
+  \[
+  (m)+(n)=\Z.
+  \]
+  又在 $\Z$ 中，
+  \[
+  (m)\cap(n)=(mn).
+  \]
+  因此由环论版中国剩余定理，
+  \[
+  \Z/(mn)\Z=\Z/((m)\cap(n))\cong \Z/(m)\times \Z/(n)\cong \Z/m\Z\times \Z/n\Z.
+  \]
+  这就是整数版中国剩余定理。
+
+  \item \textbf{解答.} 因为 $I+J=R$，故 $I\cap J=IJ$。于是自然映射
+  \[
+  \Phi:R\to R/I\times R/J,\qquad r\mapsto(r+I,r+J)
+  \]
+  的核为
+  \[
+  \Ker\Phi=I\cap J=IJ.
+  \]
+  又 $\Phi$ 在 $I+J=R$ 时满射，所以由第一同构定理，
+  \[
+  R/(IJ)\cong R/I\times R/J.
+  \]
+
+  \item \textbf{解答.} 定义
+  \[
+  \Phi:\F[x]\to \F\times \F,\qquad f(x)\mapsto (f(a),f(b)).
+  \]
+  它是环同态。因为 $a\neq b$，对任意 $(u,v)\in\F\times\F$，取
+  \[
+  f(x)=u\frac{x-b}{a-b}+v\frac{x-a}{b-a},
+  \]
+  则 $f(a)=u,\ f(b)=v$，故 $\Phi$ 满射。  
+  又
+  \[
+  \Ker\Phi=\{f:f(a)=f(b)=0\}=(x-a)\cap(x-b).
+  \]
+  因 $(x-a)+(x-b)=\F[x]$，故
+  \[
+  (x-a)\cap(x-b)=(x-a)(x-b).
+  \]
+  所以由第一同构定理，
+  \[
+  \F[x]/((x-a)(x-b))\cong \F\times\F.
+  \]
+  显式逆映射为
+  \[
+  (u,v)\longmapsto
+  \left[
+  u\frac{x-b}{a-b}+v\frac{x-a}{b-a}
+  \right].
+  \]
+
+  \item \textbf{解答.} 若 $a^2+5b^2=2$，则若 $b=0$ 有 $a^2=2$ 不可能；若 $b\neq0$，则
+  \[
+  a^2+5b^2\ge 5,
+  \]
+  也不可能。故无范数为 $2$ 的元素。  
+  同理，若 $a^2+5b^2=3$，则 $b=0$ 时 $a^2=3$ 不可能；$b\neq0$ 时左边至少为 $5$，也不可能。故无范数为 $3$ 的元素。
+
+  \item \textbf{解答.} 在 $\Z[\sqrt{-5}]$ 中，关联元素相差一个单位因子，而单位只有 $\pm1$。且关联元素范数相同。  
+  现在
+  \[
+  N(2)=4,\qquad N(3)=9,\qquad N(1\pm\sqrt{-5})=6.
+  \]
+  因此 $2$ 不可能与 $3$、$1\pm\sqrt{-5}$ 关联，$3$ 也不可能与 $1\pm\sqrt{-5}$ 关联。  
+  最后，若 $1+\sqrt{-5}$ 与 $1-\sqrt{-5}$ 关联，则
+  \[
+  1+\sqrt{-5}=\pm(1-\sqrt{-5}),
+  \]
+  这显然不成立。故
+  \[
+  2,\ 3,\ 1+\sqrt{-5},\ 1-\sqrt{-5}
+  \]
+  两两不关联。
+
+  \item \textbf{解答.} 按交换代数中的标准定义，戴德金整环就是满足下列三条的整环：  
+  \[
+  \text{Noether},\qquad \text{整闭},\qquad \dim R=1.
+  \]
+  而“每个非零素理想都是极大理想”正是 $\dim R=1$ 的表述。题设已经给出：
+  \begin{itemize}
+    \item $R$ 是诺特整环；
+    \item $R$ 是整闭的；
+    \item 每个非零素理想都是极大理想。
+  \end{itemize}
+  因此 $R$ 满足戴德金整环的定义，所以 $R$ 是戴德金整环。若采用“每个非零理想唯一分解为素理想乘积”作为定义，则这是上述定义的等价刻画。
+
+  \item \textbf{解答.} 设
+  \[
+  I=(2,1+\sqrt{-5})\subset \Z[\sqrt{-5}].
+  \]
+  先证 $I\neq R$。定义
+  \[
+  \phi:\Z[\sqrt{-5}]\to \F_2,\qquad a+b\sqrt{-5}\mapsto \overline{a+b}.
+  \]
+  因为在 $\F_2$ 中 $\sqrt{-5}$ 与 $1$ 同余，且 $2,1+\sqrt{-5}$ 都映到 $0$，故 $I\subset\Ker\phi$，从而 $I$ 是真理想。  
+  若 $I$ 主，即 $I=(\alpha)$，则 $\alpha\mid 2$ 且 $\alpha\mid (1+\sqrt{-5})$。于是
+  \[
+  N(\alpha)\mid N(2)=4,\qquad N(\alpha)\mid N(1+\sqrt{-5})=6,
+  \]
+  故 $N(\alpha)\mid2$，只能为 $1$ 或 $2$。范数为 $2$ 的元素不存在；若 $N(\alpha)=1$，则 $\alpha$ 为单位，从而 $I=R$，矛盾。故 $I$ 不是主理想，所以 $\Z[\sqrt{-5}]$ 不是 PID。  
+  此外，非主理想 $I$ 给出类群中的非平凡理想类 $[I]\neq1$；而下一题将证
+  \[
+  I^2=(2),
+  \]
+  所以
+  \[
+  [I]^2=[(2)]=1,
+  \]
+  这表明类群中存在非平凡元素，故类群非平凡。
+
+  \item \textbf{解答.} 先证 $I=(2,1+\sqrt{-5})$ 不是主理想，证明同上一题：若 $I=(\alpha)$，则 $N(\alpha)\mid4$ 且 $N(\alpha)\mid6$，故 $N(\alpha)=1$ 或 $2$，都不可能。  
+  再算 $I^2$：
+  \[
+  I^2=(2,1+\sqrt{-5})^2=(4,\ 2(1+\sqrt{-5}),\ (1+\sqrt{-5})^2).
+  \]
+  其中
+  \[
+  (1+\sqrt{-5})^2=1+2\sqrt{-5}-5=-4+2\sqrt{-5}=2(-2+\sqrt{-5}),
+  \]
+  所以 $I^2$ 的三个生成元都在 $(2)$ 中，故
+  \[
+  I^2\subset (2).
+  \]
+  反过来，$2\in I$，且
+  \[
+  1-\sqrt{-5}=2-(1+\sqrt{-5})\in I.
+  \]
+  因而
+  \[
+  6=(1+\sqrt{-5})(1-\sqrt{-5})\in I^2,\qquad 4=2\cdot2\in I^2.
+  \]
+  所以
+  \[
+  2=6-4\in I^2.
+  \]
+  于是 $(2)\subset I^2$。综上，
+  \[
+  I^2=(2).
+  \]
+
+  \item \textbf{解答.} 定义局部化
+  \[
+  S^{-1}R=(R\times S)/\sim,
+  \]
+  其中
+  \[
+  (r,s)\sim (r',s')\Longleftrightarrow \exists u\in S,\ u(sr'-s'r)=0.
+  \]
+  把 $(r,s)$ 的等价类记为 $\frac rs$。运算定义为
+  \[
+  \frac rs+\frac{r'}{s'}=\frac{rs'+r's}{ss'},\qquad
+  \frac rs\cdot\frac{r'}{s'}=\frac{rr'}{ss'}.
+  \]
+  自然映射为
+  \[
+  \iota:R\to S^{-1}R,\qquad r\mapsto \frac r1.
+  \]
+  现在求核。由定义，
+  \[
+  r\in\Ker\iota \Longleftrightarrow \frac r1=\frac01
+  \Longleftrightarrow \exists s\in S,\ s(r\cdot1-0\cdot1)=sr=0.
+  \]
+  因而
+  \[
+  \Ker\iota=\{r\in R:\exists s\in S,\ sr=0\}.
+  \]
+
+  \item \textbf{解答.} 令
+  \[
+  S=R\setminus P,\qquad R_P=S^{-1}R.
+  \]
+  设
+  \[
+  M=PR_P=\left\{\frac a s:a\in P,\ s\in S\right\}.
+  \]
+  它显然是理想。我们证明 $R_P$ 中不在 $M$ 里的元素恰是单位。  
+  若 $\frac a s\notin M$，则 $a\notin P$，即 $a\in S$，于是
+  \[
+  \frac a s\cdot \frac s a=\frac11,
+  \]
+  故 $\frac a s$ 是单位。  
+  反之，若 $a\in P$ 且 $\frac a s$ 是单位，则存在 $\frac bt$ 使
+  \[
+  \frac a s\cdot\frac bt=\frac11.
+  \]
+  依局部化等价关系，存在 $u\in S$ 使
+  \[
+  u(ab-st)=0.
+  \]
+  因 $a\in P$，故 $uab\in P$，从而 $ust\in P$。但 $u,s,t\in S=R\setminus P$，而 $P$ 为素理想，不可能有 $ust\in P$，矛盾。故 $a\in P$ 时 $\frac a s$ 不是单位。  
+  所以 $R_P\setminus M$ 全是单位，因而 $M$ 是极大理想；又任何极大理想都只包含非单位，所以只能等于 $M$。故 $R_P$ 只有一个极大理想，即
+  \[
+  PR_P.
+  \]
+
+  \item \textbf{解答.} 设 $R$ 是 UFD，$K=\operatorname{Frac}(R)$。先回忆 Gauss 引理：  
+  \begin{itemize}
+    \item 原始多项式之积仍原始；
+    \item 原始多项式在 $R[x]$ 中不可约当且仅当它在 $K[x]$ 中不可约；
+    \item 若原始多项式在 $K[x]$ 中可约，则在 $R[x]$ 中也可约。
+  \end{itemize}
+  现在取任意非零非单位 $f\in R[x]$。写成
+  \[
+  f=c(f)\,f_0,
+  \]
+  其中 $c(f)\in R$ 是内容，$f_0$ 原始。由于 $R$ 是 UFD，$c(f)$ 可唯一分解为 $R$ 中不可约元之积。  
+  另一方面，$K[x]$ 是 PID，从而是 UFD，所以 $f_0$ 在 $K[x]$ 中可分解为不可约多项式之积。对每个因子清分母并取原始部分，再由 Gauss 引理可把它们改写成 $R[x]$ 中的原始不可约因子，于是 $f$ 在 $R[x]$ 中存在不可约分解。  
+  唯一性方面，若 $f$ 有两种分解，先比较内容，因 $R$ 是 UFD，内容分解唯一；除去内容后得到原始多项式的两种分解。把它们看作 $K[x]$ 中的分解，由 $K[x]$ 的唯一分解性知各原始不可约因子在重排后两两关联；而原始多项式在 $K[x]$ 中关联便在 $R[x]$ 中相差 $R$ 的单位。故分解在 $R[x]$ 中也唯一。  
+  因而 $R[x]$ 是 UFD。
+
+  \item \textbf{解答.} 严格地说，一般应把命题理解为关于有理化
+  \[
+  \lambda_{f,\Q}:\mathbb{T}_{N,\Q}\to K_f\subset\C
+  \]
+  的结论。由本章定理，$\Ima(\lambda_{f,\Q})$ 是数域，因而是域。于是由第一同构定理，
+  \[
+  \mathbb{T}_{N,\Q}/\Ker(\lambda_{f,\Q})\cong \Ima(\lambda_{f,\Q})
+  \]
+  是域，所以
+  \[
+  \Ker(\lambda_{f,\Q})
+  \]
+  是 $\mathbb{T}_{N,\Q}$ 的极大理想。  
+  若按题意把 $\lambda_f$ 的像直接视为该数域中的一个域值特征，则同样有
+  \[
+  \mathbb{T}_N/\Ker(\lambda_f)\cong \Ima(\lambda_f)
+  \]
+  为域，从而 $\Ker(\lambda_f)$ 为极大理想。
+
+  \item \textbf{解答.} 取
+  \[
+  V=S_{12}(\SL_2(\Z)).
+  \]
+  这是一个一维复向量空间，由 Ramanujan 判别式模形式 $\Delta$ 张成，即
+  \[
+  V=\C\Delta.
+  \]
+  因而任何 Hecke 算子 $T_n$ 在 $V$ 上都只能是某个标量的乘法：
+  \[
+  T_n(\Delta)=\tau(n)\Delta.
+  \]
+  所以 Hecke 代数在此空间上的像就是
+  \[
+  \mathbb{T}=\Z\cdot \Id_V\cong \Z.
+  \]
+  例如
+  \[
+  T_2(\Delta)=\tau(2)\Delta=-24\Delta,
+  \]
+  故
+  \[
+  T_2=-24\,\Id_V.
+  \]
+  因而 $\mathbb{T}$ 已由单个算子 $T_2$ 生成（常数多项式给出所有整数倍的 $\Id_V$）。定义
+  \[
+  \phi:\Z[X]\to \mathbb{T},\qquad X\mapsto T_2.
+  \]
+  它满射，且
+  \[
+  f(X)\in\Ker\phi \Longleftrightarrow f(T_2)=0
+  \Longleftrightarrow f(-24)\Id_V=0
+  \Longleftrightarrow f(-24)=0.
+  \]
+  所以
+  \[
+  \Ker\phi=(X+24),
+  \]
+  从而
+  \[
+  \mathbb{T}\cong \Z[X]/(X+24)\cong \Z.
+  \]
+
+  \item \textbf{解答.} 设
+  \[
+  A=\mathbb{T}_{N,\Q}
+  \]
+  是有限维交换半单 $\Q$-代数。半单意味着 $A$ 作为环没有 Jacobson 根，有限维则意味着它是 Artin 环。由交换半单 Artin 环的结构定理，
+  \[
+  A\cong A_1\times\cdots\times A_r,
+  \]
+  其中每个 $A_i$ 是交换简单 Artin 环。  
+  但交换简单 Artin 环只能是域：若 $0\neq a\in A_i$，则主理想 $(a)$ 非零，因简单性必为整个环，故 $1\in(a)$，于是 $a$ 可逆。故每个 $A_i$ 是域。又每个 $A_i$ 都是有限维 $\Q$-向量空间，所以是 $\Q$ 的有限扩张，即数域。于是
+  \[
+  \mathbb{T}_{N,\Q}\cong K_1\times\cdots\times K_r
+  \]
+  ，其中各 $K_i$ 为数域。  
+  这与 Hecke 本征形式分解的关系是：每个投影
+  \[
+  \mathbb{T}_{N,\Q}\to K_i
+  \]
+  给出一个本征特征；相应的幂等元把模形式空间分解为若干 Hecke-稳定直和分量，每个分量对应一组共同本征值。故 Hecke 代数的直积分解正编码了本征形式按本征系统的分解。
+
+  \item \textbf{解答.} 设 $\pi:R\to R/I$ 为自然投影。定义
+  \[
+  \Phi:\Spec(R/I)\to \{\mathfrak p\in\Spec(R):I\subset \mathfrak p\},\qquad
+  \mathfrak q\mapsto \pi^{-1}(\mathfrak q).
+  \]
+  由理想对应定理，$\Phi$ 在“包含 $I$ 的理想”与 $R/I$ 的理想之间给出双射；并且素理想对应素理想，所以它是集合上的双射。  
+  下面证它是同胚。对任意包含 $I$ 的理想 $J$，$R/I$ 中闭集
+  \[
+  V_{R/I}(J/I)=\{\mathfrak q\in\Spec(R/I):J/I\subset\mathfrak q\}
+  \]
+  在 $\Phi$ 下对应为
+  \[
+  \{\mathfrak p\in\Spec(R):J\subset\mathfrak p,\ I\subset\mathfrak p\}
+  =V_R(J)\cap \{\mathfrak p:I\subset\mathfrak p\}.
+  \]
+  这正是目标空间的闭集。因此 $\Phi$ 连续，且逆映射也连续，于是为同胚。  
+  这一定理把“理想对应定理”从\emph{所有理想}推广到\emph{素理想谱及其 Zariski 拓扑}：不仅理想一一对应，而且由这些理想定义的几何点与闭集结构也完全对应。
+\end{enumerate}

@@ -829,3 +829,737 @@ N_p(n)=\frac1n\sum_{d\mid n}\mu(d)p^{n/d}.
 \]
 \end{enumerate}
 
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+\item \textbf{解答.} 由 $\sqrt2\notin\Q$，而任意 $\Q(\sqrt2)$ 中元素都唯一写成 $a+b\sqrt2$（$a,b\in\Q$）的形式，所以
+\[
+\Q(\sqrt2)=\Q\oplus \Q\sqrt2.
+\]
+故 $[\Q(\sqrt2):\Q]=2$，一组 $\Q$-基可取为 $\{1,\sqrt2\}$。
+
+\item \textbf{解答.} 因为 $i\notin\Q$，且每个元素都唯一写成 $a+bi$（$a,b\in\Q$），故
+\[
+\Q(i)=\Q\oplus \Q i.
+\]
+因此 $[\Q(i):\Q]=2$，一组 $\Q$-基为 $\{1,i\}$。
+
+\item \textbf{解答.} 每个复数都唯一写成 $a+bi$，其中 $a,b\in\R$，所以 $\C$ 由 $\{1,i\}$ 在 $\R$ 上张成。若有
+\[
+a+bi=0,\qquad a,b\in\R,
+\]
+比较实部与虚部得 $a=b=0$，故 $1,i$ 在 $\R$ 上线性无关。因此 $\{1,i\}$ 是 $\C/\R$ 的一组基，从而
+\[
+[\C:\R]=2.
+\]
+
+\item \textbf{解答.} 设 $\alpha=\sqrt2+\sqrt3$。则
+\[
+\alpha^2=5+2\sqrt6,
+\qquad (\alpha^2-5)^2=24,
+\]
+所以
+\[
+\alpha^4-10\alpha^2+1=0.
+\]
+因此 $\alpha$ 满足首一多项式 $f(x)=x^4-10x^2+1$。下面证 $f$ 在 $\Q[x]$ 中不可约。它无有理根；若分解成两个二次式，则只能写成
+\[
+(x^2+ax+b)(x^2-ax+d)
+\]
+以消去奇次项。展开得常数项 $bd=1$，且 $a(d-b)=0$。若 $a=0$，则 $b,d$ 满足 $t^2+10t+1=0$，不在 $\Q$ 中；若 $d=b=\pm1$，则由 $2b-a^2=-10$ 得 $a^2=12$ 或 $8$，也不在 $\Q$ 中。故 $f$ 不可约。于是极小多项式为
+\[
+m_{\alpha,\Q}(x)=x^4-10x^2+1.
+\]
+
+\item \textbf{解答.} 设 $\beta=(1+\sqrt5)/2$。直接计算
+\[
+\beta^2-\beta-1=0.
+\]
+多项式 $x^2-x-1\in\Q[x]$ 的判别式为 $5$，不是有理平方，故它在 $\Q$ 上不可约。因此 $\beta$ 在 $\Q$ 上的极小多项式是
+\[
+x^2-x-1.
+\]
+
+\item \textbf{解答.} $\sqrt[3]{2}$ 满足
+\[
+x^3-2=0,
+\]
+故它在 $\Q$ 上代数。多项式 $x^3-2$ 由有理根定理无有理根；三次多项式若可约则必有一次因子，所以它在 $\Q[x]$ 中不可约。故极小多项式为
+\[
+m_{\sqrt[3]{2},\Q}(x)=x^3-2.
+\]
+
+\item \textbf{解答.} $i$ 满足 $i^2+1=0$，故它在 $\R$ 上代数。多项式 $x^2+1\in\R[x]$ 没有实根，因此在 $\R$ 上不可约。故 $i$ 在 $\R$ 上的极小多项式是
+\[
+x^2+1.
+\]
+
+\item \textbf{解答.} $\pi$ 超越，$e$ 也超越，这是经典定理。$\sqrt2+\pi$ 也是超越：若它代数，则
+\[
+\pi=(\sqrt2+\pi)-\sqrt2
+\]
+是两个代数数之差，从而应当代数，矛盾。$\pi^2$ 也超越：若 $\pi^2$ 代数，则 $\pi$ 满足 $x^2-\pi^2=0$，从而 $\pi$ 在代数扩张 $\Q(\pi^2)$ 上代数；又 $\Q(\pi^2)/\Q$ 是代数扩张，所以塔定律推出 $\pi$ 在 $\Q$ 上代数，矛盾。故四个数中：$\pi,e,\sqrt2+\pi,\pi^2$ 全都超越。
+
+\item \textbf{解答.} 若 $\Q(\pi)/\Q$ 是有限扩张，则由“$\alpha$ 在 $K$ 上代数当且仅当 $[K(\alpha):K]<\infty$”可知 $\pi$ 在 $\Q$ 上代数。这与 $\pi$ 超越矛盾。因此
+\[
+[\Q(\pi):\Q]=\infty,
+\]
+即 $\Q(\pi)/\Q$ 是无限扩张。
+
+\item \textbf{解答.} $x^2-2$ 的根为 $\pm\sqrt2$，故其分裂域就是
+\[
+\Q(\sqrt2).
+\]
+因为 $x^2-2$ 在 $\Q$ 上不可约，所以
+\[
+[\Q(\sqrt2):\Q]=2.
+\]
+
+\item \textbf{解答.} $x^2+1$ 的根为 $\pm i$，故其分裂域是
+\[
+\Q(i).
+\]
+因为 $x^2+1$ 在 $\Q$ 上不可约，所以
+\[
+[\Q(i):\Q]=2.
+\]
+
+\item \textbf{解答.}
+\[
+x^4-1=(x^2-1)(x^2+1)=(x-1)(x+1)(x-i)(x+i).
+\]
+其中 $\pm1\in\Q$，只需添入 $i$ 即可，所以分裂域为
+\[
+\Q(i).
+\]
+
+\item \textbf{解答.} $x^3-2$ 的根为
+\[
+\sqrt[3]{2},\quad \omega\sqrt[3]{2},\quad \omega^2\sqrt[3]{2},
+\]
+其中 $\omega=e^{2\pi i/3}=(-1+i\sqrt3)/2$。故分裂域为
+\[
+L=\Q(\sqrt[3]{2},\omega).
+\]
+又 $x^3-2$ 在 $\Q$ 上不可约，所以 $[\Q(\sqrt[3]{2}):\Q]=3$。而 $\Q(\sqrt[3]{2})\subset\R$，但 $\omega\notin\R$，故 $\omega\notin\Q(\sqrt[3]{2})$。由于 $\omega$ 满足 $x^2+x+1=0$，有
+\[
+[L:\Q(\sqrt[3]{2})]=2.
+\]
+因此
+\[
+[L:\Q]=2\cdot3=6.
+\]
+
+\item \textbf{解答.} 在 $\F_5$ 中，$2^2=4\equiv -1\pmod 5$，故 $x^2+1$ 有根 $\pm2$，于是完全分裂。\;在 $\F_3$ 中逐一代入：
+\[
+0^2+1=1,\qquad 1^2+1=2,\qquad 2^2+1=4+1=5\equiv2,
+\]
+都不为 $0$，故它在 $\F_3$ 上没有根，更不完全分裂。
+
+\item \textbf{解答.} 在 $\F_2$ 中，
+\[
+f(0)=1,\qquad f(1)=1+1+1=1,
+\]
+所以 $f(x)=x^2+x+1$ 无根，从而在 $\F_2[x]$ 中不可约。若取其一根 $u$，则分裂域就是
+\[
+\F_2(u)\cong \F_2[x]/(x^2+x+1)=\F_4.
+\]
+因为另一个根为 $u+1$，也已在该域中，所以分裂域为 $\F_4$。
+
+\item \textbf{解答.} 对任意 $a\in\F_p$，若 $a=0$ 则显然 $a^p-a=0$；若 $a\neq0$，由 Fermat 小定理 $a^{p-1}=1$，故 $a^p-a=a(a^{p-1}-1)=0$。因此 $\F_p$ 的全部 $p$ 个元素都是 $x^p-x$ 的根。另一方面，$x^p-x$ 的次数就是 $p$，所以它恰有这 $p$ 个根，从而
+\[
+x^p-x=\prod_{a\in\F_p}(x-a),
+\]
+即它在 $\F_p$ 上完全分裂。
+
+\item \textbf{解答.} 由塔定律，
+\[
+[\Q(\sqrt2,i):\Q]=[\Q(\sqrt2,i):\Q(\sqrt2)]\,[\Q(\sqrt2):\Q].
+\]
+第二因子等于 $2$。又 $\Q(\sqrt2)\subset\R$，而 $i\notin\R$，故 $i\notin\Q(\sqrt2)$，于是 $x^2+1$ 在 $\Q(\sqrt2)$ 上不可约，从而第一因子也等于 $2$。故
+\[
+[\Q(\sqrt2,i):\Q]=4.
+\]
+
+\item \textbf{解答.} 由塔定律，
+\[
+[\Q(\sqrt2,\sqrt3):\Q]=[\Q(\sqrt2,\sqrt3):\Q(\sqrt2)]\,[\Q(\sqrt2):\Q].
+\]
+其中 $[\Q(\sqrt2):\Q]=2$。若 $\sqrt3\in\Q(\sqrt2)$，则可写成 $a+b\sqrt2$。平方得
+\[
+3=a^2+2b^2+2ab\sqrt2.
+\]
+比较 $\sqrt2$ 系数得 $ab=0$。若 $b=0$，则 $\sqrt3\in\Q$；若 $a=0$，则 $3=2b^2$，都不可能。故 $\sqrt3\notin\Q(\sqrt2)$，从而 $x^2-3$ 在 $\Q(\sqrt2)$ 上不可约，第一因子为 $2$。因此
+\[
+[\Q(\sqrt2,\sqrt3):\Q]=4.
+\]
+
+\item \textbf{解答.} 设 $u=\sqrt[3]{2}$，则 $u^2=\sqrt[3]{4}$，所给数为
+\[
+\alpha=u+u^2.
+\]
+直接计算
+\[
+\alpha^3=(u+u^2)^3=u^3+3u^4+3u^5+u^6=2+6u+6u^2+4=6+6\alpha.
+\]
+故
+\[
+\alpha^3-6\alpha-6=0.
+\]
+因此 $\alpha$ 在 $\Q$ 上代数，并且它满足一个首一多项式
+\[
+x^3-6x-6.
+\]
+
+\item \textbf{解答.} 设 $\alpha=\sqrt2+\sqrt5$。先注意到
+\[
+\alpha(\sqrt5-\sqrt2)=3,
+\]
+故
+\[
+\sqrt5-\sqrt2=\frac3\alpha\in\Q(\alpha).
+\]
+于是
+\[
+\sqrt5=\frac12\left(\alpha+\frac3\alpha\right),
+\qquad
+\sqrt2=\frac12\left(\alpha-\frac3\alpha\right)
+\]
+都属于 $\Q(\alpha)$。所以
+\[
+\Q(\alpha)=\Q(\sqrt2,\sqrt5).
+\]
+再由塔定律和与上题相同的论证知 $[\Q(\sqrt2,\sqrt5):\Q]=4$，故
+\[
+[\Q(\alpha):\Q]=4.
+\]
+
+\item \textbf{解答.} 因为 $9=3^2$，而对有限域有一般公式
+\[
+[\F_{p^n}:\F_p]=n,
+\]
+所以
+\[
+[\F_9:\F_3]=2.
+\]
+
+\item \textbf{解答.} 因为 $25=5^2$，所以
+\[
+[\F_{25}:\F_5]=2.
+\]
+
+\item \textbf{解答.} 在商域 $\F_4=\F_2[u]/(u^2+u+1)$ 中，每个元素都可唯一写成 $a+bu$（$a,b\in\F_2$），故全部元素为
+\[
+0,\ 1,\ u,\ u+1.
+\]
+由关系 $u^2+u+1=0$ 得
+\[
+u^2=u+1.
+\]
+于是
+\[
+u^3=u(u+1)=u^2+u=(u+1)+u=1,
+\]
+再乘以 $u$ 得
+\[
+u^4=u.
+\]
+所以
+\[
+u^2=u+1,\qquad u^3=1,\qquad u^4=u.
+\]
+
+\item \textbf{解答.} 在 $\F_2$ 中，
+\[
+x^4-x=x(x^3-1)=x(x-1)(x^2+x+1)=x(x+1)(x^2+x+1).
+\]
+其中 $x$ 与 $x+1$ 已在 $\F_2$ 上分裂，而 $x^2+x+1$ 在 $\F_2$ 上不可约，其分裂域是 $\F_4$。因此整个多项式的分裂域也是
+\[
+\F_4.
+\]
+
+\item \textbf{解答.} 扩张 $\F_4/\F_2$ 的次数为 $2$。若 $E$ 是中间子域，则由塔定律
+\[
+2=[\F_4:\F_2]=[\F_4:E][E:\F_2].
+\]
+因为 $2$ 是素数，所以只能有 $[E:\F_2]=1$ 或 $[\F_4:E]=1$。因此只可能
+\[
+E=\F_2\quad\text{或}\quad E=\F_4.
+\]
+故全部中间子域就是 $\F_2,\F_4$ 两个。
+
+\item \textbf{解答.} 设 $[L:K]=n$，$[M:L]=m$。取 $L/K$ 的一组 $K$-基 $e_1,\dots,e_n$，再取 $M/L$ 的一组 $L$-基 $f_1,\dots,f_m$。我们证明
+\[
+\{e_if_j\mid 1\le i\le n,\ 1\le j\le m\}
+\]
+是 $M/K$ 的一组基。任意 $x\in M$ 都可写成 $x=\sum_j \lambda_j f_j$，其中 $\lambda_j\in L$；再把每个 $\lambda_j$ 写成 $\lambda_j=\sum_i a_{ij}e_i$（$a_{ij}\in K$），便得
+\[
+x=\sum_{i,j}a_{ij}e_if_j,
+\]
+故这些元素张成 $M$。若
+\[
+\sum_{i,j}a_{ij}e_if_j=0,
+\]
+按 $f_j$ 分组得
+\[
+\sum_j\left(\sum_i a_{ij}e_i\right)f_j=0.
+\]
+由 $f_j$ 在 $L$ 上线性无关知 $\sum_i a_{ij}e_i=0$；再由 $e_i$ 在 $K$ 上线性无关得一切 $a_{ij}=0$。故它们线性无关。于是
+\[
+[M:K]=mn=[M:L][L:K].
+\]
+
+\item \textbf{解答.} 若 $K\subsetneq E\subsetneq L$，则由塔定律
+\[
+[L:K]=[L:E][E:K].
+\]
+左边等于素数 $p$。故右边两个正整数中必有一个等于 $1$。若 $[E:K]=1$，则 $E=K$；若 $[L:E]=1$，则 $E=L$。这与 $E$ 为真中间域矛盾，所以不存在真中间域。
+
+\item \textbf{解答.} 因为 $\alpha,\beta$ 都在 $K$ 上代数，所以 $K(\alpha)/K$ 与 $K(\beta)/K$ 都是有限扩张。再看塔
+\[
+K\subset K(\alpha)\subset K(\alpha,\beta).
+\]
+元素 $\beta$ 在更大底域 $K(\alpha)$ 上仍代数，因此 $[K(\alpha,\beta):K(\alpha)]<\infty$。由塔定律得
+\[
+[K(\alpha,\beta):K]<\infty.
+\]
+而 $\alpha+\beta$ 与 $\alpha\beta$ 都属于这个有限扩张。于是
+\[
+K(\alpha+\beta)\subset K(\alpha,\beta),
+\qquad
+K(\alpha\beta)\subset K(\alpha,\beta).
+\]
+因此 $K(\alpha+\beta)/K$ 与 $K(\alpha\beta)/K$ 都是有限扩张，从而 $\alpha+\beta$ 与 $\alpha\beta$ 都在 $K$ 上代数。
+
+\item \textbf{解答.} 设 $[K(\alpha):K]=m$，且 $\beta\in K(\alpha)$。则有子域链
+\[
+K\subset K(\beta)\subset K(\alpha).
+\]
+由塔定律，
+\[
+[K(\alpha):K]=[K(\alpha):K(\beta)]\,[K(\beta):K].
+\]
+故 $[K(\beta):K]$ 整除 $m$，特别地
+\[
+[K(\beta):K]\le m<\infty.
+\]
+因此 $\beta$ 在 $K$ 上代数，而且它在 $K$ 上的次数就是 $[K(\beta):K]$，不超过 $m$。
+
+\item \textbf{解答.} 第一种方法：
+\[
+[\Q(\sqrt2,\sqrt3):\Q]=[\Q(\sqrt2,\sqrt3):\Q(\sqrt2)]\,[\Q(\sqrt2):\Q].
+\]
+第二因子为 $2$。若 $\sqrt3\in\Q(\sqrt2)$，则可写成 $a+b\sqrt2$，平方后比较 $\sqrt2$ 系数即得矛盾，因此第一因子也为 $2$，故总次数为 $4$。
+
+第二种方法：令 $\theta=\sqrt2+\sqrt3$。有
+\[
+\theta^2=5+2\sqrt6,
+\qquad (\theta^2-5)^2=24,
+\]
+故 $\theta$ 满足 $x^4-10x^2+1=0$。与第 $4$ 题同理可证此多项式在 $\Q[x]$ 中不可约，所以 $[\Q(\theta):\Q]=4$。又
+\[
+\theta(\sqrt3-\sqrt2)=1,
+\]
+从而 $1/\theta=\sqrt3-\sqrt2$，于是
+\[
+\sqrt3=\frac12\left(\theta+\frac1\theta\right),
+\qquad
+\sqrt2=\frac12\left(\theta-\frac1\theta\right)
+\]
+都在 $\Q(\theta)$ 中，所以 $\Q(\theta)=\Q(\sqrt2,\sqrt3)$。故 $[\Q(\sqrt2,\sqrt3):\Q]=4$。
+
+\item \textbf{解答.} 记 $\zeta_8=e^{2\pi i/8}=e^{\pi i/4}$。则
+\[
+\zeta_8^2=i,
+\qquad
+\zeta_8+\zeta_8^{-1}=2\cos(\pi/4)=\sqrt2.
+\]
+所以 $i,\sqrt2\in\Q(\zeta_8)$，从而
+\[
+\Q(i,\sqrt2)\subset \Q(\zeta_8).
+\]
+反过来，
+\[
+\zeta_8=\frac{1+i}{\sqrt2}\in\Q(i,\sqrt2),
+\]
+故
+\[
+\Q(\zeta_8)=\Q(i,\sqrt2).
+\]
+再由塔定律，$[\Q(i):\Q]=2$，且 $\sqrt2\notin\Q(i)$（因为 $\Q(i)\cap\R=\Q$），故
+\[
+[\Q(i,\sqrt2):\Q]=2\cdot2=4.
+\]
+因此 $[\Q(\zeta_8):\Q]=4$。
+
+\item \textbf{解答.} 在 $\F_2$ 中检验根：
+\[
+f(0)=1,\qquad f(1)=1+1+1=1.
+\]
+因此 $f(x)=x^3+x+1$ 无一次因子，而三次多项式无一次因子即不可约。于是
+\[
+\F_8\cong \F_2[x]/(x^3+x+1).
+\]
+记 $\alpha$ 为 $x$ 的像，则
+\[
+\alpha^3+\alpha+1=0,
+\qquad \alpha^3=\alpha+1.
+\]
+因为 $\F_8^*$ 的阶为 $7$，这是素数，所以任一非单位元都生成整个乘法群；特别地 $\alpha\ne1$，故 $\alpha$ 的阶为 $7$。于是非零元的乘法循环为
+\[
+1,\ \alpha,\ \alpha^2,\ \alpha^3=\alpha+1,\ \alpha^4=\alpha^2+\alpha,
+\]
+\[
+\alpha^5=\alpha^2+\alpha+1,\qquad \alpha^6=\alpha^2+1,\qquad \alpha^7=1.
+\]
+故
+\[
+\F_8^*=\langle \alpha\rangle.
+\]
+
+\item \textbf{解答.} 在特征 $p$ 下，二项式定理给出
+\[
+(a+b)^p=a^p+b^p,
+\qquad (ab)^p=a^pb^p,
+\]
+故 Frobenius 映射 $\varphi(x)=x^p$ 是环同态。若 $\varphi(a)=\varphi(b)$，则
+\[
+a^p=b^p\Longrightarrow (a-b)^p=a^p-b^p=0.
+\]
+域中没有非零幂零元，所以 $a-b=0$，即 $a=b$。故 $\varphi$ 为单射。
+
+\item \textbf{解答.} 由上题，Frobenius 映射
+\[
+\varphi:\F_q\to\F_q,
+\qquad x\mapsto x^p
+\]
+是从有限集到自身的单射。有限集上的单射必为满射，因此 $\varphi$ 是双射，即自同构。
+
+\item \textbf{解答.} 设不动域为
+\[
+E=\{x\in\F_{p^n}\mid x^p=x\}.
+\]
+对任意 $a\in\F_p$ 都有 $a^p=a$，所以 $\F_p\subset E$。反过来，若 $x\in E$，则 $x$ 是多项式
+\[
+X^p-X
+\]
+的根。该多项式次数为 $p$，且导数为 $-1\neq0$，故至多有 $p$ 个根；而 $\F_p$ 中已经有 $p$ 个根，所以它的全部根恰是 $\F_p$。因此 $E=\F_p$。
+
+\item \textbf{解答.} 设 $|G|=n$，并令
+\[
+m=\mathrm{lcm}\{\mathrm{ord}(g)\mid g\in G\}.
+\]
+则对每个 $g\in G$ 都有 $g^m=1$，所以 $G$ 的每个元素都是多项式 $x^m-1$ 的根。于是
+\[
+|G|\le m.
+\]
+另一方面，由 Lagrange 定理每个元素的阶都整除 $n$，故 $m\mid n$，从而 $m\le n=|G|$。于是 $m=|G|$。按 $m$ 的定义，存在某个 $g\in G$ 的阶等于 $m=|G|$，故 $g$ 生成整个 $G$。因此 $G$ 是循环群。
+
+\item \textbf{解答.} 因为 $16=2^4$，有限域子域分类告诉我们：$\F_{16}$ 的子域恰对应于 $4$ 的正因子 $1,2,4$。因此全部子域为
+\[
+\F_2,\qquad \F_4,\qquad \F_{16}.
+\]
+包含关系只有
+\[
+\F_2\subset \F_4\subset \F_{16}.
+\]
+故 Hasse 图是一条链：
+\[
+\F_{16}
+\]
+\[
+\F_4
+\]
+\[
+\F_2
+\]
+即 $\F_{16}$ 覆盖 $\F_4$，$\F_4$ 覆盖 $\F_2$。
+
+\item \textbf{解答.} 先设 $f(x)\in\F_p[x]$ 是首一不可约多项式，次数为 $d$。若 $f\mid x^{p^n}-x$，取一根 $\alpha$，则 $\alpha^{p^n}=\alpha$，所以 $\alpha\in\F_{p^n}$。于是
+\[
+\F_p(\alpha)\subset \F_{p^n},
+\]
+故
+\[
+d=[\F_p(\alpha):\F_p]
+\]
+整除 $n$。
+
+反过来，若 $d\mid n$，设 $f$ 的一根为 $\alpha$，则 $\F_p(\alpha)$ 有 $p^d$ 个元素，所以同构于 $\F_{p^d}$。由 $d\mid n$，有 $\F_{p^d}$ 可嵌入 $\F_{p^n}$，故 $f$ 在 $\F_{p^n}$ 中有根，于是 $f\mid x^{p^n}-x$。再者
+\[
+\frac{d}{dx}(x^{p^n}-x)=-1,
+\]
+故它没有重根，所以每个不可约因子只出现一次。于是
+\[
+x^{p^n}-x
+\]
+恰为所有次数整除 $n$ 的首一不可约多项式之积。
+
+\item \textbf{解答.} 由上题，对 $n=2$ 有
+\[
+p^2=\sum_{d\mid2} d\,N_p(d)=N_p(1)+2N_p(2).
+\]
+而次数为 $1$ 的首一不可约多项式恰是 $x-a$（$a\in\F_p$），共有 $N_p(1)=p$ 个。故
+\[
+p^2=p+2N_p(2),
+\]
+从而
+\[
+N_p(2)=\frac{p^2-p}{2}.
+\]
+
+\item \textbf{解答.} 对 $n=3$，次数比较给出
+\[
+p^3=\sum_{d\mid3} d\,N_p(d)=N_p(1)+3N_p(3).
+\]
+仍有 $N_p(1)=p$，故
+\[
+p^3=p+3N_p(3).
+\]
+解得
+\[
+N_p(3)=\frac{p^3-p}{3}.
+\]
+
+\item \textbf{解答.} 设
+\[
+E_d=\{x\in\F_{p^n}\mid x^{p^d}=x\}.
+\]
+与构造有限域时相同，可验证 $E_d$ 对加、减、乘、除封闭，所以是 $\F_{p^n}$ 的子域。由于 $d\mid n$，任何满足 $x^{p^d}=x$ 的元素也满足 $x^{p^n}=x$，故这些根都在 $\F_{p^n}$ 中；而多项式 $x^{p^d}-x$ 没有重根，且次数为 $p^d$，所以 $E_d$ 恰有 $p^d$ 个元素。故存在大小为 $p^d$ 的子域。
+
+若 $E\subset\F_{p^n}$ 也是大小为 $p^d$ 的子域，则对任意 $x\in E$ 都有 $x^{p^d}=x$，所以 $E\subset E_d$。两者元素个数相同，故 $E=E_d$。于是这样的子域唯一。
+
+\item \textbf{解答.} 若 $E$ 是 $\F_{p^n}$ 的子域，则 $E$ 是有限域，故存在正整数 $d$ 使
+\[
+|E|=p^d.
+\]
+又有子域链
+\[
+\F_p\subset E\subset \F_{p^n}.
+\]
+由塔定律，
+\[
+[\F_{p^n}:\F_p]=[\F_{p^n}:E][E:\F_p].
+\]
+左边等于 $n$，故 $d=[E:\F_p]$ 必整除 $n$。因此 $|E|=p^d$ 且 $d\mid n$，于是按有限域唯一性
+\[
+E\cong \F_{p^d}.
+\]
+
+\item \textbf{解答.} 设
+\[
+g(x)=\prod_{i=0}^{m-1}(x-\alpha^{p^i}).
+\]
+由 $m$ 的最小性，$\alpha,\alpha^p,\dots,\alpha^{p^{m-1}}$ 两两不同。Frobenius 映射把这些根循环置换，所以 $g(x)$ 的各系数都被 $x\mapsto x^p$ 固定；而 Frobenius 在代数闭包中的不动元恰为 $\F_p$，故 $g(x)\in\F_p[x]$。于是 $\alpha$ 在 $\F_p$ 上的极小多项式 $h(x)$ 整除 $g(x)$，从而
+\[
+\deg h\le m.
+\]
+另一方面，若 $\deg h=r$，则 $\F_p(\alpha)$ 有 $p^r$ 个元素，所以对该域中每个元素都有 $x^{p^r}=x$，特别地
+\[
+\alpha^{p^r}=\alpha.
+\]
+由 $m$ 的最小性得 $m\le r$。于是 $r=m$，且 $h$ 与 $g$ 都是首一、次数相同并且 $h\mid g$，故
+\[
+h(x)=g(x)=\prod_{i=0}^{m-1}(x-\alpha^{p^i}).
+\]
+
+\item \textbf{解答.} 设 $\alpha$ 是 $f$ 的一个根。由于 $f$ 在 $\F_q[x]$ 中不可约且次数为 $n$，所以
+\[
+[\F_q(\alpha):\F_q]=n.
+\]
+因此 $\F_q(\alpha)$ 有 $q^n$ 个元素。记该域为 $E$。在有限域中，Frobenius 自同构 $x\mapsto x^q$ 保持 $\F_q$ 不动，因此
+\[
+\alpha,\alpha^q,\alpha^{q^2},\dots
+\]
+都是 $f$ 的根。事实上，$f$ 的全部根正是
+\[
+\alpha,\alpha^q,\dots,\alpha^{q^{n-1}},
+\]
+它们都属于 $E$。所以 $f$ 在 $E$ 中完全分裂，故其分裂域就是 $E$，从而分裂域有
+\[
+|E|=q^n
+\]
+个元素。
+
+\item \textbf{解答.} 设 $|F|=q$，$|E|=q^n$。则 $E^*$ 是一个阶为 $q^n-1$ 的有限乘法群，因而是循环群。取其一个生成元 $\alpha$，则
+\[
+E^*=\langle \alpha\rangle.
+\]
+于是 $F(\alpha)$ 含有 $\alpha$ 的全部幂，因此含有 $E$ 的全部非零元素，再加上 $0$，便得到整个 $E$。故
+\[
+E=F(\alpha).
+\]
+这说明任意有限域扩张都是单扩张。
+
+\item \textbf{解答.} 给出一个标准提纲如下。先固定一个足够大的包含 $K$ 的域 $\Omega$，并考虑偏序集
+\[
+\mathcal S=\{E\mid K\subset E\subset\Omega,\ E/K\text{ 代数}\},
+\]
+以包含关系为序。若 $\mathcal C\subset\mathcal S$ 是一条链，则其并
+\[
+U=\bigcup_{E\in\mathcal C}E
+\]
+仍是域：因为链是全序的，任意两个元素落在某个同一成员中，从而对四则运算封闭。且 $U/K$ 仍代数，因为 $U$ 中每个元素本来就属于链里的某个代数扩张。故每条链都有上界。由 Zorn 引理，$\mathcal S$ 有极大元 $M$。
+
+下面说明 $M$ 代数闭。若不然，存在非常数不可约多项式 $f(x)\in M[x]$ 在 $M$ 中无根。取一根 $\alpha$，则 $M(\alpha)/M$ 是代数扩张，于是 $M(\alpha)/K$ 仍是代数扩张，且严格包含 $M$，这与 $M$ 的极大性矛盾。因此每个不可约多项式在 $M$ 中都有根，于是任意非常数多项式都可不断分解出一次因子，最终在 $M[x]$ 中完全分裂。故 $M$ 代数闭且代数于 $K$，即 $M$ 是 $K$ 的代数闭包。
+
+\item \textbf{解答.} 先证两元情形。设 $L=K(\alpha,\beta)$，并假设 $\alpha,\beta$ 都可分。记 $\alpha_1=\alpha,\dots,\alpha_m$ 为 $\alpha$ 在 $K$ 上的共轭，$\beta_1=\beta,\dots,\beta_n$ 为 $\beta$ 在 $K$ 上的共轭。因扩张可分，这些根互异。由于 $K$ 无限，可取 $c\in K$，使得对一切 $(i,j)\ne(1,1)$ 都有
+\[
+\alpha_i+c\beta_j\ne \alpha+c\beta.
+\]
+令
+\[
+\theta=\alpha+c\beta.
+\]
+显然 $K(\theta)\subset L$。考虑
+\[
+g(x)=m_\alpha(\theta-cx)\in K(\theta)[x],
+\qquad h(x)=m_\beta(x)\in K[x]\subset K(\theta)[x].
+\]
+其中 $m_\alpha,m_\beta$ 分别为极小多项式。显然 $\beta$ 同时是 $g,h$ 的根。若 $\beta_j$ 也是两者的公共根，则
+\[
+m_\alpha(\theta-c\beta_j)=0,
+\]
+故 $\theta-c\beta_j=\alpha_i$ 对某个 $i$ 成立，即
+\[
+\alpha_i+c\beta_j=\alpha+c\beta.
+\]
+由 $c$ 的选取可知只能有 $i=1,j=1$。所以 $g$ 与 $h$ 的唯一公共根是 $\beta$。因 $h$ 可分，$\gcd(g,h)=x-\beta$，从而 $x-\beta\in K(\theta)[x]$，故 $\beta\in K(\theta)$。于是
+\[
+\alpha=\theta-c\beta\in K(\theta),
+\]
+所以 $L=K(\theta)$。
+
+对一般有限可分扩张 $L/K$，取一组有限生成元 $L=K(\alpha_1,\dots,\alpha_r)$。两元情形说明可把前两个生成元合并成一个，再归纳下去，最终得到某个 $\theta\in L$ 使得 $L=K(\theta)$。这就是原始元定理。
+
+\item \textbf{解答.} 任一有限扩张 $L/\Q$ 都是有限可分扩张，因为 $\Q$ 的特征为 $0$，故所有代数扩张都可分。于是上一题的原始元定理可以直接应用，得到存在 $\theta\in L$ 使得
+\[
+L=\Q(\theta).
+\]
+故每个有限扩张 $L/\Q$ 都是单扩张。
+
+\item \textbf{解答.} 由题设，
+\[
+\Delta(q)=\sum_{n\ge1}\tau(n)q^n,
+\qquad \tau(n)\in\Z\subset\Q.
+\]
+系数域定义为
+\[
+K_\Delta=\Q(\tau(1),\tau(2),\dots).
+\]
+由于所有 $\tau(n)$ 都已经在 $\Q$ 中，所以 $K_\Delta\subset\Q$。反过来，系数域按定义总包含底域 $\Q$，故
+\[
+K_\Delta=\Q.
+\]
+
+\item \textbf{解答.} 对偶数 $k\ge4$，
+\[
+E_k(q)=1-\frac{2k}{B_k}\sum_{n\ge1}\sigma_{k-1}(n)q^n.
+\]
+这里 Bernoulli 数 $B_k\in\Q$，而每个约数和
+\[
+\sigma_{k-1}(n)=\sum_{d\mid n} d^{k-1}
+\]
+是整数。因此每个 Fourier 系数
+\[
+-\frac{2k}{B_k}\sigma_{k-1}(n)
+\]
+都属于 $\Q$，常数项 $1$ 也在 $\Q$ 中。故 $E_k$ 的全部 Fourier 系数都在 $\Q$，从而其系数域就是
+\[
+\Q.
+\]
+
+\item \textbf{解答.} 设
+\[
+f=\sum_{n\ge1} a_nq^n,
+\qquad T_mf=a_mf.
+\]
+因为 Hecke 算子在 $q$-展开上的作用由有理系数公式给出，所以对系数施加嵌入 $\sigma$ 与施加 $T_m$ 可以交换。于是
+\[
+T_mf^\sigma=T_m\left(\sum_{n\ge1}\sigma(a_n)q^n\right)=\sigma(T_mf)=\sigma(a_mf)=\sigma(a_m)f^\sigma.
+\]
+这说明 $f^\sigma$ 仍是同一权、同一级上的 Hecke 本征形式，其本征值为 $\sigma(a_m)$。又因 $a_1=1$，故
+\[
+\sigma(a_1)=1,
+\]
+所以 $f^\sigma$ 仍是归一化的。
+
+\item \textbf{解答.} 上题已知每个嵌入 $\sigma:K_f\hookrightarrow\C$ 给出一个本征形式 $f^\sigma$。若 $\sigma\ne\tau$，因为 $K_f$ 由全部 $a_n$ 生成，存在某个 $m$ 使得
+\[
+\sigma(a_m)\ne\tau(a_m).
+\]
+于是 $f^\sigma$ 与 $f^\tau$ 的第 $m$ 个 Fourier 系数不同，因此它们是不同的模形式。故映射
+\[
+\sigma\longmapsto f^\sigma
+\]
+是单射。另一方面，数域 $K_f$ 到 $\C$ 的嵌入个数恰为 $[K_f:\Q]$。所以轨道
+\[
+\{f^\sigma\}
+\]
+恰有 $[K_f:\Q]$ 个不同元素。以这些轨道元素为一组基向量得到的置换表示，其维数就是基向量个数，也即
+\[
+[K_f:\Q].
+\]
+
+\item \textbf{解答.} 由定义，
+\[
+K_f=\Q(a_1,a_2,a_3,\dots).
+\]
+题设说明每个 $a_n\in\Q(\sqrt5)$，故
+\[
+K_f\subset \Q(\sqrt5).
+\]
+又
+\[
+a_2=\frac{1+\sqrt5}{2},
+\qquad \sqrt5=2a_2-1\in K_f,
+\]
+于是
+\[
+\Q(\sqrt5)=\Q(a_2)\subset K_f.
+\]
+两边合并得
+\[
+K_f=\Q(\sqrt5).
+\]
+特别地，一旦这些系数确实生成整个 $\Q(\sqrt5)$，系数域就必是该二次数域本身。
+
+\item \textbf{解答.} 设 $L,L'$ 都是不可约多项式 $f\in K[x]$ 的分裂域。取一个固定的代数闭包 $\Omega$。因为 $L/K$ 与 $L'/K$ 都是代数扩张，可把它们通过逐步延拓嵌入到 $\Omega$ 中，并且都固定 $K$。把像仍记为 $L,L'\subset\Omega$。在 $\Omega$ 中，多项式 $f$ 的全部根是一个确定的集合 $R$。由于 $L$ 是 $f$ 的分裂域，故
+\[
+L=K(R),
+\]
+即由这些根生成的最小子域；同理
+\[
+L'=K(R).
+\]
+因此在同一个代数闭包 $\Omega$ 中有 $L=L'$。这说明任意两个分裂域都能嵌入到同一个代数闭包中并在其中重合，从而再次得到：分裂域在 $K$-同构意义下唯一。
+
+\item \textbf{解答.} 由前面的次数比较公式，
+\[
+p^n=\sum_{d\mid n} d\,N_p(d).
+\]
+令
+\[
+a_n=p^n,
+\qquad b_n=nN_p(n).
+\]
+则上式改写为
+\[
+a_n=\sum_{d\mid n} b_d.
+\]
+对这个除数求和关系应用 Möbius 反演，得
+\[
+b_n=\sum_{d\mid n}\mu(d)a_{n/d}=
+\sum_{d\mid n}\mu(d)p^{n/d}.
+\]
+于是
+\[
+nN_p(n)=\sum_{d\mid n}\mu(d)p^{n/d},
+\]
+从而
+\[
+N_p(n)=\frac1n\sum_{d\mid n}\mu(d)p^{n/d}.
+\]
+证毕。
+\end{enumerate}
+

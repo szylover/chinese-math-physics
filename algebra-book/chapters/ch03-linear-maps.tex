@@ -1610,7 +1610,625 @@ W^* \arrow[r,"f^*"] \arrow[d,"{[\,\cdot\,]_{\mathcal C^*}}"'] & V^* \arrow[d,"{[
 
 至此，我们已经建立了线性映射的三种等价视角：作为保持线性结构的映射、作为选基后的矩阵、以及作为对偶空间上的转置操作。下一章将利用这些基础研究特征值与特征向量，从而进入线性算子的谱理论。
 
+\section*{习题解答}
 
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
 
+% ────────────────── 基础题 1–30 ──────────────────
 
+\item \textbf{解答.}
+对任意 $(x_1,y_1),(x_2,y_2)\in\R^2$ 与 $a,b\in\R$，
+\begin{align*}
+  f\bigl(a(x_1,y_1)+b(x_2,y_2)\bigr)
+  &= f(ax_1+bx_2,\;ay_1+by_2) \\
+  &= \bigl((ax_1+bx_2)+2(ay_1+by_2),\;3(ax_1+bx_2)-(ay_1+by_2)\bigr) \\
+  &= a(x_1+2y_1,3x_1-y_1)+b(x_2+2y_2,3x_2-y_2) \\
+  &= af(x_1,y_1)+bf(x_2,y_2),
+\end{align*}
+故 $f$ 是线性映射。
+在标准基 $e_1=(1,0)$，$e_2=(0,1)$ 下，$f(e_1)=(1,3)$，$f(e_2)=(2,-1)$，矩阵为
+\[
+  [f] = \begin{pmatrix}1 & 2\\ 3 & -1\end{pmatrix}.
+\]
 
+\item \textbf{解答.}
+若 $t$ 是线性映射，则必有 $t(\mathbf 0)=\mathbf 0$。但
+\[
+  t(0,0)=(0+1,0)=(1,0)\neq(0,0),
+\]
+矛盾，故 $t$ 不是线性映射。
+
+\item \textbf{解答.}
+$R_\theta(x,y)=(x\cos\theta-y\sin\theta,\;x\sin\theta+y\cos\theta)$。
+对任意 $(x_1,y_1),(x_2,y_2)\in\R^2$，$a,b\in\R$：
+\begin{align*}
+  R_\theta\bigl(a(x_1,y_1)+b(x_2,y_2)\bigr)
+  &= \bigl((ax_1+bx_2)\cos\theta-(ay_1+by_2)\sin\theta,\;(ax_1+bx_2)\sin\theta+(ay_1+by_2)\cos\theta\bigr) \\
+  &= aR_\theta(x_1,y_1)+bR_\theta(x_2,y_2),
+\end{align*}
+故 $R_\theta$ 是线性映射。在标准基下，$R_\theta(e_1)=(\cos\theta,\sin\theta)$，$R_\theta(e_2)=(-\sin\theta,\cos\theta)$，故
+\[
+  [R_\theta]=\begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+$\pi(x,y,z)=(x,y,0)$。
+\begin{itemize}
+  \item 核：$\pi(x,y,z)=(0,0,0)\Leftrightarrow x=y=0$，故 $\Ker(\pi)=\{(0,0,z):z\in\R\}$，基为 $\{(0,0,1)\}$。
+  \item 像：$\Ima(\pi)=\{(x,y,0):x,y\in\R\}$，基为 $\{(1,0,0),(0,1,0)\}$。
+\end{itemize}
+
+\item \textbf{解答.}
+$\dim\mathcal{P}_4(\R)=5$（以 $1,x,x^2,x^3,x^4$ 为基）。
+$\Ker(D)$ 为全体常数多项式，故 $\dim\Ker(D)=1$。
+由秩--零化度定理，$\dim\Ima(D)=5-1=4$。（事实上 $\Ima(D)=\mathcal{P}_3(\R)$，维数恰为 $4$。）
+
+\item \textbf{解答.}
+线性性：由矩阵加法和数乘的定义，$\Tr(aA+bB)=a\Tr(A)+b\Tr(B)$，故 $\Tr$ 是线性映射。
+$\Ima(\Tr)=\F$，故 $\dim\Ima(\Tr)=1$。由秩--零化度定理，
+\[
+  \dim\Ker(\Tr)=\dim\Mat_{2\times 2}(\F)-1=4-1=3.
+\]
+
+\item \textbf{解答.}
+线性性：$s(aA+bB)=(aA+bB)+(aA+bB)^\mathsf{t}=a(A+A^\mathsf{t})+b(B+B^\mathsf{t})=as(A)+bs(B)$。
+像空间：$s(A)=A+A^\mathsf{t}$ 恒为对称矩阵，故 $\Ima(s)\subseteq\mathrm{Sym}_{2\times 2}(\R)$。
+反之，对任意对称矩阵 $S$，有 $s(S/2)=S/2+(S/2)^\mathsf{t}=S/2+S/2=S$，故 $\Ima(s)=\mathrm{Sym}_{2\times 2}(\R)$，维数为 $3$。
+
+\item \textbf{解答.}
+\begin{itemize}
+  \item 核：$\Ker(\varepsilon_0)=\{p\in\mathcal{P}_3(\R):p(0)=0\}$，即常数项为零的多项式，基为 $\{x,x^2,x^3\}$。
+  \item 像：$\varepsilon_0(c)=c$ 对任意常数多项式成立，故 $\Ima(\varepsilon_0)=\R$。
+\end{itemize}
+
+\item \textbf{解答.}
+$f(x,y,z)=(x-y,y-z)=(0,0)$ 当且仅当 $x=y=z$，故 $\Ker(f)=\{(t,t,t):t\in\R\}$，基为 $\{(1,1,1)\}$。
+由秩--零化度定理，$\dim\Ima(f)=3-1=2=\dim\R^2$，故 $\Ima(f)=\R^2$，即 $f$ 是满射。
+
+\item \textbf{解答.}
+矩阵 $A=\begin{pmatrix}1&2&0\\0&1&1\end{pmatrix}$ 已为行阶梯形，两个主元列给出 $\rank(A)=2$。
+由秩--零化度定理，
+\[
+  \dim\Ker(f)=3-2=1,\qquad \dim\Ima(f)=2.
+\]
+
+\item \textbf{解答.}
+\begin{itemize}
+  \item 零映射：$0(au+bv)=0=a\cdot 0+b\cdot 0=a\,0(u)+b\,0(v)$。
+  \item 恒等映射：$\Id_V(au+bv)=au+bv=a\,\Id_V(u)+b\,\Id_V(v)$。
+\end{itemize}
+两者均满足线性条件，故都是线性映射。
+
+\item \textbf{解答.}
+$f(1,0,0)=(1+0,0+0)=(1,0)$，$f(0,1,0)=(0+1,1+0)=(1,1)$。
+$f(U)=\mathrm{span}\{(1,0),(1,1)\}$。
+因 $(1,0)$ 与 $(1,1)$ 线性无关，$f(U)=\R^2$。
+
+\item \textbf{解答.}
+$g(x,y)=(x,0)$，$Y=\{(t,0):t\in\R\}$（即 $x$-轴）。
+对任意 $(x,y)\in\R^2$，$g(x,y)=(x,0)\in Y$（因为 $(x,0)=x\cdot(1,0)\in Y$），故 $g^{-1}(Y)=\R^2$。
+
+\item \textbf{解答.}
+$f(e_1)=f(1,0)=(1,1)$，$f(e_2)=f(0,1)=(1,-1)$，故标准矩阵为
+\[
+  [f]=\begin{pmatrix}1 & 1\\ 1 & -1\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+取基 $v_1=1,v_2=x,v_3=x^2,v_4=x^3$。
+$D(v_1)=0$，$D(v_2)=1=v_1$，$D(v_3)=2x=2v_2$，$D(v_4)=3x^2=3v_3$。
+将各像的坐标列向量排为矩阵的各列，得
+\[
+  [D]=\begin{pmatrix}0&1&0&0\\0&0&2&0\\0&0&0&3\\0&0&0&0\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+设 $b_1=(1,1)$，$b_2=(1,-1)$。
+$p(b_1)=p(1,1)=(1,0)$，将 $(1,0)$ 在 $\mathcal{B}$ 下展开：$(1,0)=a\,(1,1)+b\,(1,-1)$，
+解方程组 $a+b=1$，$a-b=0$，得 $a=b=\tfrac{1}{2}$。
+$p(b_2)=p(1,-1)=(1,0)$，同理坐标为 $\bigl(\tfrac{1}{2},\tfrac{1}{2}\bigr)^\mathsf{t}$。故
+\[
+  [p]_{\mathcal{B}}^{\mathcal{B}}=\begin{pmatrix}\tfrac{1}{2}&\tfrac{1}{2}\\[4pt]\tfrac{1}{2}&\tfrac{1}{2}\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+$\Tr\colon\Mat_{2\times 2}(\F)\to\F$ 在基 $E_{11},E_{12},E_{21},E_{22}$（域的基取 $\{1\}$）下的矩阵为 $1\times 4$ 矩阵：
+\[
+  [\Tr]=\begin{pmatrix}1&0&0&1\end{pmatrix},
+\]
+因为 $\Tr(E_{11})=1$，$\Tr(E_{12})=0$，$\Tr(E_{21})=0$，$\Tr(E_{22})=1$。
+
+\item \textbf{解答.}
+$[f]=\begin{pmatrix}1&1\\0&1\end{pmatrix}$，$[g]=\begin{pmatrix}1&0\\0&2\end{pmatrix}$。
+直接计算：$g\circ f(x,y)=g(x+y,y)=(x+y,2y)$，故
+\[
+  [g\circ f]=\begin{pmatrix}1&1\\0&2\end{pmatrix}.
+\]
+验证：$[g][f]=\begin{pmatrix}1&0\\0&2\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}=\begin{pmatrix}1&1\\0&2\end{pmatrix}$，两者一致。
+
+\item \textbf{解答.}
+$R_{\pi/2}(e_1)=(0,1)$，$R_{\pi/2}(e_2)=(-1,0)$，故
+\[
+  [R_{\pi/2}]=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+\]
+$R_{\pi/2}^2$ 对应旋转 $\pi$，矩阵为
+\[
+  \begin{pmatrix}0&-1\\1&0\end{pmatrix}^2
+  =\begin{pmatrix}-1&0\\0&-1\end{pmatrix}=-I.
+\]
+
+\item \textbf{解答.}
+过渡矩阵（从 $\mathcal{B}'$ 到 $\mathcal{B}$）的各列是 $\mathcal{B}'$ 的基向量在 $\mathcal{B}$（标准基）下的坐标，故
+\[
+  P_{\mathcal{B}'\to\mathcal{B}}=\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+从 $\mathcal{B}$ 到 $\mathcal{B}'$ 的过渡矩阵为上题矩阵的逆。
+$\det\begin{pmatrix}1&1\\1&-1\end{pmatrix}=-2$，故
+\[
+  P_{\mathcal{B}\to\mathcal{B}'}
+  =\frac{1}{-2}\begin{pmatrix}-1&-1\\-1&1\end{pmatrix}
+  =\begin{pmatrix}\tfrac{1}{2}&\tfrac{1}{2}\\[4pt]\tfrac{1}{2}&-\tfrac{1}{2}\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+$\det P=-2$，$P^{-1}=\begin{pmatrix}1/2&1/2\\1/2&-1/2\end{pmatrix}$。
+\begin{align*}
+  P^{-1}AP
+  &=\begin{pmatrix}1/2&1/2\\1/2&-1/2\end{pmatrix}
+    \begin{pmatrix}2&0\\0&3\end{pmatrix}
+    \begin{pmatrix}1&1\\1&-1\end{pmatrix} \\
+  &=\begin{pmatrix}1&3/2\\1&-3/2\end{pmatrix}
+    \begin{pmatrix}1&1\\1&-1\end{pmatrix}
+  =\begin{pmatrix}5/2&-1/2\\-1/2&5/2\end{pmatrix}.
+\end{align*}
+
+\item \textbf{解答.}
+设 $B=P^{-1}AP=\begin{pmatrix}5/2&-1/2\\-1/2&5/2\end{pmatrix}$。
+\[
+  \Tr(A)=5=\Tr(B),\quad
+  \det(A)=6=\tfrac{25}{4}-\tfrac{1}{4}=6=\det(B),\quad
+  \rank(A)=2=\rank(B).
+\]
+迹、行列式、秩均为相似不变量，与所选基无关。
+
+\item \textbf{解答.}
+设对偶基 $\{f_1,f_2\}$ 满足 $f_i(b_j)=\delta_{ij}$，其中 $b_1=(1,1)$，$b_2=(1,-1)$。
+设 $f_1(x,y)=ax+by$：由 $f_1(1,1)=a+b=1$，$f_1(1,-1)=a-b=0$，解得 $a=b=\tfrac{1}{2}$，即
+\[
+  f_1(x,y)=\frac{x+y}{2}.
+\]
+设 $f_2(x,y)=cx+dy$：由 $f_2(1,1)=c+d=0$，$f_2(1,-1)=c-d=1$，解得 $c=\tfrac{1}{2}$，$d=-\tfrac{1}{2}$，即
+\[
+  f_2(x,y)=\frac{x-y}{2}.
+\]
+
+\item \textbf{解答.}
+设 $\{e_1^*,e_2^*,e_3^*\}$ 为对应基 $v_1=1,\,v_2=x+1,\,v_3=x^2$ 的对偶基。
+对任意 $p=a+bx+cx^2\in\mathcal{P}_2(\R)$，将其展开为基的线性组合：
+\[
+  p=\alpha\cdot 1+\beta(x+1)+\gamma x^2
+  \implies \alpha+\beta=a,\;\beta=b,\;\gamma=c.
+\]
+解得 $\alpha=a-b$，$\beta=b$，$\gamma=c$，故
+\[
+  e_1^*(p)=a-b,\quad e_2^*(p)=b,\quad e_3^*(p)=c.
+\]
+
+\item \textbf{解答.}
+对偶映射 $f^*\colon W^*\to V^*$ 在标准对偶基下的矩阵等于 $[f]$ 的转置：
+\[
+  [f^*]=[f]^\mathsf{t}=\begin{pmatrix}1&3\\2&4\end{pmatrix}.
+\]
+
+\item \textbf{解答.}
+以 $\{x^*,y^*,z^*\}$ 为 $(\R^3)^*$ 的标准对偶基，设 $\varphi=ax^*+by^*+cz^*\in U^0$。
+条件 $\varphi(1,1,0)=a+b=0$ 给出 $b=-a$，$c$ 任意。
+故 $U^0=\mathrm{span}\{x^*-y^*,\;z^*\}$，基为 $\{x^*-y^*,\;z^*\}$，维数为 $2$。
+
+\item \textbf{解答.}
+$U$ 由两个线性无关的方程定义（两个约束方程 $x+y+z+w=0$ 和 $x-y=0$ 显然线性无关），故 $\dim U=4-2=2$。由湮没子维数公式（习题54），
+\[
+  \dim U^0=\dim\F^4-\dim U=4-2=2.
+\]
+
+\item \textbf{解答.}
+自然映射定义为 $\iota_V(v)(\varphi)=\varphi(v)$。
+设 $v=(2,-1)$，则对任意 $\varphi\in(\R^2)^*$，
+\[
+  \iota_V(2,-1)(\varphi)=\varphi(2,-1).
+\]
+具体地，若 $\varphi=\alpha x^*+\beta y^*$（以标准对偶基展开），则 $\iota_V(2,-1)(\varphi)=2\alpha-\beta$。
+
+\item \textbf{解答.}
+$f^2(x,y,z)=f(f(x,y,z))=f(x,y,0)=(x,y,0)=f(x,y,z)$，故 $f^2=f$。
+\begin{itemize}
+  \item $\Ker(f)=\{(0,0,z):z\in\R\}$，基为 $\{(0,0,1)\}$。
+  \item $\Ima(f)=\{(x,y,0):x,y\in\R\}$，基为 $\{(1,0,0),(0,1,0)\}$。
+\end{itemize}
+
+% ────────────────── 进阶题 31–55 ──────────────────
+
+\item \textbf{解答.}
+\begin{proof}
+$(\Rightarrow)$ 设 $f$ 单射，$v\in\Ker(f)$。则 $f(v)=0=f(0)$，由单射性 $v=0$，故 $\Ker(f)=\{0\}$。
+
+$(\Leftarrow)$ 设 $\Ker(f)=\{0\}$，且 $f(u)=f(v)$。由线性性，$f(u-v)=f(u)-f(v)=0$，故 $u-v\in\Ker(f)=\{0\}$，即 $u=v$，$f$ 单射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+$(\Rightarrow)$ 若 $f$ 满射，则对任意 $w\in W$ 存在 $v\in V$ 使 $f(v)=w$，故 $w\in\Ima(f)$，即 $\Ima(f)=W$。
+
+$(\Leftarrow)$ 若 $\Ima(f)=W$，则对任意 $w\in W$ 存在 $v$ 使 $f(v)=w$，即 $f$ 满射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+令 $K=\Ker(f)$，定义 $\widetilde{f}\colon V/K\to\Ima(f)$，$\widetilde{f}(v+K)=f(v)$。
+
+\emph{良定义：} 若 $v+K=v'+K$，则 $v-v'\in K$，故 $f(v-v')=0$，$f(v)=f(v')$。
+
+\emph{线性性：} 由商空间的运算规则与 $f$ 的线性性直接验证。
+
+\emph{单射：} 若 $\widetilde{f}(v+K)=0$，则 $f(v)=0$，故 $v\in K$，即 $v+K=K$（零元）。
+
+\emph{满射：} 对任意 $w=f(v)\in\Ima(f)$，$\widetilde{f}(v+K)=w$。
+
+故 $\widetilde{f}$ 是线性同构，$V/K\cong\Ima(f)$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设存在单射 $f\colon\F^5\to\F^3$。由习题31，$\Ker(f)=\{0\}$，故 $\dim\Ker(f)=0$。由秩--零化度定理，
+\[
+  \dim\Ima(f)=5-0=5.
+\]
+但 $\Ima(f)\subseteq\F^3$ 蕴含 $\dim\Ima(f)\le 3 < 5$，矛盾。故不存在 $\F^5\to\F^3$ 的单射线性映射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\dim V=\dim W=n$，$f\colon V\to W$ 单射。由习题31，$\dim\Ker(f)=0$。由秩--零化度定理，
+\[
+  \dim\Ima(f)=n-0=n=\dim W.
+\]
+因 $\Ima(f)\subseteq W$ 且两者维数相等，故 $\Ima(f)=W$，即 $f$ 满射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $f\circ g=\Id_W$。
+
+\emph{$f$ 满射：} 对任意 $w\in W$，$f(g(w))=\Id_W(w)=w$，故 $w\in\Ima(f)$。
+
+\emph{$g$ 单射：} 若 $g(w_1)=g(w_2)$，则 $w_1=f(g(w_1))=f(g(w_2))=w_2$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+$\Ima(g\circ f)=g(f(V))\subseteq g(W)=\Ima(g)$，故 $\rank(g\circ f)\le\rank(g)$。
+
+另一方面，将 $g$ 限制在 $\Ima(f)$ 上：$\Ima(g\circ f)=g(\Ima(f))$，其维数不超过 $\dim\Ima(f)=\rank(f)$，故 $\rank(g\circ f)\le\rank(f)$。
+
+综合两不等式得 $\rank(g\circ f)\le\min\{\rank(f),\rank(g)\}$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+在 $\Hom(V,W)$ 上定义逐点加法 $(f+g)(v)=f(v)+g(v)$ 与数乘 $(af)(v)=af(v)$。
+验证 $f+g$ 和 $af$ 仍是线性映射：
+\[
+  (f+g)(au+bv)=f(au+bv)+g(au+bv)=a(f+g)(u)+b(f+g)(v),
+\]
+数乘同理。零元为零映射，加法逆为 $(-f)(v)=-f(v)$。向量空间的八条公理均从 $W$ 的对应公理遗传，故 $\Hom(V,W)$ 是向量空间。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+固定 $V$ 的基 $\mathcal{B}=(v_1,\ldots,v_n)$ 与 $W$ 的基 $\mathcal{C}=(w_1,\ldots,w_m)$，定义 $\Phi\colon\Hom(V,W)\to\Mat_{m\times n}(\F)$，$\Phi(f)=[f]_{\mathcal{B}}^{\mathcal{C}}$。
+对任意 $a,b\in\F$，$f,g\in\Hom(V,W)$，
+\[
+  [af+bg](v_j)=(af+bg)(v_j)=af(v_j)+bg(v_j),
+\]
+故 $\Phi(af+bg)=a\Phi(f)+b\Phi(g)$，$\Phi$ 是线性映射。
+\end{proof}
+
+\item \textbf{解答.}
+定义 $f_A\colon\F^n\to\F^m$，$f_A(x)=Ax$。
+线性性：$f_A(ax+by)=A(ax+by)=aAx+bAy=af_A(x)+bf_A(y)$。
+在标准基 $\{e_1,\ldots,e_n\}$ 与 $\{e_1',\ldots,e_m'\}$ 下，$f_A(e_j)=Ae_j$（即 $A$ 的第 $j$ 列），故 $[f_A]=A$。
+
+\item \textbf{解答.}
+\begin{proof}
+设 $V$，$W$，$X$ 分别有基 $\mathcal{B}$，$\mathcal{C}$，$\mathcal{D}$。对任意 $v\in V$，
+\[
+  [f(v)]_{\mathcal{C}}=[f]_{\mathcal{B}}^{\mathcal{C}}[v]_{\mathcal{B}},
+  \qquad
+  [g(f(v))]_{\mathcal{D}}=[g]_{\mathcal{C}}^{\mathcal{D}}[f(v)]_{\mathcal{C}}
+  =[g]_{\mathcal{C}}^{\mathcal{D}}[f]_{\mathcal{B}}^{\mathcal{C}}[v]_{\mathcal{B}}.
+\]
+因此 $[g\circ f]_{\mathcal{B}}^{\mathcal{D}}[v]_{\mathcal{B}}=[g]_{\mathcal{C}}^{\mathcal{D}}[f]_{\mathcal{B}}^{\mathcal{C}}[v]_{\mathcal{B}}$ 对所有 $[v]_{\mathcal{B}}$ 成立，
+故 $[g\circ f]=[g][f]$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $f\colon V\to V$ 在基 $\mathcal{B}$ 下的矩阵为 $A$，在基 $\mathcal{B}'$ 下的矩阵为 $B$，$P$ 为从 $\mathcal{B}'$ 到 $\mathcal{B}$ 的过渡矩阵。则基变换公式给出 $B=P^{-1}AP$，即 $A$ 与 $B$ 相似。
+
+反之，若 $B=P^{-1}AP$ 对某可逆矩阵 $P$ 成立，令新基 $\mathcal{B}'$ 的第 $j$ 个基向量为以 $P$ 的第 $j$ 列为坐标（在 $\mathcal{B}$ 下）的向量，则 $P$ 是从 $\mathcal{B}'$ 到 $\mathcal{B}$ 的过渡矩阵，且 $f$ 在 $\mathcal{B}'$ 下的矩阵恰为 $B$。
+
+故两个方阵相似当且仅当它们表示同一线性自同态在不同基下的矩阵。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+\[
+  \Tr(AB)=\sum_{i=1}^n(AB)_{ii}=\sum_{i=1}^n\sum_{j=1}^n A_{ij}B_{ji}
+  =\sum_{j=1}^n\sum_{i=1}^n B_{ji}A_{ij}=\sum_{j=1}^n(BA)_{jj}=\Tr(BA). \qedhere
+\]
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+左乘可逆矩阵 $P$ 是 $\F^m$ 上的线性同构（双射），故不改变列空间的维数；右乘可逆矩阵 $Q$ 是 $\F^n$ 上的线性同构，对应可逆列变换，同样不改变秩。因此 $\rank(PAQ)=\rank(PA)=\rank(A)$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $f$ 在基 $\mathcal{B}$ 下的矩阵为 $A$，在基 $\mathcal{B}'$ 下的矩阵为 $B=P^{-1}AP$。则
+\[
+  \det(B)=\det(P^{-1})\det(A)\det(P)=\det(P)^{-1}\det(A)\det(P)=\det(A).
+\]
+故行列式值与基的选取无关，是线性自同态 $f$ 的内在不变量。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $p^2=p$，$v\in V$。写 $v=p(v)+(v-p(v))$，其中 $p(v)\in\Ima(p)$，且
+\[
+  p(v-p(v))=p(v)-p^2(v)=p(v)-p(v)=0,
+\]
+故 $v-p(v)\in\Ker(p)$。因此 $V=\Ker(p)+\Ima(p)$。
+
+再证直和：设 $v\in\Ker(p)\cap\Ima(p)$，则 $v=p(u)$ 对某 $u\in V$ 成立，且 $p(v)=0$。
+于是 $v=p(u)$，$p(v)=p^2(u)=p(u)=v$，故 $v=0$。
+
+因此 $V=\Ker(p)\oplus\Ima(p)$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+"投影"等价于幂等条件 $p^2=p$。
+
+$(\Rightarrow)$ 若 $p$ 是沿 $W_1$ 到 $W_2$ 的投影（即 $V=W_1\oplus W_2$，$p$ 将 $w_1+w_2$ 映至 $w_2$），则对任意 $v=w_1+w_2$，$p^2(v)=p(w_2)=w_2=p(v)$，故 $p^2=p$。
+
+$(\Leftarrow)$ 由习题46，$p^2=p$ 蕴含 $V=\Ker(p)\oplus\Ima(p)$，$p$ 即是沿 $\Ker(p)$ 到 $\Ima(p)$ 的投影。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+给定基 $\mathcal{B}=(v_1,\ldots,v_n)$，对每个 $i$ 定义 $f_i\colon V\to\F$：对 $v=\sum_j a_j v_j$，令 $f_i(v)=a_i$（取第 $i$ 坐标分量）。则 $f_i$ 线性，且 $f_i(v_j)=\delta_{ij}$，给出对偶基的存在性。
+
+唯一性：若 $g_i$ 也满足 $g_i(v_j)=\delta_{ij}$，则 $(g_i-f_i)(v_j)=0$ 对所有 $j$ 成立，由于线性映射由基上的值唯一决定，故 $g_i=f_i$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\dim V=n$，$\mathcal{B}=(v_1,\ldots,v_n)$ 为基，$\mathcal{B}^*=(f_1,\ldots,f_n)$ 为对偶基。
+
+\emph{$\dim V^*\ge n$：} 若 $\sum_i a_i f_i=0$，则作用于 $v_j$ 得 $a_j=0$，故 $f_1,\ldots,f_n$ 线性无关，$\dim V^*\ge n$。
+
+\emph{$\dim V^*\le n$：} 任意 $\varphi\in V^*$ 由其在基上的值 $\varphi(v_1),\ldots,\varphi(v_n)$ 唯一决定，故 $\varphi=\sum_i\varphi(v_i)f_i$，即 $\{f_1,\ldots,f_n\}$ 张成 $V^*$，$\dim V^*\le n$。
+
+综合得 $\dim V^*=n$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\iota_V(v)=0$，即对所有 $\varphi\in V^*$ 有 $\varphi(v)=0$。
+若 $v\neq 0$，将 $v$ 扩充为 $V$ 的基 $\{v,v_2,\ldots,v_n\}$，取对应的第一个对偶泛函 $f_1$ 满足 $f_1(v)=1$，与 $f_1(v)=0$ 矛盾。
+故 $v=0$，$\iota_V$ 是单射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+由习题49，$\dim V^{**}=\dim V^*=\dim V=n$。
+由习题50，$\iota_V\colon V\to V^{**}$ 是从 $n$ 维空间到 $n$ 维空间的单射线性映射。
+由习题35，单射加等维数蕴含满射。
+故 $\iota_V$ 是同构，$V\cong V^{**}$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+$\varphi\in\Ker(f^*)$
+$\Leftrightarrow f^*(\varphi)=0$
+$\Leftrightarrow \varphi\circ f=0$
+$\Leftrightarrow$ 对所有 $v\in V$，$\varphi(f(v))=0$
+$\Leftrightarrow \varphi|_{\Ima(f)}=0$
+$\Leftrightarrow \varphi\in(\Ima(f))^0$。
+
+故 $\Ker(f^*)=(\Ima(f))^0$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+\emph{包含 $\Ima(f^*)\subseteq(\Ker(f))^0$：} 设 $\psi=f^*(\varphi)=\varphi\circ f\in\Ima(f^*)$，$v\in\Ker(f)$，则 $\psi(v)=\varphi(f(v))=\varphi(0)=0$，故 $\psi\in(\Ker(f))^0$。
+
+\emph{维数相等：} 设 $\dim V=n$，$\rank(f)=r$。由习题52，$\Ker(f^*)=(\Ima(f))^0$，故 $\dim\Ker(f^*)=n-r$，从而
+\[
+  \dim\Ima(f^*)=\dim V^*-\dim\Ker(f^*)=n-(n-r)=r.
+\]
+又 $\dim(\Ker(f))^0=n-\dim\Ker(f)=n-(n-r)=r$。
+
+两者维数相等且有包含关系，故 $\Ima(f^*)=(\Ker(f))^0$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\dim V=n$，$\dim U=k$。取 $U$ 的基 $(u_1,\ldots,u_k)$ 并扩充为 $V$ 的基 $(u_1,\ldots,u_k,v_{k+1},\ldots,v_n)$，设对应对偶基为 $(u_1^*,\ldots,u_k^*,v_{k+1}^*,\ldots,v_n^*)$。
+
+$U^0=\{\varphi\in V^*:\varphi(u_i)=0,\,i=1,\ldots,k\}$，故 $\varphi=\sum_{j=k+1}^n c_j v_j^*$。
+因此 $U^0=\mathrm{span}\{v_{k+1}^*,\ldots,v_n^*\}$，从而 $\dim U^0=n-k=\dim V-\dim U$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+$(U_1+U_2)^0\subseteq U_1^0\cap U_2^0$：设 $\varphi\in(U_1+U_2)^0$，则 $\varphi$ 在 $U_1+U_2$ 上为零，特别地在 $U_1$ 和 $U_2$ 上各为零，故 $\varphi\in U_1^0\cap U_2^0$。
+
+$U_1^0\cap U_2^0\subseteq(U_1+U_2)^0$：设 $\varphi\in U_1^0\cap U_2^0$，对任意 $u_1+u_2\in U_1+U_2$，$\varphi(u_1+u_2)=\varphi(u_1)+\varphi(u_2)=0+0=0$，故 $\varphi\in(U_1+U_2)^0$。
+
+两方向包含关系均成立，故 $(U_1+U_2)^0=U_1^0\cap U_2^0$。
+\end{proof}
+
+% ────────────────── 挑战题 56–65 ──────────────────
+
+\item \textbf{解答.}
+\begin{proof}
+题目已给出 $T_n(af+bg)=aT_n(f)+bT_n(g)$，这正是线性映射的定义条件，故 $T_n\colon M_k(\Gamma)\to M_k(\Gamma)$ 是线性映射。
+
+设 $\{f_1,\ldots,f_d\}$ 为 $M_k(\Gamma)$ 的一组基（$d=\dim_\C M_k(\Gamma)<\infty$；有限维性由模形式理论给出）。由线性性，$T_n$ 完全由其在基上的值决定：
+\[
+  T_n(f_j)=\sum_{i=1}^d a_{ij}f_i,\quad a_{ij}\in\C.
+\]
+矩阵 $[T_n]=(a_{ij})\in\Mat_{d\times d}(\C)$ 即为 $T_n$ 在此基下的矩阵表示。更换基时，矩阵按相似变换改变，这与第42题一致。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+权 $k$ 斜作用定义为：对 $\gamma=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\SL_2(\R)$，
+\[
+  (f|_k\gamma)(\tau)=(c\tau+d)^{-k}f\!\left(\frac{a\tau+b}{c\tau+d}\right).
+\]
+
+\emph{群作用验证：} 设 $\gamma_1=\begin{pmatrix}a_1&b_1\\c_1&d_1\end{pmatrix}$，$\gamma_2=\begin{pmatrix}a_2&b_2\\c_2&d_2\end{pmatrix}$。
+令 $\tau'=\gamma_1\tau=\frac{a_1\tau+b_1}{c_1\tau+d_1}$，则
+\begin{align*}
+  (f|_k\gamma_1)|_k\gamma_2(\tau)
+  &=(c_2\tau+d_2)^{-k}(f|_k\gamma_1)(\tau') \\
+  &=(c_2\tau+d_2)^{-k}(c_1\tau'+d_1)^{-k}f(\gamma_1\tau').
+\end{align*}
+利用 $\SL_2(\R)$ 的 Möbius 变换复合公式，可以验证 $(c_2\tau+d_2)(c_1\tau'+d_1)$ 等于 $\gamma_1\gamma_2$ 的分母因子 $(c'\tau+d')$（其中 $\begin{pmatrix}a'&b'\\c'&d'\end{pmatrix}=\gamma_1\gamma_2$），故 $(f|_k\gamma_1)|_k\gamma_2=f|_k(\gamma_1\gamma_2)$。
+此外，$f|_k I=f$（恒等矩阵），故斜作用满足群作用公理。
+
+\emph{线性性：} 对固定 $\gamma$，$(c\tau+d)^{-k}$ 是 $\tau$ 的函数（非零常数因子），故
+\[
+  (\alpha f+\beta g)|_k\gamma(\tau)=(c\tau+d)^{-k}(\alpha f+\beta g)(\gamma\tau)=\alpha(f|_k\gamma)(\tau)+\beta(g|_k\gamma)(\tau),
+\]
+即 $f\mapsto f|_k\gamma$ 是线性映射。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $f=\sum_{m\ge 0}c_m(f)q^m$ 与 $g=\sum_{m\ge 0}c_m(g)q^m$ 属于 $M_k(\Gamma)$，$\alpha,\beta\in\C$。则
+\[
+  a_n(\alpha f+\beta g)=c_n(\alpha f+\beta g)=\alpha c_n(f)+\beta c_n(g)=\alpha a_n(f)+\beta a_n(g),
+\]
+其中第二个等号利用了 Fourier 展开对加法与数乘的逐项线性性（$q^m$ 展开的系数对线性组合是线性的）。故 $a_n$ 是线性泛函，$a_n\in M_k(\Gamma)^*$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $i\colon U\hookrightarrow V$ 为包含映射，$\pi\colon V\to V/U$，$\pi(v)=v+U$。
+
+\emph{正合性验证：}
+\begin{itemize}
+  \item 在 $U$ 处：$i$ 是包含映射，显然单射；
+  \item 在 $V$ 处：$\Ima(i)=U$，且 $\Ker(\pi)=\{v\in V:v+U=U\}=U$，故 $\Ima(i)=\Ker(\pi)$；
+  \item 在 $V/U$ 处：$\pi$ 是商映射，定义即满射。
+\end{itemize}
+故序列正合。
+
+\emph{维数公式：} $\Ker(\pi)=U$，由第一同构定理（习题33），$V/\Ker(\pi)\cong\Ima(\pi)=V/U$，从而
+\[
+  \dim(V/U)=\dim V-\dim\Ker(\pi)=\dim V-\dim U,
+\]
+即 $\dim V=\dim U+\dim(V/U)$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $0\to U\xrightarrow{i}V\xrightarrow{p}W\to 0$ 是有限维向量空间的短正合列。正合性给出：$i$ 单射，$\Ima(i)=\Ker(p)$，$p$ 满射。
+
+由第一同构定理，$V/\Ker(p)\cong\Ima(p)=W$（由 $p$ 满射），故 $\dim W=\dim V-\dim\Ker(p)$。
+
+又 $\Ker(p)=\Ima(i)$，而 $i$ 是从 $U$ 到 $\Ima(i)$ 的线性同构，故 $\dim\Ker(p)=\dim\Ima(i)=\dim U$。
+
+综合得 $\dim V=\dim\Ker(p)+\dim W=\dim U+\dim W$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+对偶序列为 $0\to W^*\xrightarrow{p^*}V^*\xrightarrow{i^*}U^*\to 0$。逐处验证正合性。
+
+\emph{$p^*$ 单射：} 若 $p^*(\psi)=\psi\circ p=0$，则 $\psi$ 在 $\Ima(p)=W$ 上为零，但 $\psi\in W^*$ 故 $\psi=0$。
+
+\emph{$\Ker(i^*)=\Ima(p^*)$：}
+\begin{itemize}
+  \item 包含 $\Ima(p^*)\subseteq\Ker(i^*)$：$i^*(p^*(\psi))=\psi\circ p\circ i$；由 $\Ima(i)=\Ker(p)$，对任意 $u\in U$，$p(i(u))=0$，故 $\psi\circ p\circ i=0$。
+  \item 包含 $\Ker(i^*)\subseteq\Ima(p^*)$：设 $\varphi\in V^*$ 满足 $\varphi\circ i=0$，即 $\varphi|_U=0$，即 $U=\Ker(p)\subseteq\Ker\varphi$。由 $p$ 满射，对任意 $w\in W$ 选 $v$ 使 $p(v)=w$，定义 $\psi(w)=\varphi(v)$：若 $p(v')=w$，则 $v-v'\in\Ker(p)=U$，故 $\varphi(v-v')=0$，$\psi$ 良定义。显然 $\varphi=\psi\circ p=p^*(\psi)$。
+\end{itemize}
+
+\emph{$i^*$ 满射：} 对任意 $\phi\in U^*$，将 $U$ 的基扩充为 $V$ 的基，定义 $\widetilde\phi\in V^*$ 在 $U$ 的基上与 $\phi$ 一致、在补空间的基向量上为零，则 $i^*(\widetilde\phi)=\widetilde\phi|_U=\phi$。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+设 $\dim V=n$，$\dim U=k$。
+
+\emph{$U\subseteq(U^0)^0$：} 对任意 $u\in U$，$\varphi\in U^0$，由 $U^0$ 的定义 $\varphi(u)=0$，即 $\iota_V(u)(\varphi)=0$ 对所有 $\varphi\in U^0$ 成立，故 $\iota_V(u)\in(U^0)^0$。借助习题51的同构 $V\cong V^{**}$，可将 $U$ 视为 $(U^0)^0$ 的子集。
+
+\emph{维数相等：} 由习题54，$\dim U^0=n-k$，再次应用习题54得 $\dim(U^0)^0=n-\dim U^0=n-(n-k)=k=\dim U$。
+
+包含关系加上维数相等，故 $(U^0)^0=U$。
+
+这表明取湮没子 $U\mapsto U^0$ 是从 $V$ 的子空间格到 $V^*$ 的子空间格的反序双射（即 $U_1\subseteq U_2\Leftrightarrow U_2^0\subseteq U_1^0$），给出两个格之间的反序对应。
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+\emph{$\bar f$ 良定义：} 若 $v+U=v'+U$，则 $v-v'\in U$，故 $f(v-v')\in f(U)\subseteq U$，即 $f(v)+U=f(v')+U$，$\bar f(v+U)=\bar f(v'+U)$。
+
+\emph{线性性：} $\bar f(a(v+U)+b(w+U))=\bar f((av+bw)+U)=f(av+bw)+U=af(v)+bf(w)+U=a\bar f(v+U)+b\bar f(w+U)$。
+
+\emph{分块上三角形式：} 取 $U$ 的基 $\mathcal{B}_1=(u_1,\ldots,u_k)$，扩充为 $V$ 的基 $\mathcal{B}=(u_1,\ldots,u_k,v_{k+1},\ldots,v_n)$。
+因 $f(U)\subseteq U$，$f(u_i)$ 是 $u_1,\ldots,u_k$ 的线性组合；$f(v_j)$（$j>k$）可以涉及全部基向量。
+在基 $\mathcal{B}$ 下，$[f]$ 的前 $k$ 列属于由 $u_i$ 张成的子空间，故矩阵具有分块上三角形式：
+\[
+  [f]_{\mathcal{B}}=\begin{pmatrix}[f|_U]_{\mathcal{B}_1} & * \\ 0 & [\bar f]\end{pmatrix}.
+\]
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+\emph{$\rho$ 满射：} 给定 $\psi\in U^*$，取 $U$ 的基 $(u_1,\ldots,u_k)$ 并扩充为 $V$ 的基 $(u_1,\ldots,u_k,v_{k+1},\ldots,v_n)$。
+定义 $\widetilde\psi\in V^*$：$\widetilde\psi(u_i)=\psi(u_i)$（$i\le k$），$\widetilde\psi(v_j)=0$（$j>k$），线性延拓。
+则 $\rho(\widetilde\psi)=\widetilde\psi|_U=\psi$，故 $\rho$ 满射。
+
+\emph{核：} $\rho(\varphi)=\varphi|_U=0\Leftrightarrow\varphi\in U^0$，故 $\Ker(\rho)=U^0$。
+
+\emph{同构：} 由第一同构定理，$\rho$ 诱导同构
+\[
+  V^*/\Ker(\rho)=V^*/U^0\xrightarrow{\;\sim\;}U^*. \qedhere
+\]
+\end{proof}
+
+\item \textbf{解答.}
+\begin{proof}
+证明 $\mathrm{(a)}\Rightarrow\mathrm{(c)}\Rightarrow\mathrm{(b)}\Rightarrow\mathrm{(a)}$。
+
+\emph{$\mathrm{(a)}\Rightarrow\mathrm{(c)}$：} 设 $p\circ s=\Id_W$。定义 $\phi\colon U\oplus W\to V$，$\phi(u,w)=i(u)+s(w)$，则 $\phi$ 线性。
+\begin{itemize}
+  \item 单射：若 $i(u)+s(w)=0$，则 $p(i(u)+s(w))=p(s(w))=w=0$，再 $i(u)=0$，由 $i$ 单射得 $u=0$。
+  \item 满射：对 $v\in V$，令 $w=p(v)$，$u'=v-s(p(v))$。则 $p(u')=p(v)-p(s(p(v)))=p(v)-p(v)=0$，故 $u'\in\Ker(p)=\Ima(i)$，存在 $u$ 使 $i(u)=u'$，故 $v=i(u)+s(w)=\phi(u,w)$。
+\end{itemize}
+故 $\phi$ 是同构，$V\cong U\oplus W$。
+
+\emph{$\mathrm{(c)}\Rightarrow\mathrm{(b)}$：} 设 $V\cong U\oplus W$，同构为 $\phi\colon U\oplus W\xrightarrow{\sim}V$。
+定义 $r=\pi_U\circ\phi^{-1}\colon V\to U$（$\pi_U$ 为投影 $(u,w)\mapsto u$），则 $r(i(u))=\pi_U(\phi^{-1}(i(u)))=\pi_U(u,0)=u$，故 $r\circ i=\Id_U$。
+
+\emph{$\mathrm{(b)}\Rightarrow\mathrm{(a)}$：} 设 $r\circ i=\Id_U$。类比 $\mathrm{(c)}\Rightarrow\mathrm{(b)}$ 的论证，令 $V=\Ima(i)\oplus\Ker(r)$（对任意 $v$，分解 $v=i(r(v))+(v-i(r(v)))$，验证 $r(v-i(r(v)))=0$，且 $\Ima(i)\cap\Ker(r)=\{0\}$）。限制映射 $p|_{\Ker(r)}\colon\Ker(r)\to W$ 是同构（单射：若 $v\in\Ker(r)$，$p(v)=0$，则 $v\in\Ker(p)=\Ima(i)\cap\Ker(r)=\{0\}$；满射：维数计算），故可定义 $s=(p|_{\Ker(r)})^{-1}\colon W\to\Ker(r)\subseteq V$，则 $p\circ s=\Id_W$。
+\end{proof}
+
+\end{enumerate}

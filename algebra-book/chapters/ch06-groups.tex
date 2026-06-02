@@ -878,3 +878,833 @@ $(2)\Rightarrow(1)$：若 $gNg^{-1}=N$，右乘 $g$ 即得 $gN=Ng$。
   \item \hard 设 $N$ 为素数。求 $\Gamma_0(N)/\Gamma(N)$ 在 $\SL_2(\Z/N\Z)$ 中对应的像，并证明它同构于上三角且行列式为 $1$ 的矩阵群。
   \item \hard 结合上一题，说明为什么 $\Gamma_0(N)$ 可以理解为“保留一个模 $N$ 的一维子空间”的矩阵群；进一步解释这一点为何在模形式的“水平结构”中是自然的。
 \end{enumerate}
+
+\section*{习题解答}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+\item \textbf{解答.} 在 $(\Z,+)$ 中：封闭性显然；结合律来自整数加法；单位元为 $0$；元素 $a$ 的逆元为 $-a$，故 $(\Z,+)$ 是群，且交换律成立，所以还是阿贝尔群。另一方面，$\Z_{>0}$ 在加法下不是群，因为它不含单位元 $0$；即使忽略这一点，正整数 $a$ 的加法逆元 $-a$ 也不在 $\Z_{>0}$ 中。
+
+\item \textbf{解答.} 对任意 $\bar a,\bar b\in \Z/n\Z$，定义 $\bar a+\bar b=\overline{a+b}$。这一定义良好，且封闭、结合律、交换律都由整数加法继承。单位元是 $\bar0$。元素 $\bar a$ 的逆元为 $\overline{-a}$，也可写作 $\overline{n-a}$（当 $a\not\equiv0\pmod n$ 时）。故 $(\Z/n\Z,+)$ 是阿贝尔群。
+
+\item \textbf{解答.} $(\Z/10\Z)^\times$ 由模 $10$ 与 $10$ 互素的剩余类组成，因此
+\[
+(\Z/10\Z)^\times=\{\bar1,\bar3,\bar7,\bar9\}.
+\]
+乘法封闭且结合律由整数乘法继承；单位元是 $\bar1$。逆元分别为
+\[
+\bar1^{-1}=\bar1,\qquad \bar3^{-1}=\bar7,\qquad \bar7^{-1}=\bar3,\qquad \bar9^{-1}=\bar9,
+\]
+因为 $3\cdot7\equiv1$、$9^2\equiv1\pmod{10}$。故它在乘法下构成群。
+
+\item \textbf{解答.} $(\Z/8\Z)^\times=\{\bar1,\bar3,\bar5,\bar7\}$。计算得
+\[
+\bar1^1=\bar1,\qquad \bar3^2=\bar9=\bar1,\qquad \bar5^2=\bar{25}=\bar1,\qquad \bar7^2=\bar{49}=\bar1.
+\]
+故
+\[
+\ord(\bar1)=1,\qquad \ord(\bar3)=\ord(\bar5)=\ord(\bar7)=2.
+\]
+
+\item \textbf{解答.} $S_3$ 的六个元素为
+\[
+e,\ (12),\ (13),\ (23),\ (123),\ (132).
+\]
+换位的阶都为 $2$，故 $\ord((12))=2$。三循环满足
+\[
+(123)^3=e,\qquad (132)^3=e,
+\]
+且它们都不等于 $e$、平方也不等于 $e$，故
+\[
+\ord((123))=\ord((132))=3.
+\]
+
+\item \textbf{解答.} 二面体群 $D_4$ 可写为
+\[
+D_4=\{1,r,r^2,r^3,s,sr,sr^2,sr^3\},
+\]
+其中 $r$ 表示逆时针旋转 $90^\circ$，$s$ 表示某一条对称轴的反射，并满足
+\[
+r^4=1,\qquad s^2=1,\qquad srs=r^{-1}.
+\]
+其中 $1,r,r^2,r^3$ 是旋转；$s,sr,sr^2,sr^3$ 是反射。
+
+\item \textbf{解答.} 若 $A\in \SL_2(\R)$，按定义 $\det A=1$。由于 $1\neq0$，故 $A$ 可逆，即 $A\in \GL_2(\R)$。因此
+\[
+\SL_2(\R)\le \GL_2(\R).
+\]
+
+\item \textbf{解答.} 在加法群 $\Z/12\Z$ 中，$\bar a$ 的阶为
+\[
+\ord(\bar a)=\frac{12}{\gcd(a,12)}.
+\]
+故
+\[
+\ord(\bar2)=\frac{12}{2}=6,\qquad
+\ord(\bar3)=\frac{12}{3}=4,\qquad
+\ord(\bar4)=\frac{12}{4}=3,\qquad
+\ord(\bar6)=\frac{12}{6}=2.
+\]
+
+\item \textbf{解答.} $\Z/12\Z$ 是循环群，子群与 $12$ 的正因子一一对应。全部子群为
+\[
+\{\bar0\},
+\]
+\[
+\langle \bar6\rangle=\{\bar0,\bar6\},
+\]
+\[
+\langle \bar4\rangle=\{\bar0,\bar4,\bar8\},
+\]
+\[
+\langle \bar3\rangle=\{\bar0,\bar3,\bar6,\bar9\},
+\]
+\[
+\langle \bar2\rangle=\{\bar0,\bar2,\bar4,\bar6,\bar8,\bar{10}\},
+\]
+\[
+\langle \bar1\rangle=\Z/12\Z.
+\]
+
+\item \textbf{解答.} 设 $H=\{e,(12)\}\subset S_3$。有 $e\in H$。又
+\[
+(12)^2=e,
+\]
+所以对任意 $h\in H$，其逆元仍在 $H$ 中。再检查乘法：
+\[
+e\cdot e=e,\quad e\cdot(12)=(12),\quad (12)\cdot e=(12),\quad (12)^2=e,
+\]
+均在 $H$ 中。故 $H\le S_3$。
+
+\item \textbf{解答.} 集合 $\{e,(12),(13)\}$ 不是 $S_3$ 的子群，因为它对乘法不封闭。例如
+\[
+(12)(13)=(132)\notin \{e,(12),(13)\}.
+\]
+
+\item \textbf{解答.} 对任意整数 $m$，集合
+\[
+m\Z=\{mk:k\in\Z\}
+\]
+在 $(\Z,+)$ 中满足：$0=m\cdot0\in m\Z$；若 $ma,mb\in m\Z$，则
+\[
+ma+mb=m(a+b)\in m\Z;
+\]
+且
+\[
+-(ma)=m(-a)\in m\Z.
+\]
+故 $m\Z$ 对加法和取负封闭，从而是 $(\Z,+)$ 的子群。
+
+\item \textbf{解答.} 在 $(\Z/12\Z,+)$ 中，$H=\{\bar0,\bar3,\bar6,\bar9\}$ 非空。且任取其中两元，其和仍为 $3$ 的倍数模 $12$，故仍在 $H$ 中；每个元素的加法逆元也仍在 $H$ 中，例如 $-\bar3=\bar9$，$-\bar6=\bar6$。因此 $H$ 是子群。事实上
+\[
+H=\langle \bar3\rangle.
+\]
+
+\item \textbf{解答.} 在加法群 $(\Z,+)$ 中，$2\Z$ 的陪集形如 $a+2\Z$。若 $a$ 为偶数，则 $a+2\Z=2\Z$；若 $a$ 为奇数，则 $a+2\Z=1+2\Z$。所以全部陪集只有两个：
+\[
+2\Z,\qquad 1+2\Z.
+\]
+
+\item \textbf{解答.} 陪集个数就是指数。由上题，$[\Z:2\Z]=2$。同理，$\Z$ 按模 $3$ 的余数分成
+\[
+3\Z,\quad 1+3\Z,\quad 2+3\Z,
+\]
+故
+\[
+[\Z:3\Z]=3.
+\]
+
+\item \textbf{解答.} 在 $S_3$ 中取 $H=\{e,(12)\}$。左陪集为
+\[
+H=\{e,(12)\},
+\]
+\[
+(13)H=\{(13),(13)(12)\}=\{(13),(123)\},
+\]
+\[
+(23)H=\{(23),(23)(12)\}=\{(23),(132)\}.
+\]
+右陪集为
+\[
+H=\{e,(12)\},
+\]
+\[
+H(13)=\{(13),(12)(13)\}=\{(13),(132)\},
+\]
+\[
+H(23)=\{(23),(12)(23)\}=\{(23),(123)\}.
+\]
+可见左右陪集不同。
+
+\item \textbf{解答.} 子群 $H=\{\bar0,\bar4,\bar8\}\le \Z/12\Z$ 有 $|H|=3$，而 $|\Z/12\Z|=12$。故其指数为
+\[
+[\Z/12\Z:H]=\frac{12}{3}=4.
+\]
+
+\item \textbf{解答.} 由 Lagrange 定理，有限群中元素的阶必须整除群的阶。若 $|G|=8$，则元素阶可能为 $8$ 的正因子，即
+\[
+1,2,4,8.
+\]
+
+\item \textbf{解答.} 若 $H\le S_3$，则由 Lagrange 定理
+\[
+|H|\mid |S_3|=6.
+\]
+因为 $5\nmid6$，故 $S_3$ 中不存在五阶子群。
+
+\item \textbf{解答.} 设 $|G|=p$，其中 $p$ 为素数。任取 $a\neq e$，则其生成的子群 $\langle a\rangle$ 的阶整除 $p$，且大于 $1$，故
+\[
+|\langle a\rangle|=p.
+\]
+于是 $\langle a\rangle=G$，故 $G$ 为循环群。
+
+\item \textbf{解答.} 在 $S_3$ 中，$H=\{e,(12)\}$ 不是正规子群。因为由第 16 题，
+\[
+(13)H=\{(13),(123)\}\neq \{(13),(132)\}=H(13).
+\]
+左右陪集不相等，因此 $H\not\trianglelefteq S_3$。
+
+\item \textbf{解答.} 若 $G$ 为阿贝尔群，$H\le G$，则对任意 $g\in G$ 与 $h\in H$，
+\[
+gh=hg.
+\]
+因此
+\[
+gH=\{gh:h\in H\}=\{hg:h\in H\}=Hg.
+\]
+所以任意左陪集等于对应右陪集，故 $H\trianglelefteq G$。
+
+\item \textbf{解答.} 因为 $\Z$ 是阿贝尔群，故 $3\Z\trianglelefteq \Z$。商群 $\Z/3\Z$ 的元素就是 $3\Z$ 的陪集：
+\[
+3\Z,\quad 1+3\Z,\quad 2+3\Z.
+\]
+通常记作
+\[
+\bar0,\ \bar1,\ \bar2.
+\]
+
+\item \textbf{解答.} 设 $H=\{\bar0,\bar3\}\le \Z/6\Z$。其陪集为
+\[
+H=\{\bar0,\bar3\},\qquad \bar1+H=\{\bar1,\bar4\},\qquad \bar2+H=\{\bar2,\bar5\}.
+\]
+故商群 $(\Z/6\Z)/H$ 有 $3$ 个元素，因此同构于唯一的三阶群，即
+\[
+(\Z/6\Z)/\{\bar0,\bar3\}\cong \Z/3\Z.
+\]
+
+\item \textbf{解答.} 对 $f:\Z\to \Z/6\Z,\ f(a)=\bar a$，有
+\[
+f(a+b)=\overline{a+b}=\bar a+\bar b=f(a)+f(b),
+\]
+故 $f$ 是群同态。其核为
+\[
+\Ker(f)=\{a\in\Z:\bar a=\bar0\}=6\Z.
+\]
+其像为所有剩余类，即
+\[
+\Ima(f)=\Z/6\Z.
+\]
+
+\item \textbf{解答.} 行列式映射
+\[
+\det:\GL_2(\R)\to \R^\times
+\]
+是群同态，因为 $\det(AB)=\det(A)\det(B)$。其核为
+\[
+\Ker(\det)=\{A\in \GL_2(\R):\det A=1\}=\SL_2(\R).
+\]
+其像为整个 $\R^\times$，因为对任意 $t\in\R^\times$，
+\[
+\det\begin{pmatrix} t&0\\0&1\end{pmatrix}=t.
+\]
+
+\item \textbf{解答.} 符号同态
+\[
+\mathrm{sgn}:S_3\to\{\pm1\}
+\]
+满足 $\mathrm{sgn}(\sigma\tau)=\mathrm{sgn}(\sigma)\mathrm{sgn}(\tau)$。其核是所有偶置换，即
+\[
+\Ker(\mathrm{sgn})=A_3=\{e,(123),(132)\}.
+\]
+其像是 $\{\pm1\}$，因为恒等置换符号为 $1$，换位 $(12)$ 的符号为 $-1$，故满射。
+
+\item \textbf{解答.} 若 $G=\langle a\rangle$ 且 $\ord(a)=12$，则
+\[
+\ord(a^k)=\frac{12}{\gcd(12,k)}.
+\]
+故
+\[
+\ord(a^2)=6,\qquad \ord(a^3)=4,\qquad \ord(a^4)=3,\qquad \ord(a^6)=2.
+\]
+
+\item \textbf{解答.} 在循环群 $\Z/12\Z=\langle \bar1\rangle$ 中，$\bar a$ 为生成元当且仅当 $\gcd(a,12)=1$。故全部生成元为
+\[
+\bar1,\ \bar5,\ \bar7,\ \bar{11}.
+\]
+
+\item \textbf{解答.} Euler 定理说：若 $\gcd(a,15)=1$，则
+\[
+a^{\varphi(15)}\equiv1\pmod{15}.
+\]
+而
+\[
+\varphi(15)=15\Bigl(1-\frac13\Bigr)\Bigl(1-\frac15\Bigr)=8.
+\]
+因此
+\[
+2^8\equiv1\pmod{15},\qquad 7^8\equiv1\pmod{15}.
+\]
+
+\item \textbf{解答.} 设 $H\subset G$ 非空，且对乘法与取逆都封闭。取 $h\in H$，则
+\[
+e=hh^{-1}\in H.
+\]
+若 $x,y\in H$，则 $y^{-1}\in H$，从而
+\[
+xy^{-1}\in H.
+\]
+于是由单步子群判别法，$H\le G$。或者直接说：已有单位元、逆元与乘法封闭，故 $H$ 是子群。
+
+\item \textbf{解答.} 若每个 $H_i\le G$，则交集 $\bigcap_i H_i$ 含单位元 $e$，且若 $x,y\in \bigcap_i H_i$，则对每个 $i$ 都有 $x,y\in H_i$，故
+\[
+xy^{-1}\in H_i\quad \text{对所有 }i,
+\]
+于是 $xy^{-1}\in \bigcap_i H_i$。故交仍是子群。并集一般不是子群，例如在 $(\Z,+)$ 中，
+\[
+2\Z\cup 3\Z
+\]
+不是子群，因为 $2\in2\Z$、$3\in3\Z$，但
+\[
+2+3=5\notin 2\Z\cup3\Z.
+\]
+
+\item \textbf{解答.} 若 $[G:H]=2$，则左陪集只有两个：$H$ 与其补集 $G\setminus H$。对任意 $g\notin H$，左陪集 $gH$ 不等于 $H$，故必为补集；同理右陪集 $Hg$ 也为补集。于是对所有 $g\in G$ 都有
+\[
+gH=Hg,
+\]
+故 $H\trianglelefteq G$。
+
+\item \textbf{解答.} 设 $|G|=4$。若存在元素 $a$ 满足 $\ord(a)=4$，则 $G=\langle a\rangle\cong \Z/4\Z$。否则所有非单位元的阶都只能是 $2$。任取两个不同的非单位元 $a,b$，则 $ab\neq e,a,b$，所以四个元素恰为
+\[
+e,\ a,\ b,\ ab.
+\]
+并且每个非单位元平方都是 $e$。此时群必为阿贝尔群，且同构于
+\[
+\Z/2\Z\times \Z/2\Z.
+\]
+故四阶群只有这两种。
+
+\item \textbf{解答.} 设 $G$ 为六阶非阿贝尔群。由 Sylow 定理，$3$-Sylow 子群个数 $n_3$ 满足
+\[
+n_3\equiv1\pmod3,\qquad n_3\mid2,
+\]
+故 $n_3=1$，因此存在正规子群 $\langle a\rangle$，其中 $\ord(a)=3$。再由 Cauchy 定理，存在 $b$ 满足 $\ord(b)=2$。因 $G$ 非阿贝尔，$bab^{-1}$ 不能等于 $a$，而 $\Aut(\langle a\rangle)\cong (\Z/3\Z)^\times=\{\pm1\}$，故必有
+\[
+bab^{-1}=a^{-1}.
+\]
+于是 $G$ 满足表示
+\[
+\langle a,b\mid a^3=b^2=e,\ bab^{-1}=a^{-1}\rangle,
+\]
+这正是 $S_3$ 的标准表示，所以 $G\cong S_3$。
+
+\item \textbf{解答.} 二面体群 $D_n=\langle r,s\mid r^n=e,\ s^2=e,\ srs=r^{-1}\rangle$。任意字都可用关系 $sr=r^{-1}s$ 把所有 $s$ 移到最左边；再用 $s^2=e$ 消去多余的 $s$，因此每个元素都可写成
+\[
+r^i\quad \text{或}\quad sr^i\qquad (0\le i<n).
+\]
+唯一性也成立：若 $r^i=sr^j$，则左边是旋转，右边是反射，不可能；若 $r^i=r^j$ 或 $sr^i=sr^j$，则分别推出 $i\equiv j\pmod n$。故表示唯一。
+
+\item \textbf{解答.} 在 $D_n=\langle r,s\rangle$ 中，中心元素必须与 $r,s$ 都交换。显然所有 $r^k$ 与 $r$ 交换，但
+\[
+sr^k=r^{-k}s,
+\]
+故 $r^k$ 与 $s$ 交换当且仅当 $r^k=r^{-k}$，即
+\[
+r^{2k}=e.
+\]
+若 $n$ 为奇数，则只有 $k\equiv0$，故
+\[
+Z(D_n)=\{e\}.
+\]
+若 $n$ 为偶数，则还有 $k=\frac n2$，故
+\[
+Z(D_n)=\{e,r^{n/2}\}.
+\]
+反射元素都不在中心中，因为一般不与 $r$ 交换。
+
+\item \textbf{解答.} $S_3$ 的正规子群只能是阶数整除 $6$ 的子群。阶为 $1$ 和 $6$ 的子群即
+\[
+\{e\},\qquad S_3,
+\]
+显然正规。唯一的三阶子群是
+\[
+A_3=\{e,(123),(132)\},
+\]
+指数为 $2$，故正规。三个二阶子群分别由三个换位生成，它们彼此共轭，不正规。故全部正规子群为
+\[
+\{e\},\ A_3,\ S_3.
+\]
+
+\item \textbf{解答.} 符号映射
+\[
+\mathrm{sgn}:S_n\to\{\pm1\}
+\]
+是群同态。按定义，$A_n$ 由偶置换组成，因此
+\[
+A_n=\Ker(\mathrm{sgn}).
+\]
+而同态的核总是正规子群，所以
+\[
+A_n\trianglelefteq S_n.
+\]
+
+\item \textbf{解答.} 由上一题，$A_3=\Ker(\mathrm{sgn})$，且 $\mathrm{sgn}:S_3\to\{\pm1\}$ 满射。由第一同构定理，
+\[
+S_3/A_3\cong \{\pm1\}\cong \Z/2\Z.
+\]
+
+\item \textbf{解答.} 行列式映射
+\[
+\det:\GL_n(F)\to F^\times
+\]
+是群同态，核为
+\[
+\Ker(\det)=\SL_n(F).
+\]
+它还是满射，因为对任意 $a\in F^\times$，
+\[
+\det(\mathrm{diag}(a,1,\dots,1))=a.
+\]
+由第一同构定理，
+\[
+\GL_n(F)/\SL_n(F)\cong F^\times.
+\]
+
+\item \textbf{解答.} 定义同态
+\[
+\phi:\Z\to \Z/m\Z\times \Z/n\Z,\qquad \phi(x)=(\bar x,\bar x).
+\]
+因 $m,n$ 互素，$\Ker(\phi)=mn\Z$；又由中国剩余定理，$\phi$ 诱导的映射
+\[
+\bar\phi:\Z/mn\Z\to \Z/m\Z\times \Z/n\Z
+\]
+是满射。于是由第一同构定理，
+\[
+\Z/mn\Z\cong \Z/m\Z\times \Z/n\Z.
+\]
+
+\item \textbf{解答.} $(\Z/8\Z)^\times=\{\bar1,\bar3,\bar5,\bar7\}$ 有 $4$ 个元素。若它是循环群，则应有一个元素阶为 $4$。但由第 4 题，每个非单位元都满足平方为 $\bar1$，因而阶都为 $2$。故不存在四阶元素，所以 $(\Z/8\Z)^\times$ 不是循环群。
+
+\item \textbf{解答.} 设 $G=\langle a\rangle$，$H\le G$。若 $H=\{e\}$，则显然循环。若 $H\neq\{e\}$，取最小正整数 $m$ 使得 $a^m\in H$。对任意 $a^k\in H$，将 $k=qm+r$（$0\le r<m$）作除法，得
+\[
+a^r=a^k(a^m)^{-q}\in H.
+\]
+由 $m$ 的最小性，必有 $r=0$，故 $a^k\in \langle a^m\rangle$。于是
+\[
+H=\langle a^m\rangle,
+\]
+故循环群的任意子群都是循环群。
+
+\item \textbf{解答.} 设 $G=\langle a\rangle$，$|G|=n$，且 $d\mid n$。令
+\[
+H=\langle a^{n/d}\rangle.
+\]
+则
+\[
+|H|=\ord(a^{n/d})=\frac{n}{\gcd(n,n/d)}=d.
+\]
+所以存在阶为 $d$ 的子群。唯一性来自循环群子群唯一：若 $K\le G$ 且 $|K|=d$，则 $K$ 是循环子群，由其生成元阶为 $d$ 可知 $K=\langle a^{n/d}\rangle$。故恰有一个阶 $d$ 的子群。
+
+\item \textbf{解答.} 在 $G=\langle a\rangle$、$|G|=n$ 中，
+\[
+\ord(a^k)=\frac{n}{\gcd(k,n)}.
+\]
+故 $a^k$ 是生成元当且仅当 $\ord(a^k)=n$，即当且仅当
+\[
+\gcd(k,n)=1.
+\]
+
+\item \textbf{解答.} 在加法群 $\Z/n\Z$ 中，$\bar a$ 的阶是最小正整数 $m$ 使得
+\[
+m\bar a=\bar0,
+\]
+也就是
+\[
+n\mid ma.
+\]
+设 $d=\gcd(a,n)$，写 $a=da_1,\ n=dn_1$，其中 $\gcd(a_1,n_1)=1$。则
+\[
+n\mid ma \iff dn_1\mid mda_1 \iff n_1\mid m.
+\]
+满足此条件的最小正整数是 $n_1=n/d$。故
+\[
+\ord(\bar a)=\frac{n}{\gcd(a,n)}.
+\]
+
+\item \textbf{解答.} 若 $f:\Z\to G$ 是群同态（以乘法记号写 $G$），则对任意 $m\in\Z$，
+\[
+f(m)=f(1+\cdots+1)=f(1)^m \quad (m>0),
+\]
+负整数情形由逆元决定，故 $f$ 完全由 $f(1)$ 决定。反之，任取 $g\in G$，定义 $f(m)=g^m$ 即得同态。  
+对 $\phi:\Z/n\Z\to G$，若设 $\phi(\bar1)=g$，则必有
+\[
+\phi(\bar k)=g^k.
+\]
+要使之定义良好，必须有
+\[
+\phi(\bar n)=\phi(\bar0)=e,
+\]
+即
+\[
+g^n=e.
+\]
+反之，任意满足 $g^n=e$ 的元素 $g\in G$ 都唯一决定一个同态 $\Z/n\Z\to G$。
+
+\item \textbf{解答.} 由于 $G$ 阿贝尔，$A+B=\{a+b:a\in A,b\in B\}$ 是子群。定义
+\[
+\phi:A\to (A+B)/B,\qquad \phi(a)=a+B.
+\]
+这是群同态，且满射，因为任意 $(a+b)+B=a+B$。其核为
+\[
+\Ker(\phi)=\{a\in A:a\in B\}=A\cap B.
+\]
+由第一同构定理，
+\[
+A/(A\cap B)\cong (A+B)/B.
+\]
+
+\item \textbf{解答.} 在加法群 $\Z$ 中有
+\[
+12\Z\subseteq 4\Z\subseteq \Z.
+\]
+第三同构定理给出
+\[
+(\Z/12\Z)/(4\Z/12\Z)\cong \Z/4\Z.
+\]
+这里左边是先对 $12\Z$ 取商，再对像子群 $4\Z/12\Z$ 取商；右边是直接对中间子群 $4\Z$ 取商。
+
+\item \textbf{解答.} 设 $G$ 为有限阿贝尔群，且每个非单位元都满足 $x^2=e$。于是对所有 $x\in G$ 都有 $x^{-1}=x$。定义数乘
+\[
+0\cdot x=e,\qquad 1\cdot x=x,
+\]
+则 $G$ 成为 $\F_2$ 上的向量空间。有限向量空间必同构于某个 $\F_2^r$，故作为加法群，
+\[
+G\cong (\Z/2\Z)^r.
+\]
+
+\item \textbf{解答.} 设 $G$ 为有限阿贝尔群，且素数 $p\mid |G|$。用归纳法证之。若 $G$ 循环，则由 $|G|$ 被 $p$ 整除，取生成元 $g$，则 $g^{|G|/p}$ 的阶为 $p$。  
+一般情形，取非平凡真子群 $H<G$。若 $p\mid |H|$，由归纳假设，$H$ 中有阶 $p$ 元素。若 $p\nmid |H|$，则 $p\mid |G/H|$。由归纳假设，$G/H$ 中存在元素 $gH$ 的阶为 $p$，故 $g^p\in H$。因为 $H$ 阿贝尔且 $p\nmid |H|$，映射 $h\mapsto h^p$ 是 $H$ 的自同构，所以存在 $h\in H$ 使
+\[
+h^p=(g^p)^{-1}.
+\]
+于是
+\[
+(gh)^p=g^ph^p=e,
+\]
+且 $gh\notin H$，故 $gh$ 的阶正好为 $p$。证毕。
+
+\item \textbf{解答.} 设 $G$ 为十五阶阿贝尔群。由上一题，因 $3\mid15$ 且 $5\mid15$，$G$ 中分别存在元素 $a,b$ 使
+\[
+\ord(a)=3,\qquad \ord(b)=5.
+\]
+由于 $G$ 阿贝尔，$ab=ba$，且 $3,5$ 互素，所以
+\[
+\ord(ab)=15.
+\]
+于是 $ab$ 生成整个 $G$，故 $G$ 是循环群，即
+\[
+G\cong \Z/15\Z.
+\]
+
+\item \textbf{解答.} 设 $G$ 为阿贝尔群且 $|G|=p^2$。若存在元素阶为 $p^2$，则
+\[
+G\cong \Z/p^2\Z.
+\]
+否则所有非单位元阶都为 $p$。任取 $a\neq e$，若 $G\neq \langle a\rangle$，再取 $b\notin\langle a\rangle$。则 $\langle a\rangle,\langle b\rangle$ 都是 $p$ 阶，且交只能为 $\{e\}$，故映射
+\[
+\Z/p\Z\times \Z/p\Z\to G,\qquad (\bar i,\bar j)\mapsto a^ib^j
+\]
+为单射。两边都有 $p^2$ 个元素，故是同构。于是
+\[
+G\cong \Z/p^2\Z \quad \text{或}\quad \Z/p\Z\times \Z/p\Z.
+\]
+
+\item \textbf{解答.} 设有限循环群 $G$ 中子群 $H,K$ 的阶分别为 $m,n$。循环群的任意子群仍循环，故 $H\cap K$ 与 $HK$ 都是 $G$ 的子群，从而也是循环群。又在循环群中每个阶对应唯一子群，因此
+\[
+|H\cap K|=\gcd(m,n).
+\]
+再由有限群公式
+\[
+|HK|=\frac{|H||K|}{|H\cap K|},
+\]
+得
+\[
+|HK|=\frac{mn}{\gcd(m,n)}=\mathrm{lcm}(m,n).
+\]
+故
+\[
+H\cap K \text{ 的阶 }=\gcd(|H|,|K|),\qquad HK \text{ 的阶 }=\mathrm{lcm}(|H|,|K|).
+\]
+
+\item \textbf{解答.} Sylow 三定理如下：  
+(1) 若 $|G|=p^k m$ 且 $p\nmid m$，则 $G$ 存在阶 $p^k$ 的子群（Sylow $p$-子群）。  
+(2) 任意两个 Sylow $p$-子群共轭。  
+(3) Sylow $p$-子群个数 $n_p$ 满足
+\[
+n_p\equiv1\pmod p,\qquad n_p\mid m.
+\]
+现设 $|G|=21=3\cdot7$。对 $p=7$，有
+\[
+n_7\equiv1\pmod7,\qquad n_7\mid3.
+\]
+唯一可能是 $n_7=1$。因此七阶 Sylow 子群唯一，从而正规。
+
+\item \textbf{解答.} 设 $|G|=12$ 且 $G$ 单。由 Sylow 定理，
+\[
+n_3\equiv1\pmod3,\quad n_3\mid4 \implies n_3=1\text{ 或 }4.
+\]
+单群中非平凡正规子群不存在，故 $n_3\neq1$，所以 $n_3=4$。于是 $G$ 作用于四个 Sylow $3$-子群的集合上，得到同态
+\[
+G\to S_4.
+\]
+其核是正规子群，且作用不平凡，所以核不可能是 $G$；由单性知核只能是 $\{e\}$。故 $G$ 嵌入 $S_4$，且像为一个 $12$ 阶子群。$S_4$ 的任何 $12$ 阶子群指数为 $2$，因而正规，只能是 $A_4$。于是
+\[
+G\cong A_4.
+\]
+但 $A_4$ 有正规 Klein 四元子群，非单，矛盾。故不存在十二阶单群。
+
+\item \textbf{解答.} 设 $|G|=p^2$。类方程表明中心 $Z(G)$ 非平凡，故 $|Z(G)|=p$ 或 $p^2$。若 $|Z(G)|=p^2$，则 $Z(G)=G$，所以 $G$ 阿贝尔。若 $|Z(G)|=p$，则
+\[
+|G/Z(G)|=p,
+\]
+故商群为循环群。若 $G/Z(G)$ 循环，则 $G$ 阿贝尔。于是任意阶为 $p^2$ 的群都是阿贝尔群。
+
+\item \textbf{解答.} 取
+\[
+\Z/3\Z\rtimes \Z/2\Z
+\]
+其中 $\Z/2\Z=\{\bar0,\bar1\}$ 的非平凡元素对 $\Z/3\Z$ 的作用为取逆，即 $x\mapsto -x$。记元素为 $(a,\varepsilon)$，乘法为
+\[
+(a,\varepsilon)(b,\delta)=\bigl(a+(-1)^\varepsilon b,\ \varepsilon+\delta\bigr).
+\]
+设
+\[
+r=(\bar1,\bar0),\qquad s=(\bar0,\bar1).
+\]
+则
+\[
+r^3=e,\qquad s^2=e,\qquad srs^{-1}=r^{-1}.
+\]
+这正是 $S_3$ 的关系式，因此
+\[
+\Z/3\Z\rtimes \Z/2\Z\cong S_3.
+\]
+
+\item \textbf{解答.} 设 $\Z/2\Z=\{\bar0,\bar1\}$ 对 $\Z/n\Z$ 的作用由
+\[
+\bar1:x\mapsto -x
+\]
+给出。半直积 $\Z/n\Z\rtimes \Z/2\Z$ 中取
+\[
+r=(\bar1,\bar0),\qquad s=(\bar0,\bar1).
+\]
+则
+\[
+r^n=e,\qquad s^2=e,\qquad srs^{-1}=r^{-1}.
+\]
+这正是 $D_n$ 的定义关系，因此
+\[
+D_n\cong \Z/n\Z\rtimes \Z/2\Z.
+\]
+
+\item \textbf{解答.} 设 $N\trianglelefteq G$，$H\le G$，且
+\[
+N\cap H=\{e\},\qquad NH=G.
+\]
+定义作用
+\[
+\varphi:H\to \Aut(N),\qquad \varphi(h)(n)=hnh^{-1}.
+\]
+因 $N\trianglelefteq G$，此作用良定义。考虑映射
+\[
+\Phi:N\rtimes_\varphi H\to G,\qquad \Phi(n,h)=nh.
+\]
+由半直积乘法定义，$\Phi$ 是同态。它是满射，因为 $NH=G$；又若 $\Phi(n,h)=e$，则 $n=h^{-1}\in N\cap H=\{e\}$，故 $n=e,h=e$，从而单射。于是
+\[
+G\cong N\rtimes H.
+\]
+
+\item \textbf{解答.} 在 $\F_2$ 上，$\F_2^\times=\{1\}$，所以
+\[
+\SL_2(\Z/2\Z)=\GL_2(\F_2).
+\]
+计算 $\GL_2(\F_2)$ 的大小：第一列可取任一非零向量，共 $2^2-1=3$ 个；第二列不能与第一列线性相关，只剩 $2^2-2=2$ 个选择。因此
+\[
+|\SL_2(\Z/2\Z)|=|\GL_2(\F_2)|=3\cdot2=6.
+\]
+又 $\SL_2(\F_2)$ 自然作用于 $\F_2^2$ 的三个非零向量上，得到同态
+\[
+\SL_2(\F_2)\to S_3.
+\]
+若一个矩阵固定三个非零向量，则它是单位矩阵，所以该同态单射。两边都只有 $6$ 个元素，故为同构：
+\[
+\SL_2(\Z/2\Z)\cong S_3.
+\]
+
+\item \textbf{解答.} 计算 $\GL_2(\F_p)$：第一列可取任一非零向量，有
+\[
+p^2-1
+\]
+种；第二列不能落在第一列张成的一维子空间中，故有
+\[
+p^2-p
+\]
+种。因此
+\[
+|\GL_2(\F_p)|=(p^2-1)(p^2-p).
+\]
+再看行列式同态
+\[
+\det:\GL_2(\F_p)\to \F_p^\times.
+\]
+它满射，核为 $\SL_2(\F_p)$。由于 $|\F_p^\times|=p-1$，由第一同构定理的计数形式得
+\[
+|\SL_2(\F_p)|=\frac{|\GL_2(\F_p)|}{p-1}
+=\frac{(p^2-1)(p^2-p)}{p-1}
+=p(p^2-1).
+\]
+
+\item \textbf{解答.} 主同余子群定义为
+\[
+\Gamma(N)=\left\{
+\begin{pmatrix}a&b\\ c&d\end{pmatrix}\in \SL_2(\Z):
+\begin{pmatrix}a&b\\ c&d\end{pmatrix}\equiv
+\begin{pmatrix}1&0\\0&1\end{pmatrix}\pmod N
+\right\}.
+\]
+即它是模 $N$ 约化映射
+\[
+\rho_N:\SL_2(\Z)\to \SL_2(\Z/N\Z)
+\]
+的核：
+\[
+\Gamma(N)=\Ker(\rho_N).
+\]
+而同态的核总是正规子群，所以
+\[
+\Gamma(N)\trianglelefteq \SL_2(\Z).
+\]
+
+\item \textbf{解答.} 定义
+\[
+\Gamma_0(N)=\left\{
+\begin{pmatrix}a&b\\ c&d\end{pmatrix}\in \SL_2(\Z): c\equiv0\pmod N
+\right\}.
+\]
+单位矩阵显然在其中。若
+\[
+A=\begin{pmatrix}a&b\\ c&d\end{pmatrix},\quad
+A'=\begin{pmatrix}a'&b'\\ c'&d'\end{pmatrix}\in \Gamma_0(N),
+\]
+则
+\[
+AA'=\begin{pmatrix}
+*&*\\
+ca'+dc'&*
+\end{pmatrix},
+\]
+其中 $c,c'$ 都被 $N$ 整除，所以下左角 $ca'+dc'$ 也被 $N$ 整除。又
+\[
+A^{-1}=\begin{pmatrix}d&-b\\ -c&a\end{pmatrix},
+\]
+其下左角为 $-c$，仍被 $N$ 整除。故 $\Gamma_0(N)$ 对乘法和取逆封闭，因此
+\[
+\Gamma_0(N)\le \SL_2(\Z).
+\]
+
+\item \textbf{解答.} 若 $A\in \Gamma(N)$，则
+\[
+A\equiv I\pmod N,
+\]
+特别地其下左角元 $c\equiv0\pmod N$，所以
+\[
+\Gamma(N)\subseteq \Gamma_0(N).
+\]
+又 $\Gamma(N)$ 是 $\rho_N:\SL_2(\Z)\to \SL_2(\Z/N\Z)$ 的核，因此
+\[
+[\SL_2(\Z):\Gamma(N)]\le |\SL_2(\Z/N\Z)|<\infty.
+\]
+任何包含有限指数子群的子群也有限指数，故
+\[
+[\SL_2(\Z):\Gamma_0(N)]<\infty.
+\]
+
+\item \textbf{解答.} 对约化映射
+\[
+\rho_N:\SL_2(\Z)\to \SL_2(\Z/N\Z),
+\]
+有
+\[
+\Ker(\rho_N)=\left\{A\in \SL_2(\Z):A\equiv I\pmod N\right\}=\Gamma(N).
+\]
+若 $\rho_N$ 满射，则由第一同构定理，
+\[
+\SL_2(\Z)/\Gamma(N)\cong \SL_2(\Z/N\Z).
+\]
+更一般地，即使不先知满射，也总有
+\[
+\SL_2(\Z)/\Gamma(N)\cong \Ima(\rho_N).
+\]
+
+\item \textbf{解答.} 对
+\[
+A=\begin{pmatrix}a&b\\ c&d\end{pmatrix}\in \SL_2(\Z),\qquad z\in \mathfrak H,
+\]
+定义
+\[
+A\cdot z=\frac{az+b}{cz+d}.
+\]
+因为 $ad-bc=1$，可直接计算
+\[
+\Im\!\left(\frac{az+b}{cz+d}\right)=\frac{\Im(z)}{|cz+d|^2}>0,
+\]
+故像仍在上半平面 $\mathfrak H$ 中，所以作用是良定义的。又单位矩阵作用为恒等，且对 $A,B\in \SL_2(\Z)$，
+\[
+(A B)\cdot z=A\cdot(B\cdot z),
+\]
+这是分式线性变换的直接计算。故 $\SL_2(\Z)$ 在 $\mathfrak H$ 上给出一个群作用。
+
+\item \textbf{解答.} 设 $N$ 为素数，则 $\Z/N\Z=\F_N$。模 $N$ 约化后，$\Gamma_0(N)$ 的像正是
+\[
+B=\left\{
+\begin{pmatrix}\bar a&\bar b\\ 0&\bar d\end{pmatrix}\in \SL_2(\F_N)
+\right\},
+\]
+即下左角为 $0$ 的矩阵群。由于行列式为 $1$，这等价于
+\[
+B=\left\{
+\begin{pmatrix}\bar a&\bar b\\ 0&\bar a^{-1}\end{pmatrix}:\bar a\in \F_N^\times,\ \bar b\in \F_N
+\right\},
+\]
+它就是上三角且行列式为 $1$ 的矩阵群。对限制映射
+\[
+\rho_N|_{\Gamma_0(N)}:\Gamma_0(N)\to B,
+\]
+其核正是 $\Gamma(N)$，故由第一同构定理
+\[
+\Gamma_0(N)/\Gamma(N)\cong B.
+\]
+
+\item \textbf{解答.} 上题中的群
+\[
+B=\left\{
+\begin{pmatrix}\bar a&\bar b\\ 0&\bar d\end{pmatrix}\in \SL_2(\F_N)
+\right\}
+\]
+恰好是 $\SL_2(\F_N)$ 中稳定直线 $\F_N e_1$（其中 $e_1=(1,0)^t$）的子群，因为
+\[
+\begin{pmatrix}\bar a&\bar b\\ 0&\bar d\end{pmatrix}e_1=\bar a\,e_1\in \F_N e_1.
+\]
+因此 $\Gamma_0(N)$ 可以理解为：其模 $N$ 约化在 $(\Z/N\Z)^2$ 上保留一个固定的一维子空间的整数矩阵群。与之相比，$\Gamma(N)$ 对应“固定整个模 $N$ 基底”，而 $\Gamma_0(N)$ 只记住一个秩 $1$ 的子模（或椭圆曲线 $N$-挠点中的一个循环子群）。这正是模形式中“水平结构”自然出现的原因：$\Gamma(N)$ 对应全水平 $N$ 结构，$\Gamma_0(N)$ 对应一个阶为 $N$ 的循环子群结构。
+\end{enumerate}
+
+
+

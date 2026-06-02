@@ -1491,3 +1491,522 @@ T_pf=a_pf,\qquad T_pg=a_pg,
 
   \item (\hard) 设 $V=\Mk_k(\Gamma)$，固定一个 Hecke 算子 $T$。把 $V$ 视为 $\C[x]$-模。说明为什么 $T$ 可对角化当且仅当该 $\C[x]$-模可分解为若干简单模 $\C[x]/(x-\lambda)$ 的直和。
 \end{enumerate}
+
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+  \item \textbf{解答.} 对 $n\in\Z$ 与 $a\in A$ 定义
+  \[
+  na=\begin{cases}
+  \underbrace{a+\cdots+a}_{n\text{ 次}},&n>0,\\
+  0,&n=0,\\
+  -((-n)a),&n<0.
+  \end{cases}
+  \]
+  则 $(m+n)a=ma+na$、$m(a+b)=ma+mb$、$(mn)a=m(na)$ 与 $1a=a$ 都由阿贝尔群运算直接推出，所以 $A$ 成为 $\Z$-模。
+
+  \item \textbf{解答.} 向量空间公理恰是把“标量域”换成环 $F$ 后的模公理：$(u+v)+w=u+(v+w)$、存在 $0,-u$ 给出加法阿贝尔群；分配律 $(a+b)v=av+bv$ 与 $a(u+v)=au+av$、结合律 $(ab)v=a(bv)$、单位律 $1v=v$ 正是 $F$-模四条公理。因此 $F$-向量空间与 $F$-模完全相同。
+
+  \item \textbf{解答.} 理想 $I$ 在加法下是阿贝尔群；若 $r\in R,x,y\in I$，则 $x-y\in I$，且因 $I$ 为理想，$rx\in I$。故 $I$ 对加法与 $R$ 的数量乘法封闭，从而是 $R$-模。
+
+  \item \textbf{解答.} 在 $M\times N$ 上定义
+  \[
+  (m,n)+(m',n')=(m+m',n+n'),\qquad r(m,n)=(rm,rn).
+  \]
+  逐分量验证即可：加法成阿贝尔群，且
+  \[
+  (r+s)(m,n)=((r+s)m,(r+s)n)=r(m,n)+s(m,n),
+  \]
+  其余三条同理，故 $M\times N$ 是 $R$-模。有限情形下 $M\oplus N=M\times N$，故直和也是 $R$-模。
+
+  \item \textbf{解答.} 由同态性质，
+  \[
+  f(0)=f(0+0)=f(0)+f(0),
+  \]
+  两边减去 $f(0)$ 得 $f(0)=0$。又因 $m+(-m)=0$，
+  \[
+  0=f(0)=f(m+(-m))=f(m)+f(-m),
+  \]
+  所以 $f(-m)=-f(m)$。
+
+  \item \textbf{解答.} 设 $N\le \Z$。若 $N=0$，则 $N=0\Z$。若 $N\neq 0$，取其中最小正元 $d$。对任意 $n\in N$，带余除法给出 $n=qd+r$，$0\le r<d$。因 $N$ 为子模，$r=n-qd\in N$；由 $d$ 的最小性得 $r=0$。故 $n\in d\Z$，即 $N\subseteq d\Z$。反过来 $d\in N$ 且 $N$ 为子模，故 $qd\in N$，于是 $d\Z\subseteq N$。故全部子模恰为 $n\Z$ $(n\ge 0)$。
+
+  \item \textbf{解答.} $\Z/12\Z$ 的子模就是它的子群。循环群的子群与 $12$ 的正因子一一对应，因此共有
+  \[
+  \langle \bar 0\rangle=\{\bar 0\},\quad \langle \bar 6\rangle=\{\bar 0,\bar 6\},\quad \langle \bar 4\rangle=\{\bar 0,\bar 4,\bar 8\},
+  \]
+  \[
+  \langle \bar 3\rangle=\{\bar 0,\bar 3,\bar 6,\bar 9\},\quad \langle \bar 2\rangle=\{\bar 0,\bar 2,\bar 4,\bar 6,\bar 8,\bar{10}\},
+  \]
+  以及整个 $\Z/12\Z=\langle \bar 1\rangle$。它们分别同构于 $\Z/d\Z$，其中 $d=1,2,3,4,6,12$。
+
+  \item \textbf{解答.} 若 $x,y\in I\cap J$，则 $x-y\in I$ 且 $x-y\in J$，故 $x-y\in I\cap J$；对任意 $r\in R$，$rx\in I\cap J$。所以 $I\cap J$ 是子模。再看 $I+J=\{a+b:a\in I,b\in J\}$：若 $a_i\in I,b_i\in J$，则
+  \[
+  (a_1+b_1)-(a_2+b_2)=(a_1-a_2)+(b_1-b_2)\in I+J,
+  \]
+  且 $r(a+b)=ra+rb\in I+J$，故 $I+J$ 也是子模。
+
+  \item \textbf{解答.} $N$ 非空，因为 $(0,0)\in N$。若 $(a,b),(c,d)\in N$，则 $a\equiv b\pmod 2$、$c\equiv d\pmod 2$，于是
+  \[
+  a-c\equiv b-d\pmod 2,
+  \]
+  故 $(a-c,b-d)\in N$。再对任意 $r\in\Z$，由 $a\equiv b\pmod 2$ 得 $ra\equiv rb\pmod 2$，故 $(ra,rb)\in N$。所以 $N\le \Z^2$。
+
+  \item \textbf{解答.} 当 $n=4$ 时，$N=4\Z$，商模 $\Z/N=\Z/4\Z$ 的元素为
+  \[
+  \bar 0,\ \bar 1,\ \bar 2,\ \bar 3.
+  \]
+  加法表为
+  \[
+  \begin{array}{c|cccc}
+  +&\bar 0&\bar 1&\bar 2&\bar 3\\\hline
+  \bar 0&\bar 0&\bar 1&\bar 2&\bar 3\\
+  \bar 1&\bar 1&\bar 2&\bar 3&\bar 0\\
+  \bar 2&\bar 2&\bar 3&\bar 0&\bar 1\\
+  \bar 3&\bar 3&\bar 0&\bar 1&\bar 2
+  \end{array}
+  \]
+  即按模 $4$ 加法计算。
+
+  \item \textbf{解答.} 定义
+  \[
+  \varphi\colon \Z^2\to \Z,\qquad \varphi(a,b)=a-b.
+  \]
+  它是 $\Z$-模同态。其核为
+  \[
+  \Ker\varphi=\{(a,b):a=b\}=\langle (1,1)\rangle=N.
+  \]
+  又对任意 $t\in\Z$，$\varphi(t,0)=t$，故 $\Ima\varphi=\Z$。由第一同构定理，
+  \[
+  \Z^2/N\cong \Z.
+  \]
+
+  \item \textbf{解答.} $M=R,N=I$ 时，商模元素是陪集 $r+I$，其加法与数量乘法为
+  \[
+  (r+I)+(s+I)=(r+s)+I,\qquad a(r+I)=ar+I.
+  \]
+  这正是商环 $R/I$ 作为 $R$-模的运算。因此两者只是同一对象的不同表述。
+
+  \item \textbf{解答.} 由 $f(a,b)=a-b$，
+  \[
+  \Ker f=\{(a,b):a=b\}=\langle(1,1)\rangle,
+  \]
+  而 $f(t,0)=t$ 表明 $\Ima f=\Z$。故
+  \[
+  \Z^2/\langle(1,1)\rangle\cong \Z,
+  \]
+  同构由 $(a,b)+\Ker f\mapsto a-b$ 给出，这正验证了第一同构定理。
+
+  \item \textbf{解答.} 因 $A,B\le M$，故 $A+B$ 是子模。显然 $A\subseteq A+B$、$B\subseteq A+B$。若 $L\le M$ 也满足 $A,B\subseteq L$，则对任意 $a\in A,b\in B$ 有 $a+b\in L$，故 $A+B\subseteq L$。所以 $A+B$ 是包含 $A,B$ 的最小子模。
+
+  \item \textbf{解答.} 在 $R^n$ 中取
+  \[
+  e_1=(1,0,\dots,0),\ \dots,\ e_n=(0,\dots,0,1).
+  \]
+  任意 $(r_1,\dots,r_n)\in R^n$ 唯一写成
+  \[
+  (r_1,\dots,r_n)=r_1e_1+\cdots+r_ne_n.
+  \]
+  因此 $R^n$ 是自由 $R$-模，$\{e_1,\dots,e_n\}$ 是其标准基。
+
+  \item \textbf{解答.} 若 $\Z/n\Z$ 是自由 $\Z$-模，则必同构于某个 $\Z^r$。但 $\Z^r$ 在 $r\ge 1$ 时含有无限多个元素，$r=0$ 时只有一个元素；而 $\Z/n\Z$ 在 $n\ge 2$ 时是非零有限群，二者都不可能同构。等价地说，$\bar 1\neq 0$ 却满足 $n\bar 1=0$，有扭；而自由 $\Z$-模无非零扭元。
+
+  \item \textbf{解答.} 设循环模 $M=Rx$。定义
+  \[
+  \phi\colon R\to M,\qquad \phi(r)=rx.
+  \]
+  这是满射模同态。其核为
+  \[
+  I=\Ann(x)=\{r\in R:rx=0\},
+  \]
+  它是理想。由第一同构定理，
+  \[
+  M\cong R/I.
+  \]
+
+  \item \textbf{解答.} 定义
+  \[
+  \pi\colon R^3\to M,\qquad \pi(a,b,c)=am_1+bm_2+cm_3.
+  \]
+  由模公理知 $\pi$ 是 $R$-模同态。因为 $m_1,m_2,m_3$ 生成 $M$，任意 $m\in M$ 都可写成 $am_1+bm_2+cm_3=\pi(a,b,c)$，故 $\pi$ 满射。
+
+  \item \textbf{解答.} 设 $V$ 有一组基 $v_1,\dots,v_n$。则任意 $v\in V$ 唯一写成 $v=\sum a_iv_i$，其中 $a_i\in F$。这正说明 $V$ 作为 $F$-模是自由模，且秩为 $n=\dim_FV$。有限维性保证基只有有限个元素，所以是有限秩自由模。
+
+  \item \textbf{解答.} 因 $M$ 有限生成，存在满射 $R^n\twoheadrightarrow M$。Noether 环 $R$ 作为 $R$-模是 Noether 的，故有限直和 $R^n$ 也是 Noether 模；而 Noether 模的商模仍是 Noether 模，所以 $M$ 必为 Noether 模。
+
+  \item \textbf{解答.} 设 $\pi\colon M\to M/N$ 为商映射。任取子模 $P\le M/N$，则 $\pi^{-1}(P)$ 是 $M$ 的子模。因 $M$ Noether，$\pi^{-1}(P)$ 有有限生成组 $x_1,\dots,x_t$。于是 $P$ 由 $\pi(x_1),\dots,\pi(x_t)$ 生成，故 $M/N$ 的每个子模都有限生成，所以 $M/N$ 是 Noether 模。
+
+  \item \textbf{解答.} 定义
+  \[
+  \Phi\colon \Z\otimes_\Z M\to M,\qquad \Phi(n\otimes m)=nm.
+  \]
+  再定义 $\Psi\colon M\to \Z\otimes_\Z M$，$\Psi(m)=1\otimes m$。则
+  \[
+  \Phi\Psi(m)=m,
+  \qquad
+  \Psi\Phi(n\otimes m)=1\otimes nm=n\otimes m.
+  \]
+  故二者互逆，
+  \[
+  \Z\otimes_\Z M\cong M.
+  \]
+
+  \item \textbf{解答.} 由 $(\Z/n\Z)\otimes_\Z A\cong A/nA$，取 $A=\Z/m\Z$ 得
+  \[
+  (\Z/n\Z)\otimes_\Z \Z/m\Z\cong (\Z/m\Z)/n(\Z/m\Z).
+  \]
+  设 $d=(m,n)$。子群 $n(\Z/m\Z)$ 由 $\bar n$ 生成，阶为 $m/d$，故商群阶为 $d$；它又是循环群，因此
+  \[
+  (\Z/n\Z)\otimes_\Z \Z/m\Z\cong \Z/d\Z=\Z/(m,n)\Z.
+  \]
+
+  \item \textbf{解答.} 任取 $v\in V,w\in W$，写成
+  \[
+  v=\sum_i a_iv_i,\qquad w=\sum_j b_jw_j.
+  \]
+  由张量积双线性，
+  \[
+  v\otimes w=\sum_{i,j} a_ib_j(v_i\otimes w_j).
+  \]
+  纯张量生成 $V\otimes_FW$，故所有 $v_i\otimes w_j$ 生成整个张量积。
+
+  \item \textbf{解答.} 由
+  \[
+  T_2f=\sum_{n\ge 0}\bigl(a_{2n}+2^{k-1}a_{n/2}\bigr)q^n,
+  \]
+  其中当 $2\nmid n$ 时 $a_{n/2}=0$，得前五个系数（$q^0$ 到 $q^4$）为
+  \[
+  (1+2^{k-1})a_0,\quad a_2,\quad a_4+2^{k-1}a_1,\quad a_6,\quad a_8+2^{k-1}a_2.
+  \]
+  因而
+  \[
+  T_2f=(1+2^{k-1})a_0+a_2q+(a_4+2^{k-1}a_1)q^2+a_6q^3+(a_8+2^{k-1}a_2)q^4+\cdots.
+  \]
+
+  \item \textbf{解答.} 直接定义
+  \[
+  \bar f\colon M/\Ker f\to \Ima f,\qquad \bar f(m+\Ker f)=f(m).
+  \]
+  若 $m+\Ker f=m'+\Ker f$，则 $m-m'\in\Ker f$，故 $f(m)=f(m')$，所以良定义。它显然满射到 $\Ima f$。若 $\bar f(m+\Ker f)=0$，则 $f(m)=0$，即 $m\in\Ker f$，从而 $m+\Ker f=0$，故单射。再由
+  \[
+  \bar f((m+\Ker f)+(m'+\Ker f))=f(m+m')=f(m)+f(m')
+  \]
+  及 $\bar f(r(m+\Ker f))=rf(m)$，知它是模同构，因此 $M/\Ker f\cong \Ima f$。
+
+  \item \textbf{解答.} 第二同构定理：定义 $\phi\colon A\to (A+B)/B$，$\phi(a)=a+B$。它满射，因为 $(a+b)+B=a+B$。其核为 $A\cap B$。故
+  \[
+  A/(A\cap B)\cong (A+B)/B.
+  \]
+  第三同构定理：设 $L\le N\le M$，定义 $\psi\colon M/L\to M/N$，$\psi(m+L)=m+N$。它良定义且满射，核为 $N/L$，故
+  \[
+  (M/L)/(N/L)\cong M/N.
+  \]
+
+  \item \textbf{解答.} 设 $\pi\colon M\to M/N$ 为商映射。若 $L\ge N$，则 $L/N\le M/N$；若 $P\le M/N$，则 $\pi^{-1}(P)\ge N$。并且
+  \[
+  \pi^{-1}(L/N)=L,
+  \qquad
+  \pi(\pi^{-1}(P))=P,
+  \]
+  所以得到包含 $N$ 的子模与 $M/N$ 的子模之间的一一对应。它保持包含关系，并满足
+  \[
+  (L_1+L_2)/N=(L_1/N)+(L_2/N),\qquad (L_1\cap L_2)/N=(L_1/N)\cap(L_2/N).
+  \]
+  这正是群论中“正规子群对应定理”的模论版本；因为模总是阿贝尔群，子模自动对应群论中的正规子群。
+
+  \item \textbf{解答.} 若 $x\in (A\cap B)+(A\cap C)$，则 $x=u+v$，其中 $u\in A\cap B$、$v\in A\cap C$。于是 $u,v\in A$，故 $x\in A$；又 $u\in B,v\in C$，故 $x\in B+C$。所以
+  \[
+  (A\cap B)+(A\cap C)\subseteq A\cap(B+C).
+  \]
+  不一定取等。例：在域 $F$ 上的 $F^2$ 中，取
+  \[
+  A=F(1,0),\quad B=F(1,1),\quad C=F(1,-1).
+  \]
+  则 $B+C=F^2$，故 $A\cap(B+C)=A$；但 $A\cap B=A\cap C=0$，于是左边为 $0$。故严格包含成立。
+
+  \item \textbf{解答.} 设 $R^m\cong R^n$。对任意极大理想 $\mathfrak m$，应用函子 $(R/\mathfrak m)\otimes_R-$，得
+  \[
+  (R/\mathfrak m)\otimes_R R^m\cong (R/\mathfrak m)\otimes_R R^n.
+  \]
+  由 $R/\mathfrak m$ 的分配性，左、右分别同构于 $(R/\mathfrak m)^m$ 与 $(R/\mathfrak m)^n$。因此
+  \[
+  (R/\mathfrak m)^m\cong (R/\mathfrak m)^n.
+  \]
+  但 $R/\mathfrak m$ 是域，上式是两个向量空间同构，故维数相等，即 $m=n$。
+
+  \item \textbf{解答.} 若 $I=(x,y)$ 是秩 $1$ 的自由子模，则它与 $R=k[x,y]$ 同构。设 $\phi\colon R\to I$ 为同构，令 $f=\phi(1)$。则对任意 $r\in R$，$\phi(r)=rf$，故 $I=Rf=(f)$ 为主理想。于是 $(x,y)$ 应为主理想。设 $(x,y)=(f)$，则 $f\mid x$ 且 $f\mid y$。因 $x,y$ 在 UFD $k[x,y]$ 中互素，故 $f$ 只能是单位，于是 $(f)=R$。但 $1\notin(x,y)$，矛盾。故 $(x,y)$ 不是秩 $1$ 的自由子模。
+
+  \item \textbf{解答.} 设 $L\le M\oplus N$。记投影为 $p_M,p_N$。则 $p_M(L)\le M$、$L\cap (0\oplus N)\le 0\oplus N\cong N$。有短正合列
+  \[
+  0\to L\cap (0\oplus N)\to L\xrightarrow{p_M} p_M(L)\to 0.
+  \]
+  因为 $M,N$ Noether，所以其子模 $p_M(L)$ 与 $L\cap(0\oplus N)$ 也 Noether。由正合列保持性可知 $L$ Noether。故 $M\oplus N$ 的每个子模都 Noether，从而 $M\oplus N$ 是 Noether 模。
+
+  \item \textbf{解答.} $R$ 作为 $R$-模的子模恰是 $R$ 的理想。因此“$R$ 是 Noether 环”按定义等价于“$R$ 作为 $R$-模是 Noether 模”，又等价于“$R$ 的每个子模都有限生成”，即“$R$ 的每个理想都有限生成”。
+
+  \item \textbf{解答.} 对 $n=1$，Hilbert 基定理给出：若 $R$ Noether，则 $R[x_1]$ Noether。归纳设 $R[x_1,\dots,x_{n-1}]$ 已 Noether，则
+  \[
+  R[x_1,\dots,x_n]=R[x_1,\dots,x_{n-1}][x_n].
+  \]
+  再对环 $R[x_1,\dots,x_{n-1}]$ 应用 Hilbert 基定理，即得 $R[x_1,\dots,x_n]$ Noether。故对一切 $n$ 成立。
+
+  \item \textbf{解答.} $\Z$ 是 Noether 环，故由 Hilbert 基定理 $\Z[x]$ 是 Noether 环。它不是 PID，因为理想 $(2,x)$ 不是主理想。若 $(2,x)=(f)$，则 $f\mid 2$ 与 $f\mid x$。在整环 $\Z[x]$ 中，$2$ 的非单位因子只有 $\pm 1,\pm 2$。若 $f$ 为单位，则 $(f)=\Z[x]$，但 $1\notin(2,x)$；若 $f=\pm 2$，则 $x\in(2)$ 不成立。矛盾。故 $(2,x)$ 非主。
+
+  \item \textbf{解答.} 因 $(a,b)=1$，故理想 $(a)+(b)=R$。中国剩余定理给出环同构
+  \[
+  R/(ab)\cong R/(a)\oplus R/(b),
+  \]
+  具体映射为 $r+(ab)\mapsto (r+(a),r+(b))$。其核是 $(a)\cap(b)=(ab)$（在 PID 中由互素推出），且满射。因此作为 $R$-模也有
+  \[
+  R/(a)\oplus R/(b)\cong R/(ab).
+  \]
+
+  \item \textbf{解答.} 由 $72=2^3\cdot 3^2$，有限阿贝尔群按 Sylow 分解为其 $2$-部分与 $3$-部分的直和。阶为 $8$ 的阿贝尔群有
+  \[
+  \Z/8\Z,\quad \Z/4\Z\oplus \Z/2\Z,\quad (\Z/2\Z)^3;
+  \]
+  阶为 $9$ 的阿贝尔群有
+  \[
+  \Z/9\Z,\quad \Z/3\Z\oplus \Z/3\Z.
+  \]
+  因而恰有 $3\times 2=6$ 类：
+  \[
+  \Z/8\Z\oplus \Z/9\Z,\quad \Z/4\Z\oplus \Z/2\Z\oplus \Z/9\Z,\quad (\Z/2\Z)^3\oplus \Z/9\Z,
+  \]
+  \[
+  \Z/8\Z\oplus \Z/3\Z\oplus \Z/3\Z,\quad \Z/4\Z\oplus \Z/2\Z\oplus \Z/3\Z\oplus \Z/3\Z,
+  \]
+  \[
+  (\Z/2\Z)^3\oplus \Z/3\Z\oplus \Z/3\Z.
+  \]
+
+  \item \textbf{解答.} 定义双线性映射
+  \[
+  b\colon (\Z/n\Z)\times A\to A/nA,\qquad b(\bar r,a)=ra+nA.
+  \]
+  若 $\bar r=\bar s$，则 $r-s=nt$，从而 $(r-s)a\in nA$，故良定义。由泛性质得
+  \[
+  \Phi\colon (\Z/n\Z)\otimes_\Z A\to A/nA,
+  \qquad \Phi(\bar r\otimes a)=ra+nA.
+  \]
+  另一方面 $a\mapsto \bar 1\otimes a$ 经商后给出逆映射 $A/nA\to (\Z/n\Z)\otimes_\Z A$。故
+  \[
+  (\Z/n\Z)\otimes_\Z A\cong A/nA.
+  \]
+  取 $A=\Z/15\Z,n=6$，得
+  \[
+  (\Z/6\Z)\otimes_\Z \Z/15\Z\cong (\Z/15\Z)/6(\Z/15\Z).
+  \]
+  因 $6(\Z/15\Z)=3(\Z/15\Z)$，其商为 $\Z/3\Z$。故结果是 $\Z/3\Z$。
+
+  \item \textbf{解答.} 定义双线性映射 $M\times N\to N\otimes_R M$，$(m,n)\mapsto n\otimes m$。由泛性质得到唯一模同态
+  \[
+  \tau\colon M\otimes_R N\to N\otimes_R M,
+  \qquad \tau(m\otimes n)=n\otimes m.
+  \]
+  同理有 $\sigma\colon N\otimes_R M\to M\otimes_R N$，$\sigma(n\otimes m)=m\otimes n$。在纯张量上
+  \[
+  \sigma\tau(m\otimes n)=m\otimes n,\qquad \tau\sigma(n\otimes m)=n\otimes m,
+  \]
+  故二者互逆，于是 $M\otimes_R N\cong N\otimes_R M$。
+
+  \item \textbf{解答.} 由三线性映射
+  \[
+  ((m,n),p)\longmapsto m\otimes(n\otimes p)
+  \]
+  先对 $M\otimes_R N$ 再对 $P$ 应用泛性质，得映射
+  \[
+  \alpha\colon (M\otimes_R N)\otimes_R P\to M\otimes_R (N\otimes_R P),
+  \qquad \alpha((m\otimes n)\otimes p)=m\otimes(n\otimes p).
+  \]
+  同理有
+  \[
+  \beta\colon M\otimes_R (N\otimes_R P)\to (M\otimes_R N)\otimes_R P,
+  \qquad \beta(m\otimes(n\otimes p))=(m\otimes n)\otimes p.
+  \]
+  在纯张量上检查 $\alpha\beta=\Id$、$\beta\alpha=\Id$，故得自然同构
+  \[
+  (M\otimes_R N)\otimes_R P\cong M\otimes_R(N\otimes_R P).
+  \]
+
+  \item \textbf{解答.} 设 $N=M/\Ima u$，商映射为 $q\colon M\to N$。先由张量积与商模相容性得到
+  \[
+  N\otimes_R P\cong (M/\Ima u)\otimes_R P\cong (M\otimes_R P)/\Ima(u\otimes \Id_P).
+  \]
+  在此同构下，$M\otimes_R P\to N\otimes_R P$ 正是 $q\otimes \Id_P$，所以其核恰为 $\Ima(u\otimes \Id_P)$，且显然满射。故
+  \[
+  L\otimes_R P\xrightarrow{u\otimes \Id_P}M\otimes_R P\xrightarrow{}N\otimes_R P\to 0
+  \]
+  正合，这就是右正合性。
+
+  \item \textbf{解答.} 取单射
+  \[
+  \times 2\colon \Z\hookrightarrow \Z.
+  \]
+  张量 $\Z/2\Z$ 后得到
+  \[
+  \Z\otimes_\Z \Z/2\Z\xrightarrow{\times 2\otimes 1}\Z\otimes_\Z \Z/2\Z.
+  \]
+  在同构 $\Z\otimes_\Z \Z/2\Z\cong \Z/2\Z$ 下，这个映射变成乘以 $2$，即零映射，所以不再单射。故张量积一般不保持单射。
+
+  \item \textbf{解答.} 对两个模先构造
+  \[
+  \Phi\colon S\otimes_R(M\oplus N)\to (S\otimes_R M)\oplus(S\otimes_R N),
+  \qquad s\otimes(m,n)\mapsto (s\otimes m,s\otimes n).
+  \]
+  由泛性质这是良定义模同态。其逆为
+  \[
+  \Psi((s\otimes m),(t\otimes n))=s\otimes(m,0)+t\otimes(0,n).
+  \]
+  故 $S\otimes_R(M\oplus N)\cong (S\otimes_R M)\oplus(S\otimes_R N)$。对有限个直和作归纳，得扩张标量函子保持有限直和。
+
+  \item \textbf{解答.} 令 $x$ 在 $V$ 上的作用为 $T$，于是任意 $f(x)=\sum a_ix^i\in F[x]$ 对应算子 $f(T)=\sum a_iT^i$。最小多项式 $\mu_T(x)$ 的定义就是首一且次数最小并满足 $\mu_T(T)=0$ 的多项式。故对任意 $v\in V$，
+  \[
+  \mu_T(x)\cdot v=\mu_T(T)(v)=0.
+  \]
+  因而 $\mu_T$ 湮没整个 $F[x]$-模 $V$。
+
+  \item \textbf{解答.} 因 $f$ 为归一化本征形式，$a_1(f)=1$，且
+  \[
+  T_pf=a_pf.
+  \]
+  比较两边 $q$ 的一次项系数。由 Hecke 公式，$T_pf$ 的 $q^1$ 系数为
+  \[
+  a_p(f)+p^{k-1}a_{1/p}(f)=a_p(f),
+  \]
+  因为 $a_{1/p}(f)=0$。而右边 $a_pf$ 的 $q^1$ 系数为 $a_p\,a_1(f)=a_p$。故
+  \[
+  a_p(f)=a_p.
+  \]
+
+  \item \textbf{解答.} 设 $M$ 由 $x_1,\dots,x_n$ 生成，且 $M=\mathfrak mM$。于是每个 $x_i$ 可写成
+  \[
+  x_i=\sum_{j=1}^n a_{ij}x_j,\qquad a_{ij}\in\mathfrak m.
+  \]
+  记 $A=(a_{ij})$，$x=(x_1,\dots,x_n)^t$，则 $(I-A)x=0$。左乘伴随矩阵得
+  \[
+  \det(I-A)x=0.
+  \]
+  设 $u=\det(I-A)$。展开行列式可见 $u=1-r$，其中 $r\in\mathfrak m$。在局部环中 $1-r$ 必为单位；否则若 $1-r\in\mathfrak m$，则 $1=(1-r)+r\in\mathfrak m$，矛盾。故 $u$ 为单位，于是 $x=0$，即所有生成元皆为零，故 $M=0$。
+
+  \item \textbf{解答.} 设 $N=Rx_1+\cdots+Rx_n\le M$。题设说 $x_i$ 在 $M/\mathfrak mM$ 中的像生成整个商模，所以对任意 $m\in M$，存在 $r_i\in R$ 使
+  \[
+  m-\sum r_ix_i\in \mathfrak mM.
+  \]
+  即 $M=N+\mathfrak mM$。于是商模 $M/N$ 满足
+  \[
+  M/N=\mathfrak m(M/N).
+  \]
+  由上一题的 Nakayama 引理，$M/N=0$。故 $M=N$，即 $x_1,\dots,x_n$ 生成 $M$。
+
+  \item \textbf{解答.} 设 $F=\bigoplus_{i\in I}R$ 为自由模。对任意模 $X$，有自然同构
+  \[
+  F\otimes_R X\cong \bigoplus_{i\in I}(R\otimes_R X)\cong \bigoplus_{i\in I}X.
+  \]
+  现取短正合列
+  \[
+  0\to A\to B\to C\to 0.
+  \]
+  对每个 $i$，恒等函子保持正合，所以
+  \[
+  0\to A\to B\to C\to 0
+  \]
+  的第 $i$ 个拷贝正合。对这些正合列取直和，仍得短正合列
+  \[
+  0\to \bigoplus_iA\to \bigoplus_iB\to \bigoplus_iC\to 0.
+  \]
+  通过上述同构即得
+  \[
+  0\to F\otimes_R A\to F\otimes_R B\to F\otimes_R C\to 0
+  \]
+  正合，所以自由模平坦。
+
+  \item \textbf{解答.} 先证非空：$0\in M_{\mathrm{tor}}$，因为任意 $0\ne r\in R$ 都满足 $r0=0$。若 $m,n\in M_{\mathrm{tor}}$，取非零 $r,s\in R$ 使 $rm=0,sn=0$。因 $R$ 为整环，$rs\ne 0$，且
+  \[
+  rs(m-n)=s(rm)-r(sn)=0.
+  \]
+  故 $m-n\in M_{\mathrm{tor}}$。再若 $a\in R,m\in M_{\mathrm{tor}}$ 且 $rm=0$，则
+  \[
+  r(am)=a(rm)=0,
+  \]
+  所以 $am\in M_{\mathrm{tor}}$。故 $M_{\mathrm{tor}}$ 是子模。
+
+  \item \textbf{解答.} 由 PID 上有限生成模结构定理，
+  \[
+  M\cong R^r\oplus R/(d_1)\oplus\cdots\oplus R/(d_t),\qquad d_1\mid d_2\mid\cdots\mid d_t.
+  \]
+  右边后半部分恰由所有被某个非零元杀掉的元素组成，所以就是 $M_{\mathrm{tor}}$；于是
+  \[
+  M\cong R^r\oplus M_{\mathrm{tor}}.
+  \]
+  唯一性方面，$M_{\mathrm{tor}}$ 由定义内在决定；而 $r$ 可由分式域 $K=\Frac(R)$ 检出，因为
+  \[
+  K\otimes_R M\cong K^r,
+  \]
+  扭部分张量后为零，故
+  \[
+  r=\dim_K(K\otimes_R M).
+  \]
+  因而 $r$ 与 $M_{\mathrm{tor}}$ 唯一确定。
+
+  \item \textbf{解答.} 设 $M$ 由 $x_1,\dots,x_n$ 生成，且 $M=IM$。于是
+  \[
+  x_i=\sum_j a_{ij}x_j,\qquad a_{ij}\in I.
+  \]
+  同样得 $(I-A)x=0$，故存在 $u=\det(I-A)$ 使 $uM=0$，且 $u=1-a$，其中 $a\in I$。因为 $I\subseteq \Rad(R)$，故 $a\in \Rad(R)$，于是 $1-a$ 是单位。既然单位 $u$ 湮没 $M$，便有 $M=0$。这就是 Nakayama 引理的常见形式。
+
+  \item \textbf{解答.} 在 $\C[x]$-模结构中，$f(x)$ 作用为算子 $f(T)$。设 $\mu_T$ 为 $T$ 的最小多项式，则 $\mu_T(T)=0$，故对每个 $v\in V$ 都有
+  \[
+  \mu_T(x)\cdot v=0.
+  \]
+  因而每个元素都被某个非零多项式（事实上同一个 $\mu_T$）湮没，$V$ 是扭模。再看湮没子理想
+  \[
+  \Ann_{\C[x]}(V)=\{f(x):f(T)=0\}.
+  \]
+  它是 $\C[x]$ 的理想，而 $\C[x]$ 为 PID，所以它由唯一首一多项式生成。由最小多项式定义，任何使 $f(T)=0$ 的多项式都被 $\mu_T$ 整除，故
+  \[
+  \Ann_{\C[x]}(V)=(\mu_T).
+  \]
+
+  \item \textbf{解答.} 对 $A,B\in\mathbb T_k(\Gamma)$ 与 $f,g\in\Mk_k(\Gamma)$，定义 $A\cdot f=A(f)$。因 $\mathbb T_k(\Gamma)\subseteq \End_\C(\Mk_k(\Gamma))$，有
+  \[
+  (A+B)\cdot f=A(f)+B(f)=A\cdot f+B\cdot f,
+  \]
+  \[
+  A\cdot(f+g)=A(f+g)=A\cdot f+A\cdot g,
+  \]
+  \[
+  (AB)\cdot f=A(B(f))=A\cdot(B\cdot f),
+  \]
+  \[
+  1\cdot f=f.
+  \]
+  因此全部模公理成立，$\Mk_k(\Gamma)$ 是 $\mathbb T_k(\Gamma)$-模。
+
+  \item \textbf{解答.} 若 $T_pf=\lambda_pf$，比较两边的 $q^1$ 系数。由公式
+  \[
+  T_pf=\sum_{n\ge 0}\bigl(a_{pn}+p^{k-1}a_{n/p}\bigr)q^n,
+  \]
+  取 $n=1$ 得左边一次项系数为 $a_p$。右边 $\lambda_pf$ 的一次项系数为 $\lambda_pa_1$。故
+  \[
+  a_p=\lambda_pa_1.
+  \]
+  特别地若 $f$ 归一化，则 $a_1=1$，于是 $a_p=\lambda_p$。
+
+  \item \textbf{解答.} 若 $T$ 可对角化，则存在由特征向量组成的基，故
+  \[
+  V=\bigoplus_\lambda E_\lambda,
+  \qquad E_\lambda=\Ker(T-\lambda).
+  \]
+  每个一维特征子空间 $\C v$ 上，$x$ 的作用就是乘以 $\lambda$，故作为 $\C[x]$-模
+  \[
+  \C v\cong \C[x]/(x-\lambda).
+  \]
+  因而 $V$ 分解为若干简单模 $\C[x]/(x-\lambda)$ 的直和。
+
+  反过来，若
+  \[
+  V\cong \bigoplus_{i=1}^r \C[x]/(x-\lambda_i),
+  \]
+  则在每个直和项上，$x$ 的作用就是标量 $\lambda_i$。取各直和项的生成元，得到一组由特征向量组成的基，所以对应算子 $T$ 可对角化。又因 $\C[x]$ 的简单模恰由极大理想商得到，而极大理想均为 $(x-\lambda)$，故这正给出可对角化与半单分解的等价性。
+\end{enumerate}

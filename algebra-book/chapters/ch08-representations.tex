@@ -1379,3 +1379,1171 @@ a_{p^{r+1}}=a_pa_{p^r}-p^{k-1}a_{p^{r-1}}.
 “模形式的 Hecke 本征值就是某个 $\GL_2$ 表示在未分歧局部 Hecke 代数上的特征标量。”
 要求给出你自己的分层解释：先说有限维线性代数图景，再说群表示图景，最后说自守表示图景。
 \end{enumerate}
+
+\section*{习题解答}
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+\item \textbf{解答.} 记 $\rho(g)=\Id_F$。则
+\[
+\rho(1)=\Id_F,\qquad \rho(gh)=\Id_F=\Id_F\Id_F=\rho(g)\rho(h)
+\]
+对任意 $g,h\in G$ 都成立，故 $\rho:G\to \GL(F)$ 是群同态，因此确为一个表示。
+
+\item \textbf{解答.} 设 $C_2=\langle t\mid t^2=1\rangle$。因 $C_2$ 阿贝尔，其不可约复表示全为一维。故只需令
+\[
+\rho(t)=\lambda\in \C^\times,\qquad \lambda^2=1,
+\]
+于是 $\lambda=\pm1$。故全部不可约表示只有两个：
+\[
+\mathbf{1}:t\mapsto 1,\qquad \varepsilon:t\mapsto -1.
+\]
+其特征标分别为
+\[
+\chi_{\mathbf{1}}(1)=1,\ \chi_{\mathbf{1}}(t)=1;\qquad
+\chi_\varepsilon(1)=1,\ \chi_\varepsilon(t)=-1.
+\]
+
+\item \textbf{解答.} 在标准基 $e_1,e_2,e_3$ 下，置换表示满足 $\sigma\cdot e_i=e_{\sigma(i)}$。故
+\[
+(12):\ e_1\leftrightarrow e_2,\ e_3\mapsto e_3,
+\]
+所以
+\[
+\rho((12))=\mat{0&1&0\\1&0&0\\0&0&1}.
+\]
+又
+\[
+(123):\ e_1\mapsto e_2,\ e_2\mapsto e_3,\ e_3\mapsto e_1,
+\]
+所以
+\[
+\rho((123))=\mat{0&0&1\\1&0&0\\0&1&0}.
+\]
+
+\item \textbf{解答.} 置换的符号可定义为任一换位分解长度的奇偶性：
+\[
+\sgn(\sigma)=(-1)^{\ell(\sigma)}.
+\]
+若 $\sigma=\tau_1\cdots \tau_r,\ \pi=\eta_1\cdots \eta_s$ 为换位分解，则
+\[
+\sigma\pi=\tau_1\cdots \tau_r\eta_1\cdots \eta_s
+\]
+是一个换位分解，其长度奇偶性为 $r+s$，故
+\[
+\sgn(\sigma\pi)=(-1)^{r+s}=(-1)^r(-1)^s=\sgn(\sigma)\sgn(\pi).
+\]
+因此 $\sgn:S_n\to\{\pm1\}$ 为群同态。
+
+\item \textbf{解答.} 左正则表示满足
+\[
+\rho(r)e_1=e_r,\qquad \rho(r)e_r=e_{r^2},\qquad \rho(r)e_{r^2}=e_1.
+\]
+故在基 $e_1,e_r,e_{r^2}$ 下，
+\[
+\rho(r)=\mat{0&0&1\\1&0&0\\0&1&0}.
+\]
+
+\item \textbf{解答.} 设
+\[
+\rho'(g)=T\rho(g)T^{-1}.
+\]
+则
+\[
+\rho'(gh)=T\rho(gh)T^{-1}=T\rho(g)\rho(h)T^{-1}
+=(T\rho(g)T^{-1})(T\rho(h)T^{-1})
+=\rho'(g)\rho'(h),
+\]
+且 $\rho'(1)=T\Id T^{-1}=\Id$，故 $\rho'$ 是表示。又
+\[
+T\rho(g)=\rho'(g)T
+\]
+对一切 $g$ 成立，所以 $T$ 是交织同构，故 $\rho'\cong \rho$。
+
+\item \textbf{解答.} 设
+\[
+U=\{(x,x,x):x\in\C\},\qquad
+W=\{(x_1,x_2,x_3):x_1+x_2+x_3=0\}.
+\]
+对任意 $\sigma\in S_3$，若 $v=(x,x,x)\in U$，则 $\sigma\cdot v$ 只是重排坐标，仍为 $(x,x,x)$，故 $U$ 不变。若 $w=(x_1,x_2,x_3)\in W$，则
+\[
+(\sigma\cdot w)_1+(\sigma\cdot w)_2+(\sigma\cdot w)_3=x_1+x_2+x_3=0,
+\]
+故 $\sigma\cdot w\in W$。因此 $U,W$ 都是子表示。
+
+\item \textbf{解答.} 对任意 $g\in G$，在分解 $V=W_1\oplus W_2$ 下，
+\[
+\rho_V(g)=\mat{\rho_{W_1}(g)&0\\0&\rho_{W_2}(g)}.
+\]
+故迹满足
+\[
+\chi_V(g)=\Tr(\rho_V(g))
+=\Tr(\rho_{W_1}(g))+\Tr(\rho_{W_2}(g))
+=\chi_{W_1}(g)+\chi_{W_2}(g).
+\]
+于是 $\chi_V=\chi_{W_1}+\chi_{W_2}$。
+
+\item \textbf{解答.} 记
+\[
+u=e_1+e_r+e_{r^2},\qquad W=\C u.
+\]
+先取线性投影 $P_0$ 为
+\[
+P_0(e_1)=u,\qquad P_0(e_r)=P_0(e_{r^2})=0.
+\]
+按 Maschke 平均构造
+\[
+P=\frac13\sum_{g\in C_3}\rho(g)P_0\rho(g)^{-1}.
+\]
+对
+\[
+v=x_1e_1+x_re_r+x_{r^2}e_{r^2}
+\]
+直接计算得
+\[
+P(v)=\frac{x_1+x_r+x_{r^2}}{3}\,(e_1+e_r+e_{r^2}).
+\]
+这显然像在 $W$ 中，且 $P(u)=u$，故是到 $W$ 的 $G$-等变投影。
+
+\item \textbf{解答.} 设
+\[
+\rho(g)=\mat{1&1\\0&1},\qquad W=\F_p\mat{1\\0}.
+\]
+则
+\[
+\rho(g)\mat{1\\0}=\mat{1\\0}\in W,
+\]
+故 $W$ 是子表示。若存在不变补空间 $U$，则因 $\dim V=2$，$U$ 必为一维，且可写成
+\[
+U=\F_p\mat{a\\1}
+\]
+（否则 $U=W$）。若 $U$ 不变，则
+\[
+\rho(g)\mat{a\\1}=\mat{a+1\\1}\in U,
+\]
+故存在 $\lambda\in\F_p$ 使
+\[
+\mat{a+1\\1}=\lambda\mat{a\\1}.
+\]
+比较第二坐标得 $\lambda=1$，再比较第一坐标得 $a+1=a$，矛盾。故 $W$ 没有不变补空间。
+
+\item \textbf{解答.} 设 $\dim V=1$。则 $V$ 的子空间只有 $0$ 与 $V$。它们显然都是不变子空间，因此任意一维表示都不可约。
+
+\item \textbf{解答.} 设 $\rho_{\mathrm{reg}}$ 为左正则表示，基为 $\{e_h:h\in G\}$。对 $g\in G$，
+\[
+\rho_{\mathrm{reg}}(g)e_h=e_{gh}.
+\]
+若 $g=1$，则 $\rho_{\mathrm{reg}}(1)=\Id$，故
+\[
+\chi_{\mathrm{reg}}(1)=|G|.
+\]
+若 $g\neq1$，则方程 $gh=h$ 无解，所以基向量全被置换而无不动点，矩阵对角元全为 $0$，故
+\[
+\chi_{\mathrm{reg}}(g)=0.
+\]
+因此
+\[
+\chi_{\mathrm{reg}}(g)=
+\begin{cases}
+|G|,& g=1,\\
+0,& g\neq1.
+\end{cases}
+\]
+
+\item \textbf{解答.} 置换表示 $\C[X]$ 以 $\{e_x:x\in X\}$ 为基，且
+\[
+\rho(g)e_x=e_{g\cdot x}.
+\]
+故 $\rho(g)$ 的矩阵是一个置换矩阵。其对角线上第 $x$ 个位置为 $1$ 当且仅当 $g\cdot x=x$。因此
+\[
+\chi(g)=\Tr(\rho(g))=\#\{x\in X:g\cdot x=x\},
+\]
+即等于 $g$ 在 $X$ 上的不动点个数。
+
+\item \textbf{解答.} 设 $C_4=\langle r\rangle$，取 $i=\sqrt{-1}$。其四个不可约特征标为
+\[
+\chi_j(r^m)=i^{jm}\qquad (j=0,1,2,3).
+\]
+特征标表为
+\[
+\begin{array}{c|cccc}
+ & 1 & r & r^2 & r^3\\
+\hline
+\chi_0 & 1 & 1 & 1 & 1\\
+\chi_1 & 1 & i & -1 & -i\\
+\chi_2 & 1 & -1 & 1 & -1\\
+\chi_3 & 1 & -i & -1 & i
+\end{array}
+\]
+
+\item \textbf{解答.} 设 $C_5=\langle r\rangle$，取本原五次单位根 $\zeta=\zeta_5$。其五个不可约特征标为
+\[
+\chi_j(r^m)=\zeta^{jm}\qquad (j=0,1,2,3,4).
+\]
+特征标表为
+\[
+\begin{array}{c|ccccc}
+ & 1 & r & r^2 & r^3 & r^4\\
+\hline
+\chi_0 & 1 & 1 & 1 & 1 & 1\\
+\chi_1 & 1 & \zeta & \zeta^2 & \zeta^3 & \zeta^4\\
+\chi_2 & 1 & \zeta^2 & \zeta^4 & \zeta & \zeta^3\\
+\chi_3 & 1 & \zeta^3 & \zeta & \zeta^4 & \zeta^2\\
+\chi_4 & 1 & \zeta^4 & \zeta^3 & \zeta^2 & \zeta
+\end{array}
+\]
+
+\item \textbf{解答.} $S_3$ 的共轭类与大小分别为
+\[
+\{1\}\ (1),\qquad \{(12),(13),(23)\}\ (3),\qquad \{(123),(132)\}\ (2).
+\]
+特征标表为
+\[
+\begin{array}{c|ccc}
+ & 1 & (12) & (123)\\
+\hline
+\mathbf{1} & 1 & 1 & 1\\
+\sgn & 1 & -1 & 1\\
+\mathrm{Std} & 2 & 0 & -1
+\end{array}
+\]
+直接检验第一正交关系：
+\[
+\inner{\mathbf{1}}{\sgn}
+=\frac16(1\cdot1+3\cdot1\cdot(-1)+2\cdot1\cdot1)=0,
+\]
+\[
+\inner{\mathbf{1}}{\mathrm{Std}}
+=\frac16(1\cdot2+3\cdot1\cdot0+2\cdot1\cdot(-1))=0,
+\]
+\[
+\inner{\sgn}{\mathrm{Std}}
+=\frac16(1\cdot2+3\cdot(-1)\cdot0+2\cdot1\cdot(-1))=0.
+\]
+且
+\[
+\inner{\mathbf{1}}{\mathbf{1}}=\inner{\sgn}{\sgn}=1,\qquad
+\inner{\mathrm{Std}}{\mathrm{Std}}=\frac16(4+0+2)=1.
+\]
+故各不可约特征标两两正交且范数为 $1$。
+
+\item \textbf{解答.} 由正文，
+\[
+D_4=\langle r,s\mid r^4=s^2=1,\ srs=r^{-1}\rangle
+\]
+的共轭类为
+\[
+\{1\},\quad \{r^2\},\quad \{r,r^3\},\quad \{s,sr^2\},\quad \{sr,sr^3\}.
+\]
+有限群的不可约复表示个数等于其共轭类个数，故 $D_4$ 恰有 $5$ 个不可约复表示。
+
+\item \textbf{解答.} 在基 $X^2,XY,Y^2$ 下，$g=\diag(a,d)$ 的作用为
+\[
+g\cdot X=aX,\qquad g\cdot Y=dY.
+\]
+故
+\[
+g\cdot X^2=a^2X^2,\qquad g\cdot (XY)=ad\,XY,\qquad g\cdot Y^2=d^2Y^2.
+\]
+因此作用矩阵为
+\[
+\mat{a^2&0&0\\0&ad&0\\0&0&d^2},
+\]
+其迹为
+\[
+a^2+ad+d^2.
+\]
+
+\item \textbf{解答.} 将 $\mathrm{Sym}^k(F^2)$ 视为二元 $k$ 次齐次多项式空间。单项式
+\[
+X^k,\ X^{k-1}Y,\ \dots,\ XY^{k-1},\ Y^k
+\]
+共有 $k+1$ 个，且线性无关并张成全体齐次多项式，故它们构成一组基。因此
+\[
+\dim \mathrm{Sym}^k(F^2)=k+1.
+\]
+
+\item \textbf{解答.} 设
+\[
+f(q)=\sum_{r\ge0}a_rq^r,\qquad T_nf=\sum_{s\ge0}b_sq^s,
+\]
+则
+\[
+b_s=\sum_{d\mid(s,n)}d^{k-1}a_{sn/d^2}.
+\]
+若 $(m,n)=1$，则 $T_mT_nf$ 的 $q^r$ 系数为
+\[
+\sum_{d\mid(r,m)}d^{k-1}b_{rm/d^2}
+=\sum_{d\mid(r,m)}\sum_{e\mid(rm/d^2,n)}d^{k-1}e^{k-1}a_{rmn/(d^2e^2)}.
+\]
+因 $d\mid m,\ e\mid n,\ (m,n)=1$，故 $(d,e)=1$。令 $u=de$，则 $u\mid(r,mn)$，且每个这样的 $u$ 唯一写成 $de$。于是上式化为
+\[
+\sum_{u\mid(r,mn)}u^{k-1}a_{rmn/u^2},
+\]
+这正是 $T_{mn}f$ 的 $q^r$ 系数。故
+\[
+T_mT_n=T_{mn}.
+\]
+
+\item \textbf{解答.} 先取 $A$ 的一个特征值 $\lambda$，设其特征子空间
+\[
+E_\lambda=\Ker(A-\lambda I)\neq0.
+\]
+因 $AB=BA$，对任意 $v\in E_\lambda$，
+\[
+A(Bv)=B(Av)=B(\lambda v)=\lambda Bv,
+\]
+故 $Bv\in E_\lambda$，即 $E_\lambda$ 在 $B$ 下不变。若 $\dim E_\lambda=1$，则其任一非零向量自动是 $B$ 的特征向量；若 $\dim E_\lambda=2$，则 $E_\lambda=\C^2$，而 $B$ 在复数域上必有特征向量。故总存在 $v\neq0$，使
+\[
+Av=\lambda v,\qquad Bv=\mu v.
+\]
+即 $A,B$ 至少有一个公共特征向量。
+
+\item \textbf{解答.} $C_4$ 在正方形四顶点上的旋转作用中，恒等元固定全部 $4$ 个顶点，而 $r,r^2,r^3$ 都不固定任何顶点。故对应置换表示的特征标为
+\[
+\chi(1)=4,\qquad \chi(r)=\chi(r^2)=\chi(r^3)=0.
+\]
+
+\item \textbf{解答.} 类函数空间的维数等于共轭类个数。$S_3$ 有三个共轭类：
+\[
+\{1\},\qquad \{(12),(13),(23)\},\qquad \{(123),(132)\}.
+\]
+故 $S_3$ 的类函数空间维数为
+\[
+3.
+\]
+
+\item \textbf{解答.} 取类函数内积。对 $0\le i,j\le n-1$，
+\[
+\inner{\chi_i}{\chi_j}
+=\frac1n\sum_{m=0}^{n-1}\chi_i(t^m)\overline{\chi_j(t^m)}
+=\frac1n\sum_{m=0}^{n-1}\zeta_n^{(i-j)m}.
+\]
+若 $i=j$，则和为 $n$，故内积为 $1$。若 $i\neq j$，则 $\zeta_n^{i-j}\neq1$，故几何级数求和得
+\[
+\sum_{m=0}^{n-1}\zeta_n^{(i-j)m}
+=\frac{1-\zeta_n^{(i-j)n}}{1-\zeta_n^{i-j}}=0.
+\]
+故
+\[
+\inner{\chi_i}{\chi_j}=\delta_{ij},
+\]
+即它们两两正交。
+
+\item \textbf{解答.} 特征标逐点相乘：
+\[
+\chi_{\sgn\otimes\mathrm{Std}}
+=\chi_{\sgn}\chi_{\mathrm{Std}}
+=(1,-1,1)\cdot(2,0,-1)=(2,0,-1).
+\]
+这正是 $\mathrm{Std}$ 的特征标，因此
+\[
+\sgn\otimes\mathrm{Std}\cong \mathrm{Std}.
+\]
+
+\item \textbf{解答.} 若 $V=W\oplus U$，其中 $W,U$ 都是子表示，则沿 $U$ 到 $W$ 的投影 $P$ 满足
+\[
+P^2=P,\qquad \Ima(P)=W.
+\]
+对 $v=w+u$（$w\in W,u\in U$）有
+\[
+P(gv)=P(gw+gu)=gw=gP(v),
+\]
+故 $P$ 为 $G$-等变投影。
+
+反之，若存在 $G$-等变投影 $P:V\to V$，且 $\Ima(P)=W$，令
+\[
+U=\Ker(P).
+\]
+由 $P^2=P$ 得
+\[
+V=\Ima(P)\oplus\Ker(P)=W\oplus U.
+\]
+又若 $u\in U$，则
+\[
+P(gu)=gP(u)=0,
+\]
+故 $gu\in U$，所以 $U$ 也是子表示。于是 $W$ 有不变补空间。
+
+\item \textbf{解答.} 设 $V_1,\dots,V_r$ 为全部不可约复表示，特征标分别为 $\chi_i$。正则表示分解为
+\[
+\C[G]\cong \bigoplus_{i=1}^r m_iV_i.
+\]
+其重数
+\[
+m_i=\inner{\chi_{\mathrm{reg}}}{\chi_i}
+=\frac1{|G|}\sum_{g\in G}\chi_{\mathrm{reg}}(g)\overline{\chi_i(g)}
+=\frac1{|G|}\chi_{\mathrm{reg}}(1)\chi_i(1)
+=\dim V_i.
+\]
+故
+\[
+\C[G]\cong \bigoplus_{i=1}^r (\dim V_i)\,V_i.
+\]
+两边取维数即得
+\[
+|G|=\dim \C[G]=\sum_{i=1}^r (\dim V_i)^2.
+\]
+
+\item \textbf{解答.} 设 $\rho:G\to \GL(V)$ 为不可约复表示，且 $G$ 阿贝尔。则对任意 $g,h\in G$，
+\[
+\rho(g)\rho(h)=\rho(h)\rho(g).
+\]
+于是每个 $\rho(g)$ 都与所有群作用可交换。由 Schur 引理，
+\[
+\rho(g)=\lambda_g\Id_V.
+\]
+因此任意一维子空间都不变。若 $\dim V>1$，则存在非平凡真子空间，与不可约性矛盾。故
+\[
+\dim V=1.
+\]
+
+\item \textbf{解答.} 任取
+\[
+z=\sum_{g\in G}a_gg\in Z(\C[G]).
+\]
+在表示 $V$ 上它作用为
+\[
+\rho(z)=\sum_{g\in G}a_g\rho(g).
+\]
+对任意 $h\in G$，
+\[
+\rho(h)\rho(z)=\rho(hz)=\rho(zh)=\rho(z)\rho(h).
+\]
+故 $\rho(z)\in \End_G(V)$。由于 $V$ 不可约且系数域为 $\C$，Schur 引理给出
+\[
+\rho(z)=\lambda(z)\Id_V.
+\]
+所以 $Z(\C[G])$ 在 $V$ 上按标量作用。
+
+\item \textbf{解答.} 在 $V\otimes W$ 上定义
+\[
+g\cdot(v\otimes w)=(g\cdot v)\otimes(g\cdot w),
+\]
+并线性延拓。则
+\[
+1\cdot(v\otimes w)=v\otimes w,
+\]
+且
+\[
+g\cdot(h\cdot(v\otimes w))
+=g\cdot((hv)\otimes(hw))
+=(gh)v\otimes(gh)w
+=(gh)\cdot(v\otimes w),
+\]
+故这确实定义了一个表示。
+
+若 $\rho_V(g)$ 的特征值为 $\lambda_1,\dots,\lambda_m$，$\rho_W(g)$ 的特征值为 $\mu_1,\dots,\mu_n$，则 $\rho_{V\otimes W}(g)$ 的特征值为全部 $\lambda_i\mu_j$，故
+\[
+\chi_{V\otimes W}(g)=\sum_{i,j}\lambda_i\mu_j
+=\left(\sum_i\lambda_i\right)\left(\sum_j\mu_j\right)
+=\chi_V(g)\chi_W(g).
+\]
+
+\item \textbf{解答.} 集合
+\[
+X=\{(i,j):1\le i,j\le3,\ i\neq j\}
+\]
+有 $6$ 个元素。置换特征标等于不动点个数：
+
+恒等元固定全部 $6$ 个点，故 $\chi(1)=6$。
+
+换位如 $(12)$ 只固定数字 $3$，但 $(3,3)\notin X$，故无不动点，所以 $\chi((12))=0$。
+
+三循环如 $(123)$ 无固定数字，故也无不动点，所以 $\chi((123))=0$。
+
+于是
+\[
+\chi_{\C[X]}=(6,0,0).
+\]
+与 $S_3$ 不可约特征标作内积：
+\[
+\inner{\chi}{\mathbf1}=\frac16\cdot6=1,\qquad
+\inner{\chi}{\sgn}=\frac16\cdot6=1,\qquad
+\inner{\chi}{\mathrm{Std}}=\frac16(6\cdot2)=2.
+\]
+故
+\[
+\C[X]\cong \mathbf1\oplus \sgn\oplus \mathrm{Std}^{\oplus2}.
+\]
+事实上，这个作用是自由传递的，所以它正是正则表示。
+
+\item \textbf{解答.} 由上一题或由一般公式，正则表示中不可约表示 $V_i$ 的重数为 $\dim V_i$。对 $S_3$ 而言，不可约表示为
+\[
+\mathbf1,\qquad \sgn,\qquad \mathrm{Std},
+\]
+维数分别为 $1,1,2$。故
+\[
+\C[S_3]\cong \mathbf1\oplus \sgn\oplus \mathrm{Std}^{\oplus2}.
+\]
+
+\item \textbf{解答.} $D_4$ 有 $5$ 个共轭类，故有 $5$ 个不可约表示。设其维数为正整数
+\[
+d_1,\dots,d_5.
+\]
+由平方和公式，
+\[
+d_1^2+\cdots+d_5^2=|D_4|=8.
+\]
+因为每个 $d_i\ge1$，故
+\[
+d_1^2+\cdots+d_5^2\ge 1+1+1+1+1=5.
+\]
+离 $8$ 还差 $3$。把一个 $1^2$ 改成 $2^2$ 恰好增加 $3$；若有某个 $d_i\ge3$，则平方至少为 $9$，不可能。故唯一可能是
+\[
+1,1,1,1,2.
+\]
+
+\item \textbf{解答.} 对 $S_3$，共轭类代表可取
+\[
+1,\quad (12),\quad (123),
+\]
+其中心化子大小分别为
+\[
+6,\quad 2,\quad 3.
+\]
+由特征标表
+\[
+\begin{array}{c|ccc}
+ & 1 & (12) & (123)\\
+\hline
+\mathbf{1} & 1 & 1 & 1\\
+\sgn & 1 & -1 & 1\\
+\mathrm{Std} & 2 & 0 & -1
+\end{array}
+\]
+直接算得
+\[
+1^2+1^2+2^2=6,\qquad
+1^2+(-1)^2+0^2=2,\qquad
+1^2+1^2+(-1)^2=3,
+\]
+对应列的范数正好是中心化子大小。又
+\[
+1\cdot1+1\cdot(-1)+2\cdot0=0,
+\]
+\[
+1\cdot1+1\cdot1+2\cdot(-1)=0,
+\]
+\[
+1\cdot1+(-1)\cdot1+0\cdot(-1)=0.
+\]
+故各列两两正交，这正是第二正交关系。
+
+\item \textbf{解答.} 设 $C_n=\langle t\rangle$，取本原 $n$ 次单位根 $\zeta_n$。其特征标表第 $i$ 行第 $j$ 列为
+\[
+\chi_i(t^j)=\zeta_n^{ij}\qquad (0\le i,j\le n-1).
+\]
+因此特征标表就是矩阵
+\[
+F_n=(\zeta_n^{ij})_{0\le i,j\le n-1},
+\]
+这正是离散 Fourier 矩阵；归一化后 $\frac1{\sqrt n}F_n$ 为酉矩阵。
+
+\item \textbf{解答.} 因 $H\triangleleft G$ 且 $[G:H]=2$，商群 $G/H\cong C_2$。设
+\[
+\varepsilon:G\to G/H\cong C_2\hookrightarrow \{\pm1\}\subset \C^\times.
+\]
+则 $\varepsilon$ 是一个非平凡一维表示，且
+\[
+\varepsilon(g)=
+\begin{cases}
+1,& g\in H,\\
+-1,& g\notin H.
+\end{cases}
+\]
+
+对 $G/H=\{H,gH\}$ 的置换表示 $\C[G/H]$，取基
+\[
+u=e_H+e_{gH},\qquad v=e_H-e_{gH}.
+\]
+则 $u$ 张成平凡子表示，而
+\[
+x\cdot v=\varepsilon(x)v
+\]
+对任意 $x\in G$ 成立，所以 $\C v$ 给出表示 $\varepsilon$。故
+\[
+\C[G/H]\cong \mathbf1\oplus \varepsilon.
+\]
+
+\item \textbf{解答.} 设 $\chi=\chi_{\mathrm{Std}}=(2,0,-1)$。对二维表示，$\mathrm{Sym}^2$ 的特征值是原特征值的二次对称积。
+
+在 $1$ 上，$\mathrm{Std}$ 的特征值为 $1,1$，故
+\[
+\chi_{\mathrm{Sym}^2(\mathrm{Std})}(1)=1+1+1=3.
+\]
+在换位上，$\mathrm{Std}$ 的特征值为 $1,-1$，故
+\[
+\chi_{\mathrm{Sym}^2(\mathrm{Std})}((12))=1+(-1)+1=1.
+\]
+在三循环上，$\mathrm{Std}$ 的特征值为 $\zeta_3,\zeta_3^2$，故
+\[
+\chi_{\mathrm{Sym}^2(\mathrm{Std})}((123))
+=\zeta_3^2+1+\zeta_3=0.
+\]
+所以
+\[
+\chi_{\mathrm{Sym}^2(\mathrm{Std})}=(3,1,0).
+\]
+分解重数为
+\[
+\inner{(3,1,0)}{\mathbf1}=\frac16(3+3)=1,\qquad
+\inner{(3,1,0)}{\sgn}=\frac16(3-3)=0,
+\]
+\[
+\inner{(3,1,0)}{\mathrm{Std}}=\frac16(3\cdot2)=1.
+\]
+故
+\[
+\mathrm{Sym}^2(\mathrm{Std})\cong \mathbf1\oplus \mathrm{Std}.
+\]
+
+\item \textbf{解答.} 设 $A\in \End_G(\C[X])$，其矩阵系数为 $a_{xy}$。由 $AG=GA$，若 $(x,y)$ 与 $(x',y')$ 在 $G$ 在 $X\times X$ 上的同一轨道中，则
+\[
+a_{xy}=a_{x'y'}.
+\]
+因此 $\End_G(\C[X])$ 的维数等于 $G$ 在 $X\times X$ 上的轨道数。
+
+若作用 $2$-重传递，则 $X\times X$ 恰有两条轨道：
+\[
+\{(x,x):x\in X\},\qquad \{(x,y):x\neq y\}.
+\]
+故 $G$-自同态只由这两条轨道上的两个常数决定，从而
+\[
+\dim \End_G(\C[X])=2.
+\]
+
+\item \textbf{解答.} 在基
+\[
+X^k,\ X^{k-1}Y,\ \dots,\ XY^{k-1},\ Y^k
+\]
+下，
+\[
+g=\diag(a,d)
+\]
+作用为
+\[
+g\cdot X^{k-i}Y^i=a^{k-i}d^iX^{k-i}Y^i\qquad (0\le i\le k).
+\]
+故全部特征值为
+\[
+a^k,\ a^{k-1}d,\ \dots,\ ad^{k-1},\ d^k,
+\]
+特征标为
+\[
+\chi_{\mathrm{Sym}^k}(g)=\sum_{i=0}^k a^{k-i}d^i.
+\]
+若 $a\neq d$，这也可写成
+\[
+\chi_{\mathrm{Sym}^k}(g)=\frac{a^{k+1}-d^{k+1}}{a-d};
+\]
+若 $a=d$，则
+\[
+\chi_{\mathrm{Sym}^k}(g)=(k+1)a^k.
+\]
+
+\item \textbf{解答.} 因
+\[
+|\mathbf P^1(\F_q)|=q+1,
+\]
+而
+\[
+\mathrm{St}=\left\{f:\mathbf P^1(\F_q)\to\C:\sum_x f(x)=0\right\}
+\]
+是一个线性条件定义的子空间，所以
+\[
+\dim \mathrm{St}=(q+1)-1=q.
+\]
+再者，任意函数 $f$ 都可唯一写成
+\[
+f=\left(f-\frac1{q+1}\sum_xf(x)\right)+\frac1{q+1}\sum_xf(x).
+\]
+第一项坐标和为 $0$，属于 $\mathrm{St}$；第二项为常值函数，属于平凡表示 $\mathbf1$。故
+\[
+\C[\mathbf P^1(\F_q)]\cong \mathbf1\oplus \mathrm{St}.
+\]
+
+\item \textbf{解答.} 定义
+\[
+\Phi:I(\chi,\chi)\to I(1,1),\qquad \Phi(f)(g)=\chi(\det g)^{-1}f(g).
+\]
+若
+\[
+b=\mat{a&*\\0&d}\in B,
+\]
+则因 $f(bg)=\chi(a)\chi(d)f(g)$，有
+\[
+\Phi(f)(bg)=\chi(\det(bg))^{-1}f(bg)
+=\chi(ad\det g)^{-1}\chi(a)\chi(d)f(g)=\Phi(f)(g).
+\]
+故 $\Phi(f)\in I(1,1)$。$\Phi$ 显然线性可逆，其逆为
+\[
+\Psi(\varphi)(g)=\chi(\det g)\varphi(g).
+\]
+并且对 $x\in G$，
+\[
+\Phi(x\cdot f)= (\chi\circ\det)(x)\, x\cdot \Phi(f),
+\]
+故表示意义下
+\[
+I(\chi,\chi)\cong (\chi\circ\det)\otimes I(1,1).
+\]
+
+\item \textbf{解答.} 对 $\dim V$ 作归纳。$\dim V=1$ 时显然。设 $\dim V>1$。若 $A$ 中每个元素都按标量作用，则任取 $0\neq v\in V$ 即为共同特征向量。否则取 $a\in A$ 使其不是标量变换。域代数闭，故 $a$ 有特征值 $\lambda$，对应特征子空间
+\[
+E=\Ker(a-\lambda I)\neq0.
+\]
+因 $a$ 非标量，$E\neq V$。对任意 $b\in A$ 与 $v\in E$，
+\[
+(a-\lambda I)(b\cdot v)=b\cdot(a-\lambda I)(v)=0,
+\]
+故 $b\cdot v\in E$。于是 $E$ 是非零真 $A$-子模。由归纳假设，$E$ 中存在共同特征向量，也就是 $V$ 中的共同特征向量。
+
+\item \textbf{解答.} 设
+\[
+f(q)=\sum_{n\ge1}a_nq^n,\qquad T_nf=\lambda_nf.
+\]
+比较两边 $q^1$ 的系数。由 Hecke 的 $q$-展开公式，
+\[
+T_nf=\sum_{m\ge1}\left(\sum_{d\mid(m,n)}d^{k-1}a_{mn/d^2}\right)q^m,
+\]
+故 $q^1$ 的系数为
+\[
+\sum_{d\mid(1,n)}d^{k-1}a_{n/d^2}=a_n.
+\]
+而 $\lambda_nf$ 的 $q^1$ 系数为 $\lambda_n a_1=\lambda_n$，因为规范化给出 $a_1=1$。故
+\[
+\lambda_n=a_n.
+\]
+
+\item \textbf{解答.} 由规范化本征模形式满足 $\lambda_n=a_n$，又若 $(m,n)=1$，则
+\[
+T_mT_n=T_{mn}.
+\]
+作用于 $f$ 上得
+\[
+a_ma_n f=\lambda_m\lambda_n f=T_mT_nf=T_{mn}f=\lambda_{mn}f=a_{mn}f.
+\]
+因 $f\neq0$，故
+\[
+a_{mn}=a_ma_n.
+\]
+
+\item \textbf{解答.} 由 $S_3$ 特征标表
+\[
+\chi_{\mathbf1}=(1,1,1),\qquad
+\chi_{\sgn}=(1,-1,1),\qquad
+\chi_{\mathrm{Std}}=(2,0,-1).
+\]
+
+首先
+\[
+\chi_{\sgn\otimes\sgn}=\chi_{\sgn}^2=(1,1,1)=\chi_{\mathbf1},
+\]
+故
+\[
+\sgn\otimes\sgn\cong \mathbf1.
+\]
+
+其次
+\[
+\chi_{\sgn\otimes\mathrm{Std}}
+=\chi_{\sgn}\chi_{\mathrm{Std}}
+=(2,0,-1)=\chi_{\mathrm{Std}},
+\]
+故
+\[
+\sgn\otimes\mathrm{Std}\cong \mathrm{Std}.
+\]
+
+再者
+\[
+\chi_{\mathrm{Std}\otimes\mathrm{Std}}
+=\chi_{\mathrm{Std}}^2=(4,0,1).
+\]
+计算内积：
+\[
+\inner{(4,0,1)}{\mathbf1}=\frac16(4+2)=1,\qquad
+\inner{(4,0,1)}{\sgn}=\frac16(4+2)=1,
+\]
+\[
+\inner{(4,0,1)}{\mathrm{Std}}
+=\frac16(4\cdot2+2\cdot(-1))=1.
+\]
+故
+\[
+\mathrm{Std}\otimes\mathrm{Std}\cong \mathbf1\oplus \sgn\oplus \mathrm{Std}.
+\]
+
+\item \textbf{解答.} 将两个复表示分解为不可约直和：
+\[
+V\cong \bigoplus_i m_iV_i,\qquad W\cong \bigoplus_i n_iV_i,
+\]
+其中 $V_i$ 两两不等价不可约。则
+\[
+\chi_V=\sum_i m_i\chi_i,\qquad \chi_W=\sum_i n_i\chi_i.
+\]
+由第一正交关系，
+\[
+m_i=\inner{\chi_V}{\chi_i},\qquad n_i=\inner{\chi_W}{\chi_i}.
+\]
+若 $\chi_V=\chi_W$，则对每个 $i$ 都有 $m_i=n_i$，故两表示具有相同的不可约分解，从而
+\[
+V\cong W.
+\]
+
+\item \textbf{解答.} 对 $D_4$ 的五个共轭类
+\[
+1,\ r^2,\ r,r^3,\ s,sr^2,\ sr,sr^3
+\]
+计算顶点不动点数。恒等元固定 $4$ 个顶点；$r^2,r,r^3$ 都不固定顶点；若把正方形顶点取在四个角上，则 $s,sr^2$（过边中点的反射）固定 $0$ 个顶点，而 $sr,sr^3$（过对角线的反射）固定 $2$ 个顶点。故置换特征标为
+\[
+\chi_{\mathrm{perm}}=(4,0,0,0,2).
+\]
+与正文中的不可约特征标表作内积：
+\[
+\inner{\chi_{\mathrm{perm}}}{\chi_{1,1}}=1,\quad
+\inner{\chi_{\mathrm{perm}}}{\chi_{1,-1}}=0,\quad
+\inner{\chi_{\mathrm{perm}}}{\chi_{-1,1}}=0,
+\]
+\[
+\inner{\chi_{\mathrm{perm}}}{\chi_{-1,-1}}=1,\quad
+\inner{\chi_{\mathrm{perm}}}{\rho_{\mathrm{geo}}}=1.
+\]
+故
+\[
+\C[\text{四顶点}]\cong \chi_{1,1}\oplus \chi_{-1,-1}\oplus \rho_{\mathrm{geo}}.
+\]
+
+\item \textbf{解答.} 将 $V,W$ 分解为不可约直和：
+\[
+V\cong \bigoplus_i m_iV_i,\qquad W\cong \bigoplus_i n_iV_i.
+\]
+由 Schur 引理，
+\[
+\Hom_G(V_i,V_j)=
+\begin{cases}
+0,& i\neq j,\\
+\C,& i=j.
+\end{cases}
+\]
+故
+\[
+\dim\Hom_G(V,W)=\sum_i m_in_i.
+\]
+另一方面，
+\[
+\chi_V=\sum_i m_i\chi_i,\qquad \chi_W=\sum_i n_i\chi_i,
+\]
+所以
+\[
+\inner{\chi_V}{\chi_W}
+=\sum_{i,j}m_in_j\inner{\chi_i}{\chi_j}
+=\sum_i m_in_i.
+\]
+因此
+\[
+\dim\Hom_G(V,W)=\inner{\chi_V}{\chi_W}.
+\]
+
+\item \textbf{解答.} 定义线性映射
+\[
+\Phi:V^\vee\otimes W\longrightarrow \Hom_\C(V,W),\qquad
+\Phi(\varphi\otimes w)(v)=\varphi(v)w.
+\]
+它是向量空间同构。检查群作用：
+\[
+(g\cdot \Phi(\varphi\otimes w))(v)
+=g\cdot \Phi(\varphi\otimes w)(g^{-1}v)
+=g\cdot \bigl(\varphi(g^{-1}v)w\bigr)
+=(g\varphi)(v)\,gw
+\]
+恰等于
+\[
+\Phi(g\varphi\otimes gw)(v).
+\]
+故 $\Phi$ 是 $G$-同构。取不变向量即得
+\[
+(V^\vee\otimes W)^G\cong \Hom_G(V,W).
+\]
+
+与 Schur 引理的关系是：若 $V,W$ 不可约，则
+\[
+\dim (V^\vee\otimes W)^G=\dim\Hom_G(V,W)=
+\begin{cases}
+0,& V\not\cong W,\\
+1,& V\cong W.
+\end{cases}
+\]
+
+\item \textbf{解答.} 对任意复表示，总有
+\[
+\chi_{V^\vee}(g)=\chi_V(g^{-1}).
+\]
+因为若 $\rho(g)$ 的特征值为 $\lambda_1,\dots,\lambda_n$，则对偶表示上 $\rho^\vee(g)$ 的特征值为 $\lambda_1^{-1},\dots,\lambda_n^{-1}$。又有限群表示可酉化，故每个 $\lambda_i$ 都满足 $|\lambda_i|=1$，于是
+\[
+\lambda_i^{-1}=\overline{\lambda_i}.
+\]
+因此
+\[
+\chi_{V^\vee}(g)=\sum_i\lambda_i^{-1}
+=\sum_i\overline{\lambda_i}
+=\overline{\sum_i\lambda_i}
+=\overline{\chi_V(g)}.
+\]
+
+\item \textbf{解答.} 设 $W$ 是 $H$-表示，作用记为 $\sigma$。函数模型下定义
+\[
+\Ind_H^G W
+=\{f:G\to W:\ f(hg)=\sigma(h)f(g)\ \forall\,h\in H,g\in G\},
+\]
+并令 $G$ 以右平移作用：
+\[
+(x\cdot f)(g)=f(gx).
+\]
+取左陪集代表元 $g_1,\dots,g_r$，其中 $r=[G:H]$，使
+\[
+G=\bigsqcup_{i=1}^r Hg_i.
+\]
+则任意 $f$ 由 $f(g_1),\dots,f(g_r)$ 唯一决定，因为
+\[
+f(hg_i)=\sigma(h)f(g_i).
+\]
+反之任取 $w_i\in W$，可唯一给出这样的 $f$。故作为向量空间，
+\[
+\Ind_H^G W\cong W^{\oplus r}.
+\]
+于是
+\[
+\dim \Ind_H^G W=[G:H]\dim W.
+\]
+
+\item \textbf{解答.} Frobenius 互反律的准确表述是：对任意有限群 $G$、子群 $H\subseteq G$、$H$-表示 $W$ 与 $G$-表示 $V$，存在自然同构
+\[
+\Hom_G(\Ind_H^G W,V)\cong \Hom_H(W,\Res_H^G V).
+\]
+
+现设 $H\triangleleft G$ 且 $W=\mathbf1_H$。此时
+\[
+\Ind_H^G\mathbf1_H
+\cong \C[G/H]
+\]
+是商集上的置换表示。定义
+\[
+\Theta:\Hom_G(\C[G/H],V)\to V^H,\qquad \Theta(T)=T(e_H).
+\]
+因 $e_H$ 被 $H$ 固定，对任意 $h\in H$，
+\[
+h\cdot \Theta(T)=h\cdot T(e_H)=T(h\cdot e_H)=T(e_H)=\Theta(T),
+\]
+故 $\Theta(T)\in V^H=\Hom_H(\mathbf1_H,\Res_H^G V)$。
+
+反过来，若 $v\in V^H$，定义
+\[
+T_v(e_{gH})=g\cdot v.
+\]
+因 $H$ 正规，若 $gH=g'H$，则 $g'=gh$，于是
+\[
+g'\cdot v=g\cdot(h\cdot v)=g\cdot v,
+\]
+故定义良好。并且 $T_v$ 显然 $G$-等变。故
+\[
+\Hom_G(\Ind_H^G\mathbf1_H,V)\cong V^H
+=\Hom_H(\mathbf1_H,\Res_H^G V),
+\]
+这正是该情形下的互反律。
+
+\item \textbf{解答.} 由有限阿贝尔群结构定理，
+\[
+A\cong C_{n_1}\times \cdots \times C_{n_r}.
+\]
+又阿贝尔群的不可约复表示全是一维，故 $\widehat A$ 即全部群同态 $A\to\C^\times$ 所成之群。并且
+\[
+\widehat{A}\cong \widehat{C_{n_1}}\times\cdots\times \widehat{C_{n_r}}.
+\]
+对每个循环群 $C_n=\langle t\rangle$，取本原 $n$ 次单位根 $\zeta_n$，则
+\[
+\chi_j(t)=\zeta_n^j\qquad (j\in \Z/n\Z)
+\]
+给出同构
+\[
+\widehat{C_n}\cong C_n.
+\]
+故
+\[
+\widehat A\cong C_{n_1}\times\cdots\times C_{n_r}\cong A.
+\]
+此同构依赖于各因子的生成元与单位根选择，故一般非规范。
+
+\item \textbf{解答.} $\GL_2(\F_p)$ 作用在 $\mathbf P^1(\F_p)$ 上。定义
+\[
+\GL_2(\F_p)/B\longrightarrow \mathbf P^1(\F_p),\qquad gB\mapsto g\cdot[1:0].
+\]
+因为 $[1:0]$ 的稳定子正是上三角 Borel 子群 $B$，故此映射良定义且为双射。因此
+\[
+G/B\cong \mathbf P^1(\F_p).
+\]
+于是
+\[
+[G:B]=|\mathbf P^1(\F_p)|=p+1.
+\]
+故主系列表示
+\[
+I(\chi_1,\chi_2)=\Ind_B^G(\chi_1\boxtimes\chi_2)
+\]
+的维数为
+\[
+\dim I(\chi_1,\chi_2)=[G:B]=p+1.
+\]
+
+\item \textbf{解答.} 置换表示的特征标总等于不动点个数，因此
+\[
+\pi(g)=\#\{x\in \mathbf P^1(\F_p):g\cdot x=x\}.
+\]
+而 $\mathbf P^1(\F_p)$ 的点正是 $\F_p^2$ 中的一维子空间，所以不动点恰是 $g$ 的 $\F_p$-特征直线。
+
+因此：
+
+(1) 若 $g=I$，则所有直线都固定，故
+\[
+\pi(I)=p+1.
+\]
+
+(2) 若 $g$ 为非平凡幺幺元（即 Jordan 形为 $\mat{1&1\\0&1}$，题中“非平凡幂零元”可如此理解），则只有一条特征直线，故
+\[
+\pi(g)=1.
+\]
+
+(3) 若 $g$ 可对角化，则其不动点数等于其在 $\F_p$ 上的特征直线数：
+\[
+\pi(g)=
+\begin{cases}
+p+1,& g=\lambda I\ \text{为标量};\\
+2,& g\ \text{有两个不同的 }\F_p\text{-特征值};\\
+0,& g\ \text{特征多项式在 }\F_p\text{ 上不可约}.
+\end{cases}
+\]
+
+\item \textbf{解答.} 由
+\[
+G/B\cong \mathbf P^1(\F_q)
+\]
+可知
+\[
+\Ind_B^{\GL_2(\F_q)}\mathbf1 \cong \C[\mathbf P^1(\F_q)].
+\]
+而正文已证明
+\[
+\C[\mathbf P^1(\F_q)]\cong \mathbf1\oplus \mathrm{St}.
+\]
+故
+\[
+\Ind_B^{\GL_2(\F_q)}\mathbf1\cong \mathbf1\oplus \mathrm{St}.
+\]
+因此 Steinberg 表示正可定义为诱导表示中除去常值函数那一维平凡部分之后得到的补表示；等价地，
+\[
+\mathrm{St}\cong \Ind_B^{\GL_2(\F_q)}\mathbf1/\mathbf1.
+\]
+这就是它最基本的构造方式。
+
+\item \textbf{解答.} 先分轨道写成
+\[
+X=\bigsqcup_{i=1}^r X_i.
+\]
+对每条轨道取一点 $x_i$，稳定子为 $H_i$，则
+\[
+\C[X_i]\cong \Ind_{H_i}^G\mathbf1.
+\]
+故
+\[
+\C[X]\cong \bigoplus_{i=1}^r \Ind_{H_i}^G\mathbf1.
+\]
+平凡表示在 $\C[X]$ 中的重数为
+\[
+\sum_{i=1}^r \dim\Hom_G(\mathbf1,\Ind_{H_i}^G\mathbf1).
+\]
+由 Frobenius 互反律，
+\[
+\Hom_G(\mathbf1,\Ind_{H_i}^G\mathbf1)\cong \Hom_{H_i}(\mathbf1,\mathbf1)\cong \C,
+\]
+故每条轨道贡献 $1$，总重数即
+\[
+r=\#(X/G).
+\]
+若作用传递，则 $r=1$，所以平凡表示恰出现一次。
+
+\item \textbf{解答.} 对规范化 Hecke 本征 cusp form $f$，有
+\[
+T_nf=a_nf
+\]
+对一切 $n\ge1$ 成立。将关系
+\[
+T_pT_{p^r}=T_{p^{r+1}}+p^{k-1}T_{p^{r-1}}
+\]
+作用于 $f$，得
+\[
+a_pa_{p^r}f=a_{p^{r+1}}f+p^{k-1}a_{p^{r-1}}f.
+\]
+因 $f\neq0$，故
+\[
+a_{p^{r+1}}=a_pa_{p^r}-p^{k-1}a_{p^{r-1}}.
+\]
+
+\item \textbf{解答.} 记
+\[
+A_r=a_{p^r},\qquad A_0=1,\qquad F(X)=\sum_{r\ge0}A_rX^r.
+\]
+由上一题递推，
+\[
+A_{r+1}=a_pA_r-p^{k-1}A_{r-1}\qquad (r\ge1).
+\]
+于是
+\[
+(1-a_pX+p^{k-1}X^2)F(X)
+=1+(A_1-a_pA_0)X+\sum_{r\ge1}(A_{r+1}-a_pA_r+p^{k-1}A_{r-1})X^{r+1}.
+\]
+因 $A_1=a_p$，且递推式使后面各项全为 $0$，故
+\[
+(1-a_pX+p^{k-1}X^2)F(X)=1.
+\]
+因此
+\[
+\sum_{r\ge0}a_{p^r}X^r=\frac{1}{1-a_pX+p^{k-1}X^2}.
+\]
+
+分母是二次式，说明存在两数 $\alpha_p,\beta_p$ 使
+\[
+1-a_pX+p^{k-1}X^2=(1-\alpha_pX)(1-\beta_pX),
+\]
+即
+\[
+\alpha_p+\beta_p=a_p,\qquad \alpha_p\beta_p=p^{k-1}.
+\]
+这正像某个二维表示在 Frobenius 元上的特征多项式
+\[
+1-\Tr(\rho(\Frob_p))X+\det(\rho(\Frob_p))X^2.
+\]
+因此它暗示 Hecke 特征值由某个二维表示控制。
+
+\item \textbf{解答.} 可分三层理解。
+
+\textnormal{(1) 有限维线性代数图景：} 一族可交换算子（这里是 Hecke 算子）作用在有限维空间上时，可寻找共同特征向量。对共同特征向量 $f$，每个 Hecke 算子 $T$ 都满足
+\[
+Tf=\lambda(T)f,
+\]
+从而得到 Hecke 代数到标量域的一个代数同态 $T\mapsto\lambda(T)$。
+
+\textnormal{(2) 群表示图景：} Hecke 算子来自双陪集，因此组成某个 Hecke 代数 $\mathcal H(G,K)$。若 $\pi$ 是一个不可约表示，且其 $K$-固定向量空间 $\pi^K$ 为一维，则 $\mathcal H(G,K)$ 在这条线上只能按标量作用；换言之，
+\[
+\mathcal H(G,K)\to \End(\pi^K)\cong \C
+\]
+给出一个特征标。Hecke 本征值就是这些标量。
+
+\textnormal{(3) 自守表示图景：} 一个规范化 Hecke 本征 cusp form $f$ 生成一个不可约自守表示
+\[
+\pi_f=\bigotimes_v' \pi_{f,v}.
+\]
+对几乎所有素数 $p$，局部分量 $\pi_{f,p}$ 未分歧，故其球向量空间 $\pi_{f,p}^{K_p}$ 为一维。未分歧局部 Hecke 代数
+\[
+\mathcal H(\GL_2(\Q_p),K_p)
+\]
+在这条线上按标量作用；该代数特征标给出的标量正是 $f$ 的 Hecke 本征值，特别是标准双陪集对应的标量就是 $a_p(f)$。所以原口号的精确意思是：模形式的 Hecke 本征值，不是孤立数字，而是其所对应自守表示在各未分歧局部 Hecke 代数上的特征标量。
+\end{enumerate}

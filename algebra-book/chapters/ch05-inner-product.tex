@@ -1621,3 +1621,1107 @@ T_nf=\lambda_n(f)f\qquad (n\ge 1)
   证明 $M$ 是自伴算子，但没有非零特征向量。由此说明：无限维情形中的谱定理与有限维矩阵对角化并不完全相同。
 \end{enumerate}
 
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+\item \textbf{解答.} 设
+\[
+\inner{(x_1,x_2)}{(y_1,y_2)}=2x_1y_1+3x_2y_2.
+\]
+它显然对称且双线性；并且
+\[
+\inner{(x_1,x_2)}{(x_1,x_2)}=2x_1^2+3x_2^2\ge 0,
+\]
+且等号仅当 $x_1=x_2=0$ 时成立，所以它是 $\R^2$ 上的内积。向量 $(1,-1)$ 的长度为
+\[
+\|(1,-1)\|=\sqrt{\inner{(1,-1)}{(1,-1)}}=\sqrt{2+3}=\sqrt{5}.
+\]
+
+\item \textbf{解答.} 这里
+\[
+\inner{x}{x}=x_1^2-x_2^2.
+\]
+取 $x=(0,1)$，则
+\[
+\inner{x}{x}=-1<0.
+\]
+故正定性失败，所以这不是内积。实际上它连半正定都不是。
+
+\item \textbf{解答.} 在标准 Hermite 内积下
+\[
+\inner{(z_1,z_2)}{(w_1,w_2)}=z_1\overline{w_1}+z_2\overline{w_2}.
+\]
+故
+\[
+\inner{(1+i,2)}{(i,1-i)}
+=(1+i)\overline{i}+2\overline{(1-i)}
+=(1+i)(-i)+2(1+i)=3+i.
+\]
+又
+\[
+\|(1+i,2)\|^2=|1+i|^2+|2|^2=2+4=6,
+\]
+所以
+\[
+\|(1+i,2)\|=\sqrt{6}.
+\]
+
+\item \textbf{解答.} 由
+\[
+A=\mat{a&0\\0&4},\qquad \inner{x}{y}=x^tAy
+\]
+可知要成为内积，必须且只需 $A$ 对称正定。它已对称；正定条件是
+\[
+x^tAx=ax_1^2+4x_2^2>0\quad (x\ne 0),
+\]
+这当且仅当 $a>0$。故所求为 $a>0$。
+
+\item \textbf{解答.}
+\[
+u=(1,2,2),\qquad v=(2,0,1).
+\]
+有
+\[
+\inner{u}{v}=1\cdot2+2\cdot0+2\cdot1=4,
+\]
+\[
+\|u\|=3,\qquad \|v\|=\sqrt{5}.
+\]
+故夹角 $\theta$ 满足
+\[
+\cos\theta=\frac{\inner{u}{v}}{\|u\|\,\|v\|}=\frac{4}{3\sqrt5}.
+\]
+因此
+\[
+\theta=\arccos\frac{4}{3\sqrt5}.
+\]
+
+\item \textbf{解答.}
+\[
+\inner{1+x}{1-x}=\int_0^1(1+x)(1-x)\,dx=\int_0^1(1-x^2)\,dx=1-\frac13=\frac23.
+\]
+
+\item \textbf{解答.} 计算各对内积：
+\[
+\inner{(1,1,0)}{(1,-1,0)}=1-1=0,\qquad
+\inner{(1,1,0)}{(0,0,1)}=0,
+\]
+\[
+\inner{(1,-1,0)}{(0,0,1)}=0.
+\]
+所以它们两两正交。再看范数：
+\[
+\|(1,1,0)\|=\sqrt2,\qquad \|(1,-1,0)\|=\sqrt2,\qquad \|(0,0,1)\|=1.
+\]
+故它们不是正交归一组。
+
+\item \textbf{解答.} 令
+\[
+v_1=(1,1),\qquad v_2=(1,-1).
+\]
+因 $\inner{v_1}{v_2}=0$，它们已正交。归一化得
+\[
+e_1=\frac1{\sqrt2}(1,1),\qquad e_2=\frac1{\sqrt2}(1,-1).
+\]
+这就是 $\R^2$ 的一组正交归一基。
+
+\item \textbf{解答.} 取
+\[
+v_1=(1,0,1),\quad v_2=(1,1,0),\quad v_3=(0,1,1).
+\]
+先令
+\[
+u_1=v_1,\qquad e_1=\frac{u_1}{\|u_1\|}=\frac1{\sqrt2}(1,0,1).
+\]
+再令
+\[
+u_2=v_2-\frac{\inner{v_2}{u_1}}{\inner{u_1}{u_1}}u_1
+=(1,1,0)-\frac12(1,0,1)=\Bigl(\frac12,1,-\frac12\Bigr),
+\]
+可取同方向向量 $(1,2,-1)$，于是
+\[
+e_2=\frac1{\sqrt6}(1,2,-1).
+\]
+最后
+\[
+\inner{v_3}{e_1}=\frac1{\sqrt2},\qquad \inner{v_3}{e_2}=\frac1{\sqrt6},
+\]
+故
+\[
+u_3=v_3-\frac1{\sqrt2}e_1-\frac1{\sqrt6}e_2
+=\Bigl(-\frac23,\frac23,\frac23\Bigr),
+\]
+可取同方向向量 $(-1,1,1)$，从而
+\[
+e_3=\frac1{\sqrt3}(-1,1,1).
+\]
+故所得正交归一组为
+\[
+\left\{\frac1{\sqrt2}(1,0,1),\ \frac1{\sqrt6}(1,2,-1),\ \frac1{\sqrt3}(-1,1,1)\right\}.
+\]
+
+\item \textbf{解答.} 原向量组已两两正交，只需归一化：
+\[
+\frac{(2,0,0)}2=(1,0,0),\qquad
+\frac{(0,-3,0)}3=(0,-1,0),\qquad
+\frac{(0,0,4)}4=(0,0,1).
+\]
+故对应正交归一组为
+\[
+(1,0,0),\ (0,-1,0),\ (0,0,1).
+\]
+
+\item \textbf{解答.} 设 $v_1,\dots,v_m$ 两两正交且都非零，并满足
+\[
+a_1v_1+\cdots+a_mv_m=0.
+\]
+与 $v_j$ 取内积得
+\[
+0=\inner{a_1v_1+\cdots+a_mv_m}{v_j}=a_j\inner{v_j}{v_j}.
+\]
+因 $v_j\ne 0$，故 $\inner{v_j}{v_j}>0$，于是 $a_j=0$。对每个 $j$ 都如此，所以 $v_1,\dots,v_m$ 线性无关。
+
+\item \textbf{解答.} 设
+\[
+u_1=(1,1,0),\qquad u_2=(1,0,1).
+\]
+先归一化
+\[
+e_1=\frac1{\sqrt2}(1,1,0).
+\]
+再作正交化：
+\[
+u_2'=u_2-\inner{u_2}{e_1}e_1=(1,0,1)-\frac1{\sqrt2}e_1=\Bigl(\frac12,-\frac12,1\Bigr),
+\]
+可取同方向向量 $(1,-1,2)$，其范数为 $\sqrt6$，故
+\[
+e_2=\frac1{\sqrt6}(1,-1,2).
+\]
+所以所求正交归一基为
+\[
+\left\{\frac1{\sqrt2}(1,1,0),\ \frac1{\sqrt6}(1,-1,2)\right\}.
+\]
+
+\item \textbf{解答.} 令
+\[
+A=\mat{1&1\\1&-1}.
+\]
+其列向量为 $a_1=(1,1)^t,\ a_2=(1,-1)^t$，且两列正交，范数都为 $\sqrt2$。因此
+\[
+Q=\frac1{\sqrt2}\mat{1&1\\1&-1},\qquad
+R=\mat{\sqrt2&0\\0&\sqrt2},
+\]
+满足 $A=QR$。
+
+\item \textbf{解答.} 设
+\[
+A=\mat{1&0\\1&1\\0&1},
+\]
+其列向量为
+\[
+a_1=(1,1,0)^t,\qquad a_2=(0,1,1)^t.
+\]
+先取
+\[
+q_1=\frac{a_1}{\|a_1\|}=\frac1{\sqrt2}(1,1,0)^t.
+\]
+再算
+\[
+r_{12}=\inner{q_1}{a_2}=\frac1{\sqrt2},
+\]
+\[
+u_2=a_2-r_{12}q_1=\Bigl(-\frac12,\frac12,1\Bigr)^t,
+\qquad \|u_2\|=\frac{\sqrt6}{2}.
+\]
+故
+\[
+q_2=\frac{u_2}{\|u_2\|}=\frac1{\sqrt6}(-1,1,2)^t.
+\]
+于是
+\[
+Q=\mat{
+\frac1{\sqrt2}&-\frac1{\sqrt6}\\
+\frac1{\sqrt2}&\frac1{\sqrt6}\\
+0&\frac2{\sqrt6}
+},\qquad
+R=\mat{
+\sqrt2&\frac1{\sqrt2}\\
+0&\frac{\sqrt6}{2}
+},
+\]
+并且 $A=QR$。
+
+\item \textbf{解答.} 设 $x=(x,y,z)\in\R^3$。则
+\[
+x\in U^\perp \iff \inner{x}{(1,2,2)}=x+2y+2z=0.
+\]
+故
+\[
+U^\perp=\{(x,y,z)\in\R^3:x+2y+2z=0\}.
+\]
+例如可取一组基
+\[
+(2,-1,0),\qquad (2,0,-1).
+\]
+
+\item \textbf{解答.} 设 $x=(x_1,x_2,x_3,x_4)\in\R^4$。则
+\[
+x\in U^\perp
+\iff
+\begin{cases}
+x_1+x_3=0,\\
+x_2+x_3+x_4=0.
+\end{cases}
+\]
+令 $x_3=s,\ x_4=t$，则
+\[
+x_1=-s,\qquad x_2=-s-t.
+\]
+故
+\[
+x=s(-1,-1,1,0)+t(0,-1,0,1).
+\]
+所以 $U^\perp$ 的一组基为
+\[
+(-1,-1,1,0),\qquad (0,-1,0,1).
+\]
+
+\item \textbf{解答.} 设 $u=(1,1,0)$。则
+\[
+\operatorname{proj}_{\operatorname{span}\{u\}}(v)
+=\frac{\inner{v}{u}}{\inner{u}{u}}u
+=\frac{2+1}{2}(1,1,0)
+=\left(\frac32,\frac32,0\right).
+\]
+
+\item \textbf{解答.} 因
+\[
+e_1=\frac1{\sqrt2}(1,1,0),\qquad e_2=(0,0,1)
+\]
+已是正交归一组，所以
+\[
+\operatorname{proj}_U(v)=\inner{v}{e_1}e_1+\inner{v}{e_2}e_2.
+\]
+对 $v=(1,2,3)$，
+\[
+\inner{v}{e_1}=\frac{3}{\sqrt2},\qquad \inner{v}{e_2}=3.
+\]
+故
+\[
+\operatorname{proj}_U(v)=\frac{3}{\sqrt2}e_1+3e_2
+=\left(\frac32,\frac32,3\right).
+\]
+
+\item \textbf{解答.} 设投影为 $a+bx$。则误差
+\[
+x^2-(a+bx)
+\]
+应与 $1,x$ 都正交，即
+\[
+\int_0^1(x^2-a-bx)\,dx=0,\qquad
+\int_0^1x(x^2-a-bx)\,dx=0.
+\]
+化为
+\[
+\frac13-a-\frac b2=0,\qquad \frac14-\frac a2-\frac b3=0.
+\]
+解得
+\[
+b=1,\qquad a=-\frac16.
+\]
+故正交投影为
+\[
+x-\frac16.
+\]
+
+\item \textbf{解答.} 直线 $y=2x$ 即 $\operatorname{span}\{(1,2)\}$。将 $v=(3,1)$ 投影到此直线上：
+\[
+\operatorname{proj}(v)=\frac{\inner{(3,1)}{(1,2)}}{\|(1,2)\|^2}(1,2)
+=\frac{5}{5}(1,2)=(1,2).
+\]
+故最佳逼近点为 $(1,2)$。
+
+\item \textbf{解答.} 写成最小二乘问题
+\[
+A\mat{x\\y}\approx b,\qquad
+A=\mat{1&0\\1&1\\0&1},\quad
+b=\mat{1\\2\\2}.
+\]
+正规方程为
+\[
+A^tA\mat{x\\y}=A^tb.
+\]
+计算得
+\[
+A^tA=\mat{2&1\\1&2},\qquad A^tb=\mat{3\\4}.
+\]
+故
+\[
+\begin{cases}
+2x+y=3,\\
+x+2y=4,
+\end{cases}
+\]
+解得
+\[
+x=\frac23,\qquad y=\frac53.
+\]
+
+\item \textbf{解答.} 在标准内积下，
+\[
+A=\mat{2&1\\1&2}
+\]
+满足 $A^t=A$，故自伴。特征多项式
+\[
+\det(A-\lambda I)=(2-\lambda)^2-1=(\lambda-3)(\lambda-1).
+\]
+故特征值为 $3,1$。对应特征向量可取
+\[
+\lambda=3:\ (1,1)^t;\qquad \lambda=1:\ (1,-1)^t.
+\]
+归一化后得一组正交归一特征向量
+\[
+\frac1{\sqrt2}(1,1)^t,\qquad \frac1{\sqrt2}(1,-1)^t.
+\]
+
+\item \textbf{解答.}
+\[
+U=\frac1{\sqrt2}\mat{1&1\\-1&1}.
+\]
+其列向量为
+\[
+u_1=\frac1{\sqrt2}\mat{1\\-1},\qquad
+u_2=\frac1{\sqrt2}\mat{1\\1}.
+\]
+有
+\[
+\inner{u_1}{u_2}=0,\qquad \|u_1\|=\|u_2\|=1.
+\]
+故列向量构成 $\C^2$ 的正交归一基，所以 $U$ 是酉矩阵。又因为它的元素全是实数，故同样满足 $U^tU=I$，于是视为实矩阵时它也是正交矩阵。
+
+\item \textbf{解答.}
+\[
+A=\mat{1&i\\-i&2}.
+\]
+有
+\[
+A^*=\overline{A}^t=\mat{1&i\\-i&2}=A.
+\]
+因此 $A$ 是 Hermite 矩阵。
+
+\item \textbf{解答.} 由上一题的特征向量，可取
+\[
+Q=\frac1{\sqrt2}\mat{1&1\\1&-1},\qquad
+D=\mat{3&0\\0&1}.
+\]
+则
+\[
+Q^tAQ=D,\qquad A=QDQ^t.
+\]
+这就是 $A$ 的正交对角化。
+
+\item \textbf{解答.} 若 $v=0$，结论显然。以下设 $v\ne 0$。对任意标量 $t$，
+\[
+0\le \|u-tv\|^2
+=\|u\|^2-t\inner{v}{u}-\overline t\,\inner{u}{v}+|t|^2\|v\|^2.
+\]
+取
+\[
+t=\frac{\inner{u}{v}}{\|v\|^2},
+\]
+得
+\[
+0\le \|u\|^2-\frac{|\inner{u}{v}|^2}{\|v\|^2}.
+\]
+故
+\[
+|\inner{u}{v}|^2\le \|u\|^2\|v\|^2,
+\]
+即
+\[
+|\inner{u}{v}|\le \|u\|\,\|v\|.
+\]
+等号成立当且仅当上述不等式中 $\|u-tv\|^2=0$，即 $u=tv$，故当且仅当 $u,v$ 线性相关。
+
+\item \textbf{解答.} 由展开公式，
+\[
+\|u+v\|^2=\|u\|^2+\inner{u}{v}+\inner{v}{u}+\|v\|^2
+\le \|u\|^2+2|\inner{u}{v}|+\|v\|^2.
+\]
+再由 Cauchy--Schwarz，
+\[
+2|\inner{u}{v}|\le 2\|u\|\,\|v\|.
+\]
+故
+\[
+\|u+v\|^2\le (\|u\|+\|v\|)^2,
+\]
+两边取平方根即得
+\[
+\|u+v\|\le \|u\|+\|v\|.
+\]
+
+\item \textbf{解答.} 设 $v\ne 0$。由等号条件的 Cauchy--Schwarz 不等式，
+\[
+|\inner{u}{v}|=\|u\|\,\|v\|
+\]
+推出 $u,v$ 线性相关。若直接证明，也可令
+\[
+t=\frac{\inner{u}{v}}{\|v\|^2},
+\]
+则
+\[
+\|u-tv\|^2=\|u\|^2-\frac{|\inner{u}{v}|^2}{\|v\|^2}=0,
+\]
+故 $u=tv$。
+
+\item \textbf{解答.} 设 Gram--Schmidt 构造得
+\[
+u_k=v_k-\sum_{j=1}^{k-1}\frac{\inner{v_k}{u_j}}{\inner{u_j}{u_j}}u_j,\qquad e_k=\frac{u_k}{\|u_k\|}.
+\]
+由定义知 $u_k\in \operatorname{span}\{v_1,\dots,v_k\}$，故
+\[
+\operatorname{span}\{u_1,\dots,u_k\}\subseteq \operatorname{span}\{v_1,\dots,v_k\}.
+\]
+反过来，
+\[
+v_k=u_k+\sum_{j=1}^{k-1}\frac{\inner{v_k}{u_j}}{\inner{u_j}{u_j}}u_j\in \operatorname{span}\{u_1,\dots,u_k\},
+\]
+故
+\[
+\operatorname{span}\{v_1,\dots,v_k\}\subseteq \operatorname{span}\{u_1,\dots,u_k\}.
+\]
+于是二者相等。对每个 $k$ 都成立，特别最终得到的新向量组与原向量组张成同一子空间。
+
+\item \textbf{解答.} 若
+\[
+A=Q_1R_1=Q_2R_2
+\]
+都是 QR 分解，且 $R_1,R_2$ 对角元都为正，则
+\[
+Q_2^*Q_1=R_2R_1^{-1}.
+\]
+左边是酉矩阵，右边是上三角矩阵，且对角元全为正。一个上三角酉矩阵必为对角矩阵，而其对角元模长为 $1$；再由“正”可知这些对角元全为 $1$，故
+\[
+Q_2^*Q_1=I.
+\]
+于是 $Q_1=Q_2$，进而 $R_1=R_2$。故在要求 $R$ 对角元为正时，QR 分解唯一。
+
+\item \textbf{解答.} 显然 $U\subseteq (U^\perp)^\perp$，因为若 $u\in U,\ w\in U^\perp$，则 $\inner{u}{w}=0$。  
+又有限维内积空间有正交分解
+\[
+V=U\oplus U^\perp,
+\]
+故
+\[
+\dim U+\dim U^\perp=\dim V.
+\]
+同理
+\[
+V=U^\perp\oplus (U^\perp)^\perp,
+\]
+所以
+\[
+\dim (U^\perp)^\perp=\dim V-\dim U^\perp=\dim U.
+\]
+既然 $U\subseteq (U^\perp)^\perp$ 且维数相同，故
+\[
+(U^\perp)^\perp=U.
+\]
+
+\item \textbf{解答.} 对任意 $x\in V$，唯一分解为
+\[
+x=u+w,\qquad u\in U,\ w\in U^\perp,
+\]
+定义
+\[
+P_Ux=u.
+\]
+若 $x=u_1+w_1,\ y=u_2+w_2$，则
+\[
+ax+by=(au_1+bu_2)+(aw_1+bw_2),
+\]
+其中前者在 $U$ 中，后者在 $U^\perp$ 中，所以
+\[
+P_U(ax+by)=aP_Ux+bP_Uy,
+\]
+故 $P_U$ 线性。又
+\[
+P_U^2x=P_U(u)=u=P_Ux,
+\]
+故 $P_U^2=P_U$。最后对 $x=u+w,\ y=u'+w'$，
+\[
+\inner{P_Ux}{y}=\inner{u}{u'+w'}=\inner{u}{u'},
+\]
+\[
+\inner{x}{P_Uy}=\inner{u+w}{u'}=\inner{u}{u'},
+\]
+因为交叉项为零，故
+\[
+\inner{P_Ux}{y}=\inner{x}{P_Uy}.
+\]
+所以 $P_U$ 自伴。
+
+\item \textbf{解答.} 设 $A:\C^n\to \C^m$，记列空间为 $\operatorname{Col}(A)$。最小二乘解就是使 $Ax$ 成为 $b$ 在 $\operatorname{Col}(A)$ 上最佳逼近的向量。由最佳逼近定理，
+\[
+b-Ax\perp \operatorname{Col}(A).
+\]
+而 $\operatorname{Col}(A)$ 由 $A$ 的各列张成，所以这等价于 $b-Ax$ 与每一列都正交，即
+\[
+A^*(b-Ax)=0.
+\]
+于是得到正规方程
+\[
+A^*Ax=A^*b.
+\]
+
+\item \textbf{解答.} 对任意 $x$，
+\[
+\inner{A^*Ax}{x}=\inner{Ax}{Ax}=\|Ax\|^2\ge 0,
+\]
+故 $A^*A$ 总是正算子。  
+再者，$A^*A$ 正定当且仅当
+\[
+\inner{A^*Ax}{x}=\|Ax\|^2>0\quad (x\ne 0),
+\]
+这等价于
+\[
+Ax=0\Rightarrow x=0,
+\]
+即 $\ker A=\{0\}$。而这又等价于 $A$ 的列向量线性无关。故 $A^*A$ 正定当且仅当 $A$ 的列向量线性无关。
+
+\item \textbf{解答.} 设 $Tv=\lambda v$，其中 $v\ne 0$。因 $T$ 自伴，
+\[
+\lambda\|v\|^2=\inner{Tv}{v}=\inner{v}{Tv}=\overline{\lambda}\|v\|^2.
+\]
+由于 $\|v\|^2>0$，故 $\lambda=\overline{\lambda}$，所以 $\lambda\in\R$。
+
+\item \textbf{解答.} 若
+\[
+Tv=\lambda v,\qquad Tw=\mu w,\qquad \lambda\ne \mu,
+\]
+则因 $T$ 自伴，
+\[
+\lambda\inner{v}{w}=\inner{Tv}{w}=\inner{v}{Tw}=\mu\inner{v}{w}.
+\]
+故
+\[
+(\lambda-\mu)\inner{v}{w}=0.
+\]
+由 $\lambda\ne\mu$，得 $\inner{v}{w}=0$，即 $v\perp w$。
+
+\item \textbf{解答.} 设 $y\in W^\perp$，任取 $w\in W$。因 $W$ 为 $T$-不变，有 $Tw\in W$。又因 $T$ 自伴，
+\[
+\inner{Ty}{w}=\inner{y}{Tw}=0.
+\]
+这对所有 $w\in W$ 成立，所以 $Ty\in W^\perp$。故 $W^\perp$ 也是 $T$-不变子空间。
+
+\item \textbf{解答.} 设 $T$ 自伴，特征值为 $\lambda_1,\dots,\lambda_r$，对应两两正交的特征子空间为 $E_{\lambda_i}$，并记到 $E_{\lambda_i}$ 上的正交投影为 $P_i$。由谱定理，
+\[
+V=\bigoplus_{i=1}^r E_{\lambda_i}.
+\]
+故任意 $x\in V$ 可写成
+\[
+x=\sum_{i=1}^r P_i x.
+\]
+于是
+\[
+Tx=\sum_{i=1}^r T(P_i x)=\sum_{i=1}^r \lambda_i P_i x.
+\]
+因为这对任意 $x$ 都成立，所以
+\[
+T=\sum_{i=1}^r \lambda_i P_i.
+\]
+
+\item \textbf{解答.} 若 $T$ 自伴，则存在正交归一特征基 $e_1,\dots,e_n$，设对应特征值为 $\lambda_1,\dots,\lambda_n$。任取
+\[
+v=\sum c_i e_i,
+\]
+则
+\[
+\inner{Tv}{v}=\sum_{i=1}^n \lambda_i |c_i|^2.
+\]
+若 $T$ 正定，则取 $v=e_i$ 得
+\[
+\lambda_i=\inner{Te_i}{e_i}>0.
+\]
+反之，若全部 $\lambda_i>0$，则对任意 $v\ne 0$，
+\[
+\inner{Tv}{v}=\sum \lambda_i |c_i|^2>0.
+\]
+故 $T$ 正定当且仅当全部特征值严格为正。
+
+\item \textbf{解答.} 由谱定理，存在正交归一基 $e_1,\dots,e_n$ 使
+\[
+Te_i=\lambda_i e_i,\qquad \lambda_i>0.
+\]
+定义
+\[
+Se_i=\sqrt{\lambda_i}\,e_i.
+\]
+则 $S$ 线性、自伴且正定，并且
+\[
+S^2e_i=\lambda_i e_i=Te_i,
+\]
+故 $S^2=T$。  
+唯一性：若 $R$ 也是正定且 $R^2=T$，则 $R$ 与 $T$ 交换。对每个 $T$ 的特征空间，$R$ 仍保持不变；在该空间上 $R^2=\lambda I$ 且 $R$ 正定，只能有 $R=\sqrt\lambda\,I$。故 $R=S$。所以这样的正定平方根存在且唯一。
+
+\item \textbf{解答.} 设 $U=[u_1\ \cdots\ u_n]$。则
+\[
+(U^*U)_{ij}=\inner{u_i}{u_j}.
+\]
+因此
+\[
+U^*U=I
+\]
+当且仅当
+\[
+\inner{u_i}{u_j}=\delta_{ij},
+\]
+即列向量两两正交且范数都为 $1$。在 $\C^n$ 中，$n$ 个正交归一向量自动构成一组正交归一基。故 $U$ 酉当且仅当其列向量构成 $\C^n$ 的一组正交归一基。
+
+\item \textbf{解答.} 若 $U$ 酉，则
+\[
+U^*U=I.
+\]
+取行列式得
+\[
+\det(U^*)\det(U)=1.
+\]
+而 $\det(U^*)=\overline{\det(U)}$，故
+\[
+|\det U|^2=1,
+\]
+于是
+\[
+|\det U|=1.
+\]
+若 $Q$ 为实正交矩阵，则
+\[
+Q^tQ=I,
+\]
+故
+\[
+(\det Q)^2=1,
+\]
+于是
+\[
+\det Q=\pm 1.
+\]
+
+\item \textbf{解答.} 设 $Uv=\lambda v$，其中 $v\ne 0$。因 $U$ 酉，
+\[
+\|Uv\|=\|v\|.
+\]
+另一方面
+\[
+\|Uv\|=\|\lambda v\|=|\lambda|\,\|v\|.
+\]
+故
+\[
+|\lambda|\,\|v\|=\|v\|.
+\]
+因 $\|v\|>0$，得
+\[
+|\lambda|=1.
+\]
+所以酉矩阵的全部特征值都在单位圆上。
+
+\item \textbf{解答.} 若 $A$ 正规，即 $A^*A=AA^*$，则对任意 $x$，
+\[
+\|Ax\|^2=\inner{Ax}{Ax}=\inner{A^*Ax}{x}=\inner{AA^*x}{x}=\inner{A^*x}{A^*x}=\|A^*x\|^2.
+\]
+故 $\|Ax\|=\|A^*x\|$。  
+反过来，若对任意 $x$ 有 $\|Ax\|=\|A^*x\|$，则
+\[
+\inner{(A^*A-AA^*)x}{x}=\|Ax\|^2-\|A^*x\|^2=0.
+\]
+记
+\[
+H=A^*A-AA^*,
+\]
+则 $H$ 自伴，且 $\inner{Hx}{x}=0$ 对任意 $x$ 成立。由极化恒等式可得 $H=0$，即
+\[
+A^*A=AA^*.
+\]
+所以 $A$ 正规。
+
+\item \textbf{解答.} 令
+\[
+B=A-\lambda I.
+\]
+若 $A$ 正规，则 $B$ 仍正规。由上一题，
+\[
+\|Bx\|=\|B^*x\|=\|(A^*-\overline{\lambda}I)x\|.
+\]
+因此
+\[
+Bx=0\iff B^*x=0.
+\]
+即
+\[
+\ker(A-\lambda I)=\ker(A^*-\overline{\lambda}I).
+\]
+
+\item \textbf{解答.} 设 $A=(a_{ij})$ 是上三角复矩阵且正规。取标准基向量 $e_n$。由于 $A$ 上三角，
+\[
+A^*e_n=\overline{a_{nn}}\,e_n,
+\]
+故
+\[
+\|A^*e_n\|^2=|a_{nn}|^2.
+\]
+而
+\[
+Ae_n=(a_{1n},a_{2n},\dots,a_{nn})^t,
+\]
+故
+\[
+\|Ae_n\|^2=\sum_{j=1}^n |a_{jn}|^2.
+\]
+由正规矩阵满足 $\|Ax\|=\|A^*x\|$，得
+\[
+\sum_{j=1}^{n-1}|a_{jn}|^2=0,
+\]
+故最后一列除对角元外全为零。于是 $A$ 分块为
+\[
+A=\mat{B&0\\0&a_{nn}},
+\]
+其中 $B$ 仍是上三角正规矩阵。对 $B$ 归纳，得 $B$ 为对角矩阵，因此 $A$ 也是对角矩阵。
+
+\item \textbf{解答.} 对一族两两交换的自伴算子 $T_1,\dots,T_m$，对维数作归纳。先对 $T_1$ 用谱定理，将空间分解为其特征子空间的正交直和：
+\[
+V=\bigoplus_\lambda E_\lambda(T_1).
+\]
+若 $x\in E_\lambda(T_1)$，则
+\[
+T_1(T_jx)=T_j(T_1x)=T_j(\lambda x)=\lambda T_jx,
+\]
+故每个 $E_\lambda(T_1)$ 对每个 $T_j$ 都不变。于是可在每个 $E_\lambda(T_1)$ 上对 $T_2,\dots,T_m$ 应用归纳假设，得到公共正交归一特征基。把各子空间中的基合并，即得整个空间的一组公共正交归一特征基。故这些算子可以同时正交对角化。
+
+\item \textbf{解答.} 设
+\[
+Q=\mat{a&b\\c&d}\in M_2(\R),\qquad Q^tQ=I.
+\]
+第一列 $(a,c)^t$ 是单位向量，故存在 $\theta$ 使
+\[
+a=\cos\theta,\qquad c=\sin\theta.
+\]
+第二列必须与第一列正交且同为单位向量，所以只能是
+\[
+(-\sin\theta,\cos\theta)^t
+\]
+或
+\[
+(\sin\theta,-\cos\theta)^t.
+\]
+于是
+\[
+Q=\mat{\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta}
+\]
+或
+\[
+Q=\mat{\cos\theta&\sin\theta\\ \sin\theta&-\cos\theta}.
+\]
+前者行列式为 $1$，是旋转矩阵；后者行列式为 $-1$，是反射矩阵。
+
+\item \textbf{解答.} 设
+\[
+A=\mat{a&b\\ \overline b&d}
+\]
+是 Hermite 矩阵。  
+若 $A$ 正定，则取 $x=(1,0)^t$，得
+\[
+a=\inner{Ax}{x}>0.
+\]
+又对任意复数 $t$，
+\[
+\inner{A(t,1)^t}{(t,1)^t}=a|t|^2+b t+\overline b\,\overline t+d>0.
+\]
+取 $t=-\overline b/a$，得
+\[
+d-\frac{|b|^2}{a}>0,
+\]
+故
+\[
+ad-|b|^2>0.
+\]
+反之，若 $a>0$ 且 $ad-|b|^2>0$，则对任意 $(x,y)\ne 0$，
+\[
+\inner{A(x,y)^t}{(x,y)^t}
+=a|x|^2+b x\overline y+\overline b\,\overline x y+d|y|^2
+=a\left|x+\frac{\overline b}{a}y\right|^2+\left(d-\frac{|b|^2}{a}\right)|y|^2>0.
+\]
+故 $A$ 正定当且仅当
+\[
+a>0,\qquad ad-|b|^2>0.
+\]
+
+\item \textbf{解答.} 设最佳一次拟合多项式为
+\[
+p(t)=a+bt.
+\]
+数据向量为
+\[
+b_0=(1,2,2)^t,
+\]
+而所有一次多项式在点 $0,1,2$ 上的取值构成子空间
+\[
+W=\operatorname{span}\{(1,1,1)^t,(0,1,2)^t\}.
+\]
+故 $p$ 对应于把 $b_0$ 正交投影到 $W$。设
+\[
+A=\mat{1&0\\1&1\\1&2},
+\]
+则正规方程
+\[
+A^tA\mat{a\\b}=A^tb.
+\]
+计算得
+\[
+A^tA=\mat{3&3\\3&5},\qquad A^tb=\mat{5\\6}.
+\]
+于是
+\[
+\begin{cases}
+3a+3b=5,\\
+3a+5b=6,
+\end{cases}
+\]
+解得
+\[
+b=\frac12,\qquad a=\frac76.
+\]
+故最佳一次拟合多项式为
+\[
+p(t)=\frac76+\frac12 t.
+\]
+其在三点上的取值
+\[
+\left(\frac76,\frac53,\frac{13}{6}\right)^t
+\]
+正是 $b_0$ 在 $W$ 上的正交投影。
+
+\item \textbf{解答.} 设 $f,g\in \Sk_k$，其 Fourier 展开为
+\[
+f(z)=\sum_{n\ge 1}a_n e^{2\pi i n z},\qquad
+g(z)=\sum_{n\ge 1}b_n e^{2\pi i n z}.
+\]
+因它们是尖点形式，令 $q=e^{2\pi i z}$ 后，
+\[
+f(z)=\sum_{n\ge1}a_n q^n,\qquad g(z)=\sum_{n\ge1}b_n q^n
+\]
+在 $|q|<1$ 上全纯且在 $q=0$ 消失，因此存在常数 $C_f,C_g,Y>0$ 使当 $y\ge Y$ 时
+\[
+|f(z)|\le C_f e^{-2\pi y},\qquad |g(z)|\le C_g e^{-2\pi y}.
+\]
+在标准基本域 $\mathcal F$ 的紧部分 $\mathcal F\cap\{y\le Y\}$ 上，被积函数
+\[
+|f(z)\overline{g(z)}|\,y^k\,d\mu(z)
+\]
+连续，故可积。对 cusp 部分 $\mathcal F\cap\{y\ge Y\}$，有
+\[
+|f(z)\overline{g(z)}|\,y^k\,d\mu(z)
+\ll e^{-4\pi y}y^k\frac{dx\,dy}{y^2}
+=e^{-4\pi y}y^{k-2}\,dx\,dy.
+\]
+而 $\mathcal F$ 中 $x$ 有界，所以只需看
+\[
+\int_Y^\infty e^{-4\pi y}y^{k-2}\,dy<\infty.
+\]
+故 Petersson 内积绝对收敛。
+
+\item \textbf{解答.} 设 $\mathcal F_1,\mathcal F_2$ 是同一群 $\Gamma$ 的两个基本域。由上一题的绝对收敛性，积分可任意分块重排。又由第 53 题，被积 $2$-形式
+\[
+f(z)\overline{g(z)}y^k\,d\mu(z)
+\]
+对 $\Gamma$ 作用不变。两个基本域只是在测度零的边界上不同，并且都可由彼此的 $\Gamma$-平移拼成，故对每一块用变换不变性即可把在 $\mathcal F_1$ 上的积分变到 $\mathcal F_2$ 上，得到
+\[
+\int_{\mathcal F_1} f(z)\overline{g(z)}y^k\,d\mu(z)
+=
+\int_{\mathcal F_2} f(z)\overline{g(z)}y^k\,d\mu(z).
+\]
+所以 Petersson 内积与基本域选取无关。
+
+\item \textbf{解答.} 设
+\[
+\gamma=\mat{a&b\\c&d}\in\Gamma,\qquad \gamma z=\frac{az+b}{cz+d}.
+\]
+对模形式有
+\[
+f(\gamma z)=(cz+d)^k f(z),\qquad g(\gamma z)=(cz+d)^k g(z).
+\]
+又
+\[
+\Im(\gamma z)=\frac{y}{|cz+d|^2},
+\]
+且双曲测度
+\[
+d\mu(z)=\frac{dx\,dy}{y^2}
+\]
+在 Möbius 变换下不变。于是
+\[
+f(\gamma z)\overline{g(\gamma z)}\,\Im(\gamma z)^k\,d\mu(\gamma z)
+=(cz+d)^k\overline{(cz+d)^k}|cz+d|^{-2k}
+f(z)\overline{g(z)}\,y^k\,d\mu(z),
+\]
+而
+\[
+(cz+d)^k\overline{(cz+d)^k}=|cz+d|^{2k},
+\]
+故上式等于
+\[
+f(z)\overline{g(z)}\,y^k\,d\mu(z).
+\]
+所以该 $2$-形式在 $z\mapsto \gamma z$ 下不变。
+
+\item \textbf{解答.} 设 $\alpha=\mat{a&b\\c&d}\in \GL_2^+(\Q)$，记
+\[
+\alpha^\vee=\det(\alpha)\alpha^{-1}=\mat{d&-b\\-c&a}.
+\]
+取一个使两边都可积分的公共基本域（例如某个有限指标公共子群的基本域）$\mathcal F$。由定义
+\[
+(f|_k\alpha)(z)=\det(\alpha)^{k/2}(cz+d)^{-k}f(\alpha z).
+\]
+于是
+\[
+\inner{f|_k\alpha}{g}_{\mathrm{Pet}}
+=\int_{\mathcal F}\det(\alpha)^{k/2}(cz+d)^{-k}f(\alpha z)\overline{g(z)}\,y^k\,d\mu(z).
+\]
+令 $w=\alpha z$。则 $d\mu(w)=d\mu(z)$，且
+\[
+\Im(w)=\frac{\det(\alpha)\,y}{|cz+d|^2},
+\qquad
+\alpha^\vee w=z,
+\qquad
+j(\alpha^\vee,w)=\frac{\det(\alpha)}{cz+d}.
+\]
+故上式化为
+\[
+\int_{\alpha\mathcal F} f(w)\,
+\overline{\det(\alpha)^{k/2}j(\alpha^\vee,w)^{-k}g(\alpha^\vee w)}
+\,\Im(w)^k\,d\mu(w),
+\]
+即
+\[
+\int_{\alpha\mathcal F} f(w)\overline{(g|_k\alpha^\vee)(w)}\,\Im(w)^k\,d\mu(w).
+\]
+因被积式对公共子群不变，可把积分域换回 $\mathcal F$，于是
+\[
+\inner{f|_k \alpha}{g}_{\mathrm{Pet}}
+=
+\inner{f}{g|_k \alpha^\vee}_{\mathrm{Pet}}.
+\]
+
+\item \textbf{解答.} 设
+\[
+\Gamma\alpha\Gamma=\bigsqcup_i \Gamma\alpha_i
+\]
+为右陪集分解，则双陪集算子定义为
+\[
+[\Gamma\alpha\Gamma]f=\sum_i f|_k\alpha_i.
+\]
+于是
+\[
+\inner{[\Gamma\alpha\Gamma]f}{g}_{\mathrm{Pet}}
+=\sum_i \inner{f|_k\alpha_i}{g}_{\mathrm{Pet}}.
+\]
+由上一题，
+\[
+\inner{f|_k\alpha_i}{g}_{\mathrm{Pet}}
+=\inner{f}{g|_k\alpha_i^\vee}_{\mathrm{Pet}}.
+\]
+而 $\{\alpha_i^\vee\}$ 正好给出双陪集 $\Gamma\alpha^\vee\Gamma$ 的一组陪集代表，因此
+\[
+\inner{[\Gamma\alpha\Gamma]f}{g}_{\mathrm{Pet}}
+=
+\inner{f}{[\Gamma\alpha^\vee\Gamma]g}_{\mathrm{Pet}}.
+\]
+故
+\[
+[\Gamma\alpha\Gamma]^*=[\Gamma\alpha^\vee\Gamma].
+\]
+
+\item \textbf{解答.} 对 Hecke 算子可取
+\[
+\alpha_n=\mat{1&0\\0&n},
+\qquad
+\alpha_n^\vee=\det(\alpha_n)\alpha_n^{-1}=\mat{n&0\\0&1}.
+\]
+令
+\[
+S=\mat{0&-1\\1&0}\in \SL_2(\Z)=\Gamma.
+\]
+则
+\[
+S\alpha_n^\vee S^{-1}=\alpha_n.
+\]
+因此
+\[
+\Gamma\alpha_n^\vee\Gamma=\Gamma\alpha_n\Gamma.
+\]
+由上一题，
+\[
+T_n^*=[\Gamma\alpha_n\Gamma]^*=[\Gamma\alpha_n^\vee\Gamma]=[\Gamma\alpha_n\Gamma]=T_n.
+\]
+故 Hecke 算子 $T_n$ 关于 Petersson 内积自伴。
+
+\item \textbf{解答.} 空间 $\Sk_k$ 是有限维 Hermite 内积空间。由上一题，每个 Hecke 算子 $T_n$ 都自伴；又已知它们彼此交换。根据“彼此交换的自伴算子可以同时正交对角化”，存在 $\Sk_k$ 的一组公共正交归一特征向量基。把这些公共特征向量正规化后，就是一组公共正交归一本征模形式基。
+
+\item \textbf{解答.} 设 $V$ 为有限维内积空间，取其一组正交归一基 $e_1,\dots,e_n$。定义
+\[
+\Phi:V\to \F^n,\qquad
+\Phi\Bigl(\sum_{i=1}^n x_i e_i\Bigr)=(x_1,\dots,x_n),
+\]
+其中 $\F=\R$ 或 $\C$。则
+\[
+\|v\|^2=\sum_{i=1}^n |x_i|^2,
+\]
+所以 $\Phi$ 是到欧几里得空间的等距同构。故 $V$ 中的 Cauchy 列对应于 $\F^n$ 中的 Cauchy 列。由于 $\R^n,\C^n$ 都完备，坐标逐项收敛，从而原序列在 $V$ 中也收敛。故每个有限维内积空间都是完备的。
+
+\item \textbf{解答.} 对 $x=(x_1,x_2,\dots)\in \ell^2(\N)$，
+\[
+Sx=(0,x_1,x_2,\dots).
+\]
+于是
+\[
+\|Sx\|^2=|0|^2+|x_1|^2+|x_2|^2+\cdots=\|x\|^2,
+\]
+故 $S$ 是等距算子。  
+它不是酉算子，因为不是满射：例如 $e_1=(1,0,0,\dots)$ 不在其像中。  
+其伴随为左移算子
+\[
+S^*(x_1,x_2,\dots)=(x_2,x_3,\dots),
+\]
+因为
+\[
+\inner{Sx}{y}=\sum_{n\ge1}x_n\overline{y_{n+1}}=\inner{x}{S^*y}.
+\]
+显然
+\[
+Se_1=e_2,\qquad S^*e_1=0,
+\]
+故 $S\ne S^*$，所以它不是自伴算子。
+
+\item \textbf{解答.} 在 $L^2[0,1]$ 上定义
+\[
+(Mf)(x)=x f(x).
+\]
+对任意 $f,g\in L^2[0,1]$，
+\[
+\inner{Mf}{g}=\int_0^1 x f(x)\overline{g(x)}\,dx
+=\int_0^1 f(x)\overline{x g(x)}\,dx
+=\inner{f}{Mg}.
+\]
+故 $M$ 自伴。  
+若 $Mf=\lambda f$，则
+\[
+(x-\lambda)f(x)=0\quad \text{a.e.}
+\]
+若 $\lambda\notin[0,1]$，则 $x-\lambda\ne 0$ 几乎处处，故 $f=0$ a.e.；若 $\lambda\in[0,1]$，则集合 $\{x=\lambda\}$ 只有一个点，测度为零，仍有 $f=0$ a.e.。因此 $M$ 没有非零特征向量。  
+这说明无限维谱定理与有限维矩阵对角化不同：有限维自伴矩阵总能分解成特征向量基下的对角矩阵；而无限维中，自伴算子往往没有特征向量基，谱定理应理解为“与乘法算子酉等价”，而不是单纯的对角矩阵分解。
+\end{enumerate}
+
+
+
+

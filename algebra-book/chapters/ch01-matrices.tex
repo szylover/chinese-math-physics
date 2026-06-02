@@ -1434,3 +1434,688 @@ CA^{-1}B=\mat{2&0}\mat{1&-2\\0&1}\mat{1\\3}=2.
     \item $\det(A)\ne0$。
   \end{enumerate}
 \end{enumerate}
+
+\section*{习题解答}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=1em]
+
+% ─────────────────────────────────────────────
+%  基础题 1–30
+% ─────────────────────────────────────────────
+
+  \item \textbf{解答.}
+  \[
+    A+B = \mat{1+4 & -2+1 \\ 3-1 & 0+5} = \mat{5&-1\\2&5}.
+  \]
+  \[
+    2A-3B = \mat{2&-4\\6&0} - \mat{12&3\\-3&15} = \mat{-10&-7\\9&-15}.
+  \]
+
+  \item \textbf{解答.}
+  \[
+    AB = \mat{1\cdot2+0\cdot0+2\cdot5 & 1\cdot1+0\cdot(-1)+2\cdot2 \\
+              (-1)\cdot2+3\cdot0+4\cdot5 & (-1)\cdot1+3\cdot(-1)+4\cdot2}
+       = \mat{12&5\\18&4}.
+  \]
+
+  \item \textbf{解答.}
+  \[
+    AB = \mat{2\cdot1+1\cdot(-2) & 2\cdot4+1\cdot0 \\
+              0\cdot1+3\cdot(-2) & 0\cdot4+3\cdot0}
+       = \mat{0&8\\-6&0}.
+  \]
+  \[
+    BA = \mat{1\cdot2+4\cdot0 & 1\cdot1+4\cdot3 \\
+              (-2)\cdot2+0\cdot0 & (-2)\cdot1+0\cdot3}
+       = \mat{2&13\\-4&-2}.
+  \]
+  由于 $\mat{0&8\\-6&0}\ne\mat{2&13\\-4&-2}$，故 $AB\ne BA$。
+
+  \item \textbf{解答.}
+  先计算
+  \[
+    AB = \mat{1\cdot2+2\cdot1+3\cdot3 & 1\cdot0+2\cdot(-1)+3\cdot5 \\
+              0\cdot2+1\cdot1+4\cdot3 & 0\cdot0+1\cdot(-1)+4\cdot5}
+       = \mat{13&13\\13&19}.
+  \]
+  于是
+  \[
+    (AB)C = \mat{13&13\\13&19}\mat{1\\2} = \mat{39\\51}.
+  \]
+  另一方面，
+  \[
+    BC = \mat{2&0\\1&-1\\3&5}\mat{1\\2} = \mat{2\\-1\\13},
+  \]
+  \[
+    A(BC) = \mat{1&2&3\\0&1&4}\mat{2\\-1\\13} = \mat{2-2+39\\0-1+52} = \mat{39\\51}.
+  \]
+  验证了结合律 $(AB)C=A(BC)$。
+
+  \item \textbf{解答.}
+  设 $E = \mat{1&1\\0&1}$，其行列式为 $1$，故可逆，逆矩阵为 $E^{-1}=\mat{1&-1\\0&1}$。因此
+  \[
+    X = E^{-1}\mat{2&3\\1&4}
+      = \mat{1&-1\\0&1}\mat{2&3\\1&4}
+      = \mat{1&-1\\1&4}.
+  \]
+
+  \item \textbf{解答.}
+  \[
+    Ax = \mat{a&b\\c&d}\mat{x_1\\x_2} = \mat{ax_1+bx_2\\cx_1+dx_2}.
+  \]
+  这恰好是二元一次线性方程组
+  $\begin{cases}ax_1+bx_2=y_1,\\cx_1+dx_2=y_2\end{cases}$
+  的左端，故矩阵–向量乘法 $Ax$ 正是将线性方程组的系数矩阵与未知量向量结合为一个整体的语言。
+
+  \item \textbf{解答.}
+  \[
+    A^T = \mat{1&4\\2&5\\3&6},\qquad B^T = \mat{0&-1&2\\1&0&3}.
+  \]
+
+  \item \textbf{解答.}
+  \[
+    A+B = \mat{0&4\\7&5},\quad (A+B)^T = \mat{0&7\\4&5}.
+  \]
+  \[
+    A^T+B^T = \mat{1&2\\0&3}+\mat{-1&5\\4&2} = \mat{0&7\\4&5}.
+  \]
+  两者相等，验证了 $(A+B)^T=A^T+B^T$。
+
+  \item \textbf{解答.}
+  \[
+    AB = \mat{1&2\\3&4\\5&6}\mat{0&1&2\\-1&3&4}
+       = \mat{-2&7&10\\-4&15&22\\-6&23&34}.
+  \]
+  \[
+    (AB)^T = \mat{-2&-4&-6\\7&15&23\\10&22&34}.
+  \]
+  \[
+    B^TA^T = \mat{0&-1\\1&3\\2&4}\mat{1&3&5\\2&4&6}
+           = \mat{-2&-4&-6\\7&15&23\\10&22&34}.
+  \]
+  两者相等，验证了 $(AB)^T=B^TA^T$。
+
+  \item \textbf{解答.}
+  \begin{itemize}
+    \item $\mat{2&1\\1&5}$：满足 $a_{ij}=a_{ji}$，是\textbf{对称矩阵}。
+    \item $\mat{0&3\\-3&0}$：对角元全为 $0$ 且 $a_{12}=-a_{21}$，是\textbf{斜对称矩阵}。
+    \item $\mat{1&2\\-2&1}$：$a_{12}=2\ne -2=a_{21}$（对称性不成立），对角元 $=1\ne0$（斜对称性不成立），\textbf{两者皆不是}。
+  \end{itemize}
+
+  \item \textbf{解答.}
+  初始矩阵：
+  \[
+    A = \mat{1&2&3\\4&5&6\\7&8&9}.
+  \]
+  \textbf{第一步}（交换 $R_1,R_3$）：
+  \[
+    \mat{7&8&9\\4&5&6\\1&2&3}.
+  \]
+  \textbf{第二步}（$R_2\leftarrow -R_2$）：
+  \[
+    \mat{7&8&9\\-4&-5&-6\\1&2&3}.
+  \]
+  \textbf{第三步}（$R_2\leftarrow R_2+2R_1$）：
+  \[
+    \mat{7&8&9\\-4+14&-5+16&-6+18\\1&2&3} = \mat{7&8&9\\10&11&12\\1&2&3}.
+  \]
+
+  \item \textbf{解答.}
+  对 $I_3$ 执行 $R_2\leftrightarrow R_3$ 得到初等矩阵
+  \[
+    P = \mat{1&0&0\\0&0&1\\0&1&0}.
+  \]
+  计算
+  \[
+    PA = \mat{1&0&0\\0&0&1\\0&1&0}\mat{1&0\\2&1\\3&4}
+       = \mat{1&0\\3&4\\2&1}.
+  \]
+  结果恰好是将 $A$ 的第 $2,3$ 行互换。
+
+  \item \textbf{解答.}
+  对 $I_3$ 执行 $R_1\leftarrow 5R_1$ 得到初等矩阵
+  \[
+    E = \mat{5&0&0\\0&1&0\\0&0&1}.
+  \]
+  其逆矩阵为对应比例的倒数：
+  \[
+    E^{-1} = \mat{1/5&0&0\\0&1&0\\0&0&1}.
+  \]
+
+  \item \textbf{解答.}
+  对 $I_4$ 执行 $R_3\leftarrow R_3-2R_1$ 得到初等矩阵
+  \[
+    E = \mat{1&0&0&0\\0&1&0&0\\-2&0&1&0\\0&0&0&1}.
+  \]
+  设 $A=(a_{ij})\in\Mat_{4,2}(\F)$。则 $EA$ 的各行与 $A$ 相同，仅第 $3$ 行变为原第 $3$ 行减去 $2$ 倍第 $1$ 行：$(a_{3j}-2a_{1j})_{j=1,2}$。
+
+  \item \textbf{解答.}
+  对增广矩阵 $(A\mid I)$ 作行变换：
+  \[
+    \mat{1&2&1&0\\3&4&0&1}
+    \xrightarrow{R_2-3R_1}
+    \mat{1&2&1&0\\0&-2&-3&1}
+    \xrightarrow{-\frac{1}{2}R_2}
+    \mat{1&2&1&0\\0&1&\tfrac{3}{2}&-\tfrac{1}{2}}
+    \xrightarrow{R_1-2R_2}
+    \mat{1&0&-2&1\\0&1&\tfrac{3}{2}&-\tfrac{1}{2}}.
+  \]
+  故
+  \[
+    A^{-1} = \mat{-2&1\\\tfrac{3}{2}&-\tfrac{1}{2}}.
+  \]
+  验证：$AA^{-1}=\mat{1&2\\3&4}\mat{-2&1\\\tfrac{3}{2}&-\tfrac{1}{2}}=\mat{1&0\\0&1}$ ✓。
+
+  \item \textbf{解答.}
+  \[
+    \dmat{3&1\\2&5} = 15-2 = 13,\quad
+    \dmat{0&-2\\7&4} = 0\cdot4-(-2)\cdot7 = 14,\quad
+    \dmat{a&b\\c&d} = ad-bc.
+  \]
+
+  \item \textbf{解答.}
+  按第一行展开：
+  \begin{align*}
+    \dmat{1&2&0\\0&3&4\\5&0&1}
+    &= 1\cdot\dmat{3&4\\0&1} - 2\cdot\dmat{0&4\\5&1} + 0 \\
+    &= (3-0) - 2(0-20) = 3+40 = 43.
+  \end{align*}
+
+  \item \textbf{解答.}
+  按第一行展开：
+  \begin{align*}
+    \dmat{2&1&3\\0&-1&4\\5&2&0}
+    &= 2\dmat{-1&4\\2&0} - 1\dmat{0&4\\5&0} + 3\dmat{0&-1\\5&2} \\
+    &= 2(0-8) - (0-20) + 3(0+5) \\
+    &= -16+20+15 = 19.
+  \end{align*}
+
+  \item \textbf{解答.}
+  按第三列展开：
+  \begin{align*}
+    \dmat{1&0&2\\3&1&4\\-1&2&0}
+    &= 2\cdot(-1)^{1+3}\dmat{3&1\\-1&2}
+      +4\cdot(-1)^{2+3}\dmat{1&0\\-1&2}
+      +0 \\
+    &= 2(6+1) - 4(2-0) \\
+    &= 14 - 8 = 6.
+  \end{align*}
+
+  \item \textbf{解答.}
+  设 $A=\mat{1&2\\3&4}$，则 $\det(A)=4-6=-2$。
+  \begin{itemize}
+    \item 交换两行得 $\mat{3&4\\1&2}$，行列式 $=6-4=2=-\det(A)$，\textbf{变号}。
+    \item 把 $R_1$ 乘以 $3$ 得 $\mat{3&6\\3&4}$，行列式 $=12-18=-6=3\det(A)$，\textbf{乘以 $3$}。
+    \item $R_2\leftarrow R_2+5R_1$ 得 $\mat{1&2\\8&14}$，行列式 $=14-16=-2=\det(A)$，\textbf{不变}。
+  \end{itemize}
+
+  \item \textbf{解答.}
+  上三角矩阵的行列式等于对角元之积（参见习题 39）：
+  \[
+    \det\mat{2&1&3\\0&-1&4\\0&0&5} = 2\cdot(-1)\cdot5 = -10.
+  \]
+  下三角矩阵类似：
+  \[
+    \det\mat{1&0&0\\2&3&0\\4&5&6} = 1\cdot3\cdot6 = 18.
+  \]
+
+  \item \textbf{解答.}
+  直接计算：
+  \begin{align*}
+    \det(A)
+    &= 1\cdot\dmat{1&4\\6&0} - 2\cdot\dmat{0&4\\5&0} + 3\cdot\dmat{0&1\\5&6} \\
+    &= (0-24) - 2(0-20) + 3(0-5) \\
+    &= -24+40-15 = 1.
+  \end{align*}
+  而 $A^T=\mat{1&0&5\\2&1&6\\3&4&0}$，展开得
+  \begin{align*}
+    \det(A^T)
+    &= 1\cdot\dmat{1&6\\4&0} - 0 + 5\cdot\dmat{2&1\\3&4} \\
+    &= (0-24)+5(8-3) = -24+25 = 1.
+  \end{align*}
+  故 $\det(A^T)=\det(A)=1$。
+
+  \item \textbf{解答.}
+  对 $\mat{2&1\\1&1}$：行列式 $=2-1=1$，逆矩阵为
+  $\mat{1&-1\\-1&2}$。
+
+  对 $\mat{1&3\\2&5}$：行列式 $=5-6=-1$，逆矩阵为
+  $\frac{1}{-1}\mat{5&-3\\-2&1}=\mat{-5&3\\2&-1}$。
+
+  \item \textbf{解答.}
+  $\det(A)=7-6=1$。伴随矩阵为
+  $\operatorname{adj}(A)=\mat{7&-2\\-3&1}$，故
+  \[
+    A^{-1}=\frac{1}{\det(A)}\operatorname{adj}(A)=\mat{7&-2\\-3&1}.
+  \]
+  验证：$AA^{-1}=\mat{1&2\\3&7}\mat{7&-2\\-3&1}=\mat{1&0\\0&1}$ ✓。
+
+  \item \textbf{解答.}
+  \begin{itemize}
+    \item $\mat{1&2\\2&4}$：$\det=4-4=0$，\textbf{不可逆}。
+    \item $\mat{1&0&0\\0&2&0\\0&0&3}$：$\det=6\ne0$，\textbf{可逆}。
+    \item $\mat{1&1&1\\1&1&1\\0&1&2}$：第 $1,2$ 行相同，$\det=0$，\textbf{不可逆}。
+  \end{itemize}
+
+  \item \textbf{解答.}
+  系数矩阵 $A=\mat{1&1\\2&-1}$，$\det(A)=-1-2=-3$。
+  \[
+    D_x=\dmat{3&1\\0&-1}=-3,\quad D_y=\dmat{1&3\\2&0}=-6.
+  \]
+  \[
+    x=\frac{D_x}{\det(A)}=\frac{-3}{-3}=1,\qquad y=\frac{D_y}{\det(A)}=\frac{-6}{-3}=2.
+  \]
+
+  \item \textbf{解答.}
+  系数矩阵 $A=\mat{1&2&1\\2&-1&1\\1&1&-1}$，行列式
+  \begin{align*}
+    \det(A)
+    &=1(1-1)-2(-2-1)+1(2+1)=0+6+3=9.
+  \end{align*}
+  用 Cramer 法则，以右端向量 $(1,0,2)^T$ 替换各列：
+  \begin{align*}
+    D_x &= \dmat{1&2&1\\0&-1&1\\2&1&-1}
+         = 1(1-1)-2(0-2)+1(0+2)=0+4+2=6,\\
+    D_y &= \dmat{1&1&1\\2&0&1\\1&2&-1}
+         = 1(0-2)-1(-2-1)+1(4-0)=-2+3+4=5,\\
+    D_z &= \dmat{1&2&1\\2&-1&0\\1&1&2}
+         = 1(-2-0)-2(4-0)+1(2+1)=-2-8+3=-7.
+  \end{align*}
+  故 $x=\tfrac{6}{9}=\tfrac{2}{3}$，$y=\tfrac{5}{9}$，$z=-\tfrac{7}{9}$。
+
+  \item \textbf{解答.}
+  对分块对角矩阵有公式 $\det(M)=\det(A)\det(D)$（对角块的行列式之积）。
+  \[
+    \det(A)=1\cdot1-0\cdot2=1,\quad \det(D)=3\cdot5-0\cdot4=15.
+  \]
+  故 $\det(M)=1\times15=15$。
+
+  \item \textbf{解答.}
+  将两个矩阵分别分块为 $2\times2$ 块矩阵（上左 $2\times2$，其余 $2\times1$、$1\times2$、$1\times1$）：
+  \[
+    P=\mat{I_2 & u \\ 0 & 1},\quad u=\mat{2\\3};\qquad
+    Q=\mat{Q_{11} & v \\ 0 & 2},\quad Q_{11}=\mat{1&1\\0&1},\quad v=\mat{0\\0}.
+  \]
+  块乘法：
+  \begin{align*}
+    (PQ)_{11} &= I_2 Q_{11} + u\cdot(0,0) = \mat{1&1\\0&1},\\
+    (PQ)_{12} &= I_2 v + u\cdot2 = \mat{0\\0}+\mat{4\\6}=\mat{4\\6},\\
+    (PQ)_{21} &= 0\cdot Q_{11}+1\cdot(0,0)=(0,0),\\
+    (PQ)_{22} &= 0\cdot v+1\cdot2=2.
+  \end{align*}
+  故
+  \[
+    PQ = \mat{1&1&4\\0&1&6\\0&0&2}.
+  \]
+
+  \item \textbf{解答.}
+  按题意，$A_{11}=(2)$，$B=(1,0)$，$C=\mat{0\\4}$，$D=\mat{1&3\\0&1}$。
+  Schur 补为
+  \[
+    S = D - C A_{11}^{-1} B
+      = \mat{1&3\\0&1} - \mat{0\\4}\cdot\tfrac{1}{2}\cdot(1,0)
+      = \mat{1&3\\0&1} - \mat{0&0\\2&0}
+      = \mat{1&3\\-2&1}.
+  \]
+  其值为 $\det(S)=1\cdot1-3\cdot(-2)=7$。
+
+% ─────────────────────────────────────────────
+%  进阶题 31–50
+% ─────────────────────────────────────────────
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A=(a_{ij})\in\Mat_{m,n}(\F)$。
+  
+  \emph{$(A^T)^T=A$}：$A^T$ 的 $(i,j)$ 元为 $a_{ji}$，故 $(A^T)^T$ 的 $(i,j)$ 元为 $a_{ij}$，与 $A$ 相同。
+  
+  \emph{$(\lambda A)^T=\lambda A^T$}：$\lambda A$ 的 $(i,j)$ 元为 $\lambda a_{ij}$，故 $(\lambda A)^T$ 的 $(i,j)$ 元为 $\lambda a_{ji}$，与 $\lambda A^T$ 的 $(i,j)$ 元相同。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  对任意 $n\ge2$，令
+  \[
+    A=\mat{0&1&0&\cdots\\0&0&0&\cdots\\\vdots&&\ddots&},\quad
+    B=\mat{0&0&\cdots\\1&0&\cdots\\0&\cdots&&},
+  \]
+  即 $A=E_{12}$（仅 $(1,2)$ 位置为 $1$），$B=E_{21}$（仅 $(2,1)$ 位置为 $1$），其余位置为 $0$（嵌入 $\Mat_n(\F)$ 中）。
+  直接计算：$AB=E_{11}$（$(1,1)$ 位置为 $1$），$BA=E_{22}$（$(2,2)$ 位置为 $1$）。
+  因 $E_{11}\ne E_{22}$，故 $AB\ne BA$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  由 $AB=I_n$ 得 $\det(A)\det(B)=\det(I_n)=1$，故 $\det(A)\ne0$，$A$ 可逆。
+  设 $A^{-1}$ 为 $A$ 的逆矩阵。由 $AB=I_n$ 左乘 $A^{-1}$ 得 $B=A^{-1}$，故 $BA=A^{-1}A=I_n$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A\in\Mat_n(\F)$ 可逆。通过 Gauss–Jordan 消元，存在初等矩阵 $E_1,\dots,E_k$ 使得
+  \[
+    E_k\cdots E_1 A = I_n.
+  \]
+  故 $A = E_1^{-1}\cdots E_k^{-1}$。由于每个初等矩阵的逆矩阵仍是初等矩阵（同类型，参数取倒数或变号），$A$ 是有限个初等矩阵的乘积。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $E$ 是相应的初等矩阵，三种情形对应的行列式分别为：
+  \begin{enumerate}[label=(\roman*)]
+    \item \emph{交换行 $i,j$}（$i\ne j$）：$\det(E)=-1$，故 $\det(EA)=\det(E)\det(A)=-\det(A)$，行列式\textbf{变号}。
+    \item \emph{行 $i$ 乘以 $\lambda\ne0$}：$\det(E)=\lambda$，故 $\det(EA)=\lambda\det(A)$，行列式\textbf{乘以 $\lambda$}。
+    \item \emph{行 $i$ 加上行 $j$ 的 $\lambda$ 倍}（$i\ne j$）：$\det(E)=1$，故 $\det(EA)=\det(A)$，行列式\textbf{不变}。
+  \end{enumerate}
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  \emph{$A$ 可逆时：}将 $A$ 写成初等矩阵的乘积 $A=E_1\cdots E_k$（习题 34）。对每个初等矩阵 $E_i$，由习题 35 知 $\det(E_i B)=\det(E_i)\det(B)$（逐步右乘），故
+  \[
+    \det(AB)=\det(E_1\cdots E_k B)=\det(E_1)\cdots\det(E_k)\det(B)=\det(A)\det(B).
+  \]
+  \emph{$A$ 不可逆时：}$\det(A)=0$。由秩不等式 $\rank(AB)\le\rank(A)<n$，故 $AB$ 也不可逆，$\det(AB)=0=\det(A)\det(B)$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A=(a_{ij})$，$\operatorname{adj}(A)=(C_{ji})$（即 $(i,j)$ 元为 $C_{ji}$，$A$ 的 $(j,i)$ 余子式）。则
+  \[
+    (A\operatorname{adj}(A))_{ij} = \sum_{k=1}^n a_{ik}C_{jk}.
+  \]
+  当 $i=j$ 时，此即 $\det(A)$ 沿第 $i$ 行的余子式展开，等于 $\det(A)$。
+  当 $i\ne j$ 时，此为将 $A$ 第 $j$ 行替换为第 $i$ 行后的行列式（两行相同），故等于 $0$。
+  因此 $A\operatorname{adj}(A)=\det(A)I_n$。
+  
+  对 $\operatorname{adj}(A)A$ 类似地按列展开可得 $\operatorname{adj}(A)A=\det(A)I_n$（也可以对 $A^T$ 应用上述结果再转置）。
+  \end{proof}
+
+  \item \textbf{解答.}
+  按第一行展开：
+  \begin{align*}
+    \det(A_t)
+    &= 1\cdot\dmat{1&t\\0&1} - t\cdot\dmat{0&t\\t&1} + 1\cdot\dmat{0&1\\t&0}\\
+    &= (1-0) - t(0-t^2) + (0-t) = 1+t^3-t.
+  \end{align*}
+  故 $\det(A_t)=t^3-t+1$。$A_t$ 可逆当且仅当 $t^3-t+1\ne0$，即 $t$ 不是多项式 $t^3-t+1\in\F[t]$ 的根时。
+
+  \item \textbf{解答.}
+  \begin{proof}
+  对 $n$ 作归纳。$n=1$ 时显然。设 $n>1$，设上三角矩阵 $A=(a_{ij})$（$a_{ij}=0$ 对 $i>j$）。按第一列展开：第一列中仅 $a_{11}\ne0$（其余位置 $a_{i1}=0$，$i\ge2$），故
+  \[
+    \det(A)=a_{11}\det(A_{11}),
+  \]
+  其中 $A_{11}$ 是去掉第 $1$ 行第 $1$ 列后得到的 $(n-1)\times(n-1)$ 上三角矩阵，由归纳假设 $\det(A_{11})=a_{22}\cdots a_{nn}$。故 $\det(A)=a_{11}a_{22}\cdots a_{nn}$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A\in\Mat_{m,n}(\F)$，$B\in\Mat_{n,r}(\F)$，视 $A$ 为线性映射 $\F^n\to\F^m$，$B$ 为 $\F^r\to\F^n$。
+
+  \emph{$\rank(AB)\le\rank(A)$}：$\mathrm{Im}(AB)=A(\mathrm{Im}(B))\subseteq\mathrm{Im}(A)$，故 $\rank(AB)=\dim\mathrm{Im}(AB)\le\dim\mathrm{Im}(A)=\rank(A)$。
+
+  \emph{$\rank(AB)\le\rank(B)$}：若 $Bx=0$，则 $ABx=0$，故 $\ker(B)\subseteq\ker(AB)$，从而 $\dim\ker(AB)\ge\dim\ker(B)$。由秩–零化度定理（对 $AB:\F^r\to\F^m$），$\rank(AB)=r-\dim\ker(AB)\le r-\dim\ker(B)=\rank(B)$。
+
+  综合得 $\rank(AB)\le\min\{\rank(A),\rank(B)\}$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  由 $\det(AB)=\det(A)\det(B)$ 且 $AB$ 可逆，故 $\det(A)\det(B)\ne0$，从而 $\det(A)\ne0$ 且 $\det(B)\ne0$，即 $A$ 与 $B$ 均可逆。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  矩阵 $A+tB$ 的每个 $(i,j)$ 元均为 $t$ 的一次（或零次）多项式 $a_{ij}+tb_{ij}$。行列式 $\det(A+tB)$ 是 $n$ 阶行列式，展开后为若干 $n$ 项积之和，每项取自每行每列恰好一个元素。每个这样的积关于 $t$ 的次数至多为 $n$（每个因子次数至多为 $1$），有限个次数至多为 $n$ 的多项式之和仍为次数至多为 $n$ 的多项式。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  $\sum_{k=1}^n a_{ik}C_{jk}$ 是将矩阵 $A$ 的第 $j$ 行替换为第 $i$ 行后沿第 $j$ 行的余子式展开所得到的行列式。当 $i\ne j$ 时，该矩阵有两行相同（第 $i$ 行与第 $j$ 行均为 $(a_{i1},\dots,a_{in})$），故行列式为 $0$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  \emph{可逆性}：注意 $\det(M)=\det(A)\det(D)$（对分块上三角矩阵，通过行变换可验证）。故 $M$ 可逆 $\Leftrightarrow \det(M)\ne0 \Leftrightarrow \det(A)\ne0$ 且 $\det(D)\ne0 \Leftrightarrow A,D$ 均可逆。
+
+  \emph{逆矩阵的分块表达式}：设 $M^{-1}=\mat{X&Y\\Z&W}$，由 $MM^{-1}=I$ 得
+  \[
+    AX+BZ=I,\quad AY+BW=0,\quad DZ=0,\quad DW=I.
+  \]
+  $D$ 可逆时，$Z=0$，$W=D^{-1}$；$A$ 可逆时，$X=A^{-1}$，$Y=-A^{-1}BD^{-1}$。故
+  \[
+    M^{-1} = \mat{A^{-1} & -A^{-1}BD^{-1} \\ 0 & D^{-1}}.
+  \]
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  对 $n\in\N$ 作归纳，证明 $A^n=\mat{1&n\\0&1}$。
+  
+  $n=0$ 时 $A^0=I_2=\mat{1&0\\0&1}$ ✓；$n=1$ 时 $A^1=\mat{1&1\\0&1}$ ✓。
+  
+  若 $A^n=\mat{1&n\\0&1}$，则
+  \[
+    A^{n+1}=A^n\cdot A=\mat{1&n\\0&1}\mat{1&1\\0&1}=\mat{1&n+1\\0&1}.
+  \]
+  由此可见，$A^n$ 的右上角记录了迭代次数 $n$，体现了矩阵乘法如何编码递推关系（如 $u_{n+1}=u_n+v_n$，$v_{n+1}=v_n$）。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $u=\mat{a\\c}$，$v=\mat{b\\d}$（$A$ 的两列向量）。利用向量叉积公式，平行四边形面积为
+  \[
+    \text{面积} = |u\times v| = \sqrt{|u|^2|v|^2-\inner{u}{v}^2}.
+  \]
+  直接计算：
+  \begin{align*}
+    |u|^2|v|^2 - \inner{u}{v}^2
+    &= (a^2+c^2)(b^2+d^2) - (ab+cd)^2 \\
+    &= a^2d^2 - 2abcd + b^2c^2 = (ad-bc)^2 = \det(A)^2.
+  \end{align*}
+  故面积 $= |\det(A)|$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  置换矩阵 $P_\sigma$ 的 $(i,j)$ 元为 $\delta_{i,\sigma(j)}$。按定义展开行列式：
+  \[
+    \det(P_\sigma) = \sum_{\tau\in S_n}\sgn(\tau)\prod_{i=1}^n(P_\sigma)_{i,\tau(i)}
+    = \sum_{\tau\in S_n}\sgn(\tau)\prod_{i=1}^n\delta_{i,\sigma(\tau(i))}.
+  \]
+  乘积 $\prod_{i=1}^n\delta_{i,\sigma(\tau(i))}$ 等于 $1$ 当且仅当 $\sigma(\tau(i))=i$ 对所有 $i$ 成立，即 $\tau=\sigma^{-1}$，否则为 $0$。故
+  \[
+    \det(P_\sigma) = \sgn(\sigma^{-1}) = \sgn(\sigma).
+  \]
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  由伴随矩阵公式 $A\operatorname{adj}(A)=\det(A)I_n$，当 $\det(A)\ne0$ 时 $x=A^{-1}b=\frac{\operatorname{adj}(A)b}{\det(A)}$。计算第 $j$ 个分量：
+  \[
+    x_j = \frac{(\operatorname{adj}(A)b)_j}{\det(A)}
+        = \frac{\sum_{i=1}^n(\operatorname{adj}(A))_{ji}\,b_i}{\det(A)}
+        = \frac{\sum_{i=1}^n C_{ji}\,b_i}{\det(A)}.
+  \]
+  其中 $(\operatorname{adj}(A))_{ji}=C_{ji}$ 为 $A$ 的 $(j,i)$ 余子式。另一方面，Cramer 法则给出 $x_j=D_j/\det(A)$，其中 $D_j$ 为将 $A$ 第 $j$ 列换为 $b$ 所得行列式，按第 $j$ 列展开恰为 $\sum_i C_{ji}b_i$，两者一致。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A=\mat{a&b\\c&d}\in\SL_2(\Z)$，即 $a,b,c,d\in\Z$ 且 $ad-bc=1$。由伴随矩阵公式，
+  \[
+    A^{-1} = \frac{1}{\det(A)}\mat{d&-b\\-c&a} = \mat{d&-b\\-c&a},
+  \]
+  因为 $\det(A)=1$。显然 $d,-b,-c,a\in\Z$，且 $\det(A^{-1})=da-(-b)(-c)=ad-bc=1$，故 $A^{-1}\in\SL_2(\Z)$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  由 $A^T=-A$ 取行列式：
+  \[
+    \det(A^T) = \det(-A) = (-1)^n\det(A).
+  \]
+  又 $\det(A^T)=\det(A)$，故
+  \[
+    \det(A) = (-1)^n\det(A).
+  \]
+  当 $n$ 为奇数时，$(-1)^n=-1$，故 $\det(A)=-\det(A)$，即 $2\det(A)=0$。
+  在特征不为 $2$ 的域 $\F$ 上，$\det(A)=0$。
+  \end{proof}
+
+% ─────────────────────────────────────────────
+%  挑战题 51–60
+% ─────────────────────────────────────────────
+
+  \item \textbf{解答.}
+  \begin{proof}
+  对 $n$ 作归纳，证明
+  $V_n = \det\mat{1&\cdots&1\\x_1&\cdots&x_n\\\vdots&&\vdots\\x_1^{n-1}&\cdots&x_n^{n-1}}
+       = \prod_{1\le i<j\le n}(x_j-x_i).$
+
+  $n=1$：$V_1=1$，乘积为空积 $=1$ ✓。$n=2$：$V_2=x_2-x_1$ ✓。
+
+  设 $n\ge3$，将 $V_n$ 视为关于 $x_n$ 的多项式。$x_n$ 仅出现在最后一列，最高次项为 $x_n^{n-1}$（来自最后一行），故 $\deg_{x_n}V_n=n-1$。
+
+  对任意 $j<n$，令 $x_n=x_j$：第 $j,n$ 两列相同，故 $V_n=0$，即 $(x_n-x_j)$ 整除 $V_n$。由此得
+  \[
+    V_n = c(x_1,\dots,x_{n-1})\prod_{j=1}^{n-1}(x_n-x_j),
+  \]
+  其中 $c$ 是关于 $x_1,\dots,x_{n-1}$ 的函数。比较 $x_n^{n-1}$ 的系数，$c$ 等于去掉最后一行最后一列所得 $(n-1)\times(n-1)$ Vandermonde 行列式 $V_{n-1}(x_1,\dots,x_{n-1})$，由归纳假设
+  $c = \prod_{1\le i<j\le n-1}(x_j-x_i).$
+  故
+  \[
+    V_n = \prod_{1\le i<j\le n-1}(x_j-x_i)\cdot\prod_{j=1}^{n-1}(x_n-x_j)
+        = \prod_{1\le i<j\le n}(x_j-x_i). \qedhere
+  \]
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  令 $c=\Phi(e_1,\dots,e_n)\in\F$。对任意 $v_1,\dots,v_n\in\F^n$，设 $v_i=\sum_j a_{ij}e_j$。由多线性性，
+  \[
+    \Phi(v_1,\dots,v_n)=\sum_{\sigma\in S_n}a_{1,\sigma(1)}\cdots a_{n,\sigma(n)}\,\Phi(e_{\sigma(1)},\dots,e_{\sigma(n)}).
+  \]
+  由交错性，$\Phi(e_{\sigma(1)},\dots,e_{\sigma(n)})=\sgn(\sigma)\Phi(e_1,\dots,e_n)=c\cdot\sgn(\sigma)$。故
+  \[
+    \Phi(v_1,\dots,v_n)=c\sum_\sigma\sgn(\sigma)\prod_i a_{i,\sigma(i)}=c\det(A)=c\det(v_1,\dots,v_n).
+  \]
+  唯一性：若 $c'$ 也满足条件，则取 $v_i=e_i$ 得 $c=\Phi(e_1,\dots,e_n)=c'\det(I_n)=c'$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  设 $A\in\Mat_{m,n}(\F)$，$B\in\Mat_{n,m}(\F)$，$m\le n$。记 $AB$ 的第 $j$ 列为 $\sum_{k=1}^n a_{jk}^{(col)}\cdots$，更精确地，$(AB)_{ij}=\sum_{k=1}^n a_{ik}b_{kj}$。
+
+  利用行列式的多线性性，将 $AB$ 按列展开：$AB$ 的第 $j$ 列为 $\sum_{k=1}^n b_{kj}A_{:k}$（$A$ 的第 $k$ 列）。代入行列式，由多线性性得
+  \[
+    \det(AB)=\sum_{k_1,\dots,k_m=1}^n b_{k_1,1}\cdots b_{k_m,m}\det(A_{:,k_1},\dots,A_{:,k_m}).
+  \]
+  当某两个下标相等时，行列式为 $0$（两列相同）；故仅 $k_1,\dots,k_m$ 互不相同的项有贡献，即仅求和于大小为 $m$ 的子集 $I=\{k_1,\dots,k_m\}\subseteq\{1,\dots,n\}$（及其上的排列）。对固定 $I$ 的贡献，整理排列带来的符号，得
+  \[
+    \det(AB)=\sum_{I\subseteq\{1,\dots,n\},\,|I|=m}\det(A_{[:,I]})\det(B_{[I,:]}). \qedhere
+  \]
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  在 Cauchy--Binet 公式中令 $B=A^T\in\Mat_{n,m}(\R)$（则 $B_{[I,:]}=A_{[:,I]}^T$）：
+  \[
+    \det(AA^T)=\sum_{|I|=m}\det(A_{[:,I]})\det(A_{[:,I]}^T)
+               =\sum_{|I|=m}\det(A_{[:,I]})^2,
+  \]
+  其中最后一步用了 $\det(M^T)=\det(M)$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  计算 $S$ 的作用（$S\v=\mat{0&-1\\1&0}\v$）：
+  \[
+    S\mat{1\\0}=\mat{0\\1},\quad S\mat{0\\1}=\mat{-1\\0},\quad
+    S\mat{2\\3}=\mat{-3\\2},\quad S\mat{-1\\4}=\mat{-4\\-1}.
+  \]
+  计算 $T$ 的作用（$T\v=\mat{1&1\\0&1}\v$）：
+  \[
+    T\mat{1\\0}=\mat{1\\0},\quad T\mat{0\\1}=\mat{1\\1},\quad
+    T\mat{2\\3}=\mat{5\\3},\quad T\mat{-1\\4}=\mat{3\\4}.
+  \]
+  $S,T\in\SL_2(\Z)$：两个矩阵的元素均为整数，且
+  $\det(S)=0\cdot0-(-1)\cdot1=1$，$\det(T)=1\cdot1-1\cdot0=1$，故两者均属于 $\SL_2(\Z)$。
+
+  \item \textbf{解答.}
+  \begin{proof}
+  \emph{$S^2=-I_2$}：
+  \[
+    S^2=\mat{0&-1\\1&0}^2=\mat{0\cdot0+(-1)\cdot1 & 0\cdot(-1)+(-1)\cdot0\\
+                                  1\cdot0+0\cdot1   & 1\cdot(-1)+0\cdot0}
+       =\mat{-1&0\\0&-1}=-I_2.
+  \]
+  \emph{$(ST)^3=-I_2$}：先计算
+  \[
+    ST=\mat{0&-1\\1&0}\mat{1&1\\0&1}=\mat{0&-1\\1&1}.
+  \]
+  再计算
+  \[
+    (ST)^2=\mat{0&-1\\1&1}\mat{0&-1\\1&1}=\mat{-1&-1\\1&0}.
+  \]
+  最后
+  \[
+    (ST)^3=\mat{-1&-1\\1&0}\mat{0&-1\\1&1}=\mat{-1&0\\0&-1}=-I_2.
+  \]
+  在 $\PSL_2(\Z)=\SL_2(\Z)/\{\pm I_2\}$ 中，$-I_2$ 与 $I_2$ 等同，故 $\bar S^2=\overline{(ST)}^3=\bar I$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \emph{$S$ 的不动点}：$S\cdot\tau=-\tfrac{1}{\tau}=\tau$，即 $\tau^2=-1$，故 $\tau=i$（取虚部为正的根）。
+
+  \emph{$ST$ 的不动点}：$ST=\mat{0&-1\\1&1}$，故 $(ST)\cdot\tau=\tfrac{-1}{\tau+1}=\tau$，即 $\tau(\tau+1)=-1$，$\tau^2+\tau+1=0$，解得
+  \[
+    \tau=\frac{-1+\sqrt{-3}}{2}=e^{2\pi i/3}=\rho,\quad \Im(\rho)=\tfrac{\sqrt3}{2}>0.
+  \]
+  这两个点 $i$ 与 $\rho$ 是 $\PSL_2(\Z)$ 在上半平面作用的\emph{椭圆点}（稳定化子非平凡）。在模形式理论中，这些点是基本域的顶点，模形式在其附近的 Fourier–Taylor 展开带来特殊的零点条件，并出现在维数公式中。
+
+  \item \textbf{解答.}
+  \begin{proof}
+  \emph{充分性}（$\det(M)=1\Rightarrow$ 列向量构成 $\Z^2$ 的有向基）：
+  设 $u=\mat{a\\c}$，$v=\mat{b\\d}$，$\det(M)=ad-bc=1$。
+  对任意 $w=\mat{x\\y}\in\Z^2$，解方程 $\alpha u+\beta v=w$，即 $M\mat{\alpha\\\beta}=w$，故 $\mat{\alpha\\\beta}=M^{-1}w=\mat{d&-b\\-c&a}w\in\Z^2$（因 $M^{-1}\in\Mat_2(\Z)$）。故 $u,v$ 生成 $\Z^2$，且 $\det(M)=1>0$，是有向基。
+
+  \emph{必要性}（$u,v$ 是 $\Z^2$ 的有向基 $\Rightarrow M\in\SL_2(\Z)$）：
+  $u,v\in\Z^2$，故 $a,b,c,d\in\Z$，$M\in\Mat_2(\Z)$。由于 $u,v$ 构成 $\Z^2$ 的基，变基矩阵 $M$ 是 $\Z$-模同构，其逆也在 $\Mat_2(\Z)$ 中。故 $\det(M)\in\Z$ 且 $\det(M^{-1})=\det(M)^{-1}\in\Z$，从而 $\det(M)=\pm1$。有向条件给出 $\det(M)=1$，即 $M\in\SL_2(\Z)$。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  对 $M=\mat{A&B\\C&D}$（$A$ 可逆），作块初等行变换：左乘
+  \[
+    L=\mat{I&0\\-CA^{-1}&I}.
+  \]
+  则
+  \[
+    LM=\mat{I&0\\-CA^{-1}&I}\mat{A&B\\C&D}
+      =\mat{A&B\\0&D-CA^{-1}B}.
+  \]
+  $L$ 是块下三角矩阵，对角块为 $I$，故 $\det(L)=1$。$LM$ 是块上三角矩阵，故
+  \[
+    \det(M)=\det(L)^{-1}\det(LM)=\det(A)\det(D-CA^{-1}B).
+  \]
+  这与普通 Gauss 消元完全类似：$A$ 是"主元块"，$D-CA^{-1}B$ 是消去 $C$ 块之后的"Schur 补"，对应于对 $C$ 行减去 $CA^{-1}$ 倍 $A$ 行，与逐元素高斯消元中从某行减去主元倍数的操作一一对应。
+  \end{proof}
+
+  \item \textbf{解答.}
+  \begin{proof}
+  我们证明循环：
+  (a)$\Rightarrow$(b)$\Rightarrow$(a)，(a)$\Rightarrow$(c)$\Rightarrow$(a)，(a)$\Leftrightarrow$(d)，(a)$\Leftrightarrow$(e)。
+
+  \textbf{(a)$\Rightarrow$(b)和(c)}：若 $A$ 可逆，取 $B=C=A^{-1}$ 即可。
+
+  \textbf{(b)$\Rightarrow$(a)}：$AB=I_n$ 蕴含 $\det(A)\det(B)=1\ne0$，故 $\det(A)\ne0$，$A$ 可逆。（由习题 33，实际上 $B=A^{-1}$。）
+
+  \textbf{(c)$\Rightarrow$(a)}：同理，$CA=I_n$ 蕴含 $\det(C)\det(A)=1$，故 $\det(A)\ne0$。
+
+  \textbf{(a)$\Leftrightarrow$(d)}：若 $A=E_1\cdots E_k$ 为初等矩阵之积，则每个 $E_i$ 可逆，乘积也可逆，故 (d)$\Rightarrow$(a)。反之，若 $A$ 可逆，由习题 34，$A$ 可写为有限个初等矩阵的乘积，即 (a)$\Rightarrow$(d)。
+
+  \textbf{(a)$\Leftrightarrow$(e)}：$A$ 可逆当且仅当存在 $A^{-1}$ 使 $AA^{-1}=I_n$，由 (b)$\Leftrightarrow$(a) 已证；另一方面，伴随矩阵公式给出，若 $\det(A)\ne0$ 则 $A^{-1}=\frac{1}{\det(A)}\operatorname{adj}(A)$ 存在，若 $\det(A)=0$ 则 $A$ 不可逆（否则 $\det(A)\det(A^{-1})=1$，矛盾）。故 (a)$\Leftrightarrow$(e)。
+  \end{proof}
+
+\end{enumerate}
