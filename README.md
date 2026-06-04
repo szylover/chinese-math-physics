@@ -1,85 +1,104 @@
-# 模形式与费马大定理
+# 中文数学与物理教材
 
-本仓库包含三本配套书籍：
+以数学的严谨，讲物理的直觉。本仓库包含 6 本中文 LaTeX 教材，涵盖数学（线性代数、抽象代数、模形式）和物理（微积分物理学）。
 
-## 📚 textbook/ — 主教材
+所有 PDF 集中存放在 `pdf/` 目录，共 **1339 页**。
 
-《模形式与费马大定理》——从 $\mathrm{SL}_2(\mathbb{Z})$ 到 Wiles 定理
+---
 
-- 10章 + 3个附录，约315页
-- 每个定理含完整证明，每节有 TikZ 图
-- 基于 Diamond & Shurman GTM 228 与 Cornell-Silverman-Stevens 1997
+## 📖 数学部分
 
-**编译：**
+### 线性代数 — `linear-algebra-book/`（241 页）
+
+从矩阵运算到谱定理，覆盖线性代数核心内容。
+
+### 抽象代数 — `abstract-algebra-book/`（174 页）
+
+群论、环论、域扩张与 Galois 理论入门。
+
+### 模形式教科书 — `modular-forms-textbook/`（315 页）
+
+《模形式与费马大定理》——从 $\mathrm{SL}_2(\mathbb{Z})$ 到 Wiles 定理。10 章 + 3 附录，每个定理含完整证明。
+
+### 模形式习题集 — `modular-forms-exercises/`（182 页）
+
+配套练习册，300+ 道题，三级难度（★ / ★★ / ★★★），每题含完整解答。
+
+---
+
+## 🔭 物理部分
+
+### 物理教科书 — `physics-textbook/`（270 页）
+
+**《从牛顿到爱因斯坦：用微积分重新理解物理》**
+
+用微积分和微分方程的语言重新构建力学、电磁学与狭义相对论。面向有高中物理基础、希望用严格数学框架理解物理的读者。
+
+| 部分 | 章节 |
+|------|------|
+| 数学预备 | Ch1 微积分速览（含二阶 ODE、PDE 初步） |
+| 力学 | Ch2 运动学 · Ch3 牛顿定律 · Ch4 动量 · Ch5 功与能 · Ch6 万有引力 · Ch7 振动与波 |
+| 电磁学 | Ch8 静电学 · Ch9 电势与电容 · Ch10 电路 · Ch11 磁学 · Ch12 电磁感应 · Ch13 Maxwell 方程组 |
+| 狭义相对论 | Ch14 狭义相对论 · Ch15 相对论动力学 |
+| 分析力学与对称性 | Ch16 Lagrangian 力学 · Noether 定理 · Hamilton 力学 · Lie 群视角 |
+| 附录 | A 矢量分析 · B 常用微分方程（含 PDE、Fourier 级数） · C 物理常数表 |
+
+特色：
+- 全书 30+ 幅 pgfplots 函数图像
+- Noether 定理：用 Lie 群统一能量/动量/角动量守恒
+- 数学严格但可读，非苏联教材风格
+
+### 物理习题集 — `physics-exercises/`（157 页）
+
+**《微积分物理习题集》**
+
+14 章习题，按经典题 · 竞赛题 · 大学物理 · 微分方程四个层次编排，含 Python 数值解法。
+
+---
+
+## 🛠️ 编译
+
+所有书籍使用 **LuaLaTeX** 编译（需要 TeX Live + CJK 字体支持）：
+
 ```bash
-cd textbook && make
+cd physics-textbook && lualatex main.tex && lualatex main.tex
 ```
 
-## 📝 exercises-book/ — 习题集
+编译好的 PDF 在 `pdf/` 目录：
 
-《模形式与费马大定理习题集》——配套练习册
-
-- 10章 + 附录A习题，共 300+ 道题
-- 三级难度（基础★ / 进阶★★ / 挑战★★★）
-- 每题含完整解答
-
-**编译：**
-```bash
-cd exercises-book && make
-```
-
-## 📐 algebra-book/ — 代数基础（新）
-
-《模形式的代数基础》——从矩阵到 Galois 理论
-
-- 12章 + 2个附录，约 750+ 道习题
-- 覆盖线性代数（5章）、群论（3章）、环/模/域（4章）
-- 三级难度（基础★ / 进阶★★ / 挑战★★★）
-- 每章带星号小节关联模形式教材中的具体应用
-
-**章节概览：**
-
-| 部分 | 章节 | 习题数 |
-|------|------|--------|
-| 线性代数 | Ch1 矩阵与行列式 | 60 |
-| | Ch2 线性空间 | 60 |
-| | Ch3 线性映射 | 65 |
-| | Ch4 特征值与对角化 | 70 |
-| | Ch5 内积空间与谱定理 | 60 |
-| 群论 | Ch6 群的基本理论 | 70 |
-| | Ch7 矩阵群与群作用 | 65 |
-| | Ch8 表示论入门 | 60 |
-| 环、模与域 | Ch9 环与理想 | 65 |
-| | Ch10 模论 | 55 |
-| | Ch11 域扩张 | 55 |
-| | Ch12 Galois 理论初步 | 60 |
-| 附录 | A 范畴语言初步 | 20 |
-| | B 常用符号与记号表 | — |
-
-**编译：**
-```bash
-cd algebra-book && make
-```
+| 文件 | 页数 |
+|------|------|
+| `linear-algebra-book.pdf` | 241 |
+| `abstract-algebra-book.pdf` | 174 |
+| `modular-forms-textbook.pdf` | 315 |
+| `modular-forms-exercises.pdf` | 182 |
+| `physics-textbook.pdf` | 270 |
+| `physics-exercises.pdf` | 157 |
+| **总计** | **1339** |
 
 ## 目录结构
 
 ```
-├── textbook/          # 主教材（10章+3附录）
-├── exercises-book/    # 习题集（300+题）
-├── algebra-book/      # 代数基础（12章+2附录，750+题）
-│   ├── main.tex
-│   ├── preamble.tex
-│   ├── Makefile
-│   └── chapters/
-│       ├── ch01-matrices.tex … ch12-galois.tex
-│       ├── app-a-categories.tex
-│       └── app-b-notation.tex
+├── linear-algebra-book/       # 线性代数
+├── abstract-algebra-book/     # 抽象代数
+├── modular-forms-textbook/    # 模形式教科书
+├── modular-forms-exercises/   # 模形式习题集
+├── physics-textbook/          # 物理教科书（16章+3附录）
+├── physics-exercises/         # 物理习题集（14章+3附录）
+├── pdf/                       # 所有编译好的 PDF
 └── README.md
 ```
 
 ## 参考书目
 
+**数学：**
 1. Diamond & Shurman, *A First Course in Modular Forms*, GTM 228
 2. Cornell, Silverman, Stevens (eds.), *Modular Forms and Fermat's Last Theorem*, 1997
-3. Artin, *Algebra*, Pearson（线性代数与抽象代数经典参考）
-4. Lang, *Algebra*, GTM 211（研究生代数全面参考）
+3. Artin, *Algebra*, Pearson
+4. Lang, *Algebra*, GTM 211
+
+**物理：**
+5. Halliday, Resnick & Walker, *Fundamentals of Physics*
+6. Griffiths, *Introduction to Electrodynamics*
+7. Taylor, *Classical Mechanics*
+8. Landau & Lifshitz, *Mechanics* (Course of Theoretical Physics, Vol. 1)
