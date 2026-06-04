@@ -1,0 +1,358 @@
+\chapter{相对论}
+
+\section{竞赛题}
+
+\begin{competition}
+某不稳定粒子的静止寿命为 $\tau_0=2.2\times 10^{-6}\,\mathrm{s}$，它以速度 $v=0.98c$ 沿直线飞行。求：
+\begin{enumerate}
+  \item 实验室系中测得的寿命；
+  \item 在其平均寿命内飞行的距离。
+\end{enumerate}
+\begin{solution}
+时间膨胀公式为
+\[
+\tau=\gamma \tau_0,
+\qquad
+\gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+代入 $v=0.98c$ 得
+\[
+\gamma=\frac{1}{\sqrt{1-0.98^2}}\approx 5.03.
+\]
+故实验室系中的寿命为
+\[
+\tau\approx 5.03\times 2.2\times 10^{-6}
+\approx 1.11\times 10^{-5}\,\mathrm{s}.
+\]
+平均飞行距离为
+\[
+L=v\tau=0.98c\times 1.11\times 10^{-5}
+\approx 3.26\times 10^3\,\mathrm{m}.
+\]
+因此粒子平均可飞行约 $3.3\,\mathrm{km}$。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一艘飞船相对地球以 $0.80c$ 的速度飞行，其静止长度为 $120\,\mathrm{m}$。求地球观测者测得的飞船长度，并说明收缩发生在哪个方向。
+\begin{solution}
+长度收缩公式为
+\[
+L=\frac{L_0}{\gamma},
+\qquad
+\gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+当 $v=0.80c$ 时，
+\[
+\gamma=\frac{1}{\sqrt{1-0.80^2}}=\frac{1}{0.6}=\frac{5}{3}.
+\]
+因此地球系测得长度
+\[
+L=\frac{120}{5/3}=72\,\mathrm{m}.
+\]
+长度收缩只发生在与运动方向平行的方向上，垂直于运动方向的尺寸保持不变。
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+参考系 $S'$ 以速度 $v=0.60c$ 相对 $S$ 沿 $x$ 轴正方向运动。若在 $S'$ 中某事件的时空坐标为
+\[
+(x',t')=(300\,\mathrm{m},\,2.5\times 10^{-6}\,\mathrm{s}),
+\]
+求其在 $S$ 系中的 $(x,t)$。
+\begin{solution}
+洛伦兹变换为
+\[
+\begin{aligned}
+  x&=\gamma(x'+vt'),\\
+  t&=\gamma\qty(t'+\frac{vx'}{c^2}),
+\end{aligned}
+\qquad
+\gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+当 $v=0.60c$ 时，
+\[
+\gamma=\frac{1}{\sqrt{1-0.36}}=1.25.
+\]
+先算位置：
+\[
+vt'=0.60c\times 2.5\times 10^{-6}
+=0.60\times 3.0\times 10^8\times 2.5\times 10^{-6}
+=450\,\mathrm{m}.
+\]
+故
+\[
+x=1.25(300+450)=937.5\,\mathrm{m}.
+\]
+再算时间：
+\[
+\frac{vx'}{c^2}=\frac{0.60c\times 300}{c^2}=\frac{180}{3.0\times 10^8}
+=6.0\times 10^{-7}\,\mathrm{s}.
+\]
+所以
+\[
+t=1.25\qty(2.5\times 10^{-6}+6.0\times 10^{-7})
+=3.875\times 10^{-6}\,\mathrm{s}.
+\]
+故
+\[
+(x,t)=(937.5\,\mathrm{m},\,3.88\times 10^{-6}\,\mathrm{s}).
+\]
+\end{solution}
+\end{university}
+
+\begin{university}
+一飞船相对地球以速度 $u'=0.70c$ 向前发射一枚探测器，飞船本身相对地球速度为 $v=0.60c$。求探测器相对地球的速度。
+\begin{solution}
+相对论速度合成公式为
+\[
+ u=\frac{u'+v}{1+u'v/c^2}.
+\]
+代入得
+\[
+ u=\frac{0.70c+0.60c}{1+0.70\times 0.60}
+ =\frac{1.30c}{1.42}
+ \approx 0.915c.
+\]
+因此探测器相对地球的速度约为 $0.915c$，仍然小于光速，这正是相对论速度合成的基本特征。
+\end{solution}
+\end{university}
+
+\begin{university}
+静止的粒子 $A$ 质量为 $M$，衰变为两个粒子：
+\[
+A\to 1+2,
+\]
+其中产物静质量分别为 $m_1,m_2$。利用四动量守恒求两产物的能量 $E_1,E_2$。
+\begin{solution}
+在母粒子静止系中，总四动量守恒为
+\[
+P_A^\mu=P_1^\mu+P_2^\mu.
+\]
+母粒子静止，所以
+\[
+P_A^\mu=\qty(Mc,\vb{0}).
+\]
+两产物动量大小相等、方向相反，设其三动量大小均为 $p$，则
+\[
+E_1^2=p^2c^2+m_1^2c^4,
+\qquad
+E_2^2=p^2c^2+m_2^2c^4.
+\]
+又由能量守恒
+\[
+E_1+E_2=Mc^2.
+\]
+利用不变量
+\[
+(P_A-P_2)^2=P_1^2,
+\]
+即
+\[
+P_A^2+P_2^2-2P_A\cdot P_2=P_1^2.
+\]
+写成质量形式：
+\[
+M^2c^2+m_2^2c^2-2ME_2/c=m_1^2c^2.
+\]
+整理得
+\[
+E_2=\frac{M^2+m_2^2-m_1^2}{2M}c^2.
+\]
+同理
+\[
+E_1=\frac{M^2+m_1^2-m_2^2}{2M}c^2.
+\]
+这就是两体衰变在母粒子静止系中的标准结果。
+\end{solution}
+\end{university}
+
+\begin{university}
+光源以速度 $v$ 远离观察者沿视线方向运动，其本征频率为 $f_0$。推导观察者接收到的频率 $f$，并讨论 $v\ll c$ 的近似结果。
+\begin{solution}
+相对论多普勒效应公式为
+\[
+ f=f_0\sqrt{\frac{1-\beta}{1+\beta}},
+ \qquad \beta=\frac{v}{c},
+\]
+这里取光源远离观察者，因此频率降低。
+
+推导可由两步完成：先在光源静止系考虑相邻两个波峰的发射时间间隔 $\Delta t_0=1/f_0$，再用洛伦兹变换求观察者系中相邻波峰的时间间隔。最终可得
+\[
+\Delta t=\Delta t_0\sqrt{\frac{1+\beta}{1-\beta}},
+\]
+故
+\[
+ f=\frac{1}{\Delta t}=f_0\sqrt{\frac{1-\beta}{1+\beta}}.
+\]
+当 $v\ll c$ 时，对根式作一阶展开：
+\[
+\sqrt{\frac{1-\beta}{1+\beta}}\approx 1-\beta.
+\]
+所以
+\[
+ f\approx f_0\qty(1-\frac{v}{c}),
+\]
+这就回到经典多普勒效应的一阶近似。
+\end{solution}
+\end{university}
+
+\section{综合题}
+
+\begin{problem}
+设飞船初始静质量为 $M_0$，不断向后喷射质量，喷气相对飞船瞬时静止系的速度恒为 $u$。推导相对论火箭方程，求飞船速度 $v$ 与质量比 $M_0/M$ 的关系。
+\begin{solution}
+令飞船在某一瞬时静止系中静止，此时其质量为 $M$。经过极短时间后，飞船向前获得速度 $\dd{v}$，并向后喷出静质量为 $-\dd{M}$ 的燃料（其中 $\dd{M}<0$）。喷气相对飞船的后向速度为 $u$。
+
+在该瞬时静止系中，发射前总动量为零，发射后由动量守恒得
+\[
+M\dd{v}+\gamma_u(-\dd{M})(-u)=0,
+\]
+即
+\[
+M\dd{v}=-\gamma_u u\dd{M},
+\qquad
+\gamma_u=\frac{1}{\sqrt{1-u^2/c^2}}.
+\]
+这是在瞬时静止系中得到的微分关系。为了将许多瞬时静止系累积起来，需要使用快速度（rapidity）
+\[
+\dd{\eta}=\frac{\dd{v}}{1-v^2/c^2}=\gamma^2\frac{\dd{v}}{c}\cdot\frac{1}{c}c.
+\]
+更直接的做法是利用相对论速度叠加对应快速度可加：
+\[
+\eta=\operatorname{artanh}\frac{v}{c}.
+\]
+对每一次微小喷射，快速度增量满足
+\[
+\dd{\eta}=-\frac{u}{c}\frac{\dd{M}}{M}.
+\]
+从初态 $M_0,v=0$ 积分到末态 $M,v$，得
+\[
+\int_0^{\eta}\dd{\eta}=-\frac{u}{c}\int_{M_0}^{M}\frac{\dd{M}}{M}.
+\]
+故
+\[
+\eta=\frac{u}{c}\ln\frac{M_0}{M}.
+\]
+于是
+\[
+\operatorname{artanh}\frac{v}{c}=\frac{u}{c}\ln\frac{M_0}{M}.
+\]
+最终得到相对论火箭方程
+\[
+\frac{v}{c}=\tanh\qty(\frac{u}{c}\ln\frac{M_0}{M}).
+\]
+即
+\[
+ v=c\tanh\qty(\frac{u}{c}\ln\frac{M_0}{M}).
+\]
+当 $v\ll c$ 且 $u\ll c$ 时，$\tanh x\approx x$，于是退化为经典齐奥尔科夫斯基方程
+\[
+ v\approx u\ln\frac{M_0}{M}.
+\]
+\end{solution}
+\end{problem}
+
+\begin{problem}
+给出质能关系 $E=mc^2$ 的两种推导思路：
+\begin{enumerate}
+  \item 由相对论动能积分出总能量；
+  \item 由物体发射光脉冲前后的动量守恒与能量守恒说明质量亏损与辐射能量的关系。
+\end{enumerate}
+\begin{solution}
+\textbf{方法一：由动能积分。}
+
+相对论中力与动量关系仍为
+\[
+\vb{F}=\dv{\vb{p}}{t},
+\qquad
+\vb{p}=\gamma m\vb{v}.
+\]
+功率为
+\[
+\dv{K}{t}=\vb{F}\cdot\vb{v}=\vb{v}\cdot\dv{\vb{p}}{t}.
+\]
+积分可得
+\[
+K=\int \vb{v}\cdot \dd{\vb{p}}= (\gamma-1)mc^2.
+\]
+于是总能量定义为静能加动能：
+\[
+E=K+mc^2=\gamma mc^2.
+\]
+当粒子静止时 $\gamma=1$，故
+\[
+E_0=mc^2.
+\]
+这就是静质量对应的静能。
+
+\textbf{方法二：爱因斯坦光盒思想。}
+
+设某物体在自身静止系中向相反两个方向发出两束等能光，各束能量为 $L/2$，故总辐射能量为 $L$。由于两束光反向，系统总动量仍为零，物体发射前后都保持静止。
+
+若在另一个相对运动参考系中观察，前后向光束的能量不同，但总动量和总能量仍守恒。比较发射前后物体动能的变化，可得到物体由于辐射能量 $L$ 而减少的质量满足
+\[
+\Delta m=\frac{L}{c^2}.
+\]
+即质量变化与能量变化关系为
+\[
+\Delta E=\Delta m\,c^2.
+\]
+把这一关系推广到任意物体的静能，即得
+\[
+E_0=mc^2.
+\]
+两种推导分别从动力学与辐射过程说明：质量本身就是能量的一种形式。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+考虑反应
+\[
+a+b\to c+d,
+\]
+其中靶粒子 $b$ 在实验室系静止。设各粒子静质量分别为 $m_a,m_b,m_c,m_d$。求发生该反应所需的入射粒子 $a$ 的最小总能量（阈能）$E_{a,\mathrm{th}}$。
+\begin{solution}
+关键思想：阈值时，在质心系中末态粒子没有相对运动，即它们共同静止，因此末态总能量最小，为
+\[
+E_{\mathrm{cm,th}}=(m_c+m_d)c^2.
+\]
+引入 Mandelstam 不变量
+\[
+ s=(P_a+P_b)^2,
+\]
+它在任意参考系中不变。
+
+在阈值条件下，于质心系有
+\[
+ s_{\mathrm{th}}=(m_c+m_d)^2c^2.
+\]
+在实验室系中，$b$ 静止，所以
+\[
+P_a^2=m_a^2c^2,
+\qquad
+P_b^2=m_b^2c^2,
+\qquad
+P_a\cdot P_b=m_bE_a.
+\]
+因此
+\[
+ s=m_a^2c^2+m_b^2c^2+2m_bE_a.
+\]
+令其等于阈值时的不变量，得
+\[
+ m_a^2c^2+m_b^2c^2+2m_bE_{a,\mathrm{th}}=(m_c+m_d)^2c^2.
+\]
+解得入射粒子的阈总能量
+\[
+ E_{a,\mathrm{th}}=\frac{(m_c+m_d)^2-m_a^2-m_b^2}{2m_b}c^2.
+\]
+若要阈动能，只需再减去入射粒子静能：
+\[
+ K_{a,\mathrm{th}}=E_{a,\mathrm{th}}-m_ac^2.
+\]
+这个结果广泛用于粒子物理与核反应的阈值估算。
+\end{solution}
+\end{problem}

@@ -1,5 +1,5 @@
 % ============================================================================
-% main.tex — 《微积分物理学——从牛顿到爱因斯坦》
+% main.tex — 《物理习题集——从高考到竞赛》
 % ============================================================================
 \documentclass[12pt, a4paper, openany]{book}
 
@@ -15,7 +15,7 @@
   \begin{tikzpicture}[remember picture, overlay]
     \fill[black!60] (current page.north west) rectangle
       ([yshift=-0.6cm]current page.north east);
-    \fill[red!40!black] ([yshift=-2.5cm]current page.north west) rectangle
+    \fill[orange!50!black] ([yshift=-2.5cm]current page.north west) rectangle
       ([yshift=-7.5cm]current page.north east);
     \fill[black!60] ([yshift=1.8cm]current page.south west) rectangle
       ([yshift=2.2cm]current page.south east);
@@ -24,15 +24,15 @@
   \centering
   \vspace*{2.2cm}
 
-  {\color{white}\fontsize{36}{44}\selectfont\bfseries 从牛顿到爱因斯坦\par}
+  {\color{white}\fontsize{36}{44}\selectfont\bfseries 物理习题集\par}
   \vspace{0.5cm}
-  {\color{white!90}\LARGE 用微积分重新理解物理\par}
+  {\color{white!90}\LARGE 从高考到竞赛：微积分的暴力美学\par}
 
   \vspace{3cm}
 
-  {\large\itshape 以数学的严谨，讲物理的直觉\par}
+  {\large\itshape 《从牛顿到爱因斯坦》配套习题集\par}
   \vspace{0.3cm}
-  {\normalsize 力学 $\cdot$ 电磁学 $\cdot$ 狭义相对论\par}
+  {\normalsize 高考真题 $\cdot$ 物理竞赛 $\cdot$ 大学物理 $\cdot$ 微分方程\par}
 
   \vfill
 
@@ -49,44 +49,43 @@
 % ============================================================================
 % 第一部分：力学
 % ============================================================================
-\part{力学}
+\part{力学习题}
 
-\include{chapters/ch01-calculus-primer}
-\include{chapters/ch02-kinematics}
-\include{chapters/ch03-newton-laws}
+\include{chapters/ch01-kinematics}
+\include{chapters/ch02-newton-laws}
+\include{chapters/ch03-springs-oscillations}
 \include{chapters/ch04-momentum}
 \include{chapters/ch05-work-energy}
 \include{chapters/ch06-gravitation}
-\include{chapters/ch07-oscillations-waves}
+\include{chapters/ch07-pendulum}
 
 % ============================================================================
 % 第二部分：电磁学
 % ============================================================================
-\part{电磁学}
+\part{电磁学习题}
 
 \include{chapters/ch08-electrostatics}
 \include{chapters/ch09-potential-capacitance}
 \include{chapters/ch10-circuits}
 \include{chapters/ch11-magnetism}
 \include{chapters/ch12-electromagnetic-induction}
-\include{chapters/ch13-maxwell-equations}
 
 % ============================================================================
-% 第三部分：狭义相对论
+% 第三部分：综合
 % ============================================================================
-\part{狭义相对论}
+\part{综合与相对论}
 
-\include{chapters/ch14-special-relativity}
-\include{chapters/ch15-relativistic-dynamics}
+\include{chapters/ch13-maxwell}
+\include{chapters/ch14-relativity}
 
 % ============================================================================
 % 附录
 % ============================================================================
 \appendix
 
-\include{chapters/app-a-vector-analysis}
-\include{chapters/app-b-ode}
-\include{chapters/app-c-constants}
+\include{chapters/app-a-ode-cheatsheet}
+\include{chapters/app-b-numerical-methods}
+\include{chapters/app-c-python}
 
 % --- 索引 ---
 \printindex

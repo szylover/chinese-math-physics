@@ -1,0 +1,132 @@
+% ============================================================================
+% preamble.tex — 物理习题集
+% ============================================================================
+
+% --- 中文支持 ---
+\usepackage[fontset=fandol]{ctex}
+\usepackage{fontspec}
+
+% --- 页面布局 ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+% --- 数学 ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{physics}
+
+% --- 图表 ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% --- 绘图 ---
+\usepackage{tikz}
+\usetikzlibrary{
+  positioning, calc, arrows.meta,
+  decorations.pathreplacing, decorations.markings,
+  patterns, angles, quotes,
+}
+\usepackage[american]{circuitikz}
+
+% --- 代码 ---
+\usepackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  numbers=left, numberstyle=\tiny\color{gray},
+  frame=single, breaklines=true,
+}
+
+% --- 单位 ---
+\usepackage{siunitx}
+\sisetup{per-mode=symbol}
+
+% --- 超链接 ---
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=cyan!50!black,
+}
+\usepackage[nameinlink]{cleveref}
+
+% --- 索引 ---
+\usepackage{makeidx}
+\makeindex
+
+% --- 颜色与框 ---
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable, skins, listings}
+
+% ============================================================================
+% 习题环境
+% ============================================================================
+
+\newcounter{problem}[chapter]
+\renewcommand{\theproblem}{\thechapter.\arabic{problem}}
+
+% 普通习题（蓝色框）
+\newtcolorbox{problem}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=12pt, after skip=12pt,
+  colback=blue!3, colframe=blue!40!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  title={\refstepcounter{problem}\bfseries 题 \theproblem},
+  fonttitle=\large, coltitle=white, colbacktitle=blue!50!black,
+  #1
+}
+
+% 高考题（紫色框）
+\newtcolorbox{gaokao}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=12pt, after skip=12pt,
+  colback=violet!3, colframe=violet!50!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  title={\refstepcounter{problem}\bfseries 高考题 \theproblem},
+  fonttitle=\large, coltitle=white, colbacktitle=violet!60!black,
+  #1
+}
+
+% 竞赛题（红色框）
+\newtcolorbox{competition}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=12pt, after skip=12pt,
+  colback=red!3, colframe=red!50!black,
+  boxrule=0.8pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  title={\refstepcounter{problem}\bfseries 竞赛题 \theproblem},
+  fonttitle=\large, coltitle=white, colbacktitle=red!60!black,
+  #1
+}
+
+% 大学物理题（绿色框）
+\newtcolorbox{university}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=12pt, after skip=12pt,
+  colback=green!3, colframe=green!40!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  title={\refstepcounter{problem}\bfseries 大学物理 \theproblem},
+  fonttitle=\large, coltitle=white, colbacktitle=green!50!black,
+  #1
+}
+
+% 解答环境
+\newenvironment{solution}{%
+  \par\noindent\textbf{解：}\par\nopagebreak
+}{\par\medskip}
+
+% ============================================================================
+% 物理符号
+% ============================================================================
+\newcommand{\vect}[1]{\vb{#1}}
+\newcommand{\uvec}[1]{\vu{#1}}
+\newcommand{\magn}[1]{\left|#1\right|}
+\newcommand{\avg}[1]{\langle #1 \rangle}

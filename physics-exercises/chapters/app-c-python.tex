@@ -1,0 +1,288 @@
+\chapter{Python 代码示例}
+
+本附录给出若干可直接运行的 Python 示例。默认读者已安装 \texttt{numpy}、\texttt{matplotlib}，其中第一题还需要 \texttt{scipy}。
+
+\section{用 \texttt{scipy.integrate.odeint} 求解阻尼振子}
+
+考虑方程
+\[
+ m\ddot x+b\dot x+kx=0.
+\]
+将其化为一阶方程组后，可用 \texttt{odeint} 直接求解。
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+m = 1.0
+b = 0.4
+k = 4.0
+
+
+def rhs(state, t, m, b, k):
+    x, v = state
+    dxdt = v
+    dvdt = -(b / m) * v - (k / m) * x
+    return [dxdt, dvdt]
+
+
+t = np.linspace(0.0, 20.0, 2000)
+y0 = [1.0, 0.0]
+sol = odeint(rhs, y0, t, args=(m, b, k))
+x = sol[:, 0]
+v = sol[:, 1]
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, x, label='x(t)')
+plt.plot(t, v, label='v(t)', alpha=0.8)
+plt.xlabel('t')
+plt.ylabel('state')
+plt.title('Damped Oscillator solved by odeint')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\section{用 RK4 手写求解抛体加空气阻力}
+
+这里采用速度平方阻力模型，阻力方向与速度相反：
+\[
+\vb{F}_d=-c\abs{\vb{v}}\vb{v}.
+\]
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+g = 9.81
+c_drag = 0.02
+m = 1.0
+h = 0.01
+T = 12.0
+
+speed0 = 50.0
+angle = np.deg2rad(45.0)
+state = np.array([0.0, 0.0,
+                  speed0 * np.cos(angle),
+                  speed0 * np.sin(angle)], dtype=float)
+
+
+def rhs(s):
+    x, y, vx, vy = s
+    v = np.hypot(vx, vy)
+    ax = -(c_drag / m) * v * vx
+    ay = -g - (c_drag / m) * v * vy
+    return np.array([vx, vy, ax, ay], dtype=float)
+
+
+def rk4_step(s, h):
+    k1 = rhs(s)
+    k2 = rhs(s + 0.5 * h * k1)
+    k3 = rhs(s + 0.5 * h * k2)
+    k4 = rhs(s + h * k3)
+    return s + (h / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
+
+
+ts = [0.0]
+xs = [state[0]]
+ys = [state[1]]
+
+while ts[-1] < T and state[1] >= 0.0:
+    state = rk4_step(state, h)
+    ts.append(ts[-1] + h)
+    xs.append(state[0])
+    ys.append(state[1])
+
+plt.figure(figsize=(7, 4))
+plt.plot(xs, ys, label='with drag')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Projectile with Air Drag (RK4)')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\section{大角度单摆的数值解与小角近似对比}
+
+完整方程为
+\[
+\ddot \theta+\frac{g}{L}\sin\theta=0,
+\]
+小角近似则将 $\sin\theta$ 替换为 $\theta$。
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+g = 9.81
+L = 1.0
+h = 0.01
+T = 12.0
+state = np.array([1.2, 0.0], dtype=float)  # theta, omega
+
+
+def rhs_exact(s):
+    theta, omega = s
+    return np.array([omega, -(g / L) * np.sin(theta)], dtype=float)
+
+
+def rhs_small(s):
+    theta, omega = s
+    return np.array([omega, -(g / L) * theta], dtype=float)
+
+
+def rk4_step(rhs, s, h):
+    k1 = rhs(s)
+    k2 = rhs(s + 0.5 * h * k1)
+    k3 = rhs(s + 0.5 * h * k2)
+    k4 = rhs(s + h * k3)
+    return s + (h / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
+
+
+t_vals = np.arange(0.0, T + h, h)
+state_exact = state.copy()
+state_small = state.copy()
+exact = []
+small = []
+
+for _ in t_vals:
+    exact.append(state_exact[0])
+    small.append(state_small[0])
+    state_exact = rk4_step(rhs_exact, state_exact, h)
+    state_small = rk4_step(rhs_small, state_small, h)
+
+plt.figure(figsize=(8, 4))
+plt.plot(t_vals, exact, label='nonlinear pendulum')
+plt.plot(t_vals, small, '--', label='small-angle approximation')
+plt.xlabel('t')
+plt.ylabel('theta')
+plt.title('Pendulum: Exact vs Small-Angle Approximation')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\section{RLC 电路暂态响应}
+
+对串联 RLC 电路，电荷满足
+\[
+ L\ddot q+R\dot q+\frac{1}{C}q=0.
+\]
+下例展示欠阻尼情形的暂态衰减振荡。
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+L = 0.5
+R = 1.0
+C = 0.2
+h = 0.002
+T = 10.0
+state = np.array([1.0, 0.0], dtype=float)  # q, i
+
+
+def rhs(s):
+    q, i = s
+    dqdt = i
+    didt = -(R / L) * i - q / (L * C)
+    return np.array([dqdt, didt], dtype=float)
+
+
+def rk4_step(s, h):
+    k1 = rhs(s)
+    k2 = rhs(s + 0.5 * h * k1)
+    k3 = rhs(s + 0.5 * h * k2)
+    k4 = rhs(s + h * k3)
+    return s + (h / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
+
+
+t_vals = np.arange(0.0, T + h, h)
+q_vals = []
+i_vals = []
+
+for _ in t_vals:
+    q_vals.append(state[0])
+    i_vals.append(state[1])
+    state = rk4_step(state, h)
+
+plt.figure(figsize=(8, 4))
+plt.plot(t_vals, q_vals, label='charge q(t)')
+plt.plot(t_vals, i_vals, label='current i(t)', alpha=0.8)
+plt.xlabel('t')
+plt.ylabel('response')
+plt.title('Transient Response of a Series RLC Circuit')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\section{带电粒子在磁场中的螺旋运动 3D 轨迹}
+
+令均匀磁场为 $\vb{B}=B\vu{z}$，忽略电场，则洛伦兹力为
+\[
+ m\dv{\vb{v}}{t}=q\vb{v}\times\vb{B}.
+\]
+当速度具有平行与垂直于磁场的分量时，轨迹是螺旋线。
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
+q = 1.0
+m = 1.0
+Bz = 1.5
+h = 0.01
+T = 30.0
+state = np.array([0.0, 0.0, 0.0,
+                  1.0, 0.5, 0.8], dtype=float)  # x, y, z, vx, vy, vz
+
+
+def rhs(s):
+    x, y, z, vx, vy, vz = s
+    ax = (q / m) * vy * Bz
+    ay = -(q / m) * vx * Bz
+    az = 0.0
+    return np.array([vx, vy, vz, ax, ay, az], dtype=float)
+
+
+def rk4_step(s, h):
+    k1 = rhs(s)
+    k2 = rhs(s + 0.5 * h * k1)
+    k3 = rhs(s + 0.5 * h * k2)
+    k4 = rhs(s + h * k3)
+    return s + (h / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
+
+
+t_vals = np.arange(0.0, T + h, h)
+xs, ys, zs = [], [], []
+
+for _ in t_vals:
+    xs.append(state[0])
+    ys.append(state[1])
+    zs.append(state[2])
+    state = rk4_step(state, h)
+
+fig = plt.figure(figsize=(7, 5))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(xs, ys, zs, lw=1.5)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.set_title('Helical Motion in a Uniform Magnetic Field')
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+以上代码均可直接保存为 \texttt{.py} 文件运行。若希望提高可重复性，可进一步加入参数封装、命令行输入与数据导出功能。

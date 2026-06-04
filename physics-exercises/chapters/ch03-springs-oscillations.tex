@@ -1,0 +1,463 @@
+\chapter{弹簧与振动}
+
+弹簧和振动问题是牛顿力学与微分方程最自然的交汇点：平衡位置决定静态偏移，回复力决定本征频率，阻尼与外驱动则塑造系统的长期行为。本章从高考常见弹簧题逐步过渡到非线性振动、耦合模态与参数共振。
+
+\section*{高考真题}
+
+\begin{gaokao}
+质量为 $m$ 的小球连接在劲度系数为 $k$ 的轻弹簧末端，在光滑水平面上做简谐振动。
+
+(1) 建立运动方程并求周期；
+
+(2) 若振幅为 $A$，求最大速度与最大加速度；
+
+(3) 说明周期与振幅无关的条件。
+
+\begin{solution}
+取平衡位置为原点，位移为 $x$，回复力为
+\[
+F=-kx.
+\]
+由牛顿第二定律
+\[
+m\ddot x=-kx,
+\qquad
+\ddot x+\omega_0^2 x=0,
+\qquad
+\omega_0=\sqrt{\frac{k}{m}}.
+\]
+因此周期为
+\[
+T=\frac{2\pi}{\omega_0}=2\pi\sqrt{\frac{m}{k}}.
+\]
+
+若取解为
+\[
+x=A\cos(\omega_0 t+\phi),
+\]
+则速度与加速度分别为
+\[
+v=\dot x=-A\omega_0\sin(\omega_0 t+\phi),
+\qquad
+a=\ddot x=-A\omega_0^2\cos(\omega_0 t+\phi).
+\]
+所以
+\[
+v_{\max}=A\omega_0=A\sqrt{\frac{k}{m}},
+\qquad
+a_{\max}=A\omega_0^2=\frac{kA}{m}.
+\]
+
+周期与振幅无关，是线性回复力模型 $F=-kx$ 的直接结果。一旦弹簧偏离胡克定律或振幅过大使非线性项不可忽略，周期就会出现振幅依赖。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+一小物块质量为 $m$，以速度 $v_0$ 滑向静止在光滑水平面上的另一物块并与其相连的轻弹簧。两物块质量均为 $m$，碰撞过程中仅通过弹簧相互作用。
+
+(1) 求系统质心速度；
+
+(2) 求最大压缩量；
+
+(3) 说明压缩到最紧时两物块速度为何相同。
+
+\begin{solution}
+系统水平方向不受外力，因此总动量守恒。初始总动量为 $mv_0$，总质量为 $2m$，故质心速度
+\[
+V_C=\frac{mv_0}{2m}=\frac{v_0}{2}.
+\]
+
+最大压缩时，两物块相对速度为零，因此它们瞬时速度都等于质心速度 $v_0/2$。这是因为弹簧只改变相对运动，不改变系统质心运动。
+
+由机械能守恒，初态总动能为
+\[
+E_i=\frac12 mv_0^2.
+\]
+最大压缩时，两块共同以 $v_0/2$ 运动，平动动能为
+\[
+E_C=2\cdot \frac12 m\qty(\frac{v_0}{2})^2=\frac14 mv_0^2.
+\]
+剩余能量全部转化为弹性势能：
+\[
+\frac12 kx_{\max}^2=E_i-E_C=\frac14 mv_0^2.
+\]
+故
+\[
+x_{\max}=v_0\sqrt{\frac{m}{2k}}.
+\]
+
+从相对运动观点看，初始相对速度为 $v_0$，压缩到最紧时相对速度降为零；这正是弹簧暂时储存全部相对运动能的时刻。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+一竖直弹簧秤上挂一质量为 $m$ 的物块，弹簧劲度系数为 $k$。若将物块从弹簧原长位置由静止释放，求弹簧秤读数随时间的变化，并从微积分角度解释其平均值。
+
+\begin{solution}
+设向下为正，弹簧伸长量为 $x$，则运动方程为
+\[
+m\ddot x=mg-kx.
+\]
+平衡位置在
+\[
+x_0=\frac{mg}{k}.
+\]
+令 $\xi=x-x_0$，则
+\[
+\ddot\xi+\omega_0^2\xi=0,
+\qquad
+\omega_0=\sqrt{\frac{k}{m}}.
+\]
+初始条件为 $x(0)=0,\ \dot x(0)=0$，故
+\[
+\xi(0)=-x_0,
+\qquad
+\dot\xi(0)=0.
+\]
+于是
+\[
+\xi(t)=-x_0\cos\omega_0 t,
+\qquad
+x(t)=x_0\qty(1-\cos\omega_0 t).
+\]
+弹簧秤读数就是弹簧弹力大小
+\[
+N(t)=kx(t)=mg\qty(1-\cos\omega_0 t).
+\]
+其最小值为 $0$，最大值为 $2mg$。
+
+一个周期内的平均读数为
+\[
+\bar N=\frac1T\int_0^T N(t)\,\dd t=mg\qty(1-\frac1T\int_0^T \cos\omega_0 t\,\dd t)=mg.
+\]
+这表明虽然瞬时读数在振荡，但时间平均值等于真实重力。微积分的作用在于：平均值不是凭直觉，而是通过一个周期积分严格得到的。
+\end{solution}
+\end{gaokao}
+
+\section*{竞赛题}
+
+\begin{competition}
+两个质量均为 $m$ 的小块排成一线放在光滑水平面上，左端通过劲度系数 $k$ 的弹簧连墙，两块之间再由劲度系数同为 $k$ 的弹簧连接。设两块位移分别为 $x_1,x_2$。
+
+(1) 写出耦合运动方程；
+
+(2) 求系统的正常模频率；
+
+(3) 给出两种模态的振型。
+
+\begin{solution}
+对第一个小块，受左弹簧力 $-kx_1$ 与中间弹簧力 $k(x_2-x_1)$，故
+\[
+m\ddot x_1=-kx_1+k(x_2-x_1)=-2kx_1+kx_2.
+\]
+对第二个小块，仅受中间弹簧力
+\[
+m\ddot x_2=-k(x_2-x_1)=kx_1-kx_2.
+\]
+即
+\[
+m\ddot x_1+2kx_1-kx_2=0,
+\qquad
+m\ddot x_2-kx_1+kx_2=0.
+\]
+
+设正常模解为
+\[
+x_1=A\cos\omega t,
+\qquad
+x_2=B\cos\omega t.
+\]
+代入得线性代数方程
+\[
+(2k-m\omega^2)A-kB=0,
+\qquad
+-kA+(k-m\omega^2)B=0.
+\]
+非平凡解要求行列式为零：
+\[
+(2k-m\omega^2)(k-m\omega^2)-k^2=0.
+\]
+整理为
+\[
+m^2\omega^4-3km\omega^2+k^2=0.
+\]
+因此
+\[
+\omega_{\pm}^2=\frac{k}{m}\cdot\frac{3\pm\sqrt5}{2}.
+\]
+
+对每个频率，由
+\[
+\frac{B}{A}=\frac{2k-m\omega^2}{k}
+\]
+可求振型。低频模对应两块大致同向运动；高频模对应两块反向运动，且中间弹簧形变更显著。这就是耦合振动的两个正常模。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+非线性弹簧满足
+\[
+F=-kx-\alpha x^3,
+\qquad \alpha>0.
+\]
+在小振幅条件下，试用谐波平衡思想求振动频率对振幅 $A$ 的一阶修正。
+
+\begin{solution}
+运动方程为
+\[
+m\ddot x+kx+\alpha x^3=0.
+\]
+记
+\[
+\omega_0^2=\frac{k}{m},
+\qquad
+\epsilon=\frac{\alpha}{m}.
+\]
+若振幅较小，可设近似解为
+\[
+x=A\cos\omega t.
+\]
+代入得
+\[
+-A\omega^2\cos\omega t+\omega_0^2 A\cos\omega t+\epsilon A^3\cos^3\omega t=0.
+\]
+利用恒等式
+\[
+\cos^3\omega t=\frac34\cos\omega t+\frac14\cos3\omega t,
+\]
+若忽略三次谐波 $\cos3\omega t$ 的小影响，仅保留基频项，则有
+\[
+-\omega^2A+\omega_0^2A+\frac34\epsilon A^3\approx 0.
+\]
+故
+\[
+\omega^2\approx \omega_0^2+\frac{3\alpha}{4m}A^2.
+\]
+于是到一阶近似
+\[
+\omega\approx \omega_0\qty(1+\frac{3\alpha A^2}{8k}).
+\]
+
+因为修正为正，所以振幅越大，频率越高、周期越短。这说明 $\alpha>0$ 时系统是“硬弹簧”；若 $\alpha<0$，则会得到相反的“软弹簧”行为。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一个小球质量为 $m$，悬挂在长度为 $\ell$ 的单摆末端；同时悬点通过一根竖直轻弹簧与天花板相连，弹簧劲度系数为 $k$。在小振动近似下，取竖直伸长量为 $x$、摆角为 $\theta$。
+
+(1) 写出线性化方程；
+
+(2) 说明何种近似下两种振动可以近似解耦；
+
+(3) 写出各自本征频率。
+
+\begin{solution}
+平衡附近，竖直方向的小振动满足
+\[
+m\ddot x+kx\approx 0,
+\]
+而摆角的小振动满足
+\[
+\ddot\theta+\frac{g}{\ell}\theta\approx 0.
+\]
+严格来说，若摆动时悬点上下移动，会使摆长与支点运动出现耦合项。但在小角度且弹簧伸长远小于 $\ell$ 的条件下，这些耦合项为高阶小量，可以忽略。
+
+于是系统近似分解为两个独立简谐振子：
+\[
+\omega_s=\sqrt{\frac{k}{m}},
+\qquad
+\omega_p=\sqrt{\frac{g}{\ell}}.
+\]
+若两频率接近，即
+\[
+\sqrt{\frac{k}{m}}\approx \sqrt{\frac{g}{\ell}},
+\]
+则实际系统中微弱耦合也可能导致能量缓慢交换；这正是耦合振动和拍现象出现的基础。
+\end{solution}
+\end{competition}
+
+\section*{大学物理题}
+
+\begin{university}
+阻尼振动方程为
+\[
+\ddot x+2\gamma \dot x+\omega_0^2 x=0,
+\qquad \gamma<\omega_0.
+\]
+试推导包络线，并说明品质因数 $Q$ 的意义。
+
+\begin{solution}
+欠阻尼解为
+\[
+x(t)=A_0\mathrm e^{-\gamma t}\cos(\omega_d t+\phi),
+\qquad
+\omega_d=\sqrt{\omega_0^2-\gamma^2}.
+\]
+故位移振幅的上下包络线为
+\[
+x_\pm(t)=\pm A_0\mathrm e^{-\gamma t}.
+\]
+可见振幅按指数规律衰减。
+
+机械能与振幅平方成正比，因此
+\[
+E(t)\propto \mathrm e^{-2\gamma t}.
+\]
+每经过一个周期 $T_d=2\pi/\omega_d$，能量损失一小部分。品质因数定义为
+\[
+Q=2\pi\times \frac{\text{储存能量}}{\text{每周期损失能量}}.
+\]
+在弱阻尼条件 $\gamma\ll\omega_0$ 下，可推得
+\[
+Q\approx \frac{\omega_0}{2\gamma}.
+\]
+$Q$ 越大，说明衰减越慢、共振峰越尖锐、系统越“善于储能”。在实验中，测量包络线衰减率或半功率带宽都可用来估算 $Q$。
+\end{solution}
+\end{university}
+
+\begin{university}
+受迫阻尼振子满足
+\[
+\ddot x+2\gamma\dot x+\omega_0^2 x=\frac{F_0}{m}\cos\omega t.
+\]
+求稳态解的振幅与相位差。
+
+\begin{solution}
+设稳态解形式为
+\[
+x_s=X\cos(\omega t-\delta).
+\]
+也可用复数法，令
+\[
+x_s=\Re\qty(\tilde X\mathrm e^{i\omega t}).
+\]
+代入方程得
+\[
+(-\omega^2+2i\gamma\omega+\omega_0^2)\tilde X=\frac{F_0}{m}.
+\]
+故
+\[
+\tilde X=\frac{F_0/m}{\omega_0^2-\omega^2+2i\gamma\omega}.
+\]
+振幅为模长：
+\[
+X=\frac{F_0/m}{\sqrt{(\omega_0^2-\omega^2)^2+4\gamma^2\omega^2}}.
+\]
+相位差满足
+\[
+\tan\delta=\frac{2\gamma\omega}{\omega_0^2-\omega^2}.
+\]
+
+当 $\omega\ll\omega_0$ 时，$\delta\approx 0$，位移几乎与驱动力同相；当 $\omega\gg\omega_0$ 时，$\delta\approx \pi$，系统来不及响应，位移与驱动力近乎反相；在共振附近，$\delta\approx \pi/2$。
+\end{solution}
+\end{university}
+
+\begin{university}
+对于受迫阻尼振子，振幅平方为
+\[
+X^2(\omega)=\frac{(F_0/m)^2}{(\omega_0^2-\omega^2)^2+4\gamma^2\omega^2}.
+\]
+求振幅达到最大时的驱动频率，并说明“共振频率偏移”。
+
+\begin{solution}
+振幅最大等价于分母最小。设
+\[
+D(\omega)=(\omega_0^2-\omega^2)^2+4\gamma^2\omega^2.
+\]
+求导：
+\[
+\dv{D}{\omega}=2(\omega_0^2-\omega^2)(-2\omega)+8\gamma^2\omega.
+\]
+令其为零，除去 $\omega=0$ 的平凡情况，得
+\[
+-4\omega(\omega_0^2-\omega^2)+8\gamma^2\omega=0
+\]
+即
+\[
+\omega^2=\omega_0^2-2\gamma^2.
+\]
+所以振幅最大时的频率为
+\[
+\omega_r=\sqrt{\omega_0^2-2\gamma^2}.
+\]
+
+可见只要存在阻尼，且 $\gamma\ne 0$，就有
+\[
+\omega_r<\omega_0.
+\]
+这就是共振频率偏移：最大响应出现的频率不再等于无阻尼固有频率，而是略微向低频移动。物理上，这是因为阻尼项在共振附近引入额外相位滞后和能量耗散，使系统最易吸收能量的频率发生偏移。
+\end{solution}
+\end{university}
+
+\section*{普通/微分方程题}
+
+\begin{problem}
+考虑阻尼方程
+\[
+\ddot x+2\gamma\dot x+\omega_0^2x=0.
+\]
+证明在所有非振荡返回平衡的位置中，临界阻尼 $\gamma=\omega_0$ 对应“最快回复”。
+
+\begin{solution}
+若要求“不发生振荡”，则必须处于临界阻尼或过阻尼情形，即 $\gamma\ge \omega_0$。对应特征方程
+\[
+r^2+2\gamma r+\omega_0^2=0
+\]
+的两个根为
+\[
+r_{1,2}=-\gamma\pm\sqrt{\gamma^2-\omega_0^2}.
+\]
+系统长期衰减速度由绝对值较小的那个根控制，也就是
+\[
+r_\text{slow}=-\gamma+\sqrt{\gamma^2-\omega_0^2}.
+\]
+其越负，衰减越快。
+
+定义
+\[
+f(\gamma)=\gamma-\sqrt{\gamma^2-\omega_0^2}, \qquad \gamma\ge \omega_0.
+\]
+则长期衰减率为 $f(\gamma)$。对其求导：
+\[
+f'(\gamma)=1-\frac{\gamma}{\sqrt{\gamma^2-\omega_0^2}}<0.
+\]
+所以 $f(\gamma)$ 随 $\gamma$ 增大反而减小，即过阻尼越强，慢模越慢。
+
+当 $\gamma=\omega_0$ 时，重根
+\[
+r=-\omega_0
+\]
+给出解
+\[
+x=(C_1+C_2 t)\mathrm e^{-\omega_0 t}.
+\]
+它恰处于“刚好不振荡”的边界，同时衰减比任意过阻尼情形都更快。因此临界阻尼是非振荡返回平衡的最速方案。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+简述参数共振的基本机制。以方程
+\[
+\ddot x+\omega_0^2\qty[1+h\cos(\Omega t)]x=0,
+\qquad 0<h\ll 1
+\]
+为例，说明为什么当 $\Omega\approx 2\omega_0$ 时振幅容易增长。
+
+\begin{solution}
+这里没有外加驱动力项，但系统参数——等效回复系数——在周期性变化，因此称为参数激励。可以把它理解成“弹簧硬度在不断轻微调制”。
+
+设解近似为
+\[
+x=a(t)\cos\omega_0 t+b(t)\sin\omega_0 t,
+\]
+其中 $a,b$ 随时间缓慢变化。将其代入方程并保留共振项后，可以发现当调制频率 $\Omega$ 接近 $2\omega_0$ 时，会出现与本征振动同频的有效能量注入，导致 $a,b$ 的包络不再衰减或保持常数，而可能满足指数增长方程。
+
+更直观地看：若每当振子经过平衡点时系统恰好变“硬”，而在转折点附近又变“软”，那么一个周期内系统就能从参数变化中吸收净能量。这种“时机匹配”最容易在
+\[
+\Omega\approx 2\omega_0
+\]
+处实现，因为参数变化一个周期对应振子半个周期的关键相位翻转。
+
+因此，参数共振的核心不是外力直接推着走，而是系统参数按合适频率调制，使振子在正确相位上持续吸能。秋千站立起伏、法拉第波等现象都可以看作参数共振的例子。
+\end{solution}
+\end{problem}

@@ -1,0 +1,196 @@
+\chapter{数值方法简介}
+
+解析解并不总是容易得到，尤其在存在阻尼、非线性或复杂外力时，数值方法往往更实用。本附录以常微分方程初值问题
+\[
+\dv{y}{t}=f(t,y),\qquad y(t_0)=y_0
+\]
+为例，介绍最常见的时间推进方法。
+
+\section{欧拉法}
+
+\subsection{前向欧拉法}
+把导数用前向差分近似：
+\[
+\frac{y_{n+1}-y_n}{h}\approx f(t_n,y_n),
+\]
+得到迭代公式
+\[
+ y_{n+1}=y_n+h f(t_n,y_n).
+\]
+其优点是简单，缺点是稳定性较差，局部截断误差为 $\mathcal{O}(h^2)$，全局误差为 $\mathcal{O}(h)$。
+
+\begin{lstlisting}
+Algorithm ForwardEuler(f, t0, y0, h, N)
+    t <- t0
+    y <- y0
+    for n = 0 to N-1
+        y <- y + h * f(t, y)
+        t <- t + h
+    end for
+    return y
+end
+\end{lstlisting}
+
+\subsection{后向欧拉法}
+把导数写在下一时刻：
+\[
+\frac{y_{n+1}-y_n}{h}\approx f(t_{n+1},y_{n+1}),
+\]
+故
+\[
+ y_{n+1}=y_n+h f(t_{n+1},y_{n+1}).
+\]
+这是隐式格式，通常需要每一步求解代数方程，但稳定性更好，尤其适合刚性问题。
+
+\begin{lstlisting}
+Algorithm BackwardEuler(f, solve, t0, y0, h, N)
+    t <- t0
+    y <- y0
+    for n = 0 to N-1
+        find y_new such that y_new = y + h * f(t + h, y_new)
+        y <- y_new
+        t <- t + h
+    end for
+    return y
+end
+\end{lstlisting}
+
+\section{改进欧拉法（Heun 法）}
+Heun 法可看作“预测--校正”思想：先用前向欧拉预测，再用两端斜率平均值修正。
+\[
+\tilde y_{n+1}=y_n+h f(t_n,y_n),
+\]
+\[
+ y_{n+1}=y_n+\frac{h}{2}\qty[f(t_n,y_n)+f(t_{n+1},\tilde y_{n+1})].
+\]
+该方法全局误差为 $\mathcal{O}(h^2)$。
+
+\begin{lstlisting}
+Algorithm Heun(f, t0, y0, h, N)
+    t <- t0
+    y <- y0
+    for n = 0 to N-1
+        k1 <- f(t, y)
+        y_pred <- y + h * k1
+        k2 <- f(t + h, y_pred)
+        y <- y + 0.5 * h * (k1 + k2)
+        t <- t + h
+    end for
+    return y
+end
+\end{lstlisting}
+
+\section{四阶龙格--库塔法（RK4）}
+RK4 是精度与复杂度之间非常经典的平衡方案。其迭代公式为
+\[
+\begin{aligned}
+  k_1&=f(t_n,y_n),\\
+  k_2&=f\qty(t_n+\frac{h}{2},y_n+\frac{h}{2}k_1),\\
+  k_3&=f\qty(t_n+\frac{h}{2},y_n+\frac{h}{2}k_2),\\
+  k_4&=f(t_n+h,y_n+hk_3),\\
+  y_{n+1}&=y_n+\frac{h}{6}(k_1+2k_2+2k_3+k_4).
+\end{aligned}
+\]
+其局部截断误差为 $\mathcal{O}(h^5)$，全局误差为 $\mathcal{O}(h^4)$。
+
+\begin{lstlisting}
+Algorithm RK4(f, t0, y0, h, N)
+    t <- t0
+    y <- y0
+    for n = 0 to N-1
+        k1 <- f(t, y)
+        k2 <- f(t + h/2, y + h*k1/2)
+        k3 <- f(t + h/2, y + h*k2/2)
+        k4 <- f(t + h,   y + h*k3)
+        y <- y + h * (k1 + 2*k2 + 2*k3 + k4) / 6
+        t <- t + h
+    end for
+    return y
+end
+\end{lstlisting}
+
+\section{误差分析}
+
+数值方法的误差通常分为三类：
+\begin{itemize}
+  \item \textbf{截断误差}：用差分替代导数时引入的误差；
+  \item \textbf{舍入误差}：有限精度浮点运算带来的误差；
+  \item \textbf{模型误差}：原始方程本身对真实系统的近似所导致的误差。
+\end{itemize}
+
+设精确解为 $y(t_n)$，数值解为 $y_n$，则全局误差定义为
+\[
+ e_n=y(t_n)-y_n.
+\]
+步长 $h$ 减小时，通常截断误差下降，但步数增加后舍入误差可能累积。因此步长并非越小越好，需要兼顾精度与计算成本。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[->] (0,0) -- (7,0) node[right] {$h$};
+  \draw[->] (0,0) -- (0,4.5) node[above] {误差};
+  \draw[blue, thick] plot[smooth] coordinates {(0.8,4.0) (1.8,2.8) (3.0,1.8) (4.5,1.0) (6.0,0.5)};
+  \draw[red, thick] plot[smooth] coordinates {(0.8,0.3) (1.8,0.5) (3.0,0.9) (4.5,1.6) (6.0,2.8)};
+  \draw[black!70, thick] plot[smooth] coordinates {(0.8,4.2) (1.8,2.9) (3.0,1.8) (4.5,1.7) (6.0,3.0)};
+  \node[blue] at (5.8,0.8) {截断误差};
+  \node[red] at (5.9,2.6) {舍入误差};
+  \node[black!70] at (5.1,1.6) {总误差};
+\end{tikzpicture}
+\end{center}
+
+上图说明：随着 $h$ 变大，截断误差上升；随着 $h$ 变得极小，舍入误差可能占主导，因此总误差常存在一个最优步长区间。
+
+\section{示例：数值求解阻尼振子}
+
+考虑阻尼振子
+\[
+ m\ddot x+b\dot x+kx=0.
+\]
+令
+\[
+ y_1=x,\qquad y_2=\dot x,
+\]
+则可化为一阶方程组
+\[
+\dv{}{t}
+\begin{pmatrix}
+ y_1\\y_2
+\end{pmatrix}
+=
+\begin{pmatrix}
+ y_2\\ -\dfrac{b}{m}y_2-\dfrac{k}{m}y_1
+\end{pmatrix}.
+\]
+取参数 $m=1$，$b=0.4$，$k=4$，初值 $x(0)=1$，$\dot x(0)=0$。用不同方法求解时，常会观察到：
+\begin{itemize}
+  \item 前向欧拉法会明显放大相位误差；
+  \item Heun 法显著改善幅值漂移；
+  \item RK4 在相同步长下通常最接近精确解；
+  \item 若步长取太大，任何方法都可能失真。
+\end{itemize}
+
+下面的示意图给出三种方法与解析包络的比较趋势。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (0,0) -- (8,0) node[right] {$t$};
+  \draw[->] (0,-2.2) -- (0,2.2) node[above] {$x$};
+  \draw[dashed, gray] plot[smooth] coordinates {(0,1.8) (1,1.4) (2,1.1) (3,0.8) (4,0.6) (5,0.45) (6,0.32) (7,0.24)};
+  \draw[dashed, gray] plot[smooth] coordinates {(0,-1.8) (1,-1.4) (2,-1.1) (3,-0.8) (4,-0.6) (5,-0.45) (6,-0.32) (7,-0.24)};
+  \draw[blue, thick] plot[smooth] coordinates {(0,1.0) (0.8,0.2) (1.6,-0.8) (2.4,-0.1) (3.2,0.65) (4.0,0.05) (4.8,-0.48) (5.6,-0.03) (6.4,0.33) (7.2,0.02)};
+  \draw[green!50!black, thick] plot[smooth] coordinates {(0,1.0) (0.8,0.15) (1.6,-0.72) (2.4,-0.08) (3.2,0.56) (4.0,0.05) (4.8,-0.40) (5.6,-0.02) (6.4,0.27) (7.2,0.01)};
+  \draw[red, thick] plot[smooth] coordinates {(0,1.0) (0.8,0.11) (1.6,-0.66) (2.4,-0.06) (3.2,0.50) (4.0,0.04) (4.8,-0.35) (5.6,-0.02) (6.4,0.22) (7.2,0.01)};
+  \node[blue] at (6.8,1.5) {前向欧拉};
+  \node[green!50!black] at (6.7,1.2) {Heun};
+  \node[red] at (6.7,0.9) {RK4};
+  \node[gray] at (6.7,0.55) {解析包络};
+\end{tikzpicture}
+\end{center}
+
+\section{方法选用建议}
+
+\begin{itemize}
+  \item 课堂推导与快速编程：前向欧拉法；
+  \item 需要比欧拉法更好但仍保持简单：Heun 法；
+  \item 普通非刚性物理问题的默认选择：RK4；
+  \item 刚性系统、耗散系统或需大步长稳定性：后向欧拉或更高阶隐式方法。
+\end{itemize}

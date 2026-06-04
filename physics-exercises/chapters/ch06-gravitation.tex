@@ -1,0 +1,414 @@
+\chapter{万有引力与天体运动}
+
+本章把万有引力、轨道方程与天体工程问题放在同一套能量与角动量框架下讨论。习题既包含高考常见的卫星变轨，也包含竞赛与大学物理中常见的开普勒定律、双体问题和轨道微分方程。
+
+\section{高考题}
+
+\begin{gaokao}
+某卫星原来在半径为 $r_1$ 的圆轨道上运行，现经一次短时点火变轨到远地点为 $r_2$ 的椭圆轨道，随后在远地点再次点火进入半径为 $r_2$ 的圆轨道。设中心天体质量为 $M$。
+\begin{enumerate}
+  \item 写出两圆轨道上的速度；
+  \item 写出转移椭圆在近地点和远地点的速度；
+  \item 说明两次点火都需要“加速”还是“减速”。
+\end{enumerate}
+\begin{solution}
+圆轨道速度满足
+\[
+v_c=\sqrt{\frac{GM}{r}}.
+\]
+因此
+\[
+v_1=\sqrt{\frac{GM}{r_1}},\qquad v_2=\sqrt{\frac{GM}{r_2}}.
+\]
+转移椭圆半长轴
+\[
+a=\frac{r_1+r_2}{2}.
+\]
+由 vis-viva 公式
+\[
+v^2=GM\qty(\frac{2}{r}-\frac{1}{a}),
+\]
+得近地点速度
+\[
+v_p=\sqrt{GM\qty(\frac{2}{r_1}-\frac{2}{r_1+r_2})}
+=\sqrt{\frac{2GMr_2}{r_1(r_1+r_2)}},
+\]
+远地点速度
+\[
+v_a=\sqrt{GM\qty(\frac{2}{r_2}-\frac{2}{r_1+r_2})}
+=\sqrt{\frac{2GMr_1}{r_2(r_1+r_2)}}.
+\]
+比较大小可得
+\[
+v_p>v_1,\qquad v_a<v_2.
+\]
+因此第一次点火要在近地点加速，第二次点火也要在远地点加速，才能由较慢的椭圆轨道速度提升为目标圆轨道速度。这正是霍曼转移的基本思想。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92,>=Latex]
+  \fill[blue!20] (0,0) circle (0.55);
+  \draw[thick] (0,0) circle (0.55);
+  \draw[thick, violet!70!black] (0,0) circle (2.0);
+  \draw[thick, violet!70!black] (0,0) circle (3.4);
+  \draw[thick, red!70!black] (0,0) ellipse (2.7 and 2.55);
+  \fill (2.0,0) circle (1.2pt) node[below] {$r_1$};
+  \fill (3.4,0) circle (1.2pt) node[below] {$r_2$};
+  \draw[->, thick] (2.0,0.15) -- ++(0.7,0.4);
+  \draw[->, thick] (3.4,-0.15) -- ++(0.5,0.25);
+\end{tikzpicture}
+\caption{圆轨道与霍曼转移椭圆}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+同步卫星绕地球赤道平面做圆周运动，与地球自转周期相同。设地球质量为 $M_\oplus$、半径为 $R_\oplus$、自转周期为 $T$。
+\begin{enumerate}
+  \item 求同步轨道半径；
+  \item 求同步卫星离地高度；
+  \item 说明同步卫星为何必须位于赤道平面上空。
+\end{enumerate}
+\begin{solution}
+同步卫星角速度为
+\[
+\omega=\frac{2\pi}{T}.
+\]
+圆周运动条件是
+\[
+\frac{GM_\oplus m}{r^2}=m\omega^2 r,
+\]
+故
+\[
+r_{\text{syn}}=\qty(\frac{GM_\oplus T^2}{4\pi^2})^{1/3}.
+\]
+离地高度为
+\[
+h=r_{\text{syn}}-R_\oplus.
+\]
+同步的含义是不仅周期相同，而且卫星在地面观察者看来始终悬停于同一经度上空。若轨道不在赤道平面内，卫星在天空中的投影会随时间南北摆动，因此不能真正“定点”。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+取无穷远处引力势能为零。质量为 $m$ 的小物体位于质量为 $M$ 的天体外部，距中心为 $r$。已知引力大小为
+\[
+F(r)=G\frac{Mm}{r^2}.
+\]
+\begin{enumerate}
+  \item 用积分重新推导引力势能；
+  \item 求从 $r_1$ 移到 $r_2$ 的势能变化；
+  \item 解释势能为负的物理意义。
+\end{enumerate}
+\begin{solution}
+沿径向移动时，取远离中心为正方向，则引力径向分量为
+\[
+F_r=-G\frac{Mm}{r^2}.
+\]
+由定义
+\[
+U(r)=-\int_{\infty}^{r} F_r\,\dd r'
+=-\int_{\infty}^{r}\qty(-G\frac{Mm}{r'^2})\dd r'=-\frac{GMm}{r}.
+\]
+故势能变化
+\[
+\Delta U=U(r_2)-U(r_1)=GMm\qty(\frac{1}{r_1}-\frac{1}{r_2}).
+\]
+若 $r_2>r_1$，则 $\Delta U>0$，说明把物体抬远离中心需要外界补充能量。
+
+势能为负表示体系处于束缚态：物体若想到达无穷远，必须至少获得大小为 $|U|$ 的能量，才能把总机械能提升到零。
+\end{solution}
+\end{gaokao}
+
+\section{竞赛题}
+
+\begin{competition}
+设质量为 $m$ 的行星在太阳引力作用下运动，太阳位于原点。由牛顿第二定律
+\[
+m\ddot{\vb{r}}=-\frac{GMm}{r^3}\vb{r}
+\]
+出发，推导开普勒第二定律：单位时间扫过的面积为常量。
+\begin{solution}
+面积速度定义为
+\[
+\dv{A}{t}=\frac12 r^2\dot\theta.
+\]
+只需证明 $r^2\dot\theta$ 为常量。对轨道角动量
+\[
+\vb{L}=m\vb{r}\times \dot{\vb{r}}
+\]
+求导，有
+\[
+\dv{\vb{L}}{t}=m\vb{r}\times \ddot{\vb{r}}.
+\]
+代入牛顿方程得
+\[
+\dv{\vb{L}}{t}=\vb{r}\times \qty(-\frac{GMm}{r^3}\vb{r})=\vb{0}.
+\]
+因此角动量守恒，大小满足
+\[
+L=mr^2\dot\theta=\text{常量}.
+\]
+于是
+\[
+\dv{A}{t}=\frac{L}{2m}=\text{常量}.
+\]
+这说明行星在近日点运动快、远日点运动慢，但单位时间扫过的面积始终相等。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+从半径为 $R$ 的星球表面把质量为 $m$ 的探测器竖直发射。忽略大气阻力，求最小发射速度 $v_e$，使其恰能逃离该星球引力束缚并到达无穷远处速度为零。要求使用积分或能量方法推导，而非直接背诵公式。
+\begin{solution}
+逃逸的临界情形是在无穷远处速度恰为零，因此初始动能全部用来克服引力势垒。由前题结果，
+\[
+U(R)=-\frac{GMm}{R},\qquad U(\infty)=0.
+\]
+设最小发射速度为 $v_e$，则机械能守恒给出
+\[
+\frac12 mv_e^2-\frac{GMm}{R}=0.
+\]
+故
+\[
+v_e=\sqrt{\frac{2GM}{R}}.
+\]
+若坚持直接积分，也可写成
+\[
+\frac12 mv_e^2=\int_R^{\infty} G\frac{Mm}{r^2}\,\dd r=GMm\eval{-\frac{1}{r}}_R^{\infty}=\frac{GMm}{R},
+\]
+结果完全一致。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一艘宇宙飞船利用行星引力弹弓增速。设在行星参考系中，飞船远离行星前后的速度大小都为 $u$，方向相对于行星来向发生偏折角 $\delta$；行星相对太阳系惯性系的速度为 $\vb{V}$。试说明：
+\begin{enumerate}
+  \item 在行星参考系中飞船机械能为何保持不变；
+  \item 在太阳系惯性系中飞船速度为何可能增加；
+  \item 当飞船在行星后方掠过时，速度增量的几何来源是什么。
+\end{enumerate}
+\begin{solution}
+在行星参考系中，行星近似静止，引力场为定常中心力，因此飞船在远处的机械能守恒，前后速率都为 $u$。变化的只是速度方向。
+
+在太阳系惯性系中，飞船速度为
+\[
+\vb{v}=\vb{u}+\vb{V},
+\]
+其中 $\vb{u}$ 是行星系中的速度。掠过前后虽然 $|\vb{u}|$ 不变，但方向改变，因此
+\[
+\vb{v}_{\text{out}}=\vb{u}_{\text{out}}+\vb{V}
+\]
+的模长可能大于
+\[
+\vb{v}_{\text{in}}=\vb{u}_{\text{in}}+\vb{V}.
+\]
+
+若飞船在行星运动方向的后方掠过，偏折后 $\vb{u}_{\text{out}}$ 与 $\vb{V}$ 更接近同向，于是矢量和变长，飞船从行星的轨道能中“借走”一部分能量；相应地，行星速度会发生极其微小的减小。
+
+对小偏折角可估算速度增量量级为
+\[
+\Delta v\sim 2V\sin\frac{\delta}{2},
+\]
+其本质是速度矢量旋转后与行星速度叠加的几何效应。
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+两质点质量分别为 $m_1,m_2$，相互之间只受万有引力作用。
+\begin{enumerate}
+  \item 定义质心坐标与相对坐标；
+  \item 证明双体问题可约化为质量为约化质量 $\mu$ 的单粒子在中心势中运动；
+  \item 写出 $\mu$ 的表达式。
+\end{enumerate}
+\begin{solution}
+定义质心坐标
+\[
+\vb{R}=\frac{m_1\vb{r}_1+m_2\vb{r}_2}{m_1+m_2},
+\]
+相对坐标
+\[
+\vb{r}=\vb{r}_1-\vb{r}_2.
+\]
+系统拉格朗日量可写成
+\[
+L=\frac12 m_1 \dot{\vb{r}}_1^2+\frac12 m_2 \dot{\vb{r}}_2^2+\frac{Gm_1m_2}{r}.
+\]
+代入坐标变换后，动能分裂为
+\[
+T=\frac12 (m_1+m_2)\dot{\vb{R}}^2+\frac12 \mu \dot{\vb{r}}^2,
+\]
+其中
+\[
+\mu=\frac{m_1m_2}{m_1+m_2}
+\]
+称为约化质量。于是拉格朗日量化为
+\[
+L=\frac12 (m_1+m_2)\dot{\vb{R}}^2+\frac12 \mu \dot{\vb{r}}^2+\frac{Gm_1m_2}{r}.
+\]
+第一项给出质心匀速直线运动；第二项说明相对运动等价于一个“质量为 $\mu$ 的粒子”在势能
+\[
+U(r)=-\frac{Gm_1m_2}{r}
+\]
+中运动。于是双体问题被拆成“平动 $+$ 中心力相对运动”两个部分。
+\end{solution}
+\end{university}
+
+\begin{university}
+设航天器从半径 $r_1$ 的圆轨道转移到半径 $r_2$ 的更高圆轨道，采用霍曼转移。
+\begin{enumerate}
+  \item 求转移轨道半长轴；
+  \item 求两次脉冲所需速度增量 $\Delta v_1,\Delta v_2$；
+  \item 证明在共面圆轨道之间，霍曼转移是两次脉冲中最省燃料的经典方案。
+\end{enumerate}
+\begin{solution}
+转移椭圆与两圆轨道相切，因此半长轴
+\[
+a_t=\frac{r_1+r_2}{2}.
+\]
+第一次脉冲位于近地点，所需速度增量
+\[
+\Delta v_1=v_p-v_1=\sqrt{GM\qty(\frac{2}{r_1}-\frac{1}{a_t})}-\sqrt{\frac{GM}{r_1}}.
+\]
+第二次脉冲位于远地点，所需速度增量
+\[
+\Delta v_2=v_2-v_a=\sqrt{\frac{GM}{r_2}}-\sqrt{GM\qty(\frac{2}{r_2}-\frac{1}{a_t})}.
+\]
+故总脉冲为
+\[
+\Delta v_{\text{tot}}=\Delta v_1+\Delta v_2.
+\]
+
+为何它最省？直观上，若只考虑两次瞬时脉冲，那么第一下应在最低轨道处施加，以在速度最大处最有效地提升轨道能；第二下应在目标半径处施加，以消除椭圆轨道与圆轨道的速度差。任何偏离切点的脉冲都会引入额外径向速度分量，增加不必要的动能开销。更严格的证明可由 Lambert 问题或变分法给出，但对共面圆轨道而言，切椭圆方案正是能量和角动量匹配的最简方案。
+\end{solution}
+\end{university}
+
+\begin{university}
+对中心力问题引入 $u(\theta)=1/r$。证明对于引力势
+\[
+\vb{F}(r)=-\frac{k}{r^2}\uvec{r}
+\]
+可得到 Binet 方程
+\[
+\dv[2]{u}{\theta}+u=\frac{k}{h^2},
+\]
+其中 $h=r^2\dot\theta$ 为单位质量角动量。并据此写出轨道方程。
+\begin{solution}
+径向方程为
+\[
+\ddot r-r\dot\theta^2=-\frac{k}{r^2}.
+\]
+由角动量守恒
+\[
+r^2\dot\theta=h,
+\]
+令 $u=1/r$，可得
+\[
+\dot r=\dv{r}{\theta}\dot\theta=-\frac{1}{u^2}\dv{u}{\theta}hu^2=-h\dv{u}{\theta},
+\]
+继续求导得到
+\[
+\ddot r=-h^2u^2\dv[2]{u}{\theta}.
+\]
+同时
+\[
+r\dot\theta^2=\frac{1}{u}\cdot h^2u^4=h^2u^3.
+\]
+代回径向方程：
+\[
+-h^2u^2\dv[2]{u}{\theta}-h^2u^3=-ku^2.
+\]
+两边除以 $-h^2u^2$，即得
+\[
+\dv[2]{u}{\theta}+u=\frac{k}{h^2}.
+\]
+该常系数线性方程通解为
+\[
+u(\theta)=\frac{k}{h^2}\qty(1+e\cos(\theta-\theta_0)).
+\]
+选取极轴使 $\theta_0=0$，便得圆锥曲线轨道
+\[
+r(\theta)=\frac{p}{1+e\cos\theta},\qquad p=\frac{h^2}{k}.
+\]
+当 $0\le e<1$ 为椭圆，$e=1$ 为抛物线，$e>1$ 为双曲线。
+\end{solution}
+\end{university}
+
+\section{拓展题}
+
+\begin{problem}
+设地球为半径 $R$、密度均匀的球体。在地球表面挖一条穿过球心的理想直隧道，小球在隧道中仅受引力作用，无摩擦、无空气阻力。
+\begin{enumerate}
+  \item 证明小球在地球内部所受引力与离球心距离 $r$ 成正比；
+  \item 写出运动方程；
+  \item 求其振动周期以及穿过地心的最大速度。
+\end{enumerate}
+\begin{solution}
+均匀球体内部，半径 $r$ 内包围质量为
+\[
+M(r)=M\frac{r^3}{R^3}.
+\]
+由球壳定理，外层球壳对内部点合引力为零，因此小球仅受内包围质量吸引：
+\[
+F(r)=-G\frac{mM(r)}{r^2}=-G\frac{Mm}{R^3}r.
+\]
+这正是回复力形式。取沿隧道的位移为 $x$，有
+\[
+m\ddot x=-G\frac{Mm}{R^3}x.
+\]
+因此它是简谐振动，角频率
+\[
+\omega=\sqrt{\frac{GM}{R^3}}.
+\]
+周期
+\[
+T=2\pi\sqrt{\frac{R^3}{GM}}.
+\]
+利用 $g=GM/R^2$ 还可写成
+\[
+T=2\pi\sqrt{\frac{R}{g}},
+\]
+恰与近地圆轨道周期相同。
+
+从表面静止释放时，振幅为 $R$，故过地心最大速度
+\[
+v_{\max}=\omega R=\sqrt{\frac{GM}{R}}.
+\]
+这比第一宇宙速度少一个 $\sqrt2$ 因子，因为这里小球并未到达无穷远，而是只在地球内部往复振动。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+设一质量为 $m$、长度为 $\ell$ 的刚体以质心为参考，近距离绕质量为 $M$ 的天体运动。刚体的两端分别位于 $r\pm \ell/2$ 处，且 $\ell\ll r$。
+\begin{enumerate}
+  \item 用泰勒展开求两端引力差；
+  \item 给出沿径向的潮汐加速度近似式；
+  \item 说明为何潮汐力与 $1/r^3$ 标度相关。
+\end{enumerate}
+\begin{solution}
+引力加速度为
+\[
+g(r)=\frac{GM}{r^2}.
+\]
+对两端作一阶展开：
+\[
+g\qty(r\pm \frac{\ell}{2})\approx g(r)\pm \frac{\ell}{2}\dv{g}{r}.
+\]
+于是两端差值为
+\[
+\Delta g\approx \ell\abs{\dv{g}{r}}=\ell\cdot \frac{2GM}{r^3}.
+\]
+因此沿径向的潮汐加速度量级为
+\[
+a_{\text{tidal}}\approx \frac{2GM}{r^3}\ell.
+\]
+前端更靠近天体，受到更大引力；后端更远，受到更小引力，所以刚体会被沿径向拉伸。
+
+之所以出现 $1/r^3$，本质上是因为潮汐效应并不取决于引力本身，而取决于引力场的空间梯度。对反平方律 $g\propto r^{-2}$ 求导，自然得到
+\[
+\dv{g}{r}\propto -\frac{1}{r^3}.
+\]
+因此潮汐力是“场的不均匀性”的量度，而不是场强本身的量度。
+\end{solution}
+\end{problem}

@@ -1,0 +1,363 @@
+\chapter{麦克斯韦方程组应用}
+
+\section{竞赛题}
+
+\begin{competition}
+同轴圆形平板电容器两极板半径为 $R$，极板间距远小于 $R$，忽略边缘效应。若极板间电场可写为
+\[
+\vb{E}(t)=E_0\sin \omega t\,\vu{z},
+\]
+求：
+\begin{enumerate}
+  \item 半径 $r<R$ 的圆周所围面积上的位移电流 $I_d(r,t)$；
+  \item 半径 $r$ 处环形磁场 $\vb{B}(r,t)$ 的大小与方向。
+\end{enumerate}
+\begin{solution}
+位移电流定义为
+\[
+I_d=\epsilon_0\dv{}{t}\Phi_E,
+\qquad
+\Phi_E=\int \vb{E}\cdot \dd{\vb{S}}.
+\]
+对半径 $r<R$ 的圆面，电场近似均匀，故
+\[
+\Phi_E(r,t)=E_0\sin \omega t\cdot \pi r^2.
+\]
+于是
+\[
+I_d(r,t)=\epsilon_0\dv{}{t}\qty(E_0\pi r^2\sin \omega t)
+=\epsilon_0\pi r^2 E_0\omega \cos \omega t.
+\]
+再由安培--麦克斯韦方程
+\[
+\oint \vb{B}\cdot \dd{\vb{l}}=\mu_0 I_d,
+\]
+利用轴对称性，在半径 $r$ 的圆周上 $B$ 为常量且方向沿周向，故
+\[
+B(2\pi r)=\mu_0\epsilon_0\pi r^2 E_0\omega \cos \omega t.
+\]
+解得
+\[
+B(r,t)=\frac{\mu_0\epsilon_0\omega E_0}{2}r\cos \omega t.
+\]
+方向由右手定则确定：若 $\pdv*{E}{t}>0$，则 $\vb{B}$ 沿逆时针方向（从 $+z$ 方向看）。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+真空中一列平面电磁波沿 $+x$ 方向传播，电场为
+\[
+\vb{E}(x,t)=E_0\cos(kx-\omega t)\,\vu{y}.
+\]
+求：
+\begin{enumerate}
+  \item 磁场 $\vb{B}(x,t)$；
+  \item 瞬时坡印廷矢量 $\vb{S}$；
+  \item 一个周期内的平均能流密度 $\avg{S}$。
+\end{enumerate}
+\begin{solution}
+在真空平面波中，$\vb{E}$、$\vb{B}$ 与传播方向两两垂直，且
+\[
+B_0=\frac{E_0}{c}.
+\]
+因此
+\[
+\vb{B}(x,t)=\frac{E_0}{c}\cos(kx-\omega t)\,\vu{z}.
+\]
+坡印廷矢量为
+\[
+\vb{S}=\frac{1}{\mu_0}\vb{E}\times\vb{B}.
+\]
+代入得
+\[
+\vb{S}(x,t)=\frac{1}{\mu_0}\frac{E_0^2}{c}\cos^2(kx-\omega t)\,\vu{x}
+=\epsilon_0 c E_0^2\cos^2(kx-\omega t)\,\vu{x}.
+\]
+因为一个周期内
+\[
+\avg{\cos^2(kx-\omega t)}=\frac{1}{2},
+\]
+所以平均能流密度为
+\[
+\avg{\vb{S}}=\frac{1}{2}\epsilon_0 c E_0^2\,\vu{x}.
+\]
+其大小为
+\[
+\avg{S}=\frac{1}{2}\epsilon_0 c E_0^2.
+\]
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+真空中一列单色平面电磁波写成
+\[
+\vb{E}=E_0\cos(kx-\omega t)\,\vu{y},
+\qquad
+\vb{B}=B_0\cos(kx-\omega t)\,\vu{z}.
+\]
+利用麦克斯韦方程证明 $E_0=cB_0$，并给出 $k$ 与 $\omega$ 的关系。
+\begin{solution}
+由法拉第电磁感应定律
+\[
+\curl \vb{E}=-\pdv{\vb{B}}{t}.
+\]
+因为 $\vb{E}$ 只有 $y$ 分量，且只依赖于 $x,t$，故
+\[
+\curl \vb{E}=\pdv{E_y}{x}\vu{z}
+=-kE_0\sin(kx-\omega t)\,\vu{z}.
+\]
+另一方面
+\[
+-\pdv{\vb{B}}{t}=-\omega B_0\sin(kx-\omega t)\,\vu{z}.
+\]
+比较系数得
+\[
+kE_0=\omega B_0.
+\]
+再由安培--麦克斯韦方程（真空中）
+\[
+\curl \vb{B}=\mu_0\epsilon_0\pdv{\vb{E}}{t},
+\]
+可得
+\[
+kB_0=\mu_0\epsilon_0\omega E_0.
+\]
+将两式相除得到
+\[
+\frac{E_0}{B_0}=\frac{\omega}{k}.
+\]
+而真空波速满足
+\[
+\frac{\omega}{k}=\frac{1}{\sqrt{\mu_0\epsilon_0}}=c,
+\]
+故
+\[
+E_0=cB_0,
+\qquad
+\omega=ck.
+\]
+\end{solution}
+\end{university}
+
+\begin{university}
+某激光束在真空中的平均强度为 $I=5.0\times 10^3\,\mathrm{W/m^2}$，垂直照射在面积 $A=2.0\times 10^{-4}\,\mathrm{m^2}$ 的探测面上。求穿过该面的平均功率，并由坡印廷矢量解释其物理意义。
+\begin{solution}
+平均强度就是平均坡印廷矢量的模：
+\[
+I=\avg{S}=\abs{\avg{\vb{S}}}.
+\]
+因此穿过面积 $A$ 的平均功率为
+\[
+P=IA=(5.0\times 10^3)(2.0\times 10^{-4})=1.0\,\mathrm{W}.
+\]
+坡印廷矢量定义为
+\[
+\vb{S}=\frac{1}{\mu_0}\vb{E}\times\vb{B},
+\]
+其方向表示电磁能量传播方向，其大小表示单位时间穿过单位面积的电磁能量。故本题中平均每秒有 $1.0\,\mathrm{J}$ 的电磁能通过探测面。
+\end{solution}
+\end{university}
+
+\begin{university}
+真空中平面电磁波的平均强度为 $I$。证明该波的平均动量密度 $\avg{g}$ 与平均辐射压 $p$ 满足：
+\[
+\avg{g}=\frac{I}{c^2},
+\qquad
+p=\frac{I}{c}\quad\text{(完全吸收)},
+\qquad
+p=\frac{2I}{c}\quad\text{(完全反射)}.
+\]
+\begin{solution}
+电磁场动量密度为
+\[
+\vb{g}=\frac{\vb{S}}{c^2}.
+\]
+取时间平均即得
+\[
+\avg{g}=\frac{\avg{S}}{c^2}=\frac{I}{c^2}.
+\]
+若波垂直入射到表面，单位时间单位面积入射的能量为 $I$，因此单位时间单位面积传递的动量为
+\[
+\frac{I}{c}.
+\]
+这正是辐射压，所以完全吸收时
+\[
+p=\frac{I}{c}.
+\]
+若完全反射，则法向动量改变量加倍，故
+\[
+p=\frac{2I}{c}.
+\]
+这表明辐射压本质上是电磁波所携带动量通量对物体表面的作用。
+\end{solution}
+\end{university}
+
+\begin{university}
+写出电磁场能量守恒的微分形式，并说明每一项的物理意义。进一步对真空情形下的平面波说明能量在电场与磁场之间如何分配。
+\begin{solution}
+电磁场能量守恒的微分形式即坡印廷定理：
+\[
+\pdv{u}{t}+\div \vb{S}+\vb{J}\cdot\vb{E}=0,
+\]
+其中
+\[
+u=\frac{1}{2}\qty(\epsilon_0 E^2+\frac{B^2}{\mu_0}),
+\qquad
+\vb{S}=\frac{1}{\mu_0}\vb{E}\times\vb{B}.
+\]
+各项意义如下：
+\begin{itemize}
+  \item $\pdv*{u}{t}$：单位体积内电磁能的变化率；
+  \item $\div \vb{S}$：电磁能流出该体积的净速率；
+  \item $\vb{J}\cdot\vb{E}$：电场对带电粒子做功的功率密度。
+\end{itemize}
+在真空平面波中，$\vb{J}=0$，故有
+\[
+\pdv{u}{t}+\div \vb{S}=0.
+\]
+又因 $E=cB$，可得
+\[
+\frac{B^2}{\mu_0}=\epsilon_0E^2,
+\]
+所以电场能密度与磁场能密度相等：
+\[
+u_E=\frac{1}{2}\epsilon_0E^2,
+\qquad
+u_B=\frac{1}{2\mu_0}B^2=\frac{1}{2}\epsilon_0E^2.
+\]
+因此总能量一半储存在电场中，一半储存在磁场中，并由坡印廷矢量沿传播方向输运。
+\end{solution}
+\end{university}
+
+\section{综合题}
+
+\begin{problem}
+从真空中的麦克斯韦方程组出发，完整推导电场与磁场满足的波动方程：
+\[
+\nabla^2\vb{E}-\mu_0\epsilon_0\pdv[2]{\vb{E}}{t}=0,
+\qquad
+\nabla^2\vb{B}-\mu_0\epsilon_0\pdv[2]{\vb{B}}{t}=0.
+\]
+要求写出每一步所用到的矢量恒等式。
+\begin{solution}
+真空中麦克斯韦方程组为
+\[
+\div \vb{E}=0,
+\qquad
+\div \vb{B}=0,
+\qquad
+\curl \vb{E}=-\pdv{\vb{B}}{t},
+\qquad
+\curl \vb{B}=\mu_0\epsilon_0\pdv{\vb{E}}{t}.
+\]
+先推导 $\vb{E}$ 的波动方程。对法拉第定律两边再取旋度：
+\[
+\curl(\curl \vb{E})=-\pdv{}{t}(\curl \vb{B}).
+\]
+利用矢量恒等式
+\[
+\curl(\curl \vb{A})=\grad(\div \vb{A})-\nabla^2\vb{A},
+\]
+得
+\[
+\grad(\div \vb{E})-\nabla^2\vb{E}=-\pdv{}{t}(\curl \vb{B}).
+\]
+因为真空中 $\div \vb{E}=0$，所以上式左边化为
+\[
+-\nabla^2\vb{E}=-\pdv{}{t}(\curl \vb{B}).
+\]
+再代入安培--麦克斯韦方程
+\[
+\curl \vb{B}=\mu_0\epsilon_0\pdv{\vb{E}}{t},
+\]
+得
+\[
+-\nabla^2\vb{E}=-\mu_0\epsilon_0\pdv[2]{\vb{E}}{t}.
+\]
+于是
+\[
+\nabla^2\vb{E}-\mu_0\epsilon_0\pdv[2]{\vb{E}}{t}=0.
+\]
+同理，对安培--麦克斯韦方程取旋度：
+\[
+\curl(\curl \vb{B})=\mu_0\epsilon_0\pdv{}{t}(\curl \vb{E}).
+\]
+利用同一恒等式并用 $\div \vb{B}=0$，得到
+\[
+-\nabla^2\vb{B}=\mu_0\epsilon_0\pdv{}{t}\qty(-\pdv{\vb{B}}{t})
+=-\mu_0\epsilon_0\pdv[2]{\vb{B}}{t}.
+\]
+因此
+\[
+\nabla^2\vb{B}-\mu_0\epsilon_0\pdv[2]{\vb{B}}{t}=0.
+\]
+这表明电磁场在真空中以速度
+\[
+\upsilon=\frac{1}{\sqrt{\mu_0\epsilon_0}}=c
+\]
+传播，即电磁波。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+设球对称标量场满足三维波动方程
+\[
+\nabla^2\psi-\frac{1}{c^2}\pdv[2]{\psi}{t}=0,
+\]
+且 $\psi=\psi(r,t)$。证明球面波通解可写成
+\[
+\psi(r,t)=\frac{1}{r}f(r-ct)+\frac{1}{r}g(r+ct).
+\]
+并解释其物理意义。
+\begin{solution}
+在球对称条件下，拉普拉斯算符化为
+\[
+\nabla^2\psi=\frac{1}{r^2}\pdv{}{r}\qty(r^2\pdv{\psi}{r}).
+\]
+令
+\[
+u(r,t)=r\psi(r,t).
+\]
+则
+\[
+\psi=\frac{u}{r},
+\qquad
+\pdv{\psi}{r}=\frac{1}{r}\pdv{u}{r}-\frac{u}{r^2}.
+\]
+于是
+\[
+r^2\pdv{\psi}{r}=r\pdv{u}{r}-u,
+\]
+再对 $r$ 求导：
+\[
+\pdv{}{r}\qty(r^2\pdv{\psi}{r})=r\pdv[2]{u}{r}.
+\]
+所以
+\[
+\nabla^2\psi=\frac{1}{r}\pdv[2]{u}{r}.
+\]
+另一方面
+\[
+\pdv[2]{\psi}{t}=\frac{1}{r}\pdv[2]{u}{t}.
+\]
+代入原波动方程得
+\[
+\frac{1}{r}\qty(\pdv[2]{u}{r}-\frac{1}{c^2}\pdv[2]{u}{t})=0.
+\]
+故 $u(r,t)$ 满足一维波动方程：
+\[
+\pdv[2]{u}{r}-\frac{1}{c^2}\pdv[2]{u}{t}=0.
+\]
+其达朗贝尔通解为
+\[
+u(r,t)=f(r-ct)+g(r+ct).
+\]
+因此
+\[
+\psi(r,t)=\frac{1}{r}f(r-ct)+\frac{1}{r}g(r+ct).
+\]
+其中第一项表示向外传播的球面波，第二项表示向内传播的球面波。前面的 $1/r$ 因子说明波在传播时振幅按距离反比衰减，这是因为能量分布在面积随 $r^2$ 增大的球面上。
+\end{solution}
+\end{problem}

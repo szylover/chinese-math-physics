@@ -1,0 +1,586 @@
+\chapter{运动学}
+
+运动学研究物体位置、速度与加速度随时间的变化规律。本章按“高考真题—竞赛题—大学物理题—微分方程题”的层次编排，尽量用统一的微积分语言重述常见模型。文中默认重力加速度为 $g$，并常用 $x$ 轴表示水平方向、$y$ 轴表示竖直向上方向。
+
+\section*{高考真题}
+
+\begin{gaokao}
+一辆汽车以初速度 $v_0=20\unit{m/s}$ 沿直线行驶，在 $t=0$ 时开始以恒定加速度 $a=-4\unit{m/s^2}$ 刹车。
+
+(1) 用微积分方法写出速度函数 $v(t)$ 与位移函数 $x(t)$；
+
+(2) 求汽车停止所需时间与刹车距离；
+
+(3) 求刹车开始后第 $2\unit{s}$ 内的位移。
+
+\begin{solution}
+设刹车开始时 $x(0)=0$。由匀变速直线运动的微分方程
+\[
+\dv{v}{t}=a=-4
+\]
+直接积分得
+\[
+v(t)=v_0+at=20-4t.
+\]
+再由 $\dv{x}{t}=v(t)$，积分得
+\[
+x(t)=\int_0^t (20-4t')\,\dd t'=20t-2t^2.
+\]
+
+汽车停止时 $v(t_\text{停})=0$，故
+\[
+20-4t_\text{停}=0\quad\Rightarrow\quad t_\text{停}=5\unit{s}.
+\]
+刹车距离为
+\[
+x(5)=20\times 5-2\times 25=50\unit{m}.
+\]
+
+第 $2\unit{s}$ 内对应时间区间 $[1,2]$，位移为
+\[
+\Delta x=x(2)-x(1)=(40-8)-(20-2)=14\unit{m}.
+\]
+也可理解为速度图像下的面积。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+甲车以恒定速度 $v=18\unit{m/s}$ 沿直线匀速前进；乙车在甲车前方 $d=36\unit{m}$ 处由静止开始以恒定加速度 $a=2\unit{m/s^2}$ 同向行驶。
+
+(1) 写出两车的位置函数；
+
+(2) 判断甲车能否追上乙车；若能，求追上时刻与位置；
+
+(3) 若把初始距离改为一般的 $d$，写出甲车能够追上的条件。
+
+\begin{solution}
+取甲车出发点为原点，$t=0$ 时刻为乙车开始运动时刻。则
+\[
+x_\text{甲}=vt=18t,
+\qquad
+x_\text{乙}=d+\frac12 at^2=36+t^2.
+\]
+追上条件是两车位置相同：
+\[
+18t=36+t^2 \quad\Rightarrow\quad t^2-18t+36=0.
+\]
+解得
+\[
+t=9\pm 3\sqrt5.
+\]
+两个根都为正，表示甲车先追上一次，之后乙车速度继续增大再反超一次。第一次追上时刻为
+\[
+t_1=9-3\sqrt5\unit{s}.
+\]
+对应位置
+\[
+x_1=18(9-3\sqrt5)=162-54\sqrt5\unit{m}.
+\]
+
+对一般初始距离 $d$，方程为
+\[
+\frac12 at^2-vt+d=0.
+\]
+要存在实数正根，至少需判别式非负：
+\[
+v^2-2ad\ge 0.
+\]
+所以追及条件为
+\[
+d\le \frac{v^2}{2a}.
+\]
+它的物理意义是：在乙车速度增长到与甲车相等之前，甲车靠初始速度优势至多只能“吃掉” $\dfrac{v^2}{2a}$ 的初始间距。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+一小球以初速度 $v_0$、仰角 $\theta$ 从地面抛出，不计空气阻力。
+
+(1) 用微积分方法求轨迹方程；
+
+(2) 求飞行时间、射程与最大高度；
+
+(3) 说明当 $\theta=45^\circ$ 时射程最大。
+
+\begin{solution}
+分解初速度：
+\[
+v_{0x}=v_0\cos\theta,
+\qquad
+v_{0y}=v_0\sin\theta.
+\]
+受力只有重力，因此
+\[
+\dv[2]{x}{t}=0,
+\qquad
+\dv[2]{y}{t}=-g.
+\]
+配合初始条件 $x(0)=0,y(0)=0$，得
+\[
+x(t)=v_0\cos\theta\, t,
+\qquad
+y(t)=v_0\sin\theta\, t-\frac12 gt^2.
+\]
+消去 $t=\dfrac{x}{v_0\cos\theta}$，得轨迹方程
+\[
+y=x\tan\theta-\frac{g x^2}{2v_0^2\cos^2\theta}.
+\]
+这是一条开口向下的抛物线。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (-0.2,0) -- (6.4,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.8) node[above] {$y$};
+  \draw[thick,blue,domain=0:6,samples=100] plot (\x,{0.9*\x-0.15*\x*\x});
+  \draw[thick,->] (0,0) -- (1.5,1.2) node[midway,above] {$\vb v_0$};
+  \draw[dashed] (3,0) -- (3,1.35);
+  \node at (6,-0.25) {$R$};
+\end{tikzpicture}
+\end{center}
+
+飞行时间由 $y(T)=0$ 的非零根给出：
+\[
+T=\frac{2v_0\sin\theta}{g}.
+\]
+射程
+\[
+R=x(T)=v_0\cos\theta\cdot \frac{2v_0\sin\theta}{g}=\frac{v_0^2\sin2\theta}{g}.
+\]
+最大高度出现在 $v_y=\dv*{y}{t}=0$ 时，即
+\[
+v_0\sin\theta-gt=0\Rightarrow t_h=\frac{v_0\sin\theta}{g}.
+\]
+代回得
+\[
+H=\frac{v_0^2\sin^2\theta}{2g}.
+\]
+
+由于 $\sin2\theta\le 1$，故射程最大时必有
+\[
+2\theta=90^\circ\Rightarrow \theta=45^\circ,
+\qquad
+R_{\max}=\frac{v_0^2}{g}.
+\]
+\end{solution}
+\end{gaokao}
+
+\section*{竞赛题}
+
+\begin{competition}
+质点沿直线运动，其加速度满足
+\[
+a(t)=a_0\mathrm e^{-\lambda t},\qquad a_0>0,\ \lambda>0.
+\]
+已知 $x(0)=0,\ v(0)=v_0$。
+
+(1) 求 $v(t)$ 与 $x(t)$；
+
+(2) 求 $t\to\infty$ 时极限速度；
+
+(3) 讨论该运动的物理特征。
+
+\begin{solution}
+由
+\[
+\dv{v}{t}=a_0\mathrm e^{-\lambda t}
+\]
+积分得
+\[
+v(t)=v_0+\int_0^t a_0\mathrm e^{-\lambda t'}\,\dd t'
+=v_0+\frac{a_0}{\lambda}\qty(1-\mathrm e^{-\lambda t}).
+\]
+再积分得位移
+\[
+x(t)=\int_0^t v(t')\,\dd t'
+=v_0 t+\frac{a_0}{\lambda}t-\frac{a_0}{\lambda^2}\qty(1-\mathrm e^{-\lambda t}).
+\]
+也可写成
+\[
+x(t)=\qty(v_0+\frac{a_0}{\lambda})t-\frac{a_0}{\lambda^2}\qty(1-\mathrm e^{-\lambda t}).
+\]
+
+当 $t\to\infty$ 时，指数项趋于零，故极限速度为
+\[
+v_\infty=v_0+\frac{a_0}{\lambda}.
+\]
+
+这说明该质点经历的是“先加速后趋于匀速”的过程。加速度不是常量，而是按时间指数衰减；因此速度不会无限增大，而是逐渐逼近有限值 $v_\infty$。这类模型常见于发动机推力逐步衰减、某些控制系统缓慢退出驱动的情形。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+设竖直向下为正方向。一小球自高处由静止释放，受重力和线性空气阻力作用，阻力为 $\vb F_d=-b\vb v$。设小球质量为 $m$。
+
+(1) 建立速度方程并求 $v(t)$；
+
+(2) 求位移 $y(t)$；
+
+(3) 求终端速度，并解释时间常数的意义。
+
+\begin{solution}
+沿竖直向下取正，则牛顿第二定律写成
+\[
+m\dv{v}{t}=mg-bv.
+\]
+整理为
+\[
+\dv{v}{t}+\frac{b}{m}v=g.
+\]
+这是一阶线性方程。用积分因子 $\mu(t)=\mathrm e^{bt/m}$，得
+\[
+\dv{}{t}\qty(v\mathrm e^{bt/m})=g\mathrm e^{bt/m}.
+\]
+由初始条件 $v(0)=0$，积分得到
+\[
+v(t)=\frac{mg}{b}\qty(1-\mathrm e^{-bt/m}).
+\]
+因此终端速度为
+\[
+v_T=\lim_{t\to\infty}v(t)=\frac{mg}{b}.
+\]
+
+位移满足 $\dv*{y}{t}=v(t)$，故
+\[
+y(t)=\int_0^t \frac{mg}{b}\qty(1-\mathrm e^{-bt'/m})\,\dd t'.
+\]
+算得
+\[
+y(t)=\frac{mg}{b}t-\frac{m^2g}{b^2}\qty(1-\mathrm e^{-bt/m}).
+\]
+
+若记
+\[
+\tau=\frac{m}{b},
+\]
+则速度可写成
+\[
+v(t)=v_T\qty(1-\mathrm e^{-t/\tau}).
+\]
+可见当 $t=\tau$ 时，速度达到终端速度的 $1-\mathrm e^{-1}\approx 63\%$。所以 $\tau$ 描述的是系统接近终端状态的快慢：$\tau$ 越小，阻力越“强”，速度越快接近饱和值。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一质点以初速度 $v_0$、仰角 $\theta$ 从原点抛出，在平面内运动，受到重力与二次阻力
+\[
+\vb F_d=-c v\vb v,
+\]
+其中 $v=\abs{\vb v}$，$c>0$。记 $k=c/m$。
+
+(1) 写出速度分量满足的微分方程；
+
+(2) 在弱阻力条件 $k v_0\ll g$ 下，把飞行时间与射程保留到一阶近似；
+
+(3) 说明最优发射角将小于 $45^\circ$。
+
+\begin{solution}
+设速度分量为 $(u,w)$，分别对应水平与竖直方向，则
+\[
+\vb v=u\vu x+w\vu y,
+\qquad v=\sqrt{u^2+w^2}.
+\]
+牛顿方程写为
+\[
+\dv{u}{t}=-kvu,
+\qquad
+\dv{w}{t}=-g-kvw.
+\]
+初值为
+\[
+u(0)=v_0\cos\theta,
+\qquad
+w(0)=v_0\sin\theta.
+\]
+
+若阻力较弱，可先用无阻力近似速度代入阻力项：
+\[
+u\approx v_0\cos\theta,
+\qquad
+w\approx v_0\sin\theta-gt.
+\]
+因此速度大小近似按无阻力轨道估计，进一步若只取一阶量，可把总阻力对飞行时间的主要影响视作使速度整体衰减，得到
+\[
+T\approx \frac{2v_0\sin\theta}{g}\qty(1-k\frac{v_0\sin\theta}{g}).
+\]
+水平方向位移为
+\[
+R=\int_0^T u\,\dd t.
+\]
+将 $u$ 的一阶近似
+\[
+u(t)\approx v_0\cos\theta\qty(1-k\bar v t)
+\]
+代入，其中平均速度量级取 $\bar v\sim v_0$，可得
+\[
+R\approx \frac{v_0^2\sin2\theta}{g}-\frac{4k v_0^3\sin^2\theta\cos\theta}{g^2}.
+\]
+第一项是无阻力射程，第二项是阻力修正。
+
+由于修正项在大仰角时更显著，意味着提高仰角虽然能增加滞空时间，却也显著增加阻力损失，所以最大射程不再在 $45^\circ$ 取得，而会偏向较小角度。若对上式求导令 $\dv*{R}{\theta}=0$，一阶修正的最优角满足
+\[
+\theta_\text{opt}=45^\circ-\varepsilon,
+\qquad \varepsilon>0.
+\]
+这与经验结论一致：有空气阻力时，为缩短飞行时间，最佳角度会低于 $45^\circ$。
+\end{solution}
+\end{competition}
+
+\section*{大学物理题}
+
+\begin{university}
+质点在平面内做极坐标运动，其轨迹由
+\[
+r(t)=r_0+\alpha t,
+\qquad
+\theta(t)=\frac12 \beta t^2
+\]
+给出，其中 $r_0,\alpha,\beta$ 为常量。
+
+(1) 求速度 $\vb v$；
+
+(2) 求加速度 $\vb a$；
+
+(3) 讨论 $t=0$ 时速度与加速度方向。
+
+\begin{solution}
+极坐标中
+\[
+\vb v=\dot r\,\vu r+r\dot\theta\,\vu\theta,
+\qquad
+\vb a=(\ddot r-r\dot\theta^2)\vu r+(r\ddot\theta+2\dot r\dot\theta)\vu\theta.
+\]
+由题设得
+\[
+\dot r=\alpha,
+\quad \ddot r=0,
+\quad \dot\theta=\beta t,
+\quad \ddot\theta=\beta.
+\]
+故速度为
+\[
+\vb v=\alpha\vu r+(r_0+\alpha t)\beta t\,\vu\theta.
+\]
+
+加速度为
+\[
+\vb a=-(r_0+\alpha t)\beta^2 t^2\vu r+\qty[(r_0+\alpha t)\beta+2\alpha\beta t]\vu\theta.
+\]
+整理得
+\[
+\vb a=-(r_0+\alpha t)\beta^2 t^2\vu r+\beta(r_0+3\alpha t)\vu\theta.
+\]
+
+在 $t=0$ 时，
+\[
+\vb v(0)=\alpha\vu r,
+\qquad
+\vb a(0)=\beta r_0\vu\theta.
+\]
+故初速度纯径向，初加速度纯切向。这说明质点一开始沿半径方向“向外滑动”，但角速度正从零开始增长，因此切向加速度在起始时就已经存在。
+\end{solution}
+\end{university}
+
+\begin{university}
+在纬度为 $\lambda$ 的地面上，从高为 $h$ 的塔顶由静止释放一小球，忽略空气阻力。考虑地球自转角速度为 $\vb\Omega$，求小球落地点相对塔底的东西向偏移量（取到一阶近似）。
+
+\begin{solution}
+取当地坐标：$x$ 向东，$y$ 向北，$z$ 竖直向上。地球自转角速度分解为
+\[
+\vb\Omega=\Omega\cos\lambda\,\vu y+\Omega\sin\lambda\,\vu z.
+\]
+在地球参考系中，忽略离心力的修正后，科里奥利加速度为
+\[
+\vb a_C=-2\vb\Omega\times \vb v.
+\]
+零阶近似下，小球仅做竖直自由落体：
+\[
+v_z\approx -gt.
+\]
+于是
+\[
+\vb a_C=-2\qty(\Omega\cos\lambda\,\vu y+\Omega\sin\lambda\,\vu z)\times (-gt\,\vu z)
+=2\Omega g t\cos\lambda\,\vu x.
+\]
+可见东向加速度为
+\[
+a_x=2\Omega g t\cos\lambda.
+\]
+积分并用 $v_x(0)=x(0)=0$：
+\[
+v_x=\int_0^t 2\Omega g t'\cos\lambda\,\dd t'=
+\Omega g t^2\cos\lambda,
+\]
+\[
+x=\int_0^t \Omega g t'^2\cos\lambda\,\dd t'=
+\frac13\Omega g t^3\cos\lambda.
+\]
+自由落体时间由
+\[
+h-\frac12 gt_f^2=0
+\]
+得
+\[
+t_f=\sqrt{\frac{2h}{g}}.
+\]
+故东向偏移量为
+\[
+\Delta x=\frac13\Omega g\cos\lambda\qty(\frac{2h}{g})^{3/2}
+=\frac{2\sqrt2}{3}\frac{\Omega\cos\lambda}{\sqrt g}h^{3/2}.
+\]
+偏移方向向东，这是因为下落过程中质点保留了较大半径处的线速度，在地面参考系看来会略微超前于塔底。
+\end{solution}
+\end{university}
+
+\begin{university}
+半径为 $R$ 的圆轨道上有一质点运动，其角加速度随时间变化为
+\[
+\alpha(t)=\alpha_0+\beta t.
+\]
+已知 $\omega(0)=\omega_0$，$\theta(0)=0$。
+
+(1) 求角速度与角位移；
+
+(2) 求切向加速度与法向加速度；
+
+(3) 写出总加速度大小。
+
+\begin{solution}
+由
+\[
+\dv{\omega}{t}=\alpha_0+\beta t
+\]
+积分得
+\[
+\omega(t)=\omega_0+\alpha_0 t+\frac12 \beta t^2.
+\]
+再次积分得到角位移
+\[
+\theta(t)=\int_0^t \omega(t')\,\dd t'
+=\omega_0 t+\frac12\alpha_0 t^2+\frac16\beta t^3.
+\]
+
+切向加速度是
+\[
+a_\tau=R\alpha(t)=R(\alpha_0+\beta t).
+\]
+法向加速度是
+\[
+a_n=R\omega^2(t)=R\qty(\omega_0+\alpha_0 t+\frac12\beta t^2)^2.
+\]
+由于两者相互垂直，总加速度大小为
+\[
+a=\sqrt{a_\tau^2+a_n^2}
+=R\sqrt{(\alpha_0+\beta t)^2+\qty(\omega_0+\alpha_0 t+\frac12\beta t^2)^4}.
+\]
+这说明在变加速圆周运动中，“切向变化率”和“曲率效应”分别由 $\alpha$ 与 $\omega^2$ 控制，两者都随时间改变，总加速度往往不是单调的。
+\end{solution}
+\end{university}
+
+\section*{普通/微分方程题}
+
+\begin{problem}
+对线性阻力自由落体模型
+\[
+m\dv{v}{t}=mg-bv
+\]
+完成以下任务：
+
+(1) 推导终端速度；
+
+(2) 定义时间常数并解释其物理意义；
+
+(3) 写出无量纲形式，并说明解为何具有普适性。
+
+\begin{solution}
+终端速度对应加速度为零，即
+\[
+mg-bv_T=0 \quad\Rightarrow\quad v_T=\frac{mg}{b}.
+\]
+若引入无量纲速度
+\[
+u=\frac{v}{v_T},
+\qquad
+s=\frac{t}{\tau},
+\]
+希望方程尽量简化。由原方程可写成
+\[
+\dv{v}{t}=g-\frac{b}{m}v.
+\]
+令
+\[
+\tau=\frac{m}{b},
+\]
+则
+\[
+\dv{v}{t}=g-\frac{1}{\tau}v.
+\]
+改写为无量纲变量：
+\[
+\dv{\nu}{s}=1-\nu.
+\]
+初值若为由静止下落，则 $\nu(0)=0$，解为
+\[
+\nu(s)=1-\mathrm e^{-s}.
+\]
+因此
+\[
+v(t)=v_T\qty(1-\mathrm e^{-t/\tau}).
+\]
+
+时间常数 $\tau=m/b$ 表示系统趋近稳态的快慢尺度：经过一个 $\tau$ 后，速度达到终端速度的约 $63\%$；经过 $3\tau$ 后，已经达到约 $95\%$。由于无量纲方程中不再出现 $m,b,g$ 的细节，所有线性阻力下落过程在缩放后都服从同一个函数 $1-\mathrm e^{-s}$，这就是所谓解的普适性。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+考虑弱线性阻力下的平抛/斜抛模型。设阻力为 $\vb F_d=-b\vb v$，并假设参数
+\[
+\varepsilon=\frac{b v_0}{mg}\ll 1.
+\]
+试用一阶近似讨论最远射程问题：
+
+(1) 给出射程的近似表达式；
+
+(2) 求最优发射角的一阶修正方向；
+
+(3) 解释为什么最优角会低于 $45^\circ$。
+
+\begin{solution}
+线性阻力下，速度分量满足
+\[
+\dv{v_x}{t}=-\frac{b}{m}v_x,
+\qquad
+\dv{v_y}{t}=-g-\frac{b}{m}v_y.
+\]
+若记 $\gamma=b/m$，则
+\[
+v_x=v_0\cos\theta\,\mathrm e^{-\gamma t},
+\qquad
+v_y=\qty(v_0\sin\theta+\frac{g}{\gamma})\mathrm e^{-\gamma t}-\frac{g}{\gamma}.
+\]
+在 $\gamma t\ll 1$ 的弱阻力近似下，展开指数函数到一阶，可得飞行时间近似为
+\[
+T\approx \frac{2v_0\sin\theta}{g}\qty(1-\frac{\gamma v_0\sin\theta}{g}).
+\]
+再对
+\[
+R=\int_0^T v_x\,\dd t
+\]
+作一阶展开，得到
+\[
+R(\theta)\approx \frac{v_0^2}{g}\sin2\theta-\frac{4\gamma v_0^3}{3g^2}\sin^2\theta\cos\theta.
+\]
+其中第二项为阻力造成的射程损失。
+
+为了判断最优角方向，只需考察 $\theta=45^\circ$ 附近的导数。无阻力时导数为零；加上修正项后，在 $45^\circ$ 处有
+\[
+\eval{\dv{R}{\theta}}_{\theta=45^\circ}<0.
+\]
+因此要使导数重新为零，必须把 $\theta$ 略微减小，即
+\[
+\theta_\text{opt}=45^\circ-\delta,
+\qquad \delta=\mathcal O(\varepsilon)>0.
+\]
+
+原因很直观：较大的仰角虽然增加滞空时间，但阻力始终与速度反向，飞行时间越长，能量和水平速度损失越严重。所以在有阻力时，不值得像真空中那样取 $45^\circ$，而应适当压低角度，以更快到达目标区间。
+\end{solution}
+\end{problem}

@@ -1,0 +1,363 @@
+\chapter{电路与暂态过程}
+
+本章讨论闭合电路、欧姆定律、RC/RL/RLC 暂态过程以及交流电路的复阻抗方法。处理暂态问题时，核心思想是把基尔霍夫定律与元件关系
+\[
+U_R=iR,\qquad U_C=\frac{q}{C},\qquad U_L=L\dv{i}{t}
+\]
+联立即可得到微分方程。
+
+\begin{gaokao}
+在电动势为 $\mathcal{E}$、内阻为 $r$ 的电源外接电阻 $R$ 的闭合电路中，求：
+\begin{enumerate}
+  \item 电路电流；
+  \item 路端电压；
+  \item 外电阻上消耗的功率，并讨论 $R$ 增大时电流与路端电压的变化。
+\end{enumerate}
+
+\begin{solution}
+由闭合电路欧姆定律
+\[
+I=\frac{\mathcal{E}}{R+r}.
+\]
+路端电压为
+\[
+U=IR=\frac{\mathcal{E}R}{R+r}.
+\]
+外电阻功率
+\[
+P=I^2R=\frac{\mathcal{E}^2R}{(R+r)^2}.
+\]
+当 $R$ 增大时，电流 $I$ 单调减小，而路端电压
+\[
+U=\mathcal{E}-Ir
+\]
+单调增大并趋近于 $\mathcal{E}$。这反映了内阻分压在负载变化中的作用。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+如图所示，电源电动势为 $\mathcal{E}$，内阻不计。电路中 $R_1=R$，$R_2=2R$，电压表接在 $R_2$ 两端，电流表串联在主干上，均视为理想电表。
+
+\begin{center}
+\begin{circuitikz}[american voltages]
+  \draw (0,0) to[battery1,l=$\mathcal{E}$] (0,3)
+        to[ammeter,l=$A$] (2,3)
+        to[R,l=$R_1$] (4,3) -- (6,3)
+        to[R,l=$R_2$] (6,0) -- (0,0);
+  \draw (4,3) -- (4,1.5) to[voltmeter,l=$V$] (6,1.5) -- (6,3);
+\end{circuitikz}
+\end{center}
+
+求电流表与电压表的读数。
+
+\begin{solution}
+由于电压表理想，内阻无限大，不分流；电流表理想，电阻为零。故主回路只有 $R_1,R_2$ 串联，等效电阻
+\[
+R_{\text{eq}}=R+2R=3R.
+\]
+电流表读数
+\[
+I=\frac{\mathcal{E}}{3R}.
+\]
+电压表测 $R_2$ 两端电压，故
+\[
+U_V=IR_2=\frac{\mathcal{E}}{3R}\cdot 2R=\frac{2}{3}\mathcal{E}.
+\]
+因此电流表读数为 $\mathcal{E}/(3R)$，电压表读数为 $2\mathcal{E}/3$。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+一电阻 $R$ 上通过的电流随时间变化为
+\[
+i(t)=kt\qquad (0\le t\le T),
+\]
+其中 $k$ 为常量。请从微积分角度求：
+\begin{enumerate}
+  \item 时刻 $t$ 的瞬时功率；
+  \item 在 $0$ 到 $T$ 时间内产生的总焦耳热；
+  \item 平均功率。
+\end{enumerate}
+
+\begin{solution}
+瞬时功率
+\[
+P(t)=i^2R=k^2Rt^2.
+\]
+总焦耳热为
+\[
+Q=\int_0^T P(t)\dd{t}=k^2R\int_0^T t^2\dd{t}=\frac13 k^2RT^3.
+\]
+平均功率
+\[
+\overline{P}=\frac{Q}{T}=\frac13 k^2RT^2.
+\]
+该题说明：当电流不恒定时，仍应从功率微元 $\dd{W}=P\dd{t}$ 出发积分，而不能机械套用恒定功率公式。
+\end{solution}
+\end{gaokao}
+
+\begin{competition}
+对于电源电动势为 $\mathcal{E}$、电阻为 $R$、电容为 $C$ 的串联 RC 充电电路，设 $t=0$ 时开关闭合且电容器初始不带电。
+\begin{enumerate}
+  \item 建立关于电荷 $q(t)$ 的微分方程；
+  \item 完整求出 $q(t)$、$i(t)$ 与 $u_C(t)$；
+  \item 求达到最终电荷量的 $90\%$ 所需时间。
+\end{enumerate}
+
+\begin{solution}
+由基尔霍夫电压定律
+\[
+\mathcal{E}=iR+\frac{q}{C},\qquad i=\dv{q}{t},
+\]
+得到
+\[
+R\dv{q}{t}+\frac{q}{C}=\mathcal{E}.
+\]
+写成标准形式
+\[
+\dv{q}{t}+\frac{1}{RC}q=\frac{\mathcal{E}}{R}.
+\]
+结合初值 $q(0)=0$，解得
+\[
+q(t)=C\mathcal{E}\qty(1-e^{-t/(RC)}).
+\]
+于是
+\[
+i(t)=\dv{q}{t}=\frac{\mathcal{E}}{R}e^{-t/(RC)},
+\qquad
+u_C(t)=\frac{q}{C}=\mathcal{E}\qty(1-e^{-t/(RC)}).
+\]
+当 $q(t)=0.9C\mathcal{E}$ 时，
+\[
+1-e^{-t/(RC)}=0.9
+\Rightarrow e^{-t/(RC)}=0.1,
+\]
+故
+\[
+t=RC\ln 10.
+\]
+\end{solution}
+\end{competition}
+
+\begin{competition}
+对同一 RC 电路施加幅值在 $0$ 与 $U_0$ 之间切换、周期为 $T$ 的理想方波电压，且每半个周期持续时间均为 $T/2$。设系统已进入周期稳态，求电容器电压在一个周期内的表达式，并说明波形为什么不再是理想方波。
+
+\begin{solution}
+设上升半周开始时电容器电压为 $u_1$，在 $0<t<T/2$ 内满足
+\[
+RC\dv{u_C}{t}+u_C=U_0,
+\]
+解为
+\[
+u_C(t)=U_0-(U_0-u_1)e^{-t/(RC)}.
+\]
+半周结束时
+\[
+u_2=U_0-(U_0-u_1)e^{-T/(2RC)}.
+\]
+下降半周内，外加电压为 $0$，故
+\[
+RC\dv{u_C}{t}+u_C=0,
+\]
+解为
+\[
+u_C(t)=u_2 e^{-(t-T/2)/(RC)},\qquad T/2<t<T.
+\]
+周期稳态要求一个周期末回到初值：
+\[
+u_1=u_2 e^{-T/(2RC)}.
+\]
+记
+\[
+a=e^{-T/(2RC)},
+\]
+则有
+\[
+u_2=U_0-(U_0-u_1)a,
+\qquad
+u_1=au_2.
+\]
+联立得
+\[
+u_1=\frac{a}{1+a}U_0,
+\qquad
+u_2=\frac{1}{1+a}U_0.
+\]
+所以一个周期内
+\[
+\nu_C(t)=U_0-\frac{U_0}{1+a}e^{-t/(RC)},\qquad 0<t<T/2,
+\]
+\[
+\nu_C(t)=\frac{U_0}{1+a}e^{-(t-T/2)/(RC)},\qquad T/2<t<T.
+\]
+由于电容电压不能突变，它只能按指数规律追随外加电压，故输出被“平滑化”，不再保持理想方波的陡峭跳变。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一只初始电压为 $U_0$ 的电容器通过电阻 $R$ 放电。请定量求出：
+\begin{enumerate}
+  \item 放电电流；
+  \item 电阻上总共产生的热量；
+  \item 证明该热量等于电容器初始储能。
+\end{enumerate}
+
+\begin{solution}
+放电方程为
+\[
+R\dv{q}{t}+\frac{q}{C}=0,
+\qquad q(0)=CU_0.
+\]
+解得
+\[
+q(t)=CU_0e^{-t/(RC)},
+\qquad i(t)=\dv{q}{t}=-\frac{U_0}{R}e^{-t/(RC)}.
+\]
+取电流大小即可写为
+\[
+|i(t)|=\frac{U_0}{R}e^{-t/(RC)}.
+\]
+电阻热量
+\[
+Q=\int_0^{\infty} i^2R\,\dd{t}
+=\frac{U_0^2}{R}\int_0^{\infty} e^{-2t/(RC)}\dd{t}
+=\frac{U_0^2}{R}\cdot \frac{RC}{2}
+=\frac12 CU_0^2.
+\]
+而初始储能正是
+\[
+W_0=\frac12 CU_0^2.
+\]
+因此 $Q=W_0$，即电容器的全部初始电场能最终都转化为电阻上的焦耳热。
+\end{solution}
+\end{competition}
+
+\begin{university}
+如图所示，电源 $\mathcal{E}$、电阻 $R$ 与电感 $L$ 串联，$t=0$ 时闭合开关，初始电流为零。求电流随时间的变化规律以及稳态时电感两端电压。
+
+\begin{center}
+\begin{circuitikz}[american voltages]
+  \draw (0,0) to[battery1,l=$\mathcal{E}$] (0,3)
+        to[switch,l=$S$] (2,3)
+        to[R,l=$R$] (4,3)
+        to[L,l=$L$] (6,3) -- (6,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+
+\begin{solution}
+回路方程为
+\[
+L\dv{i}{t}+Ri=\mathcal{E},\qquad i(0)=0.
+\]
+解一阶线性方程得
+\[
+i(t)=\frac{\mathcal{E}}{R}\qty(1-e^{-Rt/L}).
+\]
+电感两端电压
+\[
+u_L=L\dv{i}{t}=\mathcal{E}e^{-Rt/L}.
+\]
+当 $t\to \infty$ 时，
+\[
+i\to \frac{\mathcal{E}}{R},\qquad u_L\to 0.
+\]
+这说明在直流稳态下，理想电感等效为导线；但在通电初期，电感通过自感电动势阻碍电流突变。
+\end{solution}
+\end{university}
+
+\begin{university}
+对串联 RLC 电路，在无外驱动自由响应下写出电荷 $q(t)$ 的方程，并分别讨论欠阻尼、临界阻尼和过阻尼三种情况的解型。
+
+\begin{solution}
+自由振荡时基尔霍夫定律给出
+\[
+L\dv[2]{q}{t}+R\dv{q}{t}+\frac{1}{C}q=0.
+\]
+设特征方程为
+\[
+L\lambda^2+R\lambda+\frac{1}{C}=0.
+\]
+定义判别式
+\[
+\Delta=R^2-\frac{4L}{C}.
+\]
+当 $\Delta<0$ 时为欠阻尼，记
+\[
+\alpha=\frac{R}{2L},\qquad \omega_d=\sqrt{\frac{1}{LC}-\alpha^2},
+\]
+则
+\[
+q(t)=e^{-\alpha t}\qty(A\cos \omega_d t+B\sin \omega_d t).
+\]
+当 $\Delta=0$ 时为临界阻尼，
+\[
+q(t)=(A+Bt)e^{-Rt/(2L)}.
+\]
+当 $\Delta>0$ 时为过阻尼，设根为 $\lambda_1,\lambda_2<0$，则
+\[
+q(t)=Ae^{\lambda_1 t}+Be^{\lambda_2 t}.
+\]
+三种情形分别对应“衰减振荡”“最快无振荡回零”“缓慢无振荡回零”。
+\end{solution}
+\end{university}
+
+\begin{university}
+串联 RLC 交流电路在角频率 $\omega$ 下工作，其阻抗大小为
+\[
+Z=\sqrt{R^2+\qty(\omega L-\frac{1}{\omega C})^2}.
+\]
+请说明谐振条件、品质因子 $Q$ 的定义，并解释为什么高 $Q$ 电路具有更尖锐的频率选择性。
+
+\begin{solution}
+谐振条件是感抗与容抗相等，即
+\[
+\omega_0L=\frac{1}{\omega_0C},
+\qquad
+\omega_0=\frac{1}{\sqrt{LC}}.
+\]
+此时阻抗最小为 $Z=R$，电流最大。串联 RLC 电路常把品质因子定义为
+\[
+Q=\frac{\omega_0L}{R}=\frac{1}{\omega_0CR}.
+\]
+它刻画“储能能力相对于每周期耗能的大小”。$Q$ 越大，表示电阻损耗越小，系统在谐振附近的响应峰越尖锐，带宽越窄，因此频率选择性越强。对于选频、滤波与无线电调谐，高 $Q$ 是重要指标；但过高的 $Q$ 也会使系统对参数漂移更敏感。
+\end{solution}
+\end{university}
+
+\begin{problem}
+请定性分析 RLC 并联电路在交流电源下的响应特征，讨论它与串联谐振电路在“谐振时电流或阻抗极值”的区别。
+
+\begin{solution}
+RLC 并联电路中，各支路承受相同电压，总电流为各支路电流的相量和。在某一频率附近，电感支路电流与电容支路电流大小接近、相位相反，彼此抵消，使外电源提供的总电流最小。因此并联谐振常表现为“总阻抗最大、总电流最小”，又称电流谐振。
+
+而串联 RLC 谐振时，回路总阻抗最小、总电流最大，称为电压谐振或串联谐振。两者的根本差异来自连接方式不同：串联时阻抗直接相加，并联时导纳直接相加。虽然都满足 $\omega_0=1/\sqrt{LC}$ 的基本尺度，但实际峰值位置还会受电阻分布影响。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+在交流电路中，经常采用复阻抗方法处理相位问题。请说明：
+\begin{enumerate}
+  \item 电阻、电感、电容的复阻抗分别是什么；
+  \item 为什么复阻抗法能把微分方程转化为代数运算；
+  \item 该方法在求电压、电流相位差与平均功率时有什么优势。
+\end{enumerate}
+
+\begin{solution}
+对角频率为 $\omega$ 的正弦稳态，常把电压和电流表示成复振幅形式。三种元件的复阻抗分别为
+\[
+Z_R=R,\qquad Z_L=\mathrm{i}\omega L,\qquad Z_C=\frac{1}{\mathrm{i}\omega C}=-\frac{\mathrm{i}}{\omega C}.
+\]
+由于时间微分在复指数函数 $e^{\mathrm{i}\omega t}$ 上只会带来乘子 $\mathrm{i}\omega$，故原先的微分关系
+\[
+u_L=L\dv{i}{t},\qquad i_C=C\dv{u}{t}
+\]
+可转化为代数形式。这样，串并联计算与直流电阻网络非常类似，但量变成了复数。
+
+复阻抗法的优势在于：
+\begin{enumerate}
+  \item 能直接得到电流与电压的相位差，等价于读取复数辐角；
+  \item 能用统一方法处理混合电路，避免反复写微分方程；
+  \item 平均功率可写为 $P=UI\cos\varphi$，其中功率因数 $\cos\varphi$ 可直接由阻抗角求出。
+\end{enumerate}
+因此它是交流稳态分析最有效的工具之一。
+\end{solution}
+\end{problem}

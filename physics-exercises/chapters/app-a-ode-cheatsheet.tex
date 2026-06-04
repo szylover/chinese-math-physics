@@ -1,0 +1,216 @@
+\chapter{常用微分方程速查表}
+
+本附录汇总物理中最常见的常微分方程模型、标准解法与典型结论，便于做题时快速查阅。
+
+\section{一阶方程}
+
+\begin{longtable}{p{0.20\textwidth}p{0.26\textwidth}p{0.22\textwidth}p{0.24\textwidth}}
+\toprule
+方程类型 & 标准形式 & 通法/步骤 & 备注 \\
+\midrule
+\endfirsthead
+\toprule
+方程类型 & 标准形式 & 通法/步骤 & 备注 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+可分离变量方程 & $y'=f(x)g(y)$ & 改写为
+\[
+\frac{\dd y}{g(y)}=f(x)\dd x
+\]
+两边积分，得到隐式解
+\[
+\int \frac{\dd y}{g(y)}=\int f(x)\dd x +C
+\]
+ & 若 $g(y_*)=0$，需额外检查常数解 $y=y_*$。 \\
+
+一阶线性方程 & $y'+P(x)y=Q(x)$ & 积分因子
+\[
+\mu(x)=\exp\qty(\int P(x)\dd x)
+\]
+乘后化为
+\[
+\dv{}{x}[\mu y]=\mu Q
+\]
+故
+\[
+ y=\frac{1}{\mu}\qty(\int \mu Q\dd x+C)
+\]
+ & 最常见于 RC、RL 电路与阻力问题。 \\
+
+Bernoulli 方程 & $y'+P(x)y=Q(x)y^n$ & 令 $z=y^{1-n}$，化为一阶线性方程求解。 & 当 $n=0,1$ 时分别退化为线性或可分离变量方程。 \\
+
+恰当方程 & $M(x,y)\dd x+N(x,y)\dd y=0$ & 若
+\[
+\pdv{M}{y}=\pdv{N}{x}
+\]
+则存在势函数 $\Phi$ 使
+\[
+\dd \Phi=M\dd x+N\dd y
+\]
+解为 $\Phi(x,y)=C$。 & 若不恰当，可尝试寻找积分因子。 \\
+\end{longtable}
+
+\section{二阶常系数线性方程}
+
+\begin{longtable}{p{0.23\textwidth}p{0.24\textwidth}p{0.23\textwidth}p{0.22\textwidth}}
+\toprule
+类型 & 标准形式 & 特征方程与解 & 典型物理图像 \\
+\midrule
+\endfirsthead
+\toprule
+类型 & 标准形式 & 特征方程与解 & 典型物理图像 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+二阶常系数齐次 & $ay''+by'+cy=0$ & 设 $y=e^{rx}$，得特征方程
+\[
+ ar^2+br+c=0
+\]
+ & 统一转化为根的分类讨论。 \\
+
+两实根 $r_1\neq r_2$ & 同上 & 若 $\Delta=b^2-4ac>0$，则
+\[
+ y=C_1e^{r_1x}+C_2e^{r_2x}
+\]
+ & 过阻尼、指数增长/衰减。 \\
+
+重根 $r$ & 同上 & 若 $\Delta=0$，则
+\[
+ y=(C_1+C_2x)e^{rx}
+\]
+ & 临界阻尼。 \\
+
+共轭复根 & 同上 & 若 $\Delta<0$，设
+\[
+ r=\alpha\pm i\beta,
+\]
+则
+\[
+ y=e^{\alpha x}(C_1\cos \beta x+C_2\sin \beta x)
+\]
+ & 振动叠加指数包络；欠阻尼。 \\
+\end{longtable}
+
+\section{二阶常系数非齐次方程}
+
+考虑
+\[
+ ay''+by'+cy=F(x).
+\]
+通解总写成
+\[
+ y=y_h+y_p,
+\]
+其中 $y_h$ 为对应齐次方程通解，$y_p$ 为任一特解。
+
+\begin{longtable}{p{0.27\textwidth}p{0.28\textwidth}p{0.18\textwidth}p{0.19\textwidth}}
+\toprule
+$F(x)$ 形式 & 特解猜测 & 修正规则 & 说明 \\
+\midrule
+\endfirsthead
+\toprule
+$F(x)$ 形式 & 特解猜测 & 修正规则 & 说明 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+多项式 $P_n(x)$ & 设 $y_p$ 为同阶多项式 & 若与齐次解重复，乘 $x^s$ & 常用于恒力驱动。 \\
+
+指数函数 $e^{\lambda x}$ & 设 $y_p=Ae^{\lambda x}$ & 若 $\lambda$ 是特征根，乘 $x^s$ & 指数外源或放射衰变耦合。 \\
+
+三角函数 $\cos \omega x,\sin \omega x$ & 设
+\[
+y_p=A\cos \omega x+B\sin \omega x
+\]
+ & 若 $\pm i\omega$ 是特征根，乘 $x^s$ & 简谐驱动、交流稳态。 \\
+
+指数乘多项式/三角 & 按乘积形式整体猜测 & 同样处理重根 & 待定系数法核心是“同类项闭合”。 \\
+\end{longtable}
+
+\section{物理常见方程}
+
+\begin{longtable}{p{0.22\textwidth}p{0.25\textwidth}p{0.24\textwidth}p{0.21\textwidth}}
+\toprule
+模型 & 方程 & 解的结构 & 关键参数 \\
+\midrule
+\endfirsthead
+\toprule
+模型 & 方程 & 解的结构 & 关键参数 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+简谐振子 & 
+\[
+ m\ddot x+kx=0
+\]
+ & 
+\[
+ x=A\cos(\omega_0 t+\phi),\quad \omega_0=\sqrt{k/m}
+\]
+ & 固有频率 $\omega_0$。 \\
+
+阻尼振子 & 
+\[
+ m\ddot x+b\dot x+kx=0
+\]
+ & 写成
+\[
+ \ddot x+2\beta \dot x+\omega_0^2x=0,
+\quad \beta=\frac{b}{2m}
+\]
+按 $\beta$ 与 $\omega_0$ 比较分三类。 & 欠阻尼、临界阻尼、过阻尼。 \\
+
+受迫振子 & 
+\[
+ m\ddot x+b\dot x+kx=F_0\cos \omega t
+\]
+ & 通解=暂态解+稳态解；稳态振幅为
+\[
+ A(\omega)=\frac{F_0/m}{\sqrt{(\omega_0^2-\omega^2)^2+4\beta^2\omega^2}}
+\]
+ & 共振与相位差。 \\
+
+RC 电路 & 
+\[
+ R\dv{q}{t}+\frac{q}{C}=\mathcal{E}(t)
+\]
+ & 一阶线性；若 $\mathcal{E}$ 为常量，则
+\[
+ q(t)=C\mathcal{E}+Ae^{-t/(RC)}
+\]
+ & 时间常数 $\tau=RC$。 \\
+
+RL 电路 & 
+\[
+ L\dv{i}{t}+Ri=\mathcal{E}(t)
+\]
+ & 一阶线性；常电源下
+\[
+ i(t)=\frac{\mathcal{E}}{R}+Ae^{-Rt/L}
+\]
+ & 时间常数 $\tau=L/R$。 \\
+
+RLC 串联电路 & 
+\[
+ L\ddot q+R\dot q+\frac{1}{C}q=\mathcal{E}(t)
+\]
+ & 与机械振子完全类比：
+\[
+ \ddot q+\frac{R}{L}\dot q+\frac{1}{LC}q=\frac{\mathcal{E}(t)}{L}
+\]
+ & 对应 $m\leftrightarrow L$，$b\leftrightarrow R$，$k\leftrightarrow 1/C$。 \\
+\end{longtable}
+
+\section{做题速记}
+
+\begin{itemize}
+  \item 先看是否能降阶：若方程中不显含 $x$ 或不显含 $y$，常可令 $p=y'$ 化简。
+  \item 一阶方程优先判断：可分离、线性、Bernoulli、恰当。
+  \item 二阶常系数题先写特征方程，不要急于猜解。
+  \item 非齐次题先求齐次通解，再根据右端类型决定待定系数的形状。
+  \item 物理题中常数的量纲可帮助检查答案是否合理，例如 $RC$、$L/R$、$\sqrt{m/k}$ 都应具有时间量纲。
+\end{itemize}

@@ -1,0 +1,351 @@
+\chapter{静电场}
+
+静电场把“力的叠加”“空间中的矢量场”与“积分/通量方法”高度统一起来。本章题目按照点电荷、对称分布与连续分布三个层次编排，并适当引入高斯定理与镜像法等大学物理方法。
+
+\section{高考题}
+
+\begin{gaokao}
+真空中一点电荷 $Q$ 位于原点。
+\begin{enumerate}
+  \item 写出距其 $r$ 处的电场强度大小与方向；
+  \item 若在该处放入试探电荷 $q$，求其受力；
+  \item 说明为什么电场强度与试探电荷大小无关。
+\end{enumerate}
+\begin{solution}
+由库仑定律，点电荷在距原点 $r$ 处产生的电场为
+\[
+\vb{E}(\vb{r})=\frac{1}{4\pi\varepsilon_0}\frac{Q}{r^3}\vb{r}.
+\]
+大小为
+\[
+E=\frac{1}{4\pi\varepsilon_0}\frac{|Q|}{r^2}.
+\]
+若 $Q>0$，方向沿径向向外；若 $Q<0$，方向沿径向向内。
+
+试探电荷受力为
+\[
+\vb{F}=q\vb{E}.
+\]
+之所以电场强度与试探电荷无关，是因为我们定义
+\[
+\vb{E}=\frac{\vb{F}}{q}
+\]
+时，$\vb{F}$ 本身正比于 $q$，二者相除后只剩场源电荷和空间位置的信息。试探电荷只是“探针”，不应决定原有电场的性质。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \fill[red!70] (0,0) circle (0.09);
+  \node[above right] at (0,0) {$+Q$};
+  \foreach \ang in {0,30,...,330}{
+    \draw[->, thick, blue!70!black] (0,0) -- ({2*cos(\ang)},{2*sin(\ang)});
+  }
+  \draw[gray!60] (0,0) circle (1.2);
+\end{tikzpicture}
+\caption{正点电荷的径向电场线}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+$x$ 轴上放置两个点电荷：在 $x=-a$ 处有 $+Q$，在 $x=+a$ 处有 $-Q$。
+\begin{enumerate}
+  \item 求原点处的合电场强度；
+  \item 求 $x$ 轴上任意点 $x>a$ 处合电场方向；
+  \item 说明电场叠加为什么必须作矢量和而非标量和。
+\end{enumerate}
+\begin{solution}
+原点到两电荷距离都为 $a$。由 $+Q$ 在原点产生的电场方向向右，大小为
+\[
+E_+=\frac{1}{4\pi\varepsilon_0}\frac{Q}{a^2}.
+\]
+由 $-Q$ 在原点产生的电场也向右，大小同样为 $E_-$。因此原点处
+\[
+E_O=\frac{1}{4\pi\varepsilon_0}\frac{2Q}{a^2},
+\]
+方向沿 $+x$ 轴。
+
+当 $x>a$ 时，来自 $+Q$ 的电场向右，来自 $-Q$ 的电场向左，但因场点更靠近 $-Q$，故其大小更大，因此合场方向向左，即指向负电荷。
+
+电场是矢量，每个点电荷贡献的不仅有大小，还有方向。若只作标量加法，就会错误地忽略“相消”“反向增强”等几何信息，因此必须逐个分解再合成。
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+设均匀带电细棒沿 $x$ 轴放置，中心在原点，长度为 $2L$，线电荷密度为 $\lambda$。求其在 $y$ 轴上点 $P(0,a)$ 处的电场强度，并说明为何只有 $y$ 分量保留下来。
+\begin{solution}
+取棒上位置 $x$ 处的电荷元
+\[
+\dd q=\lambda\dd x.
+\]
+它到点 $P$ 的距离为
+\[
+r=\sqrt{x^2+a^2}.
+\]
+由对称性，位于 $x$ 与 $-x$ 的两个电荷元在 $x$ 方向产生的分量相互抵消，只留下 $y$ 分量：
+\[
+\dd E_y=\frac{1}{4\pi\varepsilon_0}\frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}}.
+\]
+故
+\[
+E_y=\frac{1}{4\pi\varepsilon_0}\int_{-L}^{L}\frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}}
+=\frac{1}{4\pi\varepsilon_0}\frac{2\lambda L}{a\sqrt{L^2+a^2}}.
+\]
+方向沿 $+y$ 轴（当 $\lambda>0$ 时）。
+
+这道题说明：对称性先告诉我们“哪些分量一定抵消”，积分只需保留真正留下的方向，从而大大简化计算。
+\end{solution}
+\end{gaokao}
+
+\section{竞赛题}
+
+\begin{competition}
+半径为 $R$ 的均匀带电细环总电荷为 $Q$。求其轴线上距圆心 $x$ 处的电场强度。
+\begin{solution}
+取细环上一电荷元 $\dd q$。它到轴上场点的距离为
+\[
+r=\sqrt{R^2+x^2}.
+\]
+由对称性，环上电荷元的横向分量两两抵消，仅剩轴向分量：
+\[
+\dd E_x=\frac{1}{4\pi\varepsilon_0}\frac{x\,\dd q}{(R^2+x^2)^{3/2}}.
+\]
+对整环积分，
+\[
+E_x=\frac{1}{4\pi\varepsilon_0}\frac{x}{(R^2+x^2)^{3/2}}\int \dd q
+=\frac{1}{4\pi\varepsilon_0}\frac{Qx}{(R^2+x^2)^{3/2}}.
+\]
+方向沿轴线。若 $x\gg R$，则
+\[
+E_x\approx \frac{1}{4\pi\varepsilon_0}\frac{Q}{x^2},
+\]
+说明远处看去整个带电环近似成点电荷。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[thick] (0,0) ellipse (1.8 and 0.55);
+  \draw[dashed] (-1.8,0) arc (180:360:1.8 and 0.55);
+  \draw[->] (-3,0) -- (3,0) node[right] {轴线};
+  \fill (0,0) circle (1.2pt) node[below] {$O$};
+  \fill (2.4,0) circle (1.2pt) node[below] {$P$};
+  \draw[->, red!70!black, thick] (2.4,0) -- ++(1.0,0) node[above] {$\vb{E}$};
+\end{tikzpicture}
+\caption{带电圆环轴线上电场的方向}
+\end{figure}
+\end{solution}
+\end{competition}
+
+\begin{competition}
+半径为 $R$ 的均匀带电球壳总电荷为 $Q$。
+\begin{enumerate}
+  \item 用高斯定理求球壳外部电场；
+  \item 求球壳内部电场；
+  \item 解释“壳内场为零”并不意味着电势也为零。
+\end{enumerate}
+\begin{solution}
+取与球壳同心、半径为 $r$ 的高斯面。
+
+当 $r>R$ 时，由对称性电场在高斯面上大小处处相同、方向沿径向，故
+\[
+E\cdot 4\pi r^2=\frac{Q}{\varepsilon_0},
+\]
+于是
+\[
+E=\frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}.
+\]
+这与把全部电荷集中于球心的点电荷结果一致。
+
+当 $r<R$ 时，高斯面内包围净电荷为零，因此
+\[
+\iint_{S} \vb{E}\cdot \dd\vb{A}=0.
+\]
+结合球对称性可知
+\[
+E=0.
+\]
+但电势是电场的积分量。壳内虽然电场为零，意味着电势不再变化，却可以保持为某个非零常数；若取无穷远为零，则壳内电势恰等于球面处电势
+\[
+V=\frac{1}{4\pi\varepsilon_0}\frac{Q}{R}.
+\]
+\end{solution}
+\end{competition}
+
+\begin{competition}
+由四个点电荷构成线性电四极子：在 $x$ 轴上依次放置 $+q,-q,-q,+q$，位置分别为 $-3a/2,-a/2,a/2,3a/2$。
+\begin{enumerate}
+  \item 证明总电荷与总偶极矩均为零；
+  \item 求远轴线上 $x\gg a$ 处电势的主导阶；
+  \item 说明四极场比偶极场衰减更快的原因。
+\end{enumerate}
+\begin{solution}
+总电荷显然为
+\[
+q-q-q+q=0.
+\]
+若以原点为参考，偶极矩
+\[
+p=\sum_i q_i x_i=q\qty(-\frac{3a}{2})+(-q)\qty(-\frac{a}{2})+(-q)\qty(\frac{a}{2})+q\qty(\frac{3a}{2})=0.
+\]
+因此单极项与偶极项同时消失。
+
+远轴线上电势为
+\[
+V(x)=\frac{1}{4\pi\varepsilon_0}\qty(\frac{q}{x+3a/2}-\frac{q}{x+a/2}-\frac{q}{x-a/2}+\frac{q}{x-3a/2}).
+\]
+对 $a/x\ll 1$ 展开，前两阶相消，主导项为
+\[
+V(x)\sim \frac{1}{4\pi\varepsilon_0}\frac{2qa^2}{x^3}.
+\]
+因此四极子电势按 $1/x^3$ 衰减，相应电场按 $1/x^4$ 衰减。它比偶极子更快衰减，是因为更低阶的多极矩已经通过对称性完全抵消。
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+设体电荷密度为 $\rho(\vb{r}')$，场点为 $\vb{r}$。
+\begin{enumerate}
+  \item 写出连续电荷分布产生的电场积分公式；
+  \item 对均匀带电圆盘轴线上一点给出积分表达；
+  \item 说明“先选电荷元，再利用对称性”是求积分电场的核心步骤。
+\end{enumerate}
+\begin{solution}
+连续体电荷分布的电场一般写成
+\[
+\vb{E}(\vb{r})=\frac{1}{4\pi\varepsilon_0}\iiint \frac{\vb{r}-\vb{r}'}{|\vb{r}-\vb{r}'|^3}\rho(\vb{r}')\,\dd V'.
+\]
+若是面电荷分布，则改写为面积分；线电荷分布则改写为线积分。
+
+例如半径为 $R$ 的均匀带电圆盘，面密度为 $\sigma$，求轴线上距盘心 $x$ 处电场。取半径为 $r$、宽为 $\dd r$ 的同心细环作为电荷元，则
+\[
+\dd q=2\pi r\sigma\,\dd r,
+\qquad
+\dd E_x=\frac{1}{4\pi\varepsilon_0}\frac{x\,\dd q}{(x^2+r^2)^{3/2}}.
+\]
+故
+\[
+E_x=\frac{1}{4\pi\varepsilon_0}\int_0^R\frac{2\pi\sigma x r}{(x^2+r^2)^{3/2}}\,\dd r.
+\]
+计算可得
+\[
+E_x=\frac{\sigma}{2\varepsilon_0}\qty(1-\frac{x}{\sqrt{x^2+R^2}}).
+\]
+所谓“先选电荷元，再利用对称性”，即先让微积分把连续分布拆成无限多个简单元，再通过几何对称消去无关分量，保证积分方向与被积函数都尽可能简洁。
+\end{solution}
+\end{university}
+
+\begin{university}
+静电平衡导体表面为什么会出现表面电荷分布？请回答：
+\begin{enumerate}
+  \item 导体内部电场为何必须为零；
+  \item 表面附近电场与面电荷密度 $\sigma$ 有何关系；
+  \item 为何尖端附近更容易聚集电荷并形成强电场。
+\end{enumerate}
+\begin{solution}
+若导体内部存在非零电场，自由电荷会继续受力移动，因此静电平衡不可能建立。故平衡时导体内部必须满足
+\[
+\vb{E}_{\text{in}}=0.
+\]
+由高斯定理，对穿过导体表面的微小柱形高斯面有
+\[
+E_\perp^{\text{out}}-E_\perp^{\text{in}}=\frac{\sigma}{\varepsilon_0}.
+\]
+而内部场为零，因此导体外表面法向电场满足
+\[
+E_\perp=\frac{\sigma}{\varepsilon_0}.
+\]
+切向分量必须为零，否则电荷仍会沿表面滑动。
+
+在尖端或曲率半径很小的部位，为维持整个导体为等势体，表面电荷往往聚集得更密，即 $\sigma$ 更大，于是外部法向电场也更强。这就是静电尖端放电现象的基础。
+\end{solution}
+\end{university}
+
+\begin{university}
+一无限大接地导体平面位于 $z=0$，点电荷 $q$ 位于 $z=d$ 处。用镜像法求上半空间中的电势与电场，并求点电荷所受吸引力。
+\begin{solution}
+镜像法把导体边界条件转化为等效自由空间问题：在 $z=-d$ 处放置镜像电荷 $-q$。于是上半空间 $z>0$ 的电势为
+\[
+V(\vb{r})=\frac{1}{4\pi\varepsilon_0}\qty(\frac{q}{\sqrt{x^2+y^2+(z-d)^2}}-\frac{q}{\sqrt{x^2+y^2+(z+d)^2}}).
+\]
+在 $z=0$ 上两项恰好相消，满足接地边界条件 $V=0$。
+
+电场由
+\[
+\vb{E}=-\grad V
+\]
+求得，其物理意义等价于“真实电荷与镜像电荷共同产生的场”在上半空间的限制。点电荷所受力可直接视为镜像电荷对它的作用：二者距离为 $2d$，故吸引力大小
+\[
+F=\frac{1}{4\pi\varepsilon_0}\frac{q^2}{(2d)^2}=\frac{q^2}{16\pi\varepsilon_0 d^2},
+\]
+方向指向导体平面。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \fill[gray!20] (-3,0) rectangle (3,-0.25);
+  \draw[thick] (-3,0) -- (3,0);
+  \fill[red!70] (0,2) circle (0.09) node[right] {$q$};
+  \fill[blue!70] (0,-2) circle (0.09) node[right] {$-q$};
+  \draw[dashed] (0,-2) -- (0,2);
+  \node[left] at (0,1) {$d$};
+  \node[left] at (0,-1) {$d$};
+\end{tikzpicture}
+\caption{镜像法中的真实电荷与镜像电荷}
+\end{figure}
+\end{solution}
+\end{university}
+
+\section{拓展题}
+
+\begin{problem}
+用高斯定理求无限大均匀带电平面的电场。设面电荷密度为 $\sigma$，并说明为何电场大小与离平面的距离无关。
+\begin{solution}
+由面对称性可知，电场只能垂直于平面，且在平面两侧大小相等、方向相反。取跨越平面的薄圆柱作为高斯面，其侧面没有通量，只有上下两个底面贡献：
+\[
+\Phi_E=2EA.
+\]
+高斯面包围电荷为
+\[
+Q_{\text{in}}=\sigma A.
+\]
+由高斯定理
+\[
+2EA=\frac{\sigma A}{\varepsilon_0},
+\]
+得
+\[
+E=\frac{\sigma}{2\varepsilon_0}.
+\]
+该结果与距离无关，是因为无限大平面在任意高度看来都完全相同，不存在任何特征长度；在这种平移对称下，场强不可能随高度改变。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+设电荷分布具有球对称性，体电荷密度仅依赖于半径，即 $\rho=\rho(r)$。请推导球对称电荷分布在半径 $r$ 处的电场通式，并分别写出“场点在分布内部”与“场点在分布外部”的表达。
+\begin{solution}
+由球对称性，电场必沿径向，大小只与半径 $r$ 有关。取半径为 $r$ 的同心球面作高斯面，则
+\[
+E(r)\cdot 4\pi r^2=\frac{Q_{\text{in}}(r)}{\varepsilon_0},
+\]
+其中
+\[
+Q_{\text{in}}(r)=4\pi\int_0^r \rho(r')r'^2\,\dd r'.
+\]
+因此通式为
+\[
+E(r)=\frac{1}{\varepsilon_0 r^2}\int_0^r \rho(r')r'^2\,\dd r'.
+\]
+方向沿径向外（若净包围电荷为正）。
+
+若场点位于整个分布外部，设总半径为 $R$，则当 $r\ge R$ 时
+\[
+Q_{\text{in}}(r)=Q_{\text{tot}}=4\pi\int_0^R \rho(r')r'^2\,\dd r',
+\]
+故
+\[
+E(r)=\frac{1}{4\pi\varepsilon_0}\frac{Q_{\text{tot}}}{r^2}.
+\]
+也就是说，任意球对称分布在外部都等效为把总电荷集中在球心。若场点在内部，则只由内包围电荷决定，这是高斯定理与球对称性共同带来的强大结论。
+\end{solution}
+\end{problem}

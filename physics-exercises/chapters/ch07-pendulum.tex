@@ -1,0 +1,370 @@
+\chapter{单摆与精确解}
+
+单摆是从高中到理论力学都极具代表性的模型：小角度时它是最经典的简谐振子，而大角度时又会自然引出非线性方程、相平面与椭圆积分。本章习题旨在把这些层次贯通起来。
+
+\section{高考题}
+
+\begin{gaokao}
+一根长为 $\ell$ 的细线下端系一质量为 $m$ 的小球，构成理想单摆。在摆角很小时，证明其周期为
+\[
+T=2\pi\sqrt{\frac{\ell}{g}}.
+\]
+并说明周期与振幅、质量的关系。
+\begin{solution}
+摆球受力沿切向满足
+\[
+m\ell\ddot\theta=-mg\sin\theta.
+\]
+当摆角很小时，取近似 $\sin\theta\approx \theta$，得到
+\[
+\ddot\theta+\frac{g}{\ell}\theta=0.
+\]
+这是标准简谐振动方程，其角频率为
+\[
+\omega=\sqrt{\frac{g}{\ell}},
+\]
+故周期
+\[
+T=\frac{2\pi}{\omega}=2\pi\sqrt{\frac{\ell}{g}}.
+\]
+由此可见，在小角度近似成立时，周期与摆球质量无关，也与振幅近似无关，只由摆长与重力加速度决定。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0,>=Latex]
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (0,-1);
+  \coordinate (P) at (1.4,-3.75);
+  \fill (O) circle (1.4pt) node[above] {$O$};
+  \draw[dashed] (O) -- (0,-4);
+  \draw[thick] (O) -- (P);
+  \fill[blue!25] (P) circle (0.18);
+  \draw pic[draw,->,"$\theta$",angle radius=0.7cm] {angle = V--O--P};
+  \node[right] at (0.7,-1.9) {$\ell$};
+\end{tikzpicture}
+\caption{理想单摆的几何量}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+单摆从最大摆角 $\theta_0$ 处由静止释放，求其摆到任意摆角 $\theta$ 时的速度 $v$，并在小角度下用微积分说明其总机械能可写成“动能 $+$ 近似二次势能”的形式。
+\begin{solution}
+取最低点为势能零点，则任意角度处摆球升高高度为
+\[
+h=\ell(1-\cos\theta).
+\]
+机械能守恒给出
+\[
+\frac12 mv^2+mg\ell(1-\cos\theta)=mg\ell(1-\cos\theta_0),
+\]
+故
+\[
+v=\sqrt{2g\ell\qty(\cos\theta-\cos\theta_0)}.
+\]
+
+当 $\theta,\theta_0$ 都较小时，利用
+\[
+\cos\theta\approx 1-\frac12 \theta^2,
+\]
+可得势能近似为
+\[
+U(\theta)=mg\ell(1-\cos\theta)\approx \frac12 mg\ell\theta^2.
+\]
+再用弧长坐标 $x=\ell\theta$ 表示，则
+\[
+U\approx \frac12 \frac{mg}{\ell}x^2,
+\]
+形式上与弹簧振子完全一致，因此单摆在小角度下表现为简谐振动。
+\end{solution}
+\end{gaokao}
+
+\section{竞赛题}
+
+\begin{competition}
+对于任意振幅的理想单摆，证明其周期可写成
+\[
+T=4\sqrt{\frac{\ell}{g}}\int_0^{\pi/2}\frac{\dd\phi}{\sqrt{1-k^2\sin^2\phi}},
+\qquad k=\sin\frac{\theta_0}{2},
+\]
+并指出为何这说明大角度单摆的周期不再与振幅无关。
+\begin{solution}
+由机械能守恒，
+\[
+\frac12 m\ell^2\dot\theta^2+mg\ell(1-\cos\theta)=mg\ell(1-\cos\theta_0).
+\]
+化简得
+\[
+\dot\theta=\sqrt{\frac{2g}{\ell}\qty(\cos\theta-\cos\theta_0)}.
+\]
+单摆从 $0$ 摆到 $\theta_0$ 的时间是四分之一周期，因此
+\[
+\frac{T}{4}=\int_0^{\theta_0}\frac{\dd\theta}{\dot\theta}
+=\sqrt{\frac{\ell}{2g}}\int_0^{\theta_0}\frac{\dd\theta}{\sqrt{\cos\theta-\cos\theta_0}}.
+\]
+令
+\[
+\sin\frac{\theta}{2}=k\sin\phi,
+\qquad k=\sin\frac{\theta_0}{2},
+\]
+即可化为标准完全椭圆积分形式：
+\[
+T=4\sqrt{\frac{\ell}{g}}K(k),
+\qquad
+K(k)=\int_0^{\pi/2}\frac{\dd\phi}{\sqrt{1-k^2\sin^2\phi}}.
+\]
+因为 $K(k)$ 随 $k$ 增大而增大，而 $k$ 又随振幅 $\theta_0$ 增大而增大，所以大角度单摆的周期会变长，等时性只是在小角度下的近似性质。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+一根长度为 $\ell$ 的均匀细杆上端铰接，下端自由摆动，构成物理摆。
+\begin{enumerate}
+  \item 求细杆绕铰点的转动惯量；
+  \item 写出小振动方程；
+  \item 求周期，并与同长单摆比较。
+\end{enumerate}
+\begin{solution}
+均匀细杆质量为 $m$ 时，绕一端转动惯量为
+\[
+I=\frac13 m\ell^2.
+\]
+质心到铰点距离为 $\ell/2$，重力矩为
+\[
+\tau=-mg\frac{\ell}{2}\sin\theta.
+\]
+小角度下
+\[
+I\ddot\theta=-mg\frac{\ell}{2}\theta,
+\]
+故
+\[
+\ddot\theta+\frac{3g}{2\ell}\theta=0.
+\]
+周期为
+\[
+T=2\pi\sqrt{\frac{2\ell}{3g}}.
+\]
+若与长度同为 $\ell$ 的单摆相比，单摆周期为 $2\pi\sqrt{\ell/g}$，故细杆物理摆的周期更短，因为它的质心更靠近支点。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+扭摆由转动惯量为 $I$ 的刚体和扭转常量为 $\kappa$ 的细丝构成。若转角为 $\varphi$ 时回复力矩满足
+\[
+M=-\kappa\varphi,
+\]
+求其角频率、周期，并说明它与弹簧振子的对应关系。
+\begin{solution}
+转动方程为
+\[
+I\ddot\varphi=-\kappa\varphi,
+\]
+即
+\[
+\ddot\varphi+\frac{\kappa}{I}\varphi=0.
+\]
+所以角频率
+\[
+\omega=\sqrt{\frac{\kappa}{I}},
+\]
+周期
+\[
+T=2\pi\sqrt{\frac{I}{\kappa}}.
+\]
+它与平动弹簧振子的完全类比为
+\[
+m\leftrightarrow I,
+\qquad k\leftrightarrow \kappa,
+\qquad x\leftrightarrow \varphi.
+\]
+因此凡是关于简谐振子的小角度结论，只要把对应物理量替换成转动形式，就可直接迁移到扭摆问题中。
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+对理想单摆的精确方程
+\[
+\ddot\theta+\omega_0^2\sin\theta=0,
+\qquad \omega_0=\sqrt{g/\ell},
+\]
+进行相平面分析。
+\begin{enumerate}
+  \item 写出守恒量；
+  \item 画出相轨线的三类典型区域；
+  \item 说明分界轨线对应的物理意义。
+\end{enumerate}
+\begin{solution}
+系统的守恒量是机械能：
+\[
+E=\frac12 m\ell^2\dot\theta^2+mg\ell(1-\cos\theta).
+\]
+除以 $m\ell^2$ 后，可写成
+\[
+\frac12 \dot\theta^2+\omega_0^2(1-\cos\theta)=\text{常量}.
+\]
+在 $(\theta,\dot\theta)$ 平面中：
+\begin{itemize}
+  \item 当总能量低于顶部势垒 $2mg\ell$ 时，相轨线是围绕稳定点 $(0,0)$ 的闭合曲线，对应往复摆动；
+  \item 当总能量等于 $2mg\ell$ 时，相轨线成为分离曲线，经过 $(\pi,0)$ 与 $(-\pi,0)$，对应摆球恰好以零速度到达顶端；
+  \item 当总能量高于势垒时，相轨线是开口曲线，对应摆球连续整周转动。
+\end{itemize}
+分界轨线之所以重要，是因为它把“振荡”与“转动”两类动力学区分开来，是典型非线性系统的相变边界。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Latex]
+  \draw[->] (-4.2,0) -- (4.2,0) node[right] {$\theta$};
+  \draw[->] (0,-3.1) -- (0,3.1) node[above] {$\dot\theta$};
+  \draw[thick, green!60!black] (0,0) ellipse (1.1 and 1.8);
+  \draw[thick, green!60!black] (0,0) ellipse (2.0 and 2.4);
+  \draw[thick, dashed, green!60!black, domain=-3.1:3.1, samples=150]
+    plot (\x,{2.7*cos(\x r/2)});
+  \draw[thick, dashed, green!60!black, domain=-3.1:3.1, samples=150]
+    plot (\x,{-2.7*cos(\x r/2)});
+  \node at (2.9,2.3) {分离曲线};
+\end{tikzpicture}
+\caption{单摆相平面的典型轨线}
+\end{figure}
+\end{solution}
+\end{university}
+
+\begin{university}
+考虑倒立摆：刚性细杆长为 $\ell$，下端与小车铰接，小球在上端。先忽略控制与外驱动。
+\begin{enumerate}
+  \item 以竖直向上为 $\theta=0$，写出小角度线性化方程；
+  \item 判断其稳定性；
+  \item 从势能曲率角度解释为何直立平衡不稳定。
+\end{enumerate}
+\begin{solution}
+以竖直向上为零角，则重力矩会把摆偏离顶端，方程为
+\[
+m\ell^2\ddot\theta=mg\ell\sin\theta.
+\]
+小角度线性化后得到
+\[
+\ddot\theta-\frac{g}{\ell}\theta=0.
+\]
+其解为
+\[
+\theta(t)=C_1 e^{\sqrt{g/\ell}\,t}+C_2 e^{-\sqrt{g/\ell}\,t}.
+\]
+除非初始条件精确落在稳定流形上，否则指数增长项都会存在，因此直立平衡不稳定。
+
+从势能看，若取向上为零角，则
+\[
+U(\theta)=mg\ell\cos\theta.
+\]
+在 $\theta=0$ 处有
+\[
+U''(0)=-mg\ell<0,
+\]
+即该点是势能极大值而非极小值，所以任何微小扰动都会使系统离开平衡点。
+\end{solution}
+\end{university}
+
+\begin{university}
+Kapitza 摆的支点沿竖直方向作高频振动
+\[
+y=a\cos\Omega t,
+\qquad \Omega\gg \sqrt{g/\ell}.
+\]
+说明在高频平均意义下，倒立位置为何可能被稳定化，并写出稳定条件的量纲正确形式。
+\begin{solution}
+支点振动会给摆球附加一个快速随时间变化的惯性效应。若把摆角分解为慢变量与快变量，并对一个快周期做平均，可得到有效势能
+\[
+U_{\text{eff}}(\theta)=mg\ell(1-\cos\theta)+\frac{ma^2\Omega^2}{4\ell}\sin^2\theta.
+\]
+第二项总为正，且在 $\theta=\pi$ 附近会改变势能曲率。当该附加项足够大时，原本位于势能顶端的倒立点可转变为有效势能的局部极小点。
+
+对倒立位置的稳定条件，可写成量纲正确的典型形式
+\[
+a^2\Omega^2>2g\ell.
+\]
+它表明：不是“振得越快越好”或“振幅越大越好”单独起作用，而是 $a\Omega$ 所代表的支点速度量级决定了平均稳定化是否足够强。
+\end{solution}
+\end{university}
+
+\section{拓展题}
+
+\begin{problem}
+设单摆大振幅精确周期为 $T(\theta_0)$，小角度近似周期为 $T_0=2\pi\sqrt{\ell/g}$。请比较三组振幅下的相对误差：$\theta_0=30^\circ,60^\circ,90^\circ$。可使用级数
+\[
+\frac{T}{T_0}\approx 1+\frac{\theta_0^2}{16}+\frac{11\theta_0^4}{3072}
+\]
+（$\theta_0$ 用弧度）进行估算。
+\begin{solution}
+先把角度化为弧度：
+\[
+30^\circ=\frac{\pi}{6},\qquad 60^\circ=\frac{\pi}{3},\qquad 90^\circ=\frac{\pi}{2}.
+\]
+逐一代入可得近似比值
+\[
+\frac{T}{T_0}\bigg|_{30^\circ}\approx 1.017,
+\qquad
+\frac{T}{T_0}\bigg|_{60^\circ}\approx 1.073,
+\qquad
+\frac{T}{T_0}\bigg|_{90^\circ}\approx 1.180.
+\]
+因此相对误差约为 $1.7\%$、$7.3\%$、$18.0\%$。这说明课堂上常用的“小角度周期公式”在 $10^\circ$ 量级极好，在 $30^\circ$ 左右仍可接受，但到 $60^\circ$ 以上就必须谨慎。
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+振幅 & $T/T_0$ & 相对误差 & 评价\\
+\midrule
+$30^\circ$ & $1.017$ & $1.7\%$ & 近似很好\\
+$60^\circ$ & $1.073$ & $7.3\%$ & 已有明显偏差\\
+$90^\circ$ & $1.180$ & $18.0\%$ & 小角度近似失效\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{solution}
+\end{problem}
+
+\begin{problem}
+单摆并不严格等时。请围绕“如何改造轨道使周期真正与振幅无关”讨论摆的等时性问题，并说明 Huygens 摆为何会引出摆线轨道。
+\begin{solution}
+普通单摆只在 $\sin\theta\approx \theta$ 时近似等时。若希望不同振幅的粒子都以相同时间到达最低点，就需要寻找一种轨道，使得沿弧线坐标 $s$ 的回复力严格满足
+\[
+F_s\propto -s.
+\]
+这等价于要求沿轨道方向的势能精确为二次函数。Huygens 证明：满足这一要求的轨道是摆线，而不是圆弧。
+
+若让摆线两侧加上恰当形状的摆线夹板，摆线摆的摆线弧长坐标恰好 obey 简谐方程，因此周期与振幅无关。这个结论说明：单摆的“近似等时”来自圆弧在小范围内接近摆线，而真正严格的等时振子需要特殊几何约束。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Latex]
+  \draw[->] (-0.3,0) -- (6.2,0);
+  \draw[->] (0,-0.3) -- (0,3.6);
+  \draw[thick, blue!70!black, domain=0:5.4, samples=120, smooth]
+    plot ({\x-0.8*sin(180*\x/3.1416)},{3-0.8*cos(180*\x/3.1416)});
+  \node at (4.6,2.6) {摆线示意};
+\end{tikzpicture}
+\caption{严格等时问题会把轨道从圆弧引向摆线}
+\end{figure}
+\end{solution}
+\end{problem}
+
+\begin{problem}
+福科摆位于地球纬度 $\lambda$ 处。请定性说明其摆动平面为何会相对地面缓慢进动，并给出进动角速度的结论
+\[
+\Omega_F=\Omega_\oplus\sin\lambda.
+\]
+\begin{solution}
+在惯性空间中，若忽略阻尼，摆动平面倾向于保持不变；但地球本身在自转，因此地面观察者会看到摆动平面相对地面缓慢旋转。真正起作用的是地球自转角速度在当地竖直方向上的分量，而不是全部自转角速度。
+
+在赤道上，竖直方向与地轴垂直，因此该分量为零，摆动平面相对地面几乎不转；在北极，竖直方向与地轴重合，摆动平面一天转一周；在一般纬度 $\lambda$ 处，仅有
+\[
+\Omega_\oplus\sin\lambda
+\]
+投影到当地竖直方向，于是进动角速度为
+\[
+\Omega_F=\Omega_\oplus\sin\lambda.
+\]
+这一定律优美地把地球自转与局域摆动联系起来，是经典力学中“参考系效应可被精密测量”的著名例子。
+\end{solution}
+\end{problem}

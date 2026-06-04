@@ -448,63 +448,7 @@ E \approx \frac{1}{4\pi\varepsilon_0}\frac{2qd}{r^3}
 很多分子虽然整体不带净电荷，却表现出电偶极性质，例如极性分子。电偶极矩因而成为连接微观结构与宏观电学性质的重要桥梁。
 \end{remark}
 
-\section{高考题微积分视角}
-
 下面选取三类经典高考风格问题，展示如何用“分解、电荷元、积分、对称性”来提升理解深度。
-
-\begin{gaokao}[title={高考题的微积分视角：双点电荷平衡点}]
-\textbf{题目：} 在一条直线上相距 $a$ 的两点固定两个正点电荷，电荷量分别为 $Q$ 与 $4Q$。求连线之间电场强度为零的位置。
-
-\textbf{常规思路：} 两个正电荷在中间区域电场方向相反，因此平衡点一定在它们之间。设平衡点距 $Q$ 为 $x$，则距 $4Q$ 为 $a-x$。由场强大小相等：
-\begin{equation}
-\frac{1}{4\pi\varepsilon_0}\frac{Q}{x^2}
-=
-\frac{1}{4\pi\varepsilon_0}\frac{4Q}{(a-x)^2}.
-\end{equation}
-解得
-\begin{equation}
-a-x = 2x \quad\Rightarrow\quad x = \frac{a}{3}.
-\end{equation}
-
-\textbf{微积分视角：} 平衡点的本质是矢量场 $E(x)$ 的零点。随着 $x$ 从左向右变化，左侧电荷贡献随 $x^{-2}$ 快速减小，右侧电荷贡献随 $(a-x)^{-2}$ 快速增大；二者曲线交点就是零场点。将电场看成函数，有助于理解“零点唯一性”。
-\end{gaokao}
-
-\begin{gaokao}[title={高考题的微积分视角：带电细杆中垂线上的电场}]
-\textbf{题目：} 长为 $2L$ 的均匀带电细杆，总电荷为 $Q$，求杆中垂线上距杆中心 $a$ 处的电场强度。
-
-\textbf{解题关键：} 令线电荷密度为 $\lambda = Q/(2L)$，取电荷元 $\dd q = \lambda\dd x$。由对称性，横向分量抵消，只需积分纵向分量：
-\begin{equation}
-E = \frac{1}{4\pi\varepsilon_0}\int_{-L}^{L} \frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}}
-= \frac{1}{4\pi\varepsilon_0}\frac{Q}{a\sqrt{L^2+a^2}}.
-\end{equation}
-
-\textbf{微积分视角：} 这类题若只记结论，容易机械；若从“把细杆切成无数电荷元”的过程出发，则不仅知道答案，还知道当 $L\to\infty$ 时如何自然过渡到无限长直线电荷的模型。
-\end{gaokao}
-
-\begin{gaokao}[title={高考题的微积分视角：均匀带电球体内外电场}]
-\textbf{题目：} 半径为 $R$ 的均匀带电实心球，总电荷为 $Q$。求球内、球外距球心 $r$ 处的电场强度。
-
-\textbf{解：} 体电荷密度为
-\begin{equation}
-\rho = \frac{Q}{\frac{4}{3}\pi R^3}.
-\end{equation}
-当 $r>R$ 时，由高斯定理
-\begin{equation}
-E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}.
-\end{equation}
-当 $r<R$ 时，包围电荷
-\begin{equation}
-Q_{\text{in}} = \rho\cdot \frac{4}{3}\pi r^3 = Q\frac{r^3}{R^3},
-\end{equation}
-于是
-\begin{equation}
-E\cdot 4\pi r^2 = \frac{Q r^3}{\varepsilon_0 R^3}
-\quad\Rightarrow\quad
-E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{R^3}r.
-\end{equation}
-
-\textbf{微积分视角：} 这一结果体现了“局部电场由内部累积电荷决定”。球内 $E\propto r$，意味着从球心出发，随着包围体积按 $r^3$ 增长，而高斯面面积按 $r^2$ 增长，二者相除留下一个 $r$。
-\end{gaokao}
 
 \section*{本章小结}
 
@@ -517,40 +461,3 @@ E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{R^3}r.
   \item 电偶极子说明“净电荷为零不代表电场为零”，其远场遵循 $1/r^3$ 衰减。
 \end{itemize}
 
-\section*{习题}
-
-\begin{exercise}
-两个点电荷 $+q$ 与 $+4q$ 相距 $3a$。求在它们连线上电场强度为零的位置，并说明为什么零点不可能出现在两电荷外侧的某些区域。
-\end{exercise}
-
-\begin{exercise}
-在边长为 $a$ 的正方形四个顶点上，分别放置四个相同的正点电荷 $q$。求正方形中心处的电场强度与电势（只需口头说明电势是否为零，并解释原因）。
-\end{exercise}
-
-\begin{exercise}
-一电荷量为 $Q$ 的点电荷位于立方体一个顶点。设由八个同样的小立方体可拼成一个大立方体，使该电荷位于大立方体中心。利用高斯定理求原来小立方体各面总通量，并进一步讨论三个过该顶点的面上通量为何为零。
-\end{exercise}
-
-\begin{exercise}
-长度为 $2L$ 的均匀带电细杆，线密度为 $\lambda$。求其延长线上、距杆中心 $x$（$x>L$）处的电场强度，并验证当 $x\gg L$ 时可化为点电荷近似。
-\end{exercise}
-
-\begin{exercise}
-半径为 $R$ 的均匀带电圆环总电荷为 $Q$。求轴线上电场强度的极大值位置，并说明当场点靠近环心时场强为何趋于零。
-\end{exercise}
-
-\begin{exercise}
-利用高斯定理求半径为 $R$、体电荷密度均匀为 $\rho$ 的实心球在球内外的电场强度，并画出 $E$ 随 $r$ 变化的大致图像。
-\end{exercise}
-
-\begin{exercise}
-两块无限大平行金属板分别带有面电荷密度 $+\sigma$ 与 $-\sigma$。忽略边缘效应，利用单个无限大带电平面的场强结果，求板间与板外的合电场。
-\end{exercise}
-
-\begin{exercise}
-设电偶极子由 $\pm q$ 组成，间距为 $d$。试从精确表达式出发，推导其轴线上远场近似 $E \approx \dfrac{1}{4\pi\varepsilon_0}\dfrac{2p}{r^3}$。
-\end{exercise}
-
-\begin{exercise}
-阅读并比较：为什么高斯定理对任意闭合曲面都成立，但我们通常只在球对称、柱对称、面对称问题中用它直接求场强？请结合“积分是否易于化简”作答。
-\end{exercise}

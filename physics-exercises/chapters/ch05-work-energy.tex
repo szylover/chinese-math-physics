@@ -1,0 +1,605 @@
+\chapter{功与能}
+
+本章习题围绕“功是力沿位移的积分、能量是状态函数”这一主线展开。题目按高考、竞赛、大学物理与拓展题分层编排，尽量把公式、图像与微积分方法联结起来。
+
+\section{高考题}
+
+\begin{gaokao}
+一物块在水平直轨道上从 $x=0$ 运动到 $x=L$，所受拉力沿运动方向且随位置变化为
+\[
+F(x)=F_0+\alpha x,\qquad F_0>0,\ \alpha>0.
+\]
+已知物块质量为 $m$，轨道光滑，初速度为零。
+\begin{enumerate}
+  \item 求拉力在全过程中所做的功；
+  \item 求物块到达 $x=L$ 时的速度；
+  \item 说明为何 $F-x$ 图像下的面积就是做功。
+\end{enumerate}
+\begin{solution}
+由功的定义，
+\[
+W=\int_0^L F(x)\,\dd x=\int_0^L \qty(F_0+\alpha x)\dd x=F_0L+\frac12 \alpha L^2.
+\]
+由动能定理，
+\[
+W=\Delta E_k=\frac12 mv^2,
+\]
+故
+\[
+v=\sqrt{\frac{2F_0L+\alpha L^2}{m}}.
+\]
+因为一维情况下元功为 $\dd W=F\,\dd x$，把全过程分成许多小段后，做功就是每一小条“高为 $F$、宽为 $\dd x$”的小矩形面积之和；取极限便得到曲线下的面积。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (-0.2,0) -- (5.2,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.6) node[above] {$F$};
+  \draw[thick, violet!70!black] (0,0.8) -- (4.5,3.0) node[above right] {$F_0+\alpha x$};
+  \draw[dashed] (4.5,0) node[below] {$L$} -- (4.5,3.0);
+  \fill[violet!20] (0,0.8) -- (4.5,3.0) -- (4.5,0) -- (0,0) -- cycle;
+  \node at (2.6,1.2) {$W=\displaystyle\int_0^L F(x)\,\dd x$};
+\end{tikzpicture}
+\caption{变力做功的面积解释}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+水平传送带以恒速 $v$ 向右运行，长度为 $L$。一质量为 $m$ 的小箱从左端轻放到传送带上，箱与带之间的动摩擦因数为 $\mu$，重力加速度为 $g$。设 $L$ 足够长，使小箱能与传送带达到共同速度后再离开。
+\begin{enumerate}
+  \item 求小箱加速到速度 $v$ 所需时间与位移；
+  \item 求摩擦力对小箱所做的功；
+  \item 求这一过程中因相对滑动产生的热量与电动机至少需要补充的机械能。
+\end{enumerate}
+\begin{solution}
+滑动阶段摩擦力大小恒为 $f=\mu mg$，方向向右，因此小箱加速度
+\[
+a=\mu g.
+\]
+由 $v=at$ 得
+\[
+t_1=\frac{v}{\mu g}.
+\]
+此阶段小箱位移
+\[
+s_1=\frac12 at_1^2=\frac{v^2}{2\mu g}.
+\]
+摩擦力对小箱做功
+\[
+W_f=fs_1=\mu mg\cdot \frac{v^2}{2\mu g}=\frac12 mv^2,
+\]
+它全部转化为小箱动能。
+
+传送带表面在时间 $t_1$ 内前进距离
+\[
+s_{\text{belt}}=vt_1=\frac{v^2}{\mu g},
+\]
+故相对滑动距离
+\[
+\Delta s=s_{\text{belt}}-s_1=\frac{v^2}{2\mu g}.
+\]
+产生热量
+\[
+Q=f\Delta s=\mu mg\cdot \frac{v^2}{2\mu g}=\frac12 mv^2.
+\]
+因此电动机至少补充的机械能为“物块动能增加 $+$ 热耗散”，即
+\[
+E_{\text{motor,min}}=\frac12 mv^2+\frac12 mv^2=mv^2.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Latex]
+  \fill[gray!20] (0,0) rectangle (7,0.8);
+  \draw[thick] (0,0) rectangle (7,0.8);
+  \foreach \x in {0.6,1.6,...,6.6}{
+    \draw[->, thick] (\x,0.4) -- ++(0.7,0);
+  }
+  \draw[fill=blue!20, thick] (1.0,0.8) rectangle (2.1,1.6);
+  \node at (1.55,1.2) {$m$};
+  \draw[->,red!70!black, thick] (1.55,1.2) -- ++(1.4,0) node[above] {$f$};
+  \node[below] at (3.7,0) {传送带速度 $v$};
+\end{tikzpicture}
+\caption{传送带上小箱的加速过程}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\begin{gaokao}
+轻弹簧一端固定，另一端连接小球。若弹簧相对原长的伸长量为 $x$，则弹力为 $F=-kx$。现把小球从平衡位置缓慢拉到伸长量 $A$ 处。
+\begin{enumerate}
+  \item 用积分重新推导弹簧势能公式；
+  \item 求从 $x_1$ 变化到 $x_2$ 时弹力做功；
+  \item 说明“缓慢拉动”与“瞬间拉到”在外力做功上有何不同。
+\end{enumerate}
+\begin{solution}
+把平衡位置取为势能零点，则外力缓慢拉动时始终有 $F_{\text{ext}}=kx$，故外力做功为
+\[
+W_{\text{ext}}=\int_0^A kx\,\dd x=\frac12 kA^2.
+\]
+这正是弹簧势能的增加，因此
+\[
+U(x)=\frac12 kx^2.
+\]
+弹簧力本身做功为
+\[
+W_{\text{spring}}=\int_{x_1}^{x_2} (-kx)\,\dd x=-\frac12 k\qty(x_2^2-x_1^2)=U(x_1)-U(x_2).
+\]
+若缓慢拉动，外力几乎不改变小球动能，外力所做功几乎全部储存在弹簧中；若瞬间拉到某位置，则外力做功除了增加势能，还会给小球留下动能。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (-0.2,0) -- (4.8,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.4) node[above] {$U$};
+  \draw[thick, violet!70!black, domain=0:4.2, smooth] plot (\x,{0.16*\x*\x});
+  \draw[dashed] (3.5,0) node[below] {$A$} -- (3.5,1.96);
+  \node at (3.1,2.5) {$U=\frac12 kx^2$};
+\end{tikzpicture}
+\caption{弹簧势能随形变量的二次增长}
+\end{figure}
+\end{solution}
+\end{gaokao}
+
+\section{竞赛题}
+
+\begin{competition}
+质点沿 $x$ 轴运动，所受外力为
+\[
+F(x)=ax-bx^3,\qquad a>0,\ b>0.
+\]
+质点从原点由静止出发。
+\begin{enumerate}
+  \item 求质点从 $x=0$ 运动到 $x=\sqrt{a/b}$ 过程中外力所做的功；
+  \item 求动能达到最大时的位置；
+  \item 讨论该力在较大位移下为何会使质点减速。
+\end{enumerate}
+\begin{solution}
+先积分得
+\[
+W(0\to x)=\int_0^x (a\xi-b\xi^3)\,\dd \xi=\frac12 ax^2-\frac14 bx^4.
+\]
+代入 $x=\sqrt{a/b}$，得
+\[
+W=\frac12 a\cdot \frac{a}{b}-\frac14 b\cdot \frac{a^2}{b^2}=\frac{a^2}{4b}.
+\]
+由于质点由静止出发，动能 $E_k(x)=W(0\to x)$。动能最大时满足
+\[
+\dv{E_k}{x}=F(x)=0,
+\]
+故
+\[
+x=0\quad \text{或}\quad x=\sqrt{\frac{a}{b}}.
+\]
+其中正根对应非平凡极值点。再看
+\[
+\dv[2]{E_k}{x}=\dv{F}{x}=a-3bx^2,
+\]
+在 $x=\sqrt{a/b}$ 处有 $a-3a=-2a<0$，故确为最大值点。
+
+当 $x>\sqrt{a/b}$ 时，$F(x)<0$，力与运动方向相反，继续前进时外力做负功，动能开始减少。这说明“变力问题”中，判断速度变化不能只看力曾经做过多少正功，还要看之后是否出现负功区。
+\end{solution}
+\end{competition}
+
+\begin{competition}
+平面上存在力场
+\[
+\vb{F}(x,y)=\alpha y\,\uvec{x}+\beta x\,\uvec{y}.
+\]
+质点沿抛物线 $y=x^2/a$ 从原点运动到点 $(a,a)$，其中 $a>0$。
+\begin{enumerate}
+  \item 计算该力沿此曲线所做的功；
+  \item 当 $\alpha=\beta$ 时，说明这一结果与路径的关系；
+  \item 当 $\alpha\ne\beta$ 时，解释为何不同路径一般给出不同结果。
+\end{enumerate}
+\begin{solution}
+取参数 $x=t$，则
+\[
+\vb{r}(t)=t\,\uvec{x}+\frac{t^2}{a}\,\uvec{y},
+\qquad 0\le t\le a,
+\]
+于是
+\[
+\dd \vb{r}=\qty(\uvec{x}+\frac{2t}{a}\uvec{y})\dd t,
+\qquad
+\vb{F}=\alpha\frac{t^2}{a}\uvec{x}+\beta t\uvec{y}.
+\]
+故元功为
+\[
+\vb{F}\cdot \dd \vb{r}=\qty(\alpha\frac{t^2}{a}+\beta t\cdot \frac{2t}{a})\dd t=\frac{\alpha+2\beta}{a}t^2\dd t.
+\]
+积分得
+\[
+W=\int_0^a \frac{\alpha+2\beta}{a}t^2\dd t=\frac{\alpha+2\beta}{3}a^2.
+\]
+若 $\alpha=\beta$，则
+\[
+\vb{F}=\grad(\alpha xy),
+\]
+它是保守力，做功只由始末点决定，因此任取一条从 $(0,0)$ 到 $(a,a)$ 的路径，结果都应为
+\[
+W=\alpha a^2.
+\]
+代入上式也得到相同答案。若 $\alpha\ne\beta$，则
+\[
+\pdv{F_x}{y}=\alpha\ne \beta=\pdv{F_y}{x},
+\]
+力场旋度不为零，线积分一般依赖路径。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Latex]
+  \draw[->] (-0.2,0) -- (5.2,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.8) node[above] {$y$};
+  \draw[thick, red!70!black, domain=0:4, smooth] plot (\x,{\x*\x/4});
+  \fill (0,0) circle (1.3pt) node[below left] {$O$};
+  \fill (4,4) circle (1.3pt) node[above right] {$(a,a)$};
+  \node at (2.7,1.1) {$y=x^2/a$};
+\end{tikzpicture}
+\caption{沿曲线运动时的线积分}
+\end{figure}
+\end{solution}
+\end{competition}
+
+\begin{competition}
+某系统的一维势能为
+\[
+U(x)=U_0\qty[\qty(\frac{x}{a})^4-2\qty(\frac{x}{a})^2],\qquad U_0>0.
+\]
+\begin{enumerate}
+  \item 求全部平衡位置；
+  \item 判断各平衡位置的稳定性；
+  \item 对稳定平衡点附近的小振动求角频率。
+\end{enumerate}
+\begin{solution}
+平衡位置由
+\[
+F=-\dv{U}{x}=0
+\]
+给出，即
+\[
+\dv{U}{x}=\frac{4U_0}{a^4}x(x^2-a^2)=0.
+\]
+故有
+\[
+x=0,\qquad x=\pm a.
+\]
+稳定性由二阶导数判断：
+\[
+\dv[2]{U}{x}=\frac{4U_0}{a^4}(3x^2-a^2).
+\]
+在 $x=0$ 处，
+\[
+\dv[2]{U}{x}\bigg|_{x=0}=-\frac{4U_0}{a^2}<0,
+\]
+为势能极大点，不稳定；在 $x=\pm a$ 处，
+\[
+\dv[2]{U}{x}\bigg|_{x=\pm a}=\frac{8U_0}{a^2}>0,
+\]
+为稳定平衡点。
+
+在稳定点附近取 $x=a+\xi$，保留二次项可写成
+\[
+U\approx U(a)+\frac12 U''(a)\xi^2,
+\]
+故等效劲度系数
+\[
+k_{\text{eff}}=U''(a)=\frac{8U_0}{a^2}.
+\]
+于是小振动角频率为
+\[
+\omega=\sqrt{\frac{k_{\text{eff}}}{m}}=\sqrt{\frac{8U_0}{ma^2}}.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (-3.5,0) -- (3.5,0) node[right] {$x$};
+  \draw[->] (0,-2.2) -- (0,2.5) node[above] {$U$};
+  \draw[thick, red!70!black, domain=-2.2:2.2, smooth, samples=150]
+    plot (\x,{0.28*(\x*\x*\x*\x-2.8*\x*\x)});
+  \node at (0.35,2.0) {$x=0$ 不稳定};
+  \node at (-2.1,-1.2) {$x=-a$};
+  \node at (2.1,-1.2) {$x=a$};
+\end{tikzpicture}
+\caption{双势阱与稳定性判据}
+\end{figure}
+\end{solution}
+\end{competition}
+
+\section{大学物理题}
+
+\begin{university}
+在三维空间考虑力场
+\[
+\vb{F}(x,y,z)=\qty(2xy+y^2)\uvec{x}+\qty(x^2+2xy)\uvec{y}.
+\]
+\begin{enumerate}
+  \item 判断该力场是否为保守力；
+  \item 若是保守力，求其势能函数 $U(x,y)$，取 $U(0,0)=0$；
+  \item 计算质点从 $(0,0)$ 到 $(1,2)$ 的做功。
+\end{enumerate}
+\begin{solution}
+在单连通区域内，保守力判据可取旋度为零。这里
+\[
+\pdv{F_y}{x}=2x+2y,
+\qquad
+\pdv{F_x}{y}=2x+2y,
+\]
+且无 $z$ 分量，因此
+\[
+\curl \vb{F}=\vb{0}.
+\]
+故该力场为保守力。
+
+设 $\vb{F}=-\grad U$，则
+\[
+\pdv{U}{x}=-(2xy+y^2).
+\]
+对 $x$ 积分得
+\[
+U=-x^2y-xy^2+g(y).
+\]
+再由
+\[
+\pdv{U}{y}=-(x^2+2xy)+g'(y)
+\]
+应等于 $-(x^2+2xy)$，故 $g'(y)=0$，即 $g(y)=C$。由 $U(0,0)=0$ 得 $C=0$，因此
+\[
+U(x,y)=-x^2y-xy^2.
+\]
+从 $(0,0)$ 到 $(1,2)$ 的做功为
+\[
+W=U(0,0)-U(1,2)=0-(-6)=6.
+\]
+这说明一旦找到了势能函数，任意路径积分都可化为端点代数计算。
+\end{solution}
+\end{university}
+
+\begin{university}
+质量为 $m$ 的粒子在中心势
+\[
+U(r)=-\frac{k}{r}
+\]
+中运动，角动量大小为 $L$。
+\begin{enumerate}
+  \item 写出有效势能 $U_{\text{eff}}(r)$；
+  \item 求圆轨道半径并判断其稳定性；
+  \item 给出圆轨道附近微小径向振动的等效劲度系数。
+\end{enumerate}
+\begin{solution}
+在中心力问题中，径向运动可写成
+\[
+E=\frac12 m\dot r^2+U_{\text{eff}}(r),
+\qquad
+U_{\text{eff}}(r)=\frac{L^2}{2mr^2}-\frac{k}{r}.
+\]
+圆轨道满足
+\[
+\dv{U_{\text{eff}}}{r}= -\frac{L^2}{mr^3}+\frac{k}{r^2}=0,
+\]
+故
+\[
+r_0=\frac{L^2}{mk}.
+\]
+再计算二阶导数：
+\[
+\dv[2]{U_{\text{eff}}}{r}=\frac{3L^2}{mr^4}-\frac{2k}{r^3}.
+\]
+代入 $r_0$ 并利用 $k=L^2/(mr_0)$，得
+\[
+U_{\text{eff}}''(r_0)=\frac{L^2}{mr_0^4}>0,
+\]
+因此圆轨道稳定。
+
+在 $r=r_0+\rho$ 附近，
+\[
+U_{\text{eff}}\approx U_{\text{eff}}(r_0)+\frac12 U''_{\text{eff}}(r_0)\rho^2,
+\]
+等效劲度系数为
+\[
+k_{\text{eff}}=U''_{\text{eff}}(r_0)=\frac{L^2}{mr_0^4},
+\]
+对应径向小振动角频率
+\[
+\omega_r=\sqrt{\frac{k_{\text{eff}}}{m}}=\frac{L}{mr_0^2}.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (0,0) -- (5.4,0) node[right] {$r$};
+  \draw[->] (0,-1.8) -- (0,3.2) node[above] {$U_{\text{eff}}$};
+  \draw[thick, green!60!black, domain=0.55:5.0, smooth, samples=150]
+    plot (\x,{1.8/(\x*\x)-2.5/\x+0.5});
+  \draw[dashed] (2.1,0) -- (2.1,-0.7);
+  \node[below] at (2.1,0) {$r_0$};
+  \node at (3.7,1.5) {$U_{\text{eff}}$};
+\end{tikzpicture}
+\caption{中心力问题中的有效势能}
+\end{figure}
+\end{solution}
+\end{university}
+
+\begin{university}
+分子间相互作用常用 Lennard--Jones 势近似：
+\[
+U(r)=4\varepsilon\qty[\qty(\frac{\sigma}{r})^{12}-\qty(\frac{\sigma}{r})^6].
+\]
+\begin{enumerate}
+  \item 求平衡距离 $r_0$；
+  \item 求势阱深度；
+  \item 写出力 $F(r)$ 并说明何时表现为斥力、何时表现为引力。
+\end{enumerate}
+\begin{solution}
+平衡位置满足 $\dv*{U}{r}=0$。计算得
+\[
+\dv{U}{r}=4\varepsilon\qty[-12\frac{\sigma^{12}}{r^{13}}+6\frac{\sigma^6}{r^7}].
+\]
+故
+\[
+-12\frac{\sigma^{12}}{r^{13}}+6\frac{\sigma^6}{r^7}=0
+\quad\Longrightarrow\quad
+r^6=2\sigma^6,
+\]
+于是
+\[
+r_0=2^{1/6}\sigma.
+\]
+代回势能：
+\[
+U(r_0)=4\varepsilon\qty[\frac{1}{4}-\frac{1}{2}]=-\varepsilon,
+\]
+故势阱深度为 $\varepsilon$。
+
+力由
+\[
+F(r)=-\dv{U}{r}=24\varepsilon\qty[2\frac{\sigma^{12}}{r^{13}}-\frac{\sigma^6}{r^7}].
+\]
+当 $r<r_0$ 时，高次项占优，$F>0$，表现为强斥力；当 $r>r_0$ 时，$F<0$，表现为吸引力；当 $r\to \infty$ 时，作用迅速衰减为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (0,0) -- (6,0) node[right] {$r$};
+  \draw[->] (0,-2.4) -- (0,2.3) node[above] {$U$};
+  \draw[thick, green!60!black, domain=0.95:5.5, smooth, samples=180]
+    plot (\x,{1.5*((1/\x)^12-(1/\x)^6)});
+  \draw[dashed] (1.8,0) -- (1.8,-1.1);
+  \node[below] at (1.8,0) {$r_0$};
+  \node at (4.4,-0.35) {$U\to 0^-$};
+\end{tikzpicture}
+\caption{Lennard--Jones 势的短程斥、长程吸特征}
+\end{figure}
+\end{solution}
+\end{university}
+
+\section{拓展题}
+
+\begin{problem}
+考虑更完整的传送带模型。水平传送带以恒速 $V$ 向右运动，小块质量为 $m$，进入传送带左端时速度为 $u_0$。动摩擦因数为 $\mu$，忽略空气阻力。
+\begin{enumerate}
+  \item 写出滑动阶段的微分方程；
+  \item 讨论 $u_0<V$ 与 $u_0>V$ 两种情况下速度函数 $v(t)$；
+  \item 写出与传送带速度相等时的时间、位移及相对滑移距离。
+\end{enumerate}
+\begin{solution}
+滑动阶段摩擦力总是阻碍相对运动，因此可统一写成
+\[
+m\dv{v}{t}=\mu mg\,\operatorname{sgn}(V-v),
+\qquad v\ne V,
+\]
+其中 $\operatorname{sgn}$ 为符号函数。再配合
+\[
+\dv{x}{t}=v
+\]
+即可得到完整分段方程组。
+
+若 $u_0<V$，则 $\operatorname{sgn}(V-v)=1$，故
+\[
+\dv{v}{t}=\mu g,
+\qquad
+v(t)=u_0+\mu gt.
+\]
+达到同步条件 $v=V$ 的时刻为
+\[
+t_*^{(+)}=\frac{V-u_0}{\mu g},
+\]
+对应位移
+\[
+x_*^{(+)}=u_0 t_*^{(+)}+\frac12 \mu g\qty(t_*^{(+)})^2
+=\frac{V^2-u_0^2}{2\mu g}.
+\]
+传送带表面前进了 $Vt_*^{(+)}$，故相对滑移距离
+\[
+\Delta s^{(+)}=Vt_*^{(+)}-x_*^{(+)}=\frac{(V-u_0)^2}{2\mu g}.
+\]
+
+若 $u_0>V$，则 $\operatorname{sgn}(V-v)=-1$，于是
+\[
+\dv{v}{t}=-\mu g,
+\qquad
+v(t)=u_0-\mu gt.
+\]
+同步时刻
+\[
+t_*^{(-)}=\frac{u_0-V}{\mu g},
+\]
+位移
+\[
+x_*^{(-)}=u_0 t_*^{(-)}-\frac12 \mu g\qty(t_*^{(-)})^2
+=\frac{u_0^2-V^2}{2\mu g},
+\]
+相对滑移距离
+\[
+\Delta s^{(-)}=x_*^{(-)}-Vt_*^{(-)}=\frac{(u_0-V)^2}{2\mu g}.
+\]
+两种情形的共同特征是：相对滑移距离只由初末速度差决定，形式统一为
+\[
+\Delta s=\frac{(u_0-V)^2}{2\mu g}.
+\]
+若传送带长度小于对应的 $x_*$，则小块离开传送带时仍在滑动，需要把分段解截断到离开时刻。
+\end{solution}
+\end{problem}
+
+\begin{problem}
+设一维矩形势垒为
+\[
+U(x)=\begin{cases}
+0, & x<0,\\
+U_0, & 0\le x\le a,\\
+0, & x>a,
+\end{cases}
+\qquad E<U_0.
+\]
+\begin{enumerate}
+  \item 从经典力学角度说明粒子为何不能穿过势垒；
+  \item 写出 WKB 指数因子
+  \[
+  \gamma=\int_0^a \sqrt{\frac{2m\qty(U_0-E)}{\hbar^2}}\,\dd x
+  \]
+  的结果；
+  \item 用“虚时间中的经典越岭”解释这一指数为何可被视作一种经典类比。
+\end{enumerate}
+\begin{solution}
+在经典力学中，动能必须满足
+\[
+T=E-U(x)\ge 0.
+\]
+而在势垒内部 $U=U_0>E$，故
+\[
+T=E-U_0<0,
+\]
+这在经典图像中不可能，因此粒子在 $x=0$ 处就会发生转折，不能进入禁阻区。对应的转折点位于势垒左边界。
+
+矩形势垒下，WKB 指数简化为
+\[
+\gamma=\frac{a}{\hbar}\sqrt{2m(U_0-E)}.
+\]
+透射率主指数行为为
+\[
+T\sim e^{-2\gamma}.
+\]
+这说明势垒越高、越宽，量子透射越困难。
+
+若把时间作解析延拓 $t\to -i\tau$，则牛顿方程在禁阻区可视为粒子在“倒置后的势能图像”中沿虚时间运动；此时本来不能越过的山丘，转化为可在欧氏时间中走过的轨道。于是
+\[
+S_E=\int \sqrt{2m\qty(U-E)}\,\dd x
+\]
+就像经典作用量那样控制衰减强弱。这不是说隧穿真的变成了普通经典运动，而是说明禁阻区面积在数学上扮演了“经典作用量”的角色。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Latex]
+  \draw[->] (-0.3,0) -- (6.2,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,3.6) node[above] {$U$};
+  \draw[thick, blue!70!black] (0,0) -- (1.5,0) -- (1.5,2.7) -- (4.5,2.7) -- (4.5,0) -- (6,0);
+  \draw[dashed, red!70!black] (0,1.6) -- (6,1.6) node[right] {$E$};
+  \node at (3,3.0) {$U_0$};
+  \node at (3,2.1) {禁阻区};
+\end{tikzpicture}
+\caption{矩形势垒与经典禁阻区}
+\end{figure}
+\end{solution}
+\end{problem}
