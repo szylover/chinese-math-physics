@@ -1,0 +1,258 @@
+\chapter{矢量分析速查}
+
+本附录汇总电磁学、流体力学与场论中最常用的矢量分析公式，便于查阅与代入计算。
+
+\section{矢量代数}
+
+设 $\vb{a}=(a_x,a_y,a_z)$、$\vb{b}=(b_x,b_y,b_z)$、$\vb{c}=(c_x,c_y,c_z)$。
+
+\subsection{点积}
+
+\[
+\vb{a}\cdot\vb{b}=a_x b_x+a_y b_y+a_z b_z=\abs{\vb{a}}\abs{\vb{b}}\cos\theta.
+\]
+
+点积得到标量，常用于投影、功与能量计算：
+\[
+W=\int \vb{F}\cdot \dd \vb{r}.
+\]
+
+\subsection{叉积}
+
+\[
+\vb{a}\times\vb{b}=
+\begin{vmatrix}
+\vu{x} & \vu{y} & \vu{z}\\
+a_x & a_y & a_z\\
+b_x & b_y & b_z
+\end{vmatrix},
+\qquad
+\abs{\vb{a}\times\vb{b}}=\abs{\vb{a}}\abs{\vb{b}}\sin\theta.
+\]
+
+叉积得到矢量，方向由右手定则决定，常用于力矩与磁场：
+\[
+\vb{\tau}=\vb{r}\times\vb{F},
+\qquad
+\vb{F}=q\vb{v}\times\vb{B}.
+\]
+
+\subsection{三重积}
+
+标量三重积：
+\[
+\vb{a}\cdot(\vb{b}\times\vb{c})=
+\begin{vmatrix}
+a_x & a_y & a_z\\
+b_x & b_y & b_z\\
+c_x & c_y & c_z
+\end{vmatrix}.
+\]
+它的绝对值等于由三矢量张成的平行六面体体积。
+
+矢量三重积：
+\[
+\vb{a}\times(\vb{b}\times\vb{c})=\vb{b}(\vb{a}\cdot\vb{c})-\vb{c}(\vb{a}\cdot\vb{b}).
+\]
+这就是常用的 BAC--CAB 公式。
+
+\section{标量场与矢量场}
+
+\begin{definition}
+标量场是空间中每一点对应一个标量的函数，如温度场 $T(x,y,z)$、电势 $\phi(x,y,z)$。
+\end{definition}
+
+\begin{definition}
+矢量场是空间中每一点对应一个矢量的函数，如速度场 $\vb{v}(x,y,z)$、电场 $\vb{E}(x,y,z)$、磁场 $\vb{B}(x,y,z)$。
+\end{definition}
+
+如果场只依赖于位置，则称为静态场；若还依赖于时间 $t$，则写成 $f(x,y,z,t)$ 或 $\vb{F}(x,y,z,t)$。
+
+\section{梯度、散度与旋度}
+
+在直角坐标系中，
+\[
+\nabla=\vu{x}\pdv{}{x}+\vu{y}\pdv{}{y}+\vu{z}\pdv{}{z}.
+\]
+
+\subsection{梯度 $\grad f$}
+
+对标量场 $f(x,y,z)$，
+\[
+\grad f=\nabla f=\vu{x}\pdv{f}{x}+\vu{y}\pdv{f}{y}+\vu{z}\pdv{f}{z}.
+\]
+
+性质：
+\begin{itemize}
+  \item 方向指向函数增长最快的方向；
+  \item 大小等于该点最大方向导数；
+  \item 等势面 $f=\text{常数}$ 的法向量与 $\grad f$ 平行。
+\end{itemize}
+
+例如重力势 $\phi$ 满足 $\vb{g}=-\grad \phi$。
+
+\subsection{散度 $\div \vb{F}$}
+
+对矢量场 $\vb{F}=(F_x,F_y,F_z)$，
+\[
+\div \vb{F}=\nabla\cdot\vb{F}=\pdv{F_x}{x}+\pdv{F_y}{y}+\pdv{F_z}{z}.
+\]
+
+散度刻画单位体积内的净流出强度：
+\begin{itemize}
+  \item $\div \vb{F}>0$：源；
+  \item $\div \vb{F}<0$：汇；
+  \item $\div \vb{F}=0$：无源场或不可压缩流体的速度场。
+\end{itemize}
+
+\subsection{旋度 $\curl \vb{F}$}
+
+\[
+\curl \vb{F}=\nabla\times\vb{F}=
+\begin{vmatrix}
+\vu{x} & \vu{y} & \vu{z}\\
+\pdv{}{x} & \pdv{}{y} & \pdv{}{z}\\
+F_x & F_y & F_z
+\end{vmatrix}.
+\]
+
+即
+\[
+\curl \vb{F}=
+\qty(\pdv{F_z}{y}-\pdv{F_y}{z})\vu{x}
++\qty(\pdv{F_x}{z}-\pdv{F_z}{x})\vu{y}
++\qty(\pdv{F_y}{x}-\pdv{F_x}{y})\vu{z}.
+\]
+
+旋度描述场的局部环流或旋转趋势。在静电学中 $\curl \vb{E}=0$；在磁场与感应电场问题中，旋度通常不为零。
+
+\section{重要恒等式}
+
+设 $f,g$ 为标量场，$\vb{A},\vb{B}$ 为矢量场，则常用恒等式有：
+
+\[
+\grad(fg)=f\grad g+g\grad f.
+\]
+
+\[
+\div(f\vb{A})=\grad f\cdot \vb{A}+f\div \vb{A}.
+\]
+
+\[
+\curl(f\vb{A})=\grad f\times \vb{A}+f\curl \vb{A}.
+\]
+
+\[
+\div(\vb{A}\times\vb{B})=\vb{B}\cdot(\curl \vb{A})-\vb{A}\cdot(\curl \vb{B}).
+\]
+
+\[
+\curl(\vb{A}\times\vb{B})=\vb{A}(\div \vb{B})-\vb{B}(\div \vb{A})+(\vb{B}\cdot\nabla)\vb{A}-(\vb{A}\cdot\nabla)\vb{B}.
+\]
+
+\[
+\div(\grad f)=\nabla^2 f=\laplacian f.
+\]
+
+\[
+\curl(\grad f)=\vb{0}.
+\]
+
+\[
+\div(\curl \vb{A})=0.
+\]
+
+其中 $\nabla^2$ 或 $\laplacian$ 称为拉普拉斯算符。
+
+\section{高斯散度定理与斯托克斯定理}
+
+\subsection{高斯散度定理}
+
+对闭曲面 $S=\partial V$，有
+\[
+\iiint_V (\div \vb{F})\,\dd V=\iint_{S} \vb{F}\cdot \dd \vb{S}.
+\]
+
+物理意义：体积内的总源强，等于穿过边界闭曲面的总通量。电磁学中的高斯定律正是这一思想的典型应用。
+
+\subsection{斯托克斯定理}
+
+对有向曲面 $S$ 及其边界闭曲线 $C=\partial S$，有
+\[
+\iint_S (\curl \vb{F})\cdot \dd \vb{S}=\oint_C \vb{F}\cdot \dd \vb{l}.
+\]
+
+物理意义：曲面上的总旋度通量，等于边界上的总环流。法拉第电磁感应定律与安培环路定律都可以写成这一类积分关系。
+
+\section{柱坐标与球坐标下的表达式}
+
+\subsection{柱坐标 $(\rho,\phi,z)$}
+
+位置矢量写作
+\[
+\vb{r}=\rho\,\vu{\rho}+z\,\vu{z}.
+\]
+
+梯度：
+\[
+\grad f=\vu{\rho}\pdv{f}{\rho}+\vu{\phi}\frac{1}{\rho}\pdv{f}{\phi}+\vu{z}\pdv{f}{z}.
+\]
+
+散度：
+\[
+\div \vb{F}=\frac{1}{\rho}\pdv{}{\rho}(\rho F_{\rho})+\frac{1}{\rho}\pdv{F_{\phi}}{\phi}+\pdv{F_z}{z}.
+\]
+
+旋度：
+\[
+\curl \vb{F}=
+\qty[\frac{1}{\rho}\pdv{F_z}{\phi}-\pdv{F_{\phi}}{z}]\vu{\rho}
++\qty[\pdv{F_{\rho}}{z}-\pdv{F_z}{\rho}]\vu{\phi}
++\frac{1}{\rho}\qty[\pdv{}{\rho}(\rho F_{\phi})-\pdv{F_{\rho}}{\phi}]\vu{z}.
+\]
+
+体积元：
+\[
+\dd V=\rho\,\dd\rho\,\dd\phi\,\dd z.
+\]
+
+\subsection{球坐标 $(r,\theta,\phi)$}
+
+这里 $\theta$ 为极角（与 $z$ 轴夹角），$\phi$ 为方位角。
+
+梯度：
+\[
+\grad f=
+\vu{r}\pdv{f}{r}
++\vu{\theta}\frac{1}{r}\pdv{f}{\theta}
++\vu{\phi}\frac{1}{r\sin\theta}\pdv{f}{\phi}.
+\]
+
+散度：
+\[
+\div \vb{F}=
+\frac{1}{r^2}\pdv{}{r}(r^2 F_r)
++\frac{1}{r\sin\theta}\pdv{}{\theta}(\sin\theta\,F_{\theta})
++\frac{1}{r\sin\theta}\pdv{F_{\phi}}{\phi}.
+\]
+
+旋度：
+\[
+\curl \vb{F}=
+\frac{1}{r\sin\theta}\qty[\pdv{}{\theta}(\sin\theta\,F_{\phi})-\pdv{F_{\theta}}{\phi}]\vu{r}
++\frac{1}{r}\qty[\frac{1}{\sin\theta}\pdv{F_r}{\phi}-\pdv{}{r}(rF_{\phi})]\vu{\theta}
++\frac{1}{r}\qty[\pdv{}{r}(rF_{\theta})-\pdv{F_r}{\theta}]\vu{\phi}.
+\]
+
+体积元：
+\[
+\dd V=r^2\sin\theta\,\dd r\,\dd\theta\,\dd\phi.
+\]
+
+\section{使用提醒}
+
+\begin{itemize}
+  \item 直角坐标下公式最紧凑，但遇到圆柱对称或球对称问题时，应优先切换到柱坐标或球坐标。
+  \item 处理通量问题优先想到散度与高斯定理；处理环流问题优先想到旋度与斯托克斯定理。
+  \item 若某场可写成 $\vb{F}=-\grad \phi$，则它是保守场，线积分与路径无关。
+\end{itemize}

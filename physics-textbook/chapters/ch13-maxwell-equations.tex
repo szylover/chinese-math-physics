@@ -1,0 +1,612 @@
+\chapter{麦克斯韦方程组}
+
+电磁学在本章达到真正的统一。前面几章中，我们先后学习了库仑定律、安培力、法拉第电磁感应与交流电路。它们最初看上去像是彼此独立的规律：电荷产生电场，电流产生磁场，变化的磁场又会激发电场。然而麦克斯韦发现，这些规律并不是零散的经验结论，而是同一套场论结构的不同侧面。只要把“位移电流”这一关键概念补入安培定律，电与磁便首尾相接，形成自洽闭环，并自然预言了电磁波的存在。
+
+这正是经典场论最壮丽的一刻：光不再是神秘的“发光物质”，而是电场与磁场彼此激发、共同传播的波动。于是，静电学、稳恒电流、磁场、电磁感应与光学，第一次在一章之中汇合成统一语言。
+
+\section{位移电流——麦克斯韦的关键洞察}
+
+法拉第告诉我们：变化的磁场能够产生旋电场。麦克斯韦进一步追问：如果电磁学真的具有对称的统一结构，那么变化的电场是否也应当产生磁场？这个问题并非纯粹审美，而是由一个具体矛盾逼出来的。
+
+考虑电容器充电过程。导线中有传导电流 $I$ 流向极板，因此按安培环路定律，回路周围应有磁场：
+\[
+\oint_{\partial \Sigma} \vb{B}\cdot \dd \vb{l}=\mu_0 I_{\text{enc}}.
+\]
+但若我们对同一条闭合边界 $\partial \Sigma$ 选择两种不同的张面 $\Sigma$：
+\begin{itemize}
+  \item 一种穿过导线，可截到传导电流 $I$；
+  \item 另一种鼓起穿过电容极板间空隙，则没有电子真正跨过间隙。
+\end{itemize}
+若仍把右端只写成传导电流，便会得到相互矛盾的结果。磁场不可能依赖于我们任意选择的数学曲面，因此原定律一定还缺少一项。
+
+\begin{definition}[位移电流]
+位移电流是由电位移矢量 $\vb{D}$ 的时间变化所对应的“等效电流”项，其面通量形式定义为
+\[
+I_d\coloneqq \dv{}{t}\int_{\Sigma} \vb{D}\cdot \dd \vb{A}.
+\]
+若介质为真空，$\vb{D}=\varepsilon_0\vb{E}$，则
+\[
+I_d=\varepsilon_0\dv{}{t}\int_{\Sigma} \vb{E}\cdot \dd \vb{A}.
+\]
+在局域形式中，对应的电流密度称为位移电流密度：
+\[
+\vb{J}_d=\pdv{\vb{D}}{t}.
+\]
+\end{definition}
+
+这里“位移电流”并不意味着真的有电荷穿过真空缝隙流动，而是说\emph{变化的电场在磁场方程中起到与电流同样的源作用}。它修补的不是语义，而是守恒律。
+
+\begin{law}[安培--麦克斯韦定律的积分形式]
+完整的环路定律应写成
+\[
+\oint_{\partial \Sigma} \vb{H}\cdot \dd \vb{l}
+= I_{\text{free}}+\dv{}{t}\int_{\Sigma}\vb{D}\cdot \dd\vb{A}.
+\]
+在真空中，由 $\vb{B}=\mu_0\vb{H}$ 与 $\vb{D}=\varepsilon_0\vb{E}$ 得
+\[
+\oint_{\partial \Sigma} \vb{B}\cdot \dd \vb{l}
+=\mu_0 I_{\text{cond}}+\mu_0\varepsilon_0\dv{}{t}\int_{\Sigma}\vb{E}\cdot \dd\vb{A}.
+\]
+\end{law}
+
+为了看清它与电荷守恒的关系，我们回忆连续性方程：
+\[
+\div \vb{J}+\pdv{\rho}{t}=0.
+\]
+如果磁场源只写成 $\vb{J}$，那么对方程 $\curl \vb{B}=\mu_0\vb{J}$ 两边取散度，会得到
+\[
+0=\mu_0\div \vb{J},
+\]
+这要求 $\div \vb{J}=0$，与一般充放电过程不相容。麦克斯韦把右端补成
+\[
+\curl \vb{B}=\mu_0\vb{J}+\mu_0\pdv{\vb{D}}{t},
+\]
+再取散度便有
+\[
+0=\mu_0\div\vb{J}+\mu_0\pdv{}{t}(\div\vb{D}).
+\]
+利用高斯定律 $\div\vb{D}=\rho$，立刻恢复连续性方程。这说明位移电流不是可有可无的修辞，而是使场方程与电荷守恒完全兼容的必要项。
+
+\begin{example}[充电电容器中的位移电流]
+设平行板电容器极板面积为 $A$，板间距离远小于极板尺度，可近似视为匀强电场。若导线中的传导电流为 $I$，则极板上电荷满足 $\dv{Q}{t}=I$，板间电场为
+\[
+E=\frac{Q}{\varepsilon_0 A}.
+\]
+因此位移电流为
+\[
+I_d=\varepsilon_0\dv{}{t}(EA)=\varepsilon_0 A \dv{E}{t}
+=\dv{Q}{t}=I.
+\]
+这正说明：虽然板间没有传导电流穿过，但位移电流恰好补足了磁场的源，使任意张面得到相同结果。
+\end{example}
+
+\begin{remark}
+从对称性看，法拉第定律告诉我们“变磁生电”，安培--麦克斯韦定律则告诉我们“变电生磁”。这两个“旋度方程”共同构成电磁波传播的动力学核心。没有位移电流，电磁学只能描述静态与准静态现象；加入位移电流后，场本身便获得脱离物质源而独立传播的能力。
+\end{remark}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  % plates
+  \draw[fill=blue!8] (-3,1.8) rectangle (-2,-1.8);
+  \draw[fill=red!8] (2,1.8) rectangle (3,-1.8);
+  \node at (-2.5,2.2) {负极板};
+  \node at (2.5,2.2) {正极板};
+
+  % wires
+  \draw[thick] (-5,0.8) -- (-3,0.8);
+  \draw[thick] (3,0.8) -- (5,0.8);
+  \draw[->, thick] (-4.4,0.8) -- (-3.3,0.8);
+  \node at (-4.2,1.2) {$I$};
+
+  % E field
+  \foreach \y in {-1.2,-0.4,0.4,1.2} {
+    \draw[->, red!70!black, thick] (1.5,\y) -- (-1.5,\y);
+  }
+  \node[red!70!black] at (0,1.7) {$\vb{E}(t)$ 增强};
+
+  % displacement current
+  \draw[->, dashed, blue!80!black, very thick] (0,-1.4) -- (0,1.4);
+  \node[blue!80!black, right] at (0.1,0) {$\pdv{\vb{D}}{t}$};
+
+  % magnetic loops
+  \draw[orange!80!black, thick, ->] (0,0) ellipse (1.3 and 2.0);
+  \node[orange!80!black] at (1.5,-1.8) {$\vb{B}$ 环绕};
+\end{tikzpicture}
+\end{center}
+
+\section{麦克斯韦方程组——统一的四个方程}
+
+位移电流一旦加入，经典电磁学便凝聚为四个基本方程。它们一方面说明电荷与电流如何产生场，另一方面说明变化的场如何彼此激发。这四个方程既可写成整体的积分形式，也可写成逐点成立的微分形式。
+
+\begin{law}[麦克斯韦方程组的积分形式]
+在宏观介质表述中，麦克斯韦方程组为
+\begin{align*}
+\oint_{\partial V} \vb{D}\cdot \dd \vb{A} &= Q_{\text{free, enc}}, \\
+\oint_{\partial V} \vb{B}\cdot \dd \vb{A} &= 0, \\
+\oint_{\partial \Sigma} \vb{E}\cdot \dd \vb{l} &= -\dv{}{t}\int_{\Sigma}\vb{B}\cdot \dd \vb{A}, \\
+\oint_{\partial \Sigma} \vb{H}\cdot \dd \vb{l} &= I_{\text{free, enc}}+\dv{}{t}\int_{\Sigma}\vb{D}\cdot \dd \vb{A}.
+\end{align*}
+\end{law}
+
+它们依次对应：
+\begin{enumerate}
+  \item 电场的源是自由电荷；
+  \item 不存在磁单极子，磁力线总是闭合；
+  \item 变化的磁通量激发环形电场；
+  \item 自由电流与变化的电通量共同激发环形磁场。
+\end{enumerate}
+
+在真空中使用 $\vb{D}=\varepsilon_0\vb{E}$、$\vb{B}=\mu_0\vb{H}$，方程可化为更熟悉的形式：
+\begin{align*}
+\oint_{\partial V} \vb{E}\cdot \dd \vb{A} &= \frac{Q_{\text{enc}}}{\varepsilon_0}, \\
+\oint_{\partial V} \vb{B}\cdot \dd \vb{A} &= 0, \\
+\oint_{\partial \Sigma} \vb{E}\cdot \dd \vb{l} &= -\dv{}{t}\int_{\Sigma}\vb{B}\cdot \dd \vb{A}, \\
+\oint_{\partial \Sigma} \vb{B}\cdot \dd \vb{l} &= \mu_0 I_{\text{enc}}+\mu_0\varepsilon_0\dv{}{t}\int_{\Sigma}\vb{E}\cdot \dd \vb{A}.
+\end{align*}
+
+利用高斯定理与斯托克斯定理，积分形式可转化为局域微分形式。
+
+\begin{theorem}[麦克斯韦方程组的微分形式]
+在真空中，麦克斯韦方程组可写为
+\begin{align*}
+\div \vb{E} &= \frac{\rho}{\varepsilon_0}, \\
+\div \vb{B} &= 0, \\
+\curl \vb{E} &= -\pdv{\vb{B}}{t}, \\
+\curl \vb{B} &= \mu_0\vb{J}+\mu_0\varepsilon_0\pdv{\vb{E}}{t}.
+\end{align*}
+在一般介质中，则写成
+\begin{align*}
+\div \vb{D} &= \rho_{\text{free}}, \\
+\div \vb{B} &= 0, \\
+\curl \vb{E} &= -\pdv{\vb{B}}{t}, \\
+\curl \vb{H} &= \vb{J}_{\text{free}}+\pdv{\vb{D}}{t}.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+以法拉第定律为例，积分形式为
+\[
+\oint_{\partial \Sigma}\vb{E}\cdot \dd\vb{l}=-\dv{}{t}\int_\Sigma \vb{B}\cdot \dd\vb{A}.
+\]
+由斯托克斯定理，左端可写为
+\[
+\int_\Sigma (\curl \vb{E})\cdot \dd\vb{A}.
+\]
+又因该关系对任意小曲面 $\Sigma$ 成立，所以被积函数必须逐点相等，故
+\[
+\curl \vb{E}=-\pdv{\vb{B}}{t}.
+\]
+其余三个方程的推导完全类似：对体积分方程使用高斯定理，对环路积分方程使用斯托克斯定理即可。
+\end{proof}
+
+\begin{definition}[真空中的电磁场]
+若某区域内没有自由电荷与传导电流，即
+\[
+\rho=0,\qquad \vb{J}=0,
+\]
+则该区域满足真空麦克斯韦方程组
+\begin{align*}
+\div \vb{E} &= 0, & \div \vb{B} &= 0,\\
+\curl \vb{E} &= -\pdv{\vb{B}}{t}, & \curl \vb{B} &= \mu_0\varepsilon_0\pdv{\vb{E}}{t}.
+\end{align*}
+这组齐次方程正是电磁波的起点。
+\end{definition}
+
+\begin{example}[平行板电容器边缘处的磁场]
+设一半径为 $r$ 的圆形积分回路位于平行板电容器内部且与极板同轴，若板间电场近似均匀，则电通量为
+\[
+\Phi_E=E\pi r^2.
+\]
+安培--麦克斯韦定律给出
+\[
+\oint \vb{B}\cdot \dd\vb{l}=B(2\pi r)=\mu_0\varepsilon_0 \dv{\Phi_E}{t}
+=\mu_0\varepsilon_0 \pi r^2 \dv{E}{t}.
+\]
+因此
+\[
+B=\frac{\mu_0\varepsilon_0 r}{2}\dv{E}{t}.
+\]
+它表明即使在没有传导电流穿过的区域，只要电场随时间变化，磁场依然存在。
+\end{example}
+
+\begin{remark}
+从结构上看，前两个散度方程描述“源”的分布，后两个旋度方程描述“变化”如何驱动传播。静电学和稳恒磁场只是这套理论在时间不变极限下的两个投影；完整的电磁学则是场在时空中耦合演化的理论。
+\end{remark}
+
+\section{电磁波的推导——场如何自我传播}
+
+一旦进入真空区域，电荷和电流都消失，场方程反而变得更有力量。因为此时电场与磁场不再依赖外部源维持，而是通过旋度方程彼此驱动，自行向前传播。
+
+在真空中，麦克斯韦方程组为
+\begin{align}
+\div \vb{E} &= 0, \label{eq:maxwell-vacuum-divE}\\
+\div \vb{B} &= 0, \label{eq:maxwell-vacuum-divB}\\
+\curl \vb{E} &= -\pdv{\vb{B}}{t}, \label{eq:maxwell-vacuum-curlE}\\
+\curl \vb{B} &= \mu_0\varepsilon_0\pdv{\vb{E}}{t}. \label{eq:maxwell-vacuum-curlB}
+\end{align}
+对 \cref{eq:maxwell-vacuum-curlE} 两边取旋度：
+\[
+\curl(\curl \vb{E})=-\pdv{}{t}(\curl \vb{B}).
+\]
+代入 \cref{eq:maxwell-vacuum-curlB}，得
+\[
+\curl(\curl \vb{E})=-\mu_0\varepsilon_0\pdv[2]{\vb{E}}{t}.
+\]
+再用向量恒等式
+\[
+\curl(\curl \vb{E})=\grad(\div\vb{E})-\nabla^2 \vb{E},
+\]
+并结合 $\div\vb{E}=0$，便得到
+\[
+\nabla^2 \vb{E}=\mu_0\varepsilon_0\pdv[2]{\vb{E}}{t}.
+\]
+这正是三维波动方程。对磁场重复同样步骤，可得
+\[
+\nabla^2 \vb{B}=\mu_0\varepsilon_0\pdv[2]{\vb{B}}{t}.
+\]
+
+\begin{theorem}[真空中的电磁波动方程]
+在无源真空区域内，电场与磁场分别满足
+\[
+\nabla^2 \vb{E}=\mu_0\varepsilon_0\pdv[2]{\vb{E}}{t},
+\qquad
+\nabla^2 \vb{B}=\mu_0\varepsilon_0\pdv[2]{\vb{B}}{t}.
+\]
+因此电磁扰动以波速
+\[
+ v=\frac{1}{\sqrt{\mu_0\varepsilon_0}}
+\]
+传播。
+\end{theorem}
+
+若代入实验测得的真空磁导率与介电常数，便得到
+\[
+\frac{1}{\sqrt{\mu_0\varepsilon_0}}\approx 3.00\times 10^8\ \text{m/s},
+\]
+这恰好等于光速 $c$。因此麦克斯韦得出震撼性的结论：
+\begin{center}
+\Large 光就是电磁波。
+\end{center}
+
+这是理论物理史上的经典时刻：不是先看到一种现象再去拟合方程，而是先从方程中推出一个此前独立研究的自然对象，并发现它与已知常数严丝合缝地吻合。
+
+\begin{example}[一维平面电磁波满足波动方程]
+设电场仅沿 $y$ 方向，且只依赖于 $x,t$：
+\[
+\vb{E}(x,t)=E_y(x,t)\,\uvec{y}.
+\]
+则波动方程化为
+\[
+\pdv[2]{E_y}{x}=\mu_0\varepsilon_0\pdv[2]{E_y}{t}.
+\]
+其一组解为
+\[
+E_y(x,t)=E_0\cos(kx-\omega t+\phi),
+\]
+只要满足色散关系
+\[
+\omega=ck,\qquad c=\frac{1}{\sqrt{\mu_0\varepsilon_0}}.
+\]
+磁场也可取同频同相的平面波形式，从而组成完整的电磁波解。
+\end{example}
+
+\begin{law}[平面电磁波的场关系]
+对沿 $+x$ 方向传播的简谐平面波，可取
+\[
+\vb{E}=E_0\cos(kx-\omega t)\,\uvec{y},
+\qquad
+\vb{B}=B_0\cos(kx-\omega t)\,\uvec{z}.
+\]
+代入法拉第定律或安培--麦克斯韦定律可得
+\[
+B_0=\frac{E_0}{c},
+\qquad
+\omega=ck.
+\]
+\end{law}
+
+\section{电磁波的性质——横波、正交与能量}
+
+麦克斯韦方程组不仅告诉我们电磁波会传播，还严格规定了它如何传播。与绳波、声波等机械波不同，电磁波不需要介质振动，其“振动”对象就是场本身。
+
+\subsection*{1. 横波性质}
+
+设平面波沿波矢 $\vb{k}$ 方向传播，场可写成
+\[
+\vb{E}(\vb{r},t)=\vb{E}_0\cos(\vb{k}\cdot\vb{r}-\omega t),
+\qquad
+\vb{B}(\vb{r},t)=\vb{B}_0\cos(\vb{k}\cdot\vb{r}-\omega t).
+\]
+由 $\div\vb{E}=0$ 与 $\div\vb{B}=0$ 可得
+\[
+\vb{k}\cdot\vb{E}_0=0,
+\qquad
+\vb{k}\cdot\vb{B}_0=0.
+\]
+因此电场与磁场都垂直于传播方向，电磁波是\textbf{横波}。
+
+\subsection*{2. $\vb{E}\perp \vb{B}$ 且同相}
+
+由旋度方程进一步可知
+\[
+\vb{k}\times \vb{E}_0=\omega \vb{B}_0,
+\qquad
+\vb{k}\times \vb{B}_0=-\frac{\omega}{c^2}\vb{E}_0.
+\]
+因此 $\vb{E}_0\perp \vb{B}_0$，且 $\vb{E},\vb{B},\vb{k}$ 三者两两正交，构成右手系。对真空平面波而言，电场与磁场在相位上同步达到极大值与极小值，不存在四分之一周期的相位差。
+
+\subsection*{3. 振幅关系与能量均分}
+
+真空中平面波满足
+\[
+E=cB.
+\]
+电场能量密度与磁场能量密度分别为
+\[
+u_E=\frac{1}{2}\varepsilon_0 E^2,
+\qquad
+u_B=\frac{1}{2\mu_0}B^2.
+\]
+利用 $E=cB$ 以及 $c^2=1/(\mu_0\varepsilon_0)$，立刻得到
+\[
+u_E=u_B.
+\]
+所以在真空平面电磁波中，电场与磁场各承担一半能量。总能量密度为
+\[
+u=u_E+u_B=\frac{1}{2}\varepsilon_0 E^2+\frac{B^2}{2\mu_0}.
+\]
+
+\begin{definition}[电磁波的能量密度]
+电磁场在真空中的瞬时能量密度定义为
+\[
+ u\coloneqq \frac{1}{2}\varepsilon_0 E^2+\frac{B^2}{2\mu_0}.
+\]
+对于简谐平面波，由于 $E=cB$，可写成
+\[
+ u=\varepsilon_0 E^2=\frac{B^2}{\mu_0}.
+\]
+若对一个周期取时间平均，则
+\[
+ \avg{u}=\frac{1}{2}\varepsilon_0 E_0^2=\frac{B_0^2}{2\mu_0}.
+\]
+\end{definition}
+
+\begin{definition}[偏振]
+若一列沿固定方向传播的电磁波，其电场矢量在垂直于传播方向的平面内具有确定的振动规律，则称该波具有偏振。若 $\vb{E}$ 始终沿固定方向振动，称为线偏振；若其端点描绘圆或椭圆，则分别称为圆偏振或椭圆偏振。
+\end{definition}
+
+偏振现象是电磁波横波性的直接证据之一。自然光可视作许多偏振态的混合，而偏振片则会筛选出某一方向的电场分量。若电磁波是纵波，就不会存在这样的“方向选择”现象。
+
+\begin{example}[太阳光辐照下的场强估算]
+设太阳光到达地面的平均辐照度约为 $I=1.0\times 10^3\ \text{W/m}^2$。对平面电磁波，平均坡印廷矢量大小满足
+\[
+I=\avg{S}=\frac{1}{2}\varepsilon_0 c E_0^2.
+\]
+因此
+\[
+E_0=\sqrt{\frac{2I}{\varepsilon_0 c}}\approx 8.7\times10^2\ \text{V/m}.
+\]
+相应磁场振幅为
+\[
+B_0=\frac{E_0}{c}\approx 2.9\times10^{-6}\ \text{T}.
+\]
+这说明日常光照对应的磁场其实非常弱，但其高速传播使能量输运极其显著。
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \draw[->] (0,0) -- (7.2,0) node[right] {$x$（传播方向）};
+  \draw[->, red!75!black] (0,0) -- (0,2.5) node[above] {$E_y$};
+  \draw[->, blue!75!black] (0,0) -- (0,-2.5) node[below] {$B_z$};
+
+  \draw[red!75!black, thick, samples=120, domain=0:6.3, smooth]
+    plot (\x,{1.4*sin(\x r)});
+  \draw[blue!75!black, thick, dashed, samples=120, domain=0:6.3, smooth]
+    plot (\x,{-1.2*sin(\x r)});
+
+  \draw[->, very thick, orange!80!black] (3.8,0.3) -- (5.3,0.3);
+  \node[orange!80!black] at (4.55,0.8) {$\vb{S}$};
+  \node[red!75!black] at (6.1,1.5) {$\vb{E}$};
+  \node[blue!75!black] at (6.0,-1.4) {$\vb{B}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remark}
+声波依赖空气的压缩与疏松，所以不能在真空中传播；电磁波则不同，电场与磁场互为“弹性”和“惯性”，场本身就构成传播机制。这是经典物理从“粒子受力”走向“场独立存在”的一次哲学跃迁。
+\end{remark}
+
+\section{坡印廷矢量——电磁能如何流动}
+
+既然电磁波能够携带能量，那么能量流向何处、以何种速率穿过单位面积，就需要新的物理量来描述。这个量就是坡印廷矢量。
+
+\begin{definition}[坡印廷矢量]
+真空中电磁场的能流密度矢量定义为
+\[
+\vb{S}\coloneqq \frac{1}{\mu_0}\vb{E}\times\vb{B}.
+\]
+其方向给出电磁能传播的方向，其大小表示单位时间穿过单位面积的能量，即功率面密度。
+\end{definition}
+
+对平面波而言，由于 $\vb{E}\perp\vb{B}$，有
+\[
+S=\frac{EB}{\mu_0}=\varepsilon_0 c E^2=\frac{c}{\mu_0}B^2.
+\]
+若电场为简谐振荡 $E=E_0\cos(kx-\omega t)$，则瞬时能流密度也随时间振荡：
+\[
+S(t)=\varepsilon_0 c E_0^2 \cos^2(kx-\omega t).
+\]
+一个周期内的平均值为
+\[
+\avg{S}=\frac{1}{2}\varepsilon_0 c E_0^2.
+\]
+这就是光强、无线电发射强度等量的经典表达。
+
+\begin{theorem}[坡印廷定理的真空形式]
+设真空中存在电荷密度 $\rho$ 和电流密度 $\vb{J}$，则电磁能满足局域守恒关系
+\[
+\pdv{u}{t}+\div \vb{S}+\vb{J}\cdot\vb{E}=0,
+\]
+其中
+\[
+ u=\frac{1}{2}\varepsilon_0 E^2+\frac{B^2}{2\mu_0},
+ \qquad
+ \vb{S}=\frac{1}{\mu_0}\vb{E}\times\vb{B}.
+\]
+\end{theorem}
+
+\begin{proof}
+由安培--麦克斯韦定律
+\[
+\curl\vb{B}=\mu_0\vb{J}+\mu_0\varepsilon_0\pdv{\vb{E}}{t}
+\]
+与法拉第定律
+\[
+\curl\vb{E}=-\pdv{\vb{B}}{t}
+\]
+出发，分别与 $\vb{E}$、$\vb{B}/\mu_0$ 做点乘并相减，利用向量恒等式
+\[
+\div(\vb{E}\times\vb{B})=\vb{B}\cdot(\curl\vb{E})-\vb{E}\cdot(\curl\vb{B}),
+\]
+整理即可得到
+\[
+\vb{J}\cdot\vb{E}+\pdv{}{t}\left(\frac{1}{2}\varepsilon_0 E^2+\frac{B^2}{2\mu_0}\right)+\div\left(\frac{1}{\mu_0}\vb{E}\times\vb{B}\right)=0.
+\]
+这就是所求结果。
+\end{proof}
+
+把上式对任意体积 $V$ 积分，并使用高斯定理，可得
+\[
+\dv{}{t}\int_V u\,\dd V+\oint_{\partial V}\vb{S}\cdot\dd\vb{A}+\int_V \vb{J}\cdot\vb{E}\,\dd V=0.
+\]
+它表明：边界面上的坡印廷通量给出了体积内部电磁能的净流出率，而 $\vb{J}\cdot\vb{E}$ 则给出了场能转化为物质能的速率。
+
+坡印廷定理的物理意义极其清晰：
+\begin{itemize}
+  \item $\pdv{u}{t}$ 表示单位体积内电磁能的变化率；
+  \item $\div\vb{S}$ 表示能量从该体积流出或流入；
+  \item $\vb{J}\cdot\vb{E}$ 表示电磁场对电荷做功、把场能转为粒子能量的速率。
+\end{itemize}
+因此它是电磁场的能量守恒律。
+
+作为数量级估算，若某真空平面电磁波的电场振幅为 $E_0=120\ \text{V/m}$，则平均能流密度为
+\[
+\avg{S}=\frac{1}{2}\varepsilon_0 c E_0^2
+\approx \frac{1}{2}\times 8.85\times10^{-12}\times 3.00\times10^8\times (120)^2
+\approx 19\ \text{W/m}^2.
+\]
+这表示每秒约有 $19\ \text{J}$ 的电磁能穿过垂直于传播方向的每平方米面积。
+
+\begin{remark}
+在稳恒直流电路中，我们常说电源通过导线把能量送到电阻上。更精确地说，真正携带能量的不是电子“拖着能量跑”，而是导线外部空间中的电磁场。电场大致沿导线方向，磁场环绕导线，因此
+\[
+\vb{S}=\frac{1}{\mu_0}\vb{E}\times\vb{B}
+\]
+指向导线内部或电阻内部。于是，能量是从周围空间持续流入电阻并转化为热的。这是坡印廷矢量给出的深刻图景。
+\end{remark}
+
+\begin{remark}
+“光压”“太阳帆”“无线能量传输”等现象，都可以从坡印廷矢量出发理解。它把“场携带能量与动量”这一观点变成可计算、可测量的物理量，也为后续进入相对论与场论铺平道路。
+\end{remark}
+
+\section{电磁谱——从无线电波到 $\gamma$ 射线}
+
+既然光只是电磁波的一小段，那么不同频率、不同波长的所有电磁辐射，本质上都由同一套麦克斯韦方程支配。改变的不是“种类”，而只是频率尺度与相互作用方式。于是，人类把分散的无线通信、红外加热、可见光成像、紫外灭菌、X 射线透视、$\gamma$ 射线核辐射统统纳入一个连续谱中。
+
+\begin{definition}[电磁谱]
+按照频率 $f$ 或波长 $\lambda$ 排列的全部电磁波范围称为电磁谱，它们满足
+\[
+ c=f\lambda.
+\]
+频率越高，波长越短；在真空中它们的传播速度都等于光速 $c$。
+\end{definition}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{3cm}p{3.7cm}p{4.8cm}p{3.2cm}}
+\toprule
+波段 & 典型波长范围 & 典型应用 & 主要特征 \\
+\midrule
+无线电波 & $>10^{-1}\ \text{m}$ & 广播、通信、雷达 & 波长长，绕射能力强 \\
+微波 & $10^{-3}\sim10^{-1}\ \text{m}$ & 微波炉、卫星通信、Wi-Fi & 易与分子转动耦合 \\
+红外线 & $7\times10^{-7}\sim10^{-3}\ \text{m}$ & 热成像、遥控 & 常与热辐射关联 \\
+可见光 & $4\times10^{-7}\sim7\times10^{-7}\ \text{m}$ & 视觉、成像、光纤 & 人眼可感知部分 \\
+紫外线 & $10^{-8}\sim4\times10^{-7}\ \text{m}$ & 灭菌、荧光激发 & 化学作用强 \\
+X 射线 & $10^{-11}\sim10^{-8}\ \text{m}$ & 医学透视、晶体分析 & 穿透性强 \\
+$\gamma$ 射线 & $<10^{-11}\ \text{m}$ & 核物理、放疗、天体物理 & 频率最高、能量最大 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}[由频率求波长]
+某 FM 广播频率为 $f=100\ \text{MHz}$，则其在真空中的波长为
+\[
+\lambda=\frac{c}{f}=\frac{3.00\times 10^8}{1.00\times10^8}=3.0\ \text{m}.
+\]
+这说明广播电台使用的是米量级波长的无线电波。
+\end{example}
+
+若可见光典型波长取 $500\ \text{nm}$，X 射线典型波长取 $0.1\ \text{nm}$，则二者波长之比为
+\[
+\frac{500}{0.1}=5000.
+\]
+也就是说，X 射线的波长比可见光短约四个数量级，因此更容易分辨原子尺度结构，也具有更强穿透能力。
+
+\begin{remark}
+麦克斯韦方程组本身并不偏爱任何波段。无线电通信与宇宙射线看似相距遥远，但它们只是同一种场在不同频率下的表现。统一的力量，就在于把“多样现象”还原为“少数基本方程”。从经典观点看，不同波段的差异主要体现在与物质的耦合尺度不同；从现代观点看，还可以进一步用光子的能量 $E=hf$ 来理解高频辐射为何更容易电离原子。
+\end{remark}
+
+\section*{本章小结}
+
+本章是电磁学的顶点，也是经典物理统一思想的典范：
+\begin{itemize}
+  \item 麦克斯韦以位移电流 $\pdv{\vb{D}}{t}$ 修正安培定律，使其与电荷守恒完全一致；
+  \item 四条麦克斯韦方程把电场、磁场、电荷和电流纳入统一框架；
+  \item 在真空中，这四个方程自动推出波动方程，预言波速 $c=1/\sqrt{\mu_0\varepsilon_0}$；
+  \item 电磁波是横波，满足 $\vb{E}\perp \vb{B}\perp \vb{k}$，并携带能量与动量；
+  \item 坡印廷矢量 $\vb{S}=\vb{E}\times\vb{B}/\mu_0$ 描述了电磁能流；
+  \item 从无线电波到 $\gamma$ 射线，整个电磁谱都服从同一组方程。
+\end{itemize}
+
+如果说牛顿把天上与地下的运动统一起来，那么麦克斯韦则把电、磁与光统一起来。下一步，爱因斯坦将进一步追问：既然光速由真空常数决定，而且对所有惯性系都应相同，那么时间与空间本身又必须如何改变？
+
+\begin{exercise}
+从连续性方程
+\[
+\div\vb{J}+\pdv{\rho}{t}=0
+\]
+和高斯定律 $\div\vb{D}=\rho$ 出发，说明为什么安培定律必须包含位移电流项 $\pdv{\vb{D}}{t}$。
+\end{exercise}
+
+\begin{exercise}
+设平行板电容器极板面积为 $A$，充电时板间电场按 $E(t)=\alpha t$ 增长。求板间位移电流 $I_d$，并说明它与导线中的传导电流关系如何。
+\end{exercise}
+
+\begin{exercise}
+写出真空中麦克斯韦方程组的积分形式与微分形式，并分别说明每一个方程的物理意义。
+\end{exercise}
+
+\begin{exercise}
+在无源真空区域中，从
+\[
+\curl\vb{E}=-\pdv{\vb{B}}{t},
+\qquad
+\curl\vb{B}=\mu_0\varepsilon_0\pdv{\vb{E}}{t}
+\]
+出发，推导电场的波动方程。
+\end{exercise}
+
+\begin{exercise}
+一列真空平面电磁波的电场振幅为 $E_0=300\ \text{V/m}$。求其磁场振幅 $B_0$、平均能量密度 $\avg{u}$ 与平均能流密度 $\avg{S}$。
+\end{exercise}
+
+\begin{exercise}
+证明真空平面电磁波中电场能量密度与磁场能量密度恒相等，即 $u_E=u_B$。
+\end{exercise}
+
+\begin{exercise}
+某微波炉工作频率约为 $2.45\ \text{GHz}$。估算其对应电磁波在真空中的波长，并说明它属于电磁谱的哪一波段。
+\end{exercise}
+
+\begin{exercise}
+查阅并思考：为什么紫外线可用于消毒，而 X 射线可用于医学成像？请结合它们在电磁谱中的频率、波长与物质相互作用方式作简要说明。
+\end{exercise}

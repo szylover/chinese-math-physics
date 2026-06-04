@@ -1,0 +1,681 @@
+\chapter{电势与电容}
+
+电场力和万有引力一样，都是\emph{保守力}。这意味着：电荷从一点移动到另一点时，电场力做功只由起点和终点决定，而与路径的具体形状无关。于是我们可以像力学中引入重力势能那样，在静电学中引入\textbf{电势}这一标量函数。它把原本带有方向的电场信息，压缩为一个更容易计算、也更容易与能量观点结合的量。
+
+本章有三条主线：
+\begin{enumerate}
+  \item 电势差来自电场沿路径的线积分；
+  \item 电场是电势在空间中的变化率，即 $\vb E=-\grad V$；
+  \item 电容与电场能量都能由电势观点自然推出。
+\end{enumerate}
+
+从高中物理的角度看，电势常被理解为“单位正电荷的电势能”；从微积分的角度看，它更像是一个\emph{势函数}：知道空间中每一点的 $V(\vb r)$，就能用求导恢复电场，用积分计算总能量。
+
+\section{电势}
+
+\subsection{电势差的线积分定义}
+
+设试探电荷 $q_0$ 从点 $A$ 沿某条曲线移动到点 $B$，路径元记为 $\dd\vb l$。电场力的元功为
+\[
+\dd W = q_0\,\vb E\cdot \dd\vb l,
+\]
+因此总功为
+\[
+W_{A\to B}=q_0\int_A^B \vb E\cdot \dd\vb l.
+\]
+
+若只考虑静电场，由于它是保守场，电场力做功等于电势能的减少：
+\[
+W_{A\to B}=-(U_B-U_A).
+\]
+两边同除以 $q_0$，便得到单位正电荷的势能变化，也即电势差。
+
+\begin{definition}
+点 $A,B$ 之间的\textbf{电势差}定义为
+\[
+V_B-V_A=-\int_A^B \vb E\cdot \dd\vb l.
+\]
+若选定某个参考点 $O$ 使 $V(O)=0$，则点 $P$ 的\textbf{电势}为
+\[
+V(P)-V(O)=-\int_O^P \vb E\cdot \dd\vb l.
+\]
+在静电学中，常取无穷远处为零势点，即 $V(\infty)=0$。
+\end{definition}
+
+这个定义强调了两件事：
+\begin{itemize}
+  \item 电势是\textbf{标量}，没有方向；
+  \item 电势差的定义本质上是\textbf{线积分}，而静电场的特殊性在于该积分与路径无关。
+\end{itemize}
+
+\begin{theorem}
+在静电场中，若空间区域内不存在随时间变化的磁场，则对任意闭合回路 $\Gamma$ 都有
+\[
+\oint_\Gamma \vb E\cdot \dd\vb l=0.
+\]
+因此从一点到另一点的线积分只与端点有关，电势函数 $V(\vb r)$ 可以在该区域内定义。
+\end{theorem}
+
+\begin{proof}
+静电场满足 $\curl \vb E=\vb 0$。由斯托克斯公式，
+\[
+\oint_\Gamma \vb E\cdot \dd\vb l
+=\iint_S (\curl \vb E)\cdot \dd\vb S=0.
+\]
+所以任意两条连接同一对端点的路径，其线积分之差为零，故线积分只由端点决定。这正是势函数存在的充分条件。
+\end{proof}
+
+\begin{remark}
+“电势高低”与“电势能大小”并不完全相同。对正电荷，电势越高，势能越高；对负电荷，情形恰好相反，因为 $U=qV$ 中的 $q$ 可以为负。
+\end{remark}
+
+\subsection{电势的物理意义}
+
+若把单位正电荷从参考点缓慢移到空间某点 $P$，外力所做的功（准静态条件下）就等于该点的电势。于是对于任意电荷 $q$，其电势能为
+\[
+U=qV.
+\]
+这说明：电势本身是“场的性质”，而势能是“电荷与场共同决定的量”。
+
+\begin{example}
+在匀强电场中，电场方向沿 $x$ 轴正方向，$\vb E=E_0\uvec{x}$。求两点 $A(x_A)$、$B(x_B)$ 之间的电势差。
+\end{example}
+
+\begin{proof}[解]
+取路径沿 $x$ 轴，则 $\dd\vb l=\dd x\,\uvec{x}$，从而
+\[
+V_B-V_A=-\int_{x_A}^{x_B} E_0\,\dd x=-E_0(x_B-x_A).
+\]
+所以电势沿电场方向线性降低。若 $x_B>x_A$，则 $V_B<V_A$。
+\end{proof}
+
+这一结论可以口头记成：\textbf{顺着电场方向走，电势降低；逆着电场方向走，电势升高。}
+
+\section{电势与电场的关系}
+
+电势是全局量，电场是局部量。二者之间的联系由微积分中的导数给出。
+
+\subsection{一维情形：导数形式}
+
+若电势只随 $x$ 变化，由定义有
+\[
+V(x+\dd x)-V(x)=-E_x\,\dd x.
+\]
+两边除以 $\dd x$ 并取极限，得
+\[
+E_x=-\dv{V}{x}.
+\]
+这说明电场强度等于电势对位置变化率的负值。
+
+\subsection{三维情形：梯度形式}
+
+在三维空间中，
+\[
+\dd V=-\vb E\cdot \dd\vb l.
+\]
+另一方面，函数 $V(x,y,z)$ 的全微分为
+\[
+\dd V=\frac{\partial V}{\partial x}\dd x+\frac{\partial V}{\partial y}\dd y+\frac{\partial V}{\partial z}\dd z=\grad V\cdot \dd\vb l.
+\]
+对任意位移 $\dd\vb l$ 比较两式，得到静电学中极其重要的关系。
+
+\begin{law}
+静电场与电势的关系为
+\[
+\vb E=-\grad V.
+\]
+在直角坐标系中即
+\[
+E_x=-\pdv{V}{x},\qquad E_y=-\pdv{V}{y},\qquad E_z=-\pdv{V}{z}.
+\]
+\end{law}
+
+该公式有非常直观的几何含义：电场方向指向电势下降最快的方向，而电场大小等于单位长度上的最大降势率。
+
+\subsection{等势面}
+
+\begin{definition}
+若空间中某个曲面上所有点的电势都相等，则该曲面称为\textbf{等势面}；二维截面中的对应曲线称为\textbf{等势线}。
+\end{definition}
+
+沿等势面移动时 $\dd V=0$，于是
+\[
+\vb E\cdot \dd\vb l=0.
+\]
+因此电场总与等势面垂直。这与地形中的等高线完全类似：坡度最大的方向垂直于等高线，电势下降最快的方向则是电场方向。
+
+\begin{remark}
+等势面不能相交。否则同一点将被赋予两个不同的电势值，这与电势作为标量场的定义矛盾。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \draw[->, thick] (-3.5,0) -- (3.8,0) node[right] {$x$};
+  \draw[->, thick] (0,-3.5) -- (0,3.8) node[above] {$y$};
+  \fill[red!70] (0,0) circle (0.08) node[below right] {$+q$};
+  \foreach \r/\lab in {0.8/$V_1$,1.5/$V_2$,2.2/$V_3$,2.9/$V_4$}{
+    \draw[blue!70] (0,0) circle (\r);
+    \node[blue!70] at ({0.72*\r},{0.72*\r}) {\small \lab};
+  }
+  \foreach \ang in {0,30,...,330}{
+    \draw[orange!85,->] (0,0) -- (\ang:3.15);
+  }
+  \node at (0,-4.1) {蓝色为等势线，橙色为电场线，二者处处垂直};
+\end{tikzpicture}
+\caption{点电荷周围的等势线与电场线}
+\end{figure}
+
+\begin{example}
+已知一维电势分布为
+\[
+V(x)=V_0-ax+bx^2,
+\]
+其中 $a,b$ 为正常数。求电场 $E_x(x)$，并判断 $x=\dfrac{a}{2b}$ 两侧电场方向。
+\end{example}
+
+\begin{proof}[解]
+由 $E_x=-\dv*{V}{x}$，得
+\[
+E_x=a-2bx.
+\]
+当 $x<\dfrac{a}{2b}$ 时，$E_x>0$，电场沿 $x$ 正方向；当 $x>\dfrac{a}{2b}$ 时，$E_x<0$，电场沿 $x$ 负方向；在 $x=\dfrac{a}{2b}$ 处电场为零。也就是说，该点是电势函数的驻点，对应电场方向发生改变。
+\end{proof}
+
+\section{点电荷与电荷分布的电势}
+
+\subsection{点电荷的电势}
+
+对位于原点的点电荷 $q$，其电场为
+\[
+\vb E=\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\uvec{r}.
+\]
+取无穷远处为零势点，沿径向从 $\infty$ 积分到 $r$，则
+\[
+V(r)=-\int_\infty^r \vb E\cdot \dd\vb l
+=-\int_\infty^r \frac{1}{4\pi\varepsilon_0}\frac{q}{r'^2}\dd r'.
+\]
+计算得
+\[
+V(r)=\frac{1}{4\pi\varepsilon_0}\frac{q}{r}.
+\]
+
+\begin{law}
+点电荷 $q$ 在距离其 $r$ 处产生的电势为
+\[
+V(r)=\frac{1}{4\pi\varepsilon_0}\frac{q}{r},
+\]
+并满足叠加原理：若有多个点电荷，则总电势等于各点电势的代数和。
+\end{law}
+
+于是离散电荷系的电势写为
+\[
+V(\vb r)=\frac{1}{4\pi\varepsilon_0}\sum_i \frac{q_i}{\abs{\vb r-\vb r_i}}.
+\]
+注意这是\textbf{代数和}而不是矢量和，因此通常比电场更容易计算。
+
+\begin{example}
+两个点电荷 $+q$ 与 $-q$ 分别放在 $x=\pm a$ 处。求原点的电势，并判断原点电场的方向。
+\end{example}
+
+\begin{proof}[解]
+原点到两电荷的距离都为 $a$，故电势为
+\[
+V(0)=\frac{1}{4\pi\varepsilon_0}\qty(\frac{q}{a}-\frac{q}{a})=0.
+\]
+但电场并不为零。原点处由 $+q$ 产生的电场指向远离正电荷的方向，即向左；由 $-q$ 产生的电场指向负电荷本身，也向左。二者叠加后，原点电场沿 $x$ 负方向。
+
+因此，\textbf{电势为零并不意味着电场为零}；电势取决于标量叠加，电场取决于矢量叠加。
+\end{proof}
+
+\subsection{连续分布电荷的电势积分}
+
+若电荷连续分布，则把电荷元 $\dd q$ 看成无穷多个点电荷，利用叠加原理便得
+\[
+\dd V=\frac{1}{4\pi\varepsilon_0}\frac{\dd q}{R},
+\]
+其中 $R$ 是场点到电荷元的距离。积分后有
+\[
+V=\frac{1}{4\pi\varepsilon_0}\int \frac{\dd q}{R}.
+\]
+
+根据分布类型不同，可分别写成
+\begin{align*}
+V(\vb r)&=\frac{1}{4\pi\varepsilon_0}\int \frac{\lambda\,\dd l'}{\abs{\vb r-\vb r'}},\\
+V(\vb r)&=\frac{1}{4\pi\varepsilon_0}\iint \frac{\sigma\,\dd S'}{\abs{\vb r-\vb r'}},\\
+V(\vb r)&=\frac{1}{4\pi\varepsilon_0}\iiint \frac{\rho\,\dd \tau'}{\abs{\vb r-\vb r'}}.
+\end{align*}
+
+这些公式看上去像“库仑定律的积分版”，但它们有一个重要优势：分母中只有距离 $R$，没有方向分量，所以很多对称问题先算电势再求电场会更简洁。
+
+\begin{example}
+半径为 $R$ 的均匀带电圆环，总电荷为 $Q$。求圆环轴线上距离圆心 $x$ 处的电势，并由电势求轴向电场。
+\end{example}
+
+\begin{proof}[解]
+圆环上任意电荷元到轴线上场点的距离都相同，均为
+\[
+\sqrt{x^2+R^2}.
+\]
+因此
+\[
+V(x)=\frac{1}{4\pi\varepsilon_0}\int \frac{\dd q}{\sqrt{x^2+R^2}}
+=\frac{1}{4\pi\varepsilon_0}\frac{Q}{\sqrt{x^2+R^2}}.
+\]
+再由
+\[
+E_x=-\dv{V}{x}
+\]
+得到
+\[
+E_x=\frac{1}{4\pi\varepsilon_0}\frac{Qx}{(x^2+R^2)^{3/2}}.
+\]
+这里清楚地体现出“先积分求势，再求导得场”的微积分思路。
+\end{proof}
+
+作为另一类常见积分，长度为 $2L$ 的均匀带电细棒沿 $x$ 轴放置、线电荷密度为 $\lambda$ 时，其垂直平分线上距中点 $a$ 处的电势可写成
+\[
+V(a)=\frac{1}{4\pi\varepsilon_0}\int_{-L}^{L}\frac{\lambda\,\dd x}{\sqrt{x^2+a^2}}
+=\frac{\lambda}{2\pi\varepsilon_0}\ln\qty(\frac{L+\sqrt{L^2+a^2}}{a}).
+\]
+当 $L\to \infty$ 时，上式发散，说明无限长带电直线若取无穷远为零势点会遇到参考点选择问题，这也是“绝对电势依赖参考零点”的一个例子。
+
+\subsection{从电势反求电场}
+
+一旦求出 $V(\vb r)$，就可以通过
+\[
+\vb E=-\grad V
+\]
+恢复电场。这常比直接对电场做分量积分更高效。对称性越强、积分变量越多时，这种“先势后场”的策略就越有威力。
+
+\section{电容器}
+
+\subsection{电容的定义}
+
+如果一个导体或一组导体能够在一定电势差下储存电荷，我们就说它具有电容。最常见的是两导体构成的\textbf{电容器}。
+
+\begin{definition}
+对一对带等量异种电荷 $\pm Q$、电势差为 $U$ 的导体系统，其\textbf{电容}定义为
+\[
+C=\frac{Q}{U}.
+\]
+在电容器问题中，$U$ 常写作两极板间电压，因此也常见写法 $C=Q/V$。
+\end{definition}
+
+电容刻画的是“单位电压下能存多少电荷”，只由几何形状、相对位置以及介质性质决定，与实际带了多少电荷无关。
+
+\subsection{平行板电容器}
+
+设两块面积为 $S$、间距为 $d$ 的平行导体板带电 $\pm Q$，忽略边缘效应。面电荷密度为
+\[
+\sigma=\frac{Q}{S}.
+\]
+两板间电场近似为匀强电场：
+\[
+E=\frac{\sigma}{\varepsilon_0}=\frac{Q}{\varepsilon_0 S}.
+\]
+故两板间电势差为
+\[
+U=Ed=\frac{Qd}{\varepsilon_0 S}.
+\]
+代入电容定义，便得
+\[
+C=\frac{Q}{U}=\frac{\varepsilon_0 S}{d}.
+\]
+
+\begin{law}
+真空中平行板电容器的电容为
+\[
+C=\frac{\varepsilon_0 S}{d},
+\]
+其中 $S$ 为极板正对面积，$d$ 为板间距离。增大面积会增大电容，增大间距会减小电容。
+\end{law}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \fill[gray!35] (-3,2) rectangle (-2.6,-2);
+  \fill[gray!35] (2.6,2) rectangle (3,-2);
+  \node at (-2.8,2.35) {$+Q$};
+  \node at (2.8,2.35) {$-Q$};
+  \foreach \y in {-1.5,-0.75,0,0.75,1.5}{
+    \draw[blue!75,->,thick] (-2.45,\y) -- (2.45,\y);
+  }
+  \draw[<->] (-2.6,-2.5) -- (2.6,-2.5) node[midway, fill=white] {$d$};
+  \draw[decorate,decoration={brace,mirror,amplitude=6pt}] (-3,-2.15) -- (-2.6,-2.15) node[midway,yshift=-0.55cm] {$\text{极板}$};
+  \node at (0,2.35) {$\vb E$ 近似均匀};
+\end{tikzpicture}
+\caption{平行板电容器及其近似匀强电场}
+\end{figure}
+
+\begin{remark}
+平行板电容器公式建立在“板间距离远小于板的线度、可忽略边缘效应”的前提下。若极板很小或间距很大，电场会向外弯曲，公式只剩近似意义。
+\end{remark}
+
+\begin{example}
+一个空气平行板电容器的面积增为原来的 $2$ 倍、板间距离减为原来的 $\dfrac{1}{2}$。求其电容变为原来的多少倍。
+\end{example}
+
+\begin{proof}[解]
+由 $C=\varepsilon_0 S/d$，得
+\[
+\frac{C'}{C}=\frac{(2S)/(d/2)}{S/d}=4.
+\]
+所以新电容是原来的 $4$ 倍。这表明电容本质上是一个几何量：增大有效面积、缩小板间距离都会增强储电能力。
+\end{proof}
+
+\section{电场能量}
+
+\subsection{充电过程中外力做功}
+
+把一个电容器从不带电逐渐充到总电荷为 $Q$。若某一时刻极板上已有电荷 $q$，其电压为
+\[
+U=\frac{q}{C}.
+\]
+这时再搬运微元电荷 $\dd q$ 到极板上，外力需做元功
+\[
+\dd W=U\,\dd q=\frac{q}{C}\dd q.
+\]
+从 $0$ 积分到 $Q$，得总能量
+\[
+W=\int_0^Q \frac{q}{C}\dd q=\frac{Q^2}{2C}.
+\]
+结合 $Q=CU$，还能写成
+\[
+W=\frac{1}{2}QU=\frac{1}{2}CU^2.
+\]
+
+\begin{law}
+电容器储存的电场能量为
+\[
+W=\frac{Q^2}{2C}=\frac{1}{2}QU=\frac{1}{2}CU^2.
+\]
+\end{law}
+
+\subsection{能量密度}
+
+以真空平行板电容器为例，板间体积为 $Sd$，而
+\[
+W=\frac{1}{2}CU^2=\frac{1}{2}\cdot \frac{\varepsilon_0 S}{d}\cdot (Ed)^2
+=\frac{1}{2}\varepsilon_0 E^2\,Sd.
+\]
+于是单位体积中的能量为
+\[
+u=\frac{W}{Sd}=\frac{1}{2}\varepsilon_0 E^2.
+\]
+这就得到真空中电场能量密度的表达式。
+
+\begin{law}
+真空电场的能量密度为
+\[
+u=\frac{1}{2}\varepsilon_0 E^2.
+\]
+若电场分布不均匀，则总能量由体积分给出：
+\[
+W=\iiint \frac{1}{2}\varepsilon_0 E^2\,\dd \tau.
+\]
+\end{law}
+
+这意味着电场能量并不是“神秘地附着在电荷上”，而是分布在整个有电场的空间中。场强大的地方，能量密度也大。
+
+对接在恒定电压 $U$ 的真空平行板电容器，板间电场近似为
+\[
+E=\frac{U}{d},
+\]
+故其能量密度为
+\[
+u=\frac{1}{2}\varepsilon_0 E^2=\frac{1}{2}\varepsilon_0\frac{U^2}{d^2}.
+\]
+若电压保持不变而减小板距，则电场变强，能量密度增大。同时电容 $C=\varepsilon_0 S/d$ 也增大，总能量
+\[
+W=\frac{1}{2}CU^2=\frac{1}{2}\frac{\varepsilon_0 S}{d}U^2
+\]
+也随 $d$ 减小而增大。
+
+\subsection{一般电荷分布的能量表达式}
+
+对任意静电系统，把电荷从无穷远逐步搬运进来，可以得到总电场能量还可写为
+\[
+W=\frac{1}{2}\int V\,\dd q.
+\]
+若为连续体分布，则写作
+\[
+W=\frac{1}{2}\iiint \rho V\,\dd \tau.
+\]
+这里的 $\dfrac{1}{2}$ 用来避免把任意一对电荷相互作用能计算两次。这一公式与 $\iiint \dfrac{1}{2}\varepsilon_0 E^2\dd\tau$ 本质等价，只是出发点不同：一个从“搬运电荷”看，一个从“空间储能”看。
+
+\section{电介质}
+
+\subsection{极化现象}
+
+在真空中，电场线可以看作直接穿过空间；但若在电场中放入绝缘材料，材料内部的正负电荷会发生微小相对位移，形成许多微观电偶极子，这种现象称为\textbf{极化}。
+
+\begin{definition}
+电介质在外电场作用下，内部束缚正负电荷发生微小分离，从而形成宏观偶极化的现象，称为\textbf{极化}；能够发生这种极化而又不形成持续导电电流的材料称为\textbf{电介质}。
+\end{definition}
+
+极化后，介质表面会出现束缚电荷，它们产生附加电场，方向通常与原外电场相反，于是材料内部的合场强减小。
+
+\subsection{介电常数}
+
+实验表明，对许多线性、各向同性电介质，插入介质后电场变为原来的 $1/\kappa$，其中 $\kappa$ 称为相对介电常数。于是可把真空介电常数 $\varepsilon_0$ 替换为
+\[
+\varepsilon=\kappa\varepsilon_0.
+\]
+因此许多公式都可形式不变地推广：
+\[
+C=\frac{\varepsilon S}{d}=\kappa\frac{\varepsilon_0 S}{d}=\kappa C_0.
+\]
+这里 $C_0$ 为真空中的电容。
+
+\begin{law}
+在极板间完全充满均匀电介质的平行板电容器中，电容变为
+\[
+C=\kappa \frac{\varepsilon_0 S}{d}=\kappa C_0.
+\]
+介电常数越大，电容越大。
+\end{law}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.98]
+  \begin{scope}[xshift=-4.8cm]
+    \fill[gray!35] (-1.2,1.8) rectangle (-0.8,-1.8);
+    \fill[gray!35] (0.8,1.8) rectangle (1.2,-1.8);
+    \foreach \y in {-1.2,-0.4,0.4,1.2}{
+      \draw[blue!75,->,thick] (-0.7,\y) -- (0.7,\y);
+    }
+    \node at (0,-2.35) {真空};
+  \end{scope}
+  \begin{scope}[xshift=4.8cm]
+    \fill[gray!35] (-1.2,1.8) rectangle (-0.8,-1.8);
+    \fill[gray!35] (0.8,1.8) rectangle (1.2,-1.8);
+    \fill[green!20] (-0.8,1.8) rectangle (0.8,-1.8);
+    \foreach \y in {-1.2,-0.4,0.4,1.2}{
+      \draw[blue!75,->,thick] (-0.7,\y) -- (0.7,\y);
+      \draw[orange!70,->,thick] (0.45,\y+0.12) -- (-0.45,\y+0.12);
+    }
+    \node at (0,-2.35) {充满电介质};
+  \end{scope}
+\end{tikzpicture}
+\caption{电介质极化会产生反向附加电场，使合场减弱}
+\end{figure}
+
+\begin{example}
+一个平行板电容器先与电源断开，再在板间完全插入相对介电常数为 $\kappa$ 的电介质。求电压、场强和储能如何变化。
+\end{example}
+
+\begin{proof}[解]
+与电源断开意味着极板总电荷 $Q$ 保持不变。插入电介质后
+\[
+C'=\kappa C.
+\]
+由 $U=Q/C$ 得
+\[
+U'=\frac{Q}{C'}=\frac{U}{\kappa}.
+\]
+由于 $E=U/d$，故
+\[
+E'=\frac{E}{\kappa}.
+\]
+储能则变为
+\[
+W'=\frac{Q^2}{2C'}=\frac{W}{\kappa}.
+\]
+因此在断电条件下，插入电介质会使电压、场强和能量都减小。
+\end{proof}
+
+\begin{remark}
+若电容器始终接在恒压电源上，则情况不同：电压 $U$ 保持不变，电容增大为 $\kappa C$，电荷增大为 $\kappa Q$，总储能变为 $W'=\kappa W$。这类题目的关键是先判断\textbf{不变量}究竟是 $Q$ 还是 $U$。
+\end{remark}
+
+\section{高考题微积分视角}
+
+下面选取三类常见高考题，展示如何把“定义、求导、积分”真正用起来。
+
+\begin{gaokao}[title={题型一：图像给出电场，求电势差与运动趋势}]
+已知某直线上电场沿 $x$ 方向，场强随位置变化为
+\[
+E_x=E_0-kx\qquad (0\le x\le a).
+\]
+设 $x=0$ 处电势为 $V_0$。
+
+\textbf{问题：}
+\begin{enumerate}
+  \item 求任意位置 $x$ 处的电势 $V(x)$；
+  \item 若 $k>0$，判断正电荷在该区域内更容易向哪一侧自发运动。
+\end{enumerate}
+
+\textbf{微积分解法：}
+由 $E_x=-\dv*{V}{x}$，得
+\[
+\dv{V}{x}=-(E_0-kx).
+\]
+从 $0$ 积分到 $x$：
+\[
+V(x)-V_0=-\int_0^x (E_0-k\xi)\,\dd \xi=-E_0x+\frac{1}{2}kx^2.
+\]
+故
+\[
+V(x)=V_0-E_0x+\frac{1}{2}kx^2.
+\]
+若正电荷自由运动，它总沿电势降低方向运动；或者等价地说沿电场方向运动。于是只需看 $E_x=E_0-kx$ 的符号即可：在 $x<\dfrac{E_0}{k}$ 的区域内，它倾向于向 $x$ 增大的方向运动。
+
+\textbf{点评：} 高考中经常把 $E-x$ 图像、$V-x$ 图像、粒子运动联系起来。核心不是记图像，而是记住
+\[
+V_B-V_A=-\int_A^B E_x\,\dd x.
+\]
+\end{gaokao}
+
+\begin{gaokao}[title={题型二：带电粒子经电势差加速}]
+一带电粒子质量为 $m$、电荷量为 $q$，从静止开始经过电势差 $U$ 的加速后进入真空。忽略重力，求粒子速度大小。
+
+\textbf{微积分解法：}
+电场力做功等于动能增量：
+\[
+\Delta K = qU.
+\]
+从更本质的角度看，
+\[
+qU = -\Delta (qV)
+\]
+正是势能转化为动能。粒子由静止开始，故
+\[
+\frac{1}{2}mv^2=qU.
+\]
+解得
+\[
+v=\sqrt{\frac{2qU}{m}}.
+\]
+
+\textbf{点评：} 这类题在表面上是动力学题，实质上是电势能问题。若电场分布复杂，只要能先算出电势差，运动学部分仍可直接求解。
+\end{gaokao}
+
+\begin{gaokao}[title={题型三：平行板电容器的动态分析}]
+某平行板电容器接在恒压电源上，初始电容为 $C$、电压为 $U$。现将极板间距减小为原来的一半，忽略边缘效应。求电容、电荷、场强和储能如何变化。
+
+\textbf{微积分与函数观点：}
+由
+\[
+C=\frac{\varepsilon_0 S}{d}
+\]
+知间距减半后
+\[
+C'=2C.
+\]
+由于接在恒压电源上，故 $U'=U$ 不变，于是
+\[
+Q'=C'U=2Q.
+\]
+板间场强
+\[
+E'=\frac{U'}{d/2}=2E.
+\]
+储能
+\[
+W'=\frac{1}{2}C'U'^2=2W.
+\]
+
+\textbf{点评：} 电容器综合题的关键在于先判断约束条件：接电源意味着 $U$ 不变；断电意味着 $Q$ 不变。随后把其余量都看成 $d$ 的函数，再逐个推出即可。
+\end{gaokao}
+
+\section*{本章小结}
+
+\begin{itemize}
+  \item 电势差由线积分定义：$V_B-V_A=-\int_A^B \vb E\cdot \dd\vb l$；
+  \item 静电场满足 $\vb E=-\grad V$，电场线与等势面垂直；
+  \item 点电荷电势为 $V=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{r}$，连续分布可积分求得；
+  \item 电容定义为 $C=Q/U$，平行板电容器满足 $C=\varepsilon_0 S/d$；
+  \item 电场能量可写为 $W=\dfrac{1}{2}CU^2$，能量密度为 $u=\dfrac{1}{2}\varepsilon_0E^2$；
+  \item 电介质通过极化削弱内部电场，并使电容增大为 $\kappa$ 倍。
+\end{itemize}
+
+\section*{习题}
+
+\begin{exercise}
+由电势差定义证明：在静电场中，沿任意闭合回路搬运电荷，电场力做功为零。并解释这一定性结论为什么允许我们引入电势函数。
+\end{exercise}
+
+\begin{exercise}
+一匀强电场大小为 $E$，方向沿 $x$ 轴正方向。若 $A(0)$、$B(l)$、$C(2l)$ 三点共线，求 $V_B-V_A$、$V_C-V_A$ 以及 $V_C-V_B$，并说明电势差与路径是否有关。
+\end{exercise}
+
+\begin{exercise}
+已知电势函数
+\[
+V(x,y)=ax^2-by^2,
+\]
+其中 $a,b>0$。求平面上任意点的电场矢量，并找出电场为零的点。
+\end{exercise}
+
+\begin{exercise}
+点电荷 $+q$ 放在原点。求半径分别为 $R$ 与 $2R$ 的两球面之间的电势差，并据此说明点电荷电势为何随距离按 $1/r$ 衰减。
+\end{exercise}
+
+\begin{exercise}
+半径为 $R$ 的均匀带电圆环总电荷为 $Q$。请直接由
+\[
+V(x)=\frac{1}{4\pi\varepsilon_0}\frac{Q}{\sqrt{x^2+R^2}}
+\]
+出发，求轴线上电场 $E_x$，并讨论 $x\gg R$ 时的近似形式。
+\end{exercise}
+
+\begin{exercise}
+一平行板电容器极板面积为 $S$，板间距为 $d$。若先将其充电到电压 $U$ 后断开电源，再把板间距增大到 $2d$。求电容、电压、场强和储能如何变化。
+\end{exercise}
+
+\begin{exercise}
+证明真空平行板电容器的储能也可由能量密度积分
+\[
+W=\iiint \frac{1}{2}\varepsilon_0E^2\,\dd\tau
+\]
+得到，并与 $W=\dfrac{1}{2}CU^2$ 对照验证。
+\end{exercise}
+
+\begin{exercise}
+某电容器接在恒压电源上，向其中插入相对介电常数为 $\kappa$ 的电介质。比较插入前后 $C,Q,E,W$ 的变化；再讨论若电源断开，结论如何改变。
+\end{exercise}
+
+\begin{exercise}
+一个质量为 $m$、带电量为 $q$ 的粒子从电势为 $V_A$ 的位置静止释放，运动到电势为 $V_B$ 的位置。忽略非电场力，求其速度，并分别讨论 $q>0$ 与 $q<0$ 时粒子运动方向与电势高低的关系。
+\end{exercise}

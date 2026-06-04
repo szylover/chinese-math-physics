@@ -1,0 +1,772 @@
+\chapter{功与能}
+
+在牛顿力学中，力描述的是\emph{状态如何改变}，而能量描述的是\emph{改变能够以怎样统一的数量形式被记录}。前几章我们已经用微积分语言建立了位移、速度、加速度与动量的关系；本章进一步说明：当力沿着位移方向持续作用时，它通过\emph{做功}把机械运动的变化压缩为一个标量关系，并自然导出动能、势能、机械能守恒与功率等核心概念。
+
+从高中物理的角度看，“功与能”常常是一组公式；从微积分的角度看，它们是一条清晰的逻辑链：
+\[
+\vb{F}(\vb{r}) \longrightarrow W=\int_C \vb{F}\cdot \dd \vb{r}
+\longrightarrow W=\Delta E_k
+\longrightarrow U(\vb{r})=-\int \vb{F}\cdot \dd \vb{r}
+\longrightarrow E_k+U=\text{常量}.
+\]
+本章将围绕这条链逐步展开。
+
+\section{功的定义}\label{sec:work-definition}
+
+\begin{definition}[力做功]
+若质点在外力 $\vb{F}$ 作用下沿曲线 $C$ 从点 $A$ 运动到点 $B$，取轨道上一小段位移 $\dd \vb{r}$，则该小段上的元功定义为
+\[
+\dd W = \vb{F}\cdot \dd \vb{r}.
+\]
+总功定义为沿轨道的线积分
+\[
+W_{A\to B}=\int_C \vb{F}\cdot \dd \vb{r}.
+\]
+\end{definition}
+
+这个定义直接揭示了三点：
+\begin{enumerate}
+  \item 功是标量，由力和位移的点积给出；
+  \item 只有力在位移方向上的分量才做功；
+  \item 对变力或曲线运动，必须通过积分把每一小段元功累加起来。
+\end{enumerate}
+
+若运动是一维直线运动，位置坐标为 $x$，力为 $F(x)$，则
+\[
+W=\int_{x_1}^{x_2} F(x)\,\dd x.
+\]
+于是，在 $F-x$ 图像下，功就是曲线与 $x$ 轴围成的\emph{带符号面积}：图像在轴上方时功为正，在轴下方时功为负。
+
+\begin{remark}
+“功”描述的是力转移能量的过程，而不是力本身的大小。大力未必做大功：若位移很小，或力始终与位移垂直，则功可以很小甚至为零。例如匀速圆周运动中的向心力始终垂直于瞬时位移，因此不做功。
+\end{remark}
+
+\begin{example}[恒力做功与夹角]
+一个大小恒为 $F$ 的力与位移 $\vb{s}$ 的夹角为 $\theta$，求该力做功。
+
+\textbf{解：}
+恒力情况下，线积分可直接提出常量：
+\[
+W=\int_C \vb{F}\cdot \dd \vb{r}=\vb{F}\cdot\int_C \dd \vb{r}=\vb{F}\cdot \vb{s}=Fs\cos\theta.
+\]
+这就是高中熟悉的公式，但现在我们知道它是线积分在恒力情形下的特例。
+\end{example}
+
+\begin{example}[变力做功：线性增大的拉力]\label{ex:linear-force-work}
+某物体沿 $x$ 轴由 $x=0$ 移到 $x=a$，受力 $F(x)=kx$，其中 $k>0$ 为常量。求该力做功。
+
+\textbf{解：}
+由一维积分公式，
+\[
+W=\int_0^a kx\,\dd x = \frac{1}{2}ka^2.
+\]
+这说明：当力随位移线性增大时，平均力为末态力的一半，因此做功等于三角形面积。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (-0.2,0) -- (4.6,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.2) node[above] {$F$};
+  \draw[thick,blue] (0,0) -- (4,2.8) node[above right] {$F=kx$};
+  \draw[dashed] (4,0) node[below] {$a$} -- (4,2.8);
+  \fill[blue!18] (0,0) -- (4,0) -- (4,2.8) -- cycle;
+  \node at (2.6,0.8) {$W=\displaystyle\int_0^a F\,\dd x$};
+\end{tikzpicture}
+\end{center}
+\end{example}
+
+\begin{example}[二维路径上的线积分]
+平面内有力场
+\[
+\vb{F}(x,y)=(-ky,\,kx),
+\]
+质点从原点沿直线 $y=x$ 运动到点 $(a,a)$。求该力做功。
+
+\textbf{解：}
+参数方程取为
+\[
+\vb{r}(t)=(t,t),\qquad 0\le t\le a,
+\]
+则
+\[
+\dd \vb{r}=(1,1)\,\dd t,
+\qquad
+\vb{F}(\vb{r}(t))=(-kt,kt).
+\]
+因此
+\[
+\vb{F}\cdot \dd \vb{r}=(-kt,kt)\cdot (1,1)\,\dd t = 0.
+\]
+从而
+\[
+W=\int_0^a 0\,\dd t =0.
+\]
+这里并不是“没有力”，而是因为该力在整条路径上的切向分量恰好处处相互抵消。
+\end{example}
+
+\begin{definition}[变力做功的微积分表述]
+若质点运动轨迹写成 $\vb{r}(t)$，其中 $t_1\le t\le t_2$，则线积分可改写为
+\[
+W=\int_{t_1}^{t_2} \vb{F}(\vb{r}(t))\cdot \dv{\vb{r}}{t}\,\dd t
+=\int_{t_1}^{t_2} \vb{F}\cdot \vb{v}\,\dd t.
+\]
+它表明：做功是“力与速度的点积”对时间的累积。
+\end{definition}
+
+\begin{remark}
+以后我们定义功率 $P=\dv*{W}{t}$ 时，将立即得到 $P=\vb{F}\cdot \vb{v}$。因此，功与功率并不是两个彼此孤立的公式，而是积分与导数的关系。
+\end{remark}
+
+\section{动能定理}\label{sec:work-kinetic}
+
+力做功为什么如此重要？根本原因在于：它直接决定速度大小的变化，这就是动能定理。
+
+\begin{definition}[动能]
+质量为 $m$、速率为 $v$ 的质点，其动能定义为
+\[
+E_k=\frac{1}{2}mv^2.
+\]
+\end{definition}
+
+\begin{law}[动能定理]
+合外力对质点所做的总功，等于质点动能的增量：
+\[
+W_{\text{合}} = \Delta E_k = E_{k2}-E_{k1}.
+\]
+\end{law}
+
+\begin{proof}
+由牛顿第二定律
+\[
+\vb{F}_{\text{合}}=m\dv{\vb{v}}{t}.
+\]
+两边与位移元 $\dd \vb{r}=\vb{v}\,\dd t$ 点乘：
+\[
+\vb{F}_{\text{合}}\cdot \dd \vb{r}
+= m\dv{\vb{v}}{t}\cdot \vb{v}\,\dd t.
+\]
+左边就是元功 $\dd W$。右边利用恒等式
+\[
+\dv{}{t}(v^2)=\dv{}{t}(\vb{v}\cdot \vb{v})=2\vb{v}\cdot\dv{\vb{v}}{t},
+\]
+得
+\[
+\dd W = m\vb{v}\cdot\dv{\vb{v}}{t}\,\dd t
+= \frac{m}{2}\dd(v^2)
+=\dd\qty(\frac{1}{2}mv^2).
+\]
+对初态到末态积分，得到
+\[
+W_{\text{合}}=\int \dd W
+=\int \dd\qty(\frac{1}{2}mv^2)
+=\frac{1}{2}mv_2^2-\frac{1}{2}mv_1^2
+=\Delta E_k.
+\]
+证毕。
+\end{proof}
+
+这个证明的关键不是技巧，而是观念转换：
+\[
+\text{牛顿第二定律 } \vb{F}=m\vb{a}
+\quad \Longrightarrow \quad
+\text{做功关系 } \vb{F}\cdot \dd\vb{r}=\dd E_k.
+\]
+前者是矢量微分方程，后者是标量积分关系。许多复杂运动问题，用后者往往比直接解加速度更简洁。
+
+\begin{example}[动能定理求末速度]
+质量为 $m$ 的物块在水平面上受恒力 $F$ 作用前进距离 $s$，摩擦力大小恒为 $f$，初速度为 $v_0$。求末速度 $v$。
+
+\textbf{解：}
+合外力做功为
+\[
+W=(F-f)s.
+\]
+由动能定理，
+\[
+(F-f)s=\frac{1}{2}mv^2-\frac{1}{2}mv_0^2.
+\]
+故
+\[
+v^2=v_0^2+\frac{2(F-f)s}{m}.
+\]
+当右端为零时物块恰好停下；若右端为负，则说明物块在走完 $s$ 之前已经停止，此时题目所设全过程并不成立。
+\end{example}
+
+\begin{example}[由动能定理反求变力]\label{ex:reverse-force}
+某质点沿 $x$ 轴运动，质量为 $m$，速度满足
+\[
+v^2=v_0^2+2\alpha x,
+\]
+其中 $\alpha$ 为常量。求合外力 $F(x)$，并说明其做功规律。
+
+\textbf{解：}
+由动能
+\[
+E_k=\frac{1}{2}mv^2=\frac{1}{2}m(v_0^2+2\alpha x)
+=\frac{1}{2}mv_0^2+m\alpha x.
+\]
+因此动能随位移线性增加，故有
+\[
+\dv{E_k}{x}=m\alpha.
+\]
+又因一维情形下
+\[
+F(x)=\dv{W}{x}=\dv{E_k}{x},
+\]
+故
+\[
+F(x)=m\alpha,
+\]
+即合外力为恒力。并且从 $0$ 到 $x$ 的总功为
+\[
+W=m\alpha x.
+\]
+这道题说明：若已知 $v^2$ 与 $x$ 的函数关系，常常可以不经时间，直接借助动能定理研究力学量。
+\end{example}
+
+\begin{remark}
+动能定理适用于任意力，只要讨论的是\emph{合外力总功}，就一定成立；而机械能守恒只在满足特定条件时才成立。因此从适用范围看，动能定理比机械能守恒更普遍。
+\end{remark}
+
+\section{势能}\label{sec:potential-energy}
+
+并不是所有力都能由“位置”唯一决定其做功结果。若某种力对物体从 $A$ 到 $B$ 做的功只与始末位置有关、与路径无关，我们就称它为保守力。
+
+\begin{definition}[保守力]
+若力 $\vb{F}$ 在某一区域内满足：质点从点 $A$ 到点 $B$ 的做功与路径无关，只由始末位置决定，则称 $\vb{F}$ 为\emph{保守力}。等价地，对任意闭合路径 $C$ 有
+\[
+\oint_C \vb{F}\cdot\dd\vb{r}=0.
+\]
+\end{definition}
+
+\begin{definition}[势能函数]
+若 $\vb{F}$ 为保守力，则存在标量函数 $U(\vb{r})$，称为势能，使得
+\[
+W_{A\to B}^{(\vb{F})}=U(A)-U(B)=-(U(B)-U(A)).
+\]
+在一维情形中，可写为
+\[
+U(x)=-\int F(x)\,\dd x + C,
+\]
+其中 $C$ 是任意常数，反映势能零点可以自由选取。
+\end{definition}
+
+由上式立刻得到一维关系
+\[
+F(x)=-\dv{U}{x},
+\]
+多维情形可写成
+\[
+\vb{F}=-\grad U.
+\]
+这说明：力总是指向势能降低最快的方向。
+
+\begin{theorem}[保守力做功与势能变化]
+对任意保守力，沿任一路径从 $A$ 到 $B$ 的做功满足
+\[
+W_{A\to B}^{(\vb{F})}=-\Delta U.
+\]
+因此，保守力做正功时势能减少；保守力做负功时势能增加。
+\end{theorem}
+
+\subsection*{引力势能}
+
+在近地面重力场中，重力近似恒为 $\vb{G}= -mg\uvec{y}$。若竖直坐标取向上为正，则
+\[
+F_y=-mg,
+\qquad
+U(y)=-\int (-mg)\,\dd y = mgy + C.
+\]
+通常取地面某处为零势能面，则
+\[
+U_g=mgh.
+\]
+更一般地，对万有引力
+\[
+F(r)=-\frac{GMm}{r^2},
+\]
+势能为
+\[
+U(r)=-\int F(r)\,\dd r = -\frac{GMm}{r}+C.
+\]
+若规定无穷远处势能为零，则
+\[
+U(r)=-\frac{GMm}{r}.
+\]
+
+\subsection*{弹性势能}
+
+对理想轻弹簧，胡克定律给出回复力
+\[
+F(x)=-kx,
+\]
+其中 $x$ 为相对平衡位置的形变量。于是
+\[
+U(x)=-\int (-kx)\,\dd x=\frac{1}{2}kx^2+C.
+\]
+若取平衡位置 $x=0$ 处势能为零，则
+\[
+U_s=\frac{1}{2}kx^2.
+\]
+
+\begin{example}[由力求势能]
+一维力场满足
+\[
+F(x)=-2ax+b,
+\]
+其中 $a>0$，$b$ 为常量。求势能函数，并指出平衡位置。
+
+\textbf{解：}
+由定义
+\[
+U(x)=-\int (-2ax+b)\,\dd x = ax^2-bx+C.
+\]
+平衡位置由 $F(x)=0$ 决定，即
+\[
+-2ax+b=0
+\quad\Longrightarrow\quad
+x_0=\frac{b}{2a}.
+\]
+把势能配方，得
+\[
+U(x)=a\qty(x-\frac{b}{2a})^2 + C-\frac{b^2}{4a}.
+\]
+因为二次项系数为正，故该平衡位置是稳定平衡点。
+\end{example}
+
+\begin{example}[弹簧势能与做功]
+轻弹簧劲度系数为 $k$，从原长缓慢压缩到形变量 $x$。求外力所做的功与弹簧势能的变化。
+
+\textbf{解：}
+若缓慢压缩，则任意时刻外力大小与弹簧弹力大小相等，即
+\[
+F_{\text{外}}(s)=ks.
+\]
+于是外力做功为
+\[
+W_{\text{外}}=\int_0^x ks\,\dd s=\frac{1}{2}kx^2.
+\]
+这全部转化为弹簧势能增量：
+\[
+\Delta U_s = \frac{1}{2}kx^2.
+\]
+而弹簧本身对外做功则为
+\[
+W_{\text{弹}}=-\frac{1}{2}kx^2.
+\]
+正负号恰好相反。
+\end{example}
+
+\begin{remark}
+势能不是物体“自己带着的一种孤立属性”，而是系统在特定相互作用下由位置决定的能量。例如重力势能属于“地球—物体”系统，弹性势能属于“弹簧—物体”系统。
+\end{remark}
+
+\section{机械能守恒}\label{sec:mechanical-energy}
+
+动能定理讨论的是“所有力的总功”，势能讨论的是“保守力的功”。二者结合，就得到机械能守恒定律。
+
+\begin{definition}[机械能]
+动能与势能之和称为机械能：
+\[
+E=E_k+U.
+\]
+\end{definition}
+
+\begin{law}[机械能守恒定律]
+若系统内只有保守力做功，或非保守力总功为零，则系统机械能保持不变：
+\[
+E_k+U=\text{常量}.
+\]
+\end{law}
+
+\begin{proof}
+由动能定理，系统所受各力总功满足
+\[
+W_{\text{总}}=\Delta E_k.
+\]
+把总功分解为保守力功与非保守力功：
+\[
+W_{\text{保}}+W_{\text{非保}}=\Delta E_k.
+\]
+而保守力功满足
+\[
+W_{\text{保}}=-\Delta U.
+\]
+代入得
+\[
+-\Delta U + W_{\text{非保}} = \Delta E_k.
+\]
+移项可得
+\[
+\Delta(E_k+U)=W_{\text{非保}}.
+\]
+因此，当 $W_{\text{非保}}=0$ 时，
+\[
+\Delta(E_k+U)=0,
+\]
+即
+\[
+E_k+U=\text{常量}.
+\]
+证毕。
+\end{proof}
+
+这个证明非常重要，因为它把“是否守恒”的判断压缩成一句话：
+\[
+\boxed{\ \text{机械能是否守恒，取决于非保守力是否做功。}\ }
+\]
+
+\begin{theorem}[机械能变化定理]
+更一般地，即使机械能不守恒，也总有
+\[
+\Delta E = \Delta(E_k+U)=W_{\text{非保}}.
+\]
+它说明非保守力的功负责把机械能转化为其他形式的能，如内能、电能或化学能。
+\end{theorem}
+
+\begin{remark}[判断机械能守恒的条件]
+判断时可依次检查：
+\begin{enumerate}
+  \item 是否选定了明确的系统；
+  \item 系统内涉及的相互作用中，哪些力可视为保守力；
+  \item 摩擦力、阻力、外界拉力、发动机牵引力等非保守力是否做功；
+  \item 若有支持力、拉力等非保守力，它们是否恰好与位移垂直，从而做功为零。
+\end{enumerate}
+例如光滑斜面上的支持力虽然不是保守力，但因始终垂直于位移而不做功，因此不破坏机械能守恒。
+\end{remark}
+
+\begin{example}[自由下落的机械能守恒]
+质量为 $m$ 的物体由高度 $h_1$ 处从静止释放，下落到高度 $h_2$。忽略空气阻力，求速度。
+
+\textbf{解：}
+系统只受重力作用，机械能守恒：
+\[
+\frac{1}{2}mv_1^2+mgh_1=\frac{1}{2}mv_2^2+mgh_2.
+\]
+由 $v_1=0$，得
+\[
+\frac{1}{2}mv_2^2=mg(h_1-h_2),
+\qquad
+v_2=\sqrt{2g(h_1-h_2)}.
+\]
+结果与质量无关，这正是自由落体结论的能量版表述。
+\end{example}
+
+\begin{example}[含摩擦时机械能不守恒]
+物块从粗糙斜面顶端由静止下滑，高度差为 $h$，斜面长为 $\ell$，动摩擦因数为 $\mu$，倾角为 $\theta$。求到达底端时速度。
+
+\textbf{解：}
+重力势能减少 $mgh$，摩擦力做负功
+\[
+W_f=-\mu mg\cos\theta\,\ell.
+\]
+由机械能变化定理，
+\[
+\frac{1}{2}mv^2 - 0 + (0-mgh)=W_f,
+\]
+即
+\[
+\frac{1}{2}mv^2 = mgh-\mu mg\cos\theta\,\ell.
+\]
+故
+\[
+v=\sqrt{2g\qty(h-\mu \ell\cos\theta)}.
+\]
+这里机械能没有守恒，但“机械能变化等于非保守力做功”仍然成立。
+\end{example}
+
+\section{功率}\label{sec:power}
+
+功告诉我们“总共转移了多少能量”，而功率告诉我们“转移得有多快”。
+
+\begin{definition}[平均功率与瞬时功率]
+在时间间隔 $\Delta t$ 内，平均功率定义为
+\[
+\bar{P}=\frac{\Delta W}{\Delta t}.
+\]
+瞬时功率定义为
+\[
+P=\dv{W}{t}.
+\]
+\end{definition}
+
+由元功公式 $\dd W=\vb{F}\cdot\dd\vb{r}$，立刻得到
+\[
+P=\dv{W}{t}=\vb{F}\cdot\dv{\vb{r}}{t}=\vb{F}\cdot\vb{v}.
+\]
+
+\begin{law}[功率公式]
+瞬时功率等于力与速度的点积：
+\[
+P=\vb{F}\cdot \vb{v}=Fv\cos\theta.
+\]
+\end{law}
+
+当力与速度同向时，功率为正；反向时为负；垂直时功率为零。
+
+\begin{example}[汽车牵引功率]
+汽车在平直公路上以速度 $v$ 匀速行驶，阻力大小恒为 $f$。求发动机输出功率。
+
+\textbf{解：}
+匀速时牵引力与阻力平衡，故牵引力大小 $F=f$，方向与速度同向。因此
+\[
+P=Fv=fv.
+\]
+这说明：同样的阻力下，速度越大，维持匀速所需功率越大。
+\end{example}
+
+\begin{remark}
+许多“额定功率”问题本质上都在使用
+\[
+F=\frac{P}{v},
+\]
+即在功率一定时，速度越大，可提供的牵引力越小。这也是汽车起步爬坡与高速巡航时动力表现不同的原因之一。
+\end{remark}
+
+\section{能量图}\label{sec:energy-diagram}
+
+当力是保守力时，研究运动不一定非要回到受力分析；直接观察势能曲线 $U(x)$，往往可以更快把握运动性质。
+
+\begin{definition}[能量图]
+在一维保守力问题中，把势能表示为位置的函数 $U(x)$，并在同一图上考虑总机械能水平线 $E$，这种分析方法称为\emph{能量图法}。
+\end{definition}
+
+由
+\[
+E=E_k+U(x)=\frac{1}{2}mv^2+U(x)
+\]
+可知在任意允许位置上必须有
+\[
+E-U(x)=\frac{1}{2}mv^2\ge 0.
+\]
+因此：
+\begin{enumerate}
+  \item 若 $U(x)>E$，则该位置不可达；
+  \item 若 $U(x)=E$，则 $v=0$，这类点称为转折点；
+  \item 若 $U(x)<E$，则粒子可以在该区域运动。
+\end{enumerate}
+
+\begin{definition}[平衡点与稳定性]
+若某点 $x_0$ 处力为零，即
+\[
+F(x_0)=0,
+\]
+则称 $x_0$ 为平衡点。由于 $F(x)=-\dv*{U}{x}$，平衡点等价于
+\[
+\dv{U}{x}\bigg|_{x=x_0}=0.
+\]
+若在 $x_0$ 附近，势能有局部最小值，则为稳定平衡；若势能有局部最大值，则为不稳定平衡。
+\end{definition}
+
+若 $U(x)$ 二阶可导，则可进一步判别：
+\[
+U'(x_0)=0,
+\qquad
+\begin{cases}
+U''(x_0)>0, & \text{稳定平衡},\\[4pt]
+U''(x_0)<0, & \text{不稳定平衡}.
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (-4.2,0) -- (4.4,0) node[right] {$x$};
+  \draw[->] (0,-0.4) -- (0,4.1) node[above] {$U$};
+  \draw[thick,blue,domain=-3.6:3.6,samples=200] plot (\x,{0.12*(\x*\x-4)^2+0.6});
+  \draw[thick,red,dashed] (-4,2.4) -- (4,2.4) node[right] {$E_1$};
+  \draw[thick,green!50!black,dashed] (-4,3.5) -- (4,3.5) node[right] {$E_2$};
+  \fill ( -2,0.6) circle (2pt) node[below] {$x_1$};
+  \fill ( 0,2.52) circle (2pt) node[above] {$x_2$};
+  \fill ( 2,0.6) circle (2pt) node[below] {$x_3$};
+  \node[blue!70!black] at (2.8,1.2) {$U(x)$};
+  \node at (-3.0,2.7) {束缚运动};
+  \node at (2.8,3.75) {越阱运动};
+\end{tikzpicture}
+\end{center}
+
+图中两个低谷对应稳定平衡点，中央峰顶对应不稳定平衡点。若总能量为 $E_1$，粒子只能困在左阱或右阱内做往复运动；若总能量提高到 $E_2$，则粒子可以跨越势垒。
+
+\begin{example}[由势能图判断运动]
+设某粒子的势能函数为
+\[
+U(x)=ax^2-bx^3,\qquad a,b>0.
+\]
+求平衡点并判断稳定性。
+
+\textbf{解：}
+由
+\[
+F(x)=-\dv{U}{x}=-(2ax-3bx^2),
+\]
+平衡点满足
+\[
+2ax-3bx^2=0
+\quad\Longrightarrow\quad
+x=0 \quad\text{或}\quad x=\frac{2a}{3b}.
+\]
+再看二阶导数：
+\[
+U''(x)=2a-6bx.
+\]
+所以
+\[
+U''(0)=2a>0,
+\]
+故 $x=0$ 为稳定平衡；而
+\[
+U''\qty(\frac{2a}{3b})=2a-4a=-2a<0,
+\]
+故 $x=\dfrac{2a}{3b}$ 为不稳定平衡。
+\end{example}
+
+\begin{remark}
+能量图法特别适合处理“能否到达某位置”“最大速度在哪里”“转折点在何处”“平衡位置是否稳定”等问题，因为这些问题都可以直接从 $E-U(x)$ 的正负看出，而不必先写加速度方程再积分。
+\end{remark}
+
+\section{高考题微积分视角}\label{sec:gaokao-work-energy}
+
+下面选取三类经典题：变力做功、弹簧问题、传送带问题。我们的目标不是重复常规解法，而是展示微积分语言如何把图像、过程与公式统一起来。
+
+\begin{gaokao}[title={高考题的微积分视角：变力做功}]
+某水平轨道上，物体从 $x=0$ 运动到 $x=L$，受水平拉力
+\[
+F(x)=F_0\qty(1-\frac{x}{L})
+\qquad (0\le x\le L)
+\]
+作用，忽略摩擦。若初速度为零，求末速度。
+
+\textbf{微积分解：}
+拉力是随位移线性减小的变力，故先算功：
+\[
+W=\int_0^L F_0\qty(1-\frac{x}{L})\dd x
+=F_0\qty[x-\frac{x^2}{2L}]_0^L
+=\frac{1}{2}F_0L.
+\]
+再由动能定理
+\[
+\frac{1}{2}F_0L=\frac{1}{2}mv^2,
+\]
+得
+\[
+v=\sqrt{\frac{F_0L}{m}}.
+\]
+
+\textbf{点评：}
+许多试题会提示作 $F-x$ 图像。其本质并非“套面积法”，而是把线积分
+\[
+\int_0^L F(x)\,\dd x
+\]
+几何化。图像面积法只是积分思想的一个可视化版本。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：弹簧与最大压缩量}]
+质量为 $m$ 的小物块以初速度 $v_0$ 沿光滑水平面滑向轻弹簧，弹簧劲度系数为 $k$。求弹簧最大压缩量 $x_{\max}$。
+
+\textbf{微积分解：}
+从接触弹簧到压缩最大处，系统只有弹力做功，机械能守恒：
+\[
+\frac{1}{2}mv_0^2=\frac{1}{2}kx_{\max}^2.
+\]
+故
+\[
+x_{\max}=v_0\sqrt{\frac{m}{k}}.
+\]
+
+若坚持从功的定义出发，也可写为：压缩到 $x$ 时弹簧力为 $F=-kx$，于是弹簧做功
+\[
+W_s=\int_0^{x_{\max}} (-kx)\,\dd x=-\frac{1}{2}kx_{\max}^2.
+\]
+再由动能定理
+\[
+-\frac{1}{2}kx_{\max}^2=0-\frac{1}{2}mv_0^2,
+\]
+得到同样结果。
+
+\textbf{点评：}
+“弹簧势能 $\frac{1}{2}kx^2$”并不是凭空记忆出来的，而是对胡克力积分后的自然结果。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：传送带与摩擦做功}]
+水平传送带以恒速 $v$ 向右运动。质量为 $m$ 的物块以初速度零轻放到传送带上，物块与带之间动摩擦因数为 $\mu$，最终与传送带共速。求摩擦力对物块所做的功，并说明机械能变化。
+
+\textbf{微积分解：}
+在相对滑动阶段，物块所受摩擦力大小恒为
+\[
+f=\mu mg,
+\]
+方向向右，因此物块加速度为 $a=\mu g$。由运动学可得达到速度 $v$ 的位移
+\[
+v^2=2as \quad\Longrightarrow\quad s=\frac{v^2}{2\mu g}.
+\]
+于是摩擦力对物块做功
+\[
+W_f=fs=\mu mg\cdot \frac{v^2}{2\mu g}=\frac{1}{2}mv^2.
+\]
+这恰好等于物块动能的增加：
+\[
+W_f=\Delta E_k.
+\]
+
+\textbf{进一步分析：}
+对“物块”系统而言，摩擦力是外力，且做正功，所以物块机械能增加；
+但对“物块+传送带+电动机”整体而言，摩擦是内力，系统总机械能并不守恒，额外能量来自电动机提供的非机械能输入，同时伴随热耗散。
+
+\textbf{点评：}
+传送带题的关键，不在于“摩擦一定阻碍运动”，而在于分清：摩擦力到底在给哪个系统输送能量。
+\end{gaokao}
+
+\section*{本章小结}
+
+本章的核心关系可以浓缩为下列四行：
+\begin{align*}
+\dd W &= \vb{F}\cdot \dd\vb{r},\\
+W_{\text{合}} &= \Delta E_k,\\
+W_{\text{保}} &= -\Delta U,\\
+\Delta(E_k+U) &= W_{\text{非保}}.
+\end{align*}
+其中，动能定理总成立；势能只对保守力有意义；机械能守恒则是“非保守力不做功”时的特殊结果。把这些公式串起来，很多看似不同的题型——下落、滑块、弹簧、圆周、传送带——便会呈现出统一结构。
+
+\section*{习题}
+
+\begin{exercise}
+质点沿 $x$ 轴运动，受力 $F(x)=3x^2+2$（单位制已略）作用，从 $x=1$ 运动到 $x=3$。求该力做功。
+\end{exercise}
+
+\begin{exercise}
+一恒力 $\vb{F}$ 作用在物体上，物体发生位移 $\vb{s}$。若将位移大小扩大为原来的 $2$ 倍，同时使力与位移夹角由 $60^\circ$ 变为 $120^\circ$，求功如何变化。
+\end{exercise}
+
+\begin{exercise}
+质量为 $m$ 的小球在竖直方向上升过程中只受重力作用，初速度为 $v_0$。用动能定理求其上升最大高度，并与运动学公式对照。
+\end{exercise}
+
+\begin{exercise}
+一质量为 $m$ 的物块在水平粗糙面上滑行，初速度为 $v_0$，动摩擦因数为 $\mu$。试用动能定理求停止前滑行距离。
+\end{exercise}
+
+\begin{exercise}
+已知一维势能函数
+\[
+U(x)=U_0\qty(\frac{x^4}{a^4}-2\frac{x^2}{a^2}),
+\]
+求对应的力 $F(x)$，并找出全部平衡点与其稳定性。
+\end{exercise}
+
+\begin{exercise}
+弹簧劲度系数为 $k$，一端固定，另一端与质量为 $m$ 的小块相连。将小块从平衡位置拉至 $x=A$ 后由静止释放。写出系统机械能表达式，并指出小块经过平衡位置时速度大小。
+\end{exercise}
+
+\begin{exercise}
+汽车发动机额定功率为 $P$，在水平路面上匀速行驶时所受阻力恒为 $f$。求该汽车能达到的最大速度，并说明为什么速度越高加速越困难。
+\end{exercise}
+
+\begin{exercise}
+某粒子的势能图在 $x=x_0$ 处有局部最小值。请用文字和数学式说明为什么这一点对应稳定平衡，并解释“小振动”时恢复力方向的来源。
+\end{exercise}
+
+\begin{exercise}
+水平传送带以速度 $v$ 匀速运行，物块以同向速度 $2v$ 轻放其上。设动摩擦因数为 $\mu$，求物块最终与传送带共速前，摩擦力对物块做的功，并判断该功的正负。
+\end{exercise}
+
+\begin{exercise}
+设质点在一维保守力场中运动，总机械能为 $E$，势能函数为 $U(x)$。试证明转折点满足 $U(x)=E$，并说明为什么粒子不能进入 $U(x)>E$ 的区域。
+\end{exercise}

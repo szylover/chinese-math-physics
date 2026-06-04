@@ -1,0 +1,740 @@
+\chapter{万有引力}
+
+从苹果下落到行星绕日，天上与地上的运动并不是两套彼此无关的规律，而是同一种相互作用在不同尺度上的表现。牛顿把这种相互作用概括为万有引力定律；而一旦把微积分引入分析，我们就不仅能写出力的大小，还能进一步求出势能、轨道、周期、逃逸条件以及潮汐效应。本章的核心思想是：\emph{把引力看成随位置变化的中心力场，再把牛顿第二定律写成微分方程来求解。}
+
+\section{万有引力定律}
+
+\subsection{从经验规律到数学表达}
+
+\begin{law}[牛顿万有引力定律]
+任意两个质点之间都存在相互吸引的引力。若两质点质量分别为 $M,m$，中心距离为 $r$，则引力大小为
+\[
+F=G\frac{Mm}{r^2},
+\]
+方向沿两质点连线，且总是相互吸引。这里 $G$ 是万有引力常量。
+\end{law}
+
+若把质量为 $M$ 的天体放在坐标原点，则位于位置矢量 $\vb{r}$ 处、质量为 $m$ 的质点所受引力可写成矢量形式
+\[
+\vb{F}(\vb{r})=-G\frac{Mm}{r^3}\vb{r},\qquad r=\abs{\vb{r}}.
+\]
+负号表示力指向原点。
+
+\begin{definition}[引力场]
+在空间每一点定义单位质量所受的引力为引力场强度：
+\[
+\vb{g}(\vb{r})=\frac{\vb{F}}{m}=-G\frac{M}{r^3}\vb{r}.
+\]
+因此引力场是一个矢量场，它描述了“如果这里放入单位质量，会受到怎样的力”。
+\end{definition}
+
+由定义立刻得到
+\[
+\vb{F}=m\vb{g}.
+\]
+在靠近地球表面的区域，$r\approx R_\oplus$，于是引力场大小近似为常量
+\[
+g\approx G\frac{M_\oplus}{R_\oplus^2}.
+\]
+高中中常用的重力加速度，本质上正是地球引力场在地表附近的数值近似。
+
+\begin{remark}
+严格地说，日常所说“重力”还会受到地球自转的影响；但在本章主体推导中，我们先把地球看成静止、均匀球对称的天体，于是重力可近似等同于万有引力。
+\end{remark}
+
+\subsection{平方反比规律的几何图像}
+
+之所以出现 $1/r^2$，可以从几何上理解：以天体为中心作半径为 $r$ 的球面，球面积与 $r^2$ 成正比，而引力场线穿过整个球面的“总通量”若保持不变，则单位面积上分到的场线数就与 $1/r^2$ 成正比。因此离中心越远，场越稀疏，引力越弱。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \fill[orange!35] (0,0) circle (0.8);
+  \draw[thick] (0,0) circle (0.8);
+  \node at (0,0) {$M$};
+  \foreach \ang in {0,30,...,330}{
+    \draw[->, blue!70!black, thick] ({3.2*cos(\ang)},{3.2*sin(\ang)}) -- ({1.0*cos(\ang)},{1.0*sin(\ang)});
+    \draw[blue!15] ({1.1*cos(\ang)},{1.1*sin(\ang)}) -- ({3.25*cos(\ang)},{3.25*sin(\ang)});
+  }
+  \draw[dashed, gray] (0,0) circle (2.0);
+  \draw[dashed, gray] (0,0) circle (3.0);
+  \node[gray] at (2.3,1.2) {$r$ 增大};
+  \node[blue!70!black] at (2.8,-1.0) {场线指向中心};
+\end{tikzpicture}
+\caption{球对称天体周围的引力场线示意图}
+\end{figure}
+
+在地表对质量为 $m$ 的物体应用万有引力定律，有
+\[
+mg=G\frac{M_\oplus m}{R_\oplus^2},
+\]
+约去 $m$ 即得
+\[
+g=G\frac{M_\oplus}{R_\oplus^2}.
+\]
+这说明自由落体加速度与下落物体质量无关，只由中心天体的质量与半径决定。
+
+\begin{example}
+若人造卫星高度远小于地球半径，即 $h\ll R_\oplus$，证明高度升高后重力加速度的相对变化近似满足
+\[
+\frac{\Delta g}{g}\approx -2\frac{h}{R_\oplus}.
+\]
+
+\textbf{解：} 有
+\[
+g(h)=G\frac{M_\oplus}{(R_\oplus+h)^2}=g\left(1+\frac{h}{R_\oplus}\right)^{-2}.
+\]
+当 $h/R_\oplus$ 很小时，用一阶展开
+\[
+\left(1+x\right)^{-2}\approx 1-2x,
+\]
+故
+\[
+g(h)\approx g\left(1-2\frac{h}{R_\oplus}\right),
+\]
+于是
+\[
+\Delta g=g(h)-g\approx -2g\frac{h}{R_\oplus}.
+\]
+这是微积分近似在线性化中的一个典型应用。
+\end{example}
+
+\section{引力势能}
+
+\subsection{保守力与路径无关}
+
+引力做功只与始末位置有关，与具体路径无关，因此它是保守力。对保守力，我们可以引入势能函数 $U(r)$，使得
+\[
+\Delta U=-W_{\text{引力}}.
+\]
+通常约定无穷远处势能为零，即
+\[
+U(\infty)=0.
+\]
+这个约定非常自然，因为两物体相距无限远时，引力趋近于零，相互作用也可视为“完全分离”。
+
+\begin{definition}[引力势能]
+设质量为 $m$ 的质点位于质量为 $M$ 的球对称天体外部，距中心为 $r$。若取无穷远处势能为零，则该点的引力势能定义为
+\[
+U(r)=-\int_{\infty}^{r}\vb{F}\cdot \dd \vb{r}.
+\]
+\end{definition}
+
+\subsection{由积分推导 $U(r)=-GMm/r$}
+
+沿径向移动时，力与位移共线。若把位移正方向取为远离中心，则引力径向分量为
+\[
+F_r=-G\frac{Mm}{r^2}.
+\]
+于是从无穷远移到 $r$ 的过程中，引力势能为
+\[
+U(r)=-\int_{\infty}^{r}F_r\,\dd r'=-\int_{\infty}^{r}\left(-G\frac{Mm}{r'^2}\right)\dd r'.
+\]
+计算积分：
+\[
+U(r)=G Mm\int_{\infty}^{r}\frac{1}{r'^2}\dd r' = G Mm\eval{-\frac{1}{r'}}_{\infty}^{r}=-\frac{GMm}{r}.
+\]
+因此得到下面的结论。
+
+\begin{theorem}[球对称天体外部的引力势能]
+若以无穷远处为零势能点，则质量 $m$ 在质量 $M$ 的中心天体外部、距中心 $r$ 处的引力势能为
+\[
+U(r)=-\frac{GMm}{r}.
+\]
+对应的势能函数是负值，这反映了引力体系是束缚体系：若要把物体带到无穷远，必须向系统补充能量。
+\end{theorem}
+
+对该势能求导，可以恢复引力：
+\[
+F_r=-\dv{U}{r}=-\dv{}{r}\left(-\frac{GMm}{r}\right)=-\frac{GMm}{r^2}.
+\]
+这说明“力是势能对位置的负导数”这一微积分关系在引力问题中完全成立。
+
+\begin{remark}
+很多同学容易混淆“势能为负”和“做功为负”。如果物体从远处落向中心，$r$ 减小，$U=-GMm/r$ 变得更负，说明势能减少；与此同时，引力做正功，动能增加。两者由机械能守恒精确配平。
+\end{remark}
+
+\begin{example}
+把质量为 $m$ 的飞船从半径 $r_1$ 的圆轨道缓慢转移到半径 $r_2$ 的圆轨道，忽略发动机喷射细节，只计算引力势能变化。
+
+\textbf{解：}
+\[
+\Delta U=U(r_2)-U(r_1)=-\frac{GMm}{r_2}+\frac{GMm}{r_1}=GMm\left(\frac{1}{r_1}-\frac{1}{r_2}\right).
+\]
+若 $r_2>r_1$，则 $\Delta U>0$，说明升轨必须增加系统势能。
+\end{example}
+
+\begin{example}
+试求把质量为 $m$ 的物体从地球表面送到无穷远，至少需要外界提供多少功？
+
+\textbf{解：} 最小外功等于势能增量：
+\[
+W_{\min}=U(\infty)-U(R_\oplus)=0-\left(-\frac{GM_\oplus m}{R_\oplus}\right)=\frac{GM_\oplus m}{R_\oplus}.
+\]
+这个结果正是第二宇宙速度推导的能量基础。
+\end{example}
+
+\section{轨道运动}
+
+\subsection{中心力与角动量守恒}
+
+由引力矢量形式可知，引力始终沿径向，因此对中心的力矩为零：
+\[
+\vb{\tau}=\vb{r}\times \vb{F}=\vb{0}.
+\]
+于是角动量守恒：
+\[
+\vb{L}=m\vb{r}\times \vb{v}=\text{常量}.
+\]
+这意味着运动轨道一定限制在某一固定平面内；因此我们只需在平面极坐标 $(r,\theta)$ 中研究轨道。
+
+在极坐标中，加速度分解为
+\[
+\vb{a}=\left(\ddot r-r\dot\theta^2\right)\uvec{r}+\left(r\ddot\theta+2\dot r\dot\theta\right)\uvec{\theta}.
+\]
+由于引力没有切向分量，故
+\[
+r\ddot\theta+2\dot r\dot\theta=0.
+\]
+两边乘以 $r$ 可化为
+\[
+\dv{}{t}\left(r^2\dot\theta\right)=0.
+\]
+因此
+\[
+r^2\dot\theta=h,
+\]
+其中 $h$ 为单位质量的角动量常量。
+
+\begin{law}[面积速度守恒]
+对任意中心力运动，单位时间扫过的面积恒定，即
+\[
+\dv{A}{t}=\frac{1}{2}r^2\dot\theta=\frac{h}{2}=\text{常量}.
+\]
+这正是开普勒第二定律的微积分表达。
+\end{law}
+
+\subsection{轨道微分方程}
+
+径向方程为
+\[
+\ddot r-r\dot\theta^2=-\frac{GM}{r^2}.
+\]
+为了把时间变量消去，引入
+\[
+u=\frac{1}{r}.
+\]
+由 $r^2\dot\theta=h$ 可得 $\dot\theta=hu^2$。经过求导变换，可将径向方程化为著名的 Binet 方程：
+\[
+\dv[2]{u}{\theta}+u=\frac{GM}{h^2}.
+\]
+这是一个常系数二阶线性微分方程，其通解为
+\[
+u(\theta)=\frac{GM}{h^2}\left(1+e\cos(\theta-\theta_0)\right).
+\]
+适当选择极轴使 $\theta_0=0$，便得到
+\[
+r(\theta)=\frac{p}{1+e\cos\theta},\qquad p=\frac{h^2}{GM}.
+\]
+
+\begin{theorem}[万有引力下的轨道方程]
+在平方反比中心力
+\[
+\vb{F}=-G\frac{Mm}{r^3}\vb{r}
+\]
+作用下，质点轨道在极坐标中的一般方程为
+\[
+r(\theta)=\frac{p}{1+e\cos\theta}.
+\]
+其中 $e$ 为偏心率：
+\begin{itemize}
+  \item $e=0$ 时，轨道为圆；
+  \item $0<e<1$ 时，轨道为椭圆；
+  \item $e=1$ 时，轨道为抛物线；
+  \item $e>1$ 时，轨道为双曲线。
+\end{itemize}
+\end{theorem}
+
+\subsection{圆轨道与椭圆轨道}
+
+当 $e=0$ 时，
+\[
+r=p=\frac{h^2}{GM}=\text{常量},
+\]
+轨道为半径恒定的圆。此时向心加速度完全由引力提供：
+\[
+\frac{v^2}{r}=\frac{GM}{r^2}.
+\]
+因此圆轨道速度为
+\[
+v_c=\sqrt{\frac{GM}{r}},
+\]
+周期为
+\[
+T=\frac{2\pi r}{v_c}=2\pi\sqrt{\frac{r^3}{GM}}.
+\]
+
+当 $0<e<1$ 时，轨道为椭圆，中心天体位于焦点之一，而不在椭圆中心。近日点与远日点分别为
+\[
+r_{\min}=\frac{p}{1+e},\qquad r_{\max}=\frac{p}{1-e}.
+\]
+由角动量守恒，近日点处速度最大，远日点处速度最小。由于在这两个顶点处速度都恰与半径垂直，因此单位质量角动量可直接写成
+\[
+r_{\text{近日}}v_{\text{近日}}=r_{\text{远日}}v_{\text{远日}}=h.
+\]
+这说明轨道越靠近中心，切向速度就越大。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95, >=Latex]
+  \fill[orange!40] (-0.9,0) circle (0.14);
+  \node[below] at (-0.9,-0.02) {太阳};
+  \draw[thick, blue!70!black] (-0.9,0) circle (1.8);
+  \node[blue!70!black] at (1.7,1.4) {圆轨道};
+  \draw[thick, red!70!black] (1.0,0) ellipse (3.0 and 2.1);
+  \node[red!70!black] at (3.9,1.9) {椭圆轨道};
+  \draw[dashed] (-2.0,0) -- (4.0,0);
+  \draw[->, thick] (0.9,1.56) -- (1.8,1.95);
+  \node at (1.55,2.25) {$\vb{v}$};
+  \draw[->, thick] (2.25,0) -- (1.55,0);
+  \node at (1.8,0.35) {$\vb{F}$};
+\end{tikzpicture}
+\caption{圆轨道与椭圆轨道示意图：中心天体位于椭圆焦点}
+\end{figure}
+
+\begin{example}
+证明半径为 $r$ 的圆轨道人造卫星的机械能为
+\[
+E=-\frac{GMm}{2r}.
+\]
+
+\textbf{解：} 圆轨道上
+\[
+\frac{mv^2}{r}=\frac{GMm}{r^2}\quad\Rightarrow\quad v^2=\frac{GM}{r}.
+\]
+故动能
+\[
+K=\frac{1}{2}mv^2=\frac{GMm}{2r}.
+\]
+势能
+\[
+U=-\frac{GMm}{r}.
+\]
+因此总机械能
+\[
+E=K+U=\frac{GMm}{2r}-\frac{GMm}{r}=-\frac{GMm}{2r}.
+\]
+负号表明卫星处于束缚轨道。
+\end{example}
+
+\begin{example}
+某行星绕恒星作椭圆运动，在近日点和远日点处速度分别为 $v_1,v_2$，距离分别为 $r_1,r_2$。证明
+\[
+r_1v_1=r_2v_2.
+\]
+
+\textbf{解：} 在近日点和远日点，速度方向都与半径垂直，故单位质量角动量为
+\[
+h=r_1v_1=r_2v_2.
+\]
+也可从面积速度守恒理解：相同时间内扫过的面积相等，而顶点附近小扇形面积近似为 $\frac12 rv\Delta t$，于是 $rv$ 为常量。
+\end{example}
+
+\subsection{轨道能量与 vis-viva 公式}
+
+除了角动量守恒，轨道问题中另一条主线是机械能守恒：
+\[
+E=\frac12 mv^2-\frac{GMm}{r}=\text{常量}.
+\]
+对椭圆轨道，系统总机械能只由半长轴 $a$ 决定：
+\[
+E=-\frac{GMm}{2a}.
+\]
+把它与上式联立，可得任意位置处的速度公式
+\[
+v^2=GM\left(\frac{2}{r}-\frac{1}{a}\right),
+\]
+这称为 vis-viva 公式。它把“局部位置 $r$”与“全局轨道参数 $a$”联系起来，是分析变轨、近日点速度与远日点速度的常用工具。
+
+\begin{theorem}[vis-viva 公式]
+对质量远小于中心天体的轨道质点，若轨道半长轴为 $a$，则其在距离中心 $r$ 处的速度满足
+\[
+v^2=GM\left(\frac{2}{r}-\frac{1}{a}\right).
+\]
+当轨道为圆时 $a=r$，该公式退化为 $v^2=GM/r$。
+\end{theorem}
+
+这个公式也解释了一个常见事实：同一椭圆轨道上，近日点 $r$ 较小，所以速度较大；远日点 $r$ 较大，所以速度较小。速度变化并不是因为中心天体“有时拉得更用力”，而是机械能在动能和势能之间持续转换的结果。
+
+\section{开普勒三大定律}
+
+开普勒定律最初来自第谷长期观测数据的归纳，而牛顿力学则告诉我们：这些经验定律是平方反比引力的必然结果。于是“经验规律”上升为“可推导的理论定理”。
+
+\subsection{第一定律：轨道定律}
+
+\begin{theorem}[开普勒第一定律的牛顿推导]
+若行星所受力满足平方反比中心力，则其轨道必为圆锥曲线；当机械能为负时，轨道为椭圆，且太阳位于椭圆的一个焦点上。
+\end{theorem}
+
+证明的核心就是上一节的轨道方程
+\[
+r=\frac{p}{1+e\cos\theta}.
+\]
+当 $0<e<1$ 时，这正是以焦点为极点的椭圆方程。行星之所以没有飞走，是因为其总机械能 $E<0$；若 $E\ge 0$，则轨道将变成抛物线或双曲线。
+
+\subsection{第二定律：面积定律}
+
+\begin{theorem}[开普勒第二定律的牛顿推导]
+行星与太阳的连线在相等时间内扫过相等面积。
+\end{theorem}
+
+\textbf{证明：} 引力是中心力，因此
+\[
+\vb{\tau}=\vb{r}\times \vb{F}=0.
+\]
+故角动量守恒，
+\[
+r^2\dot\theta=h.
+\]
+而扇形面积元为
+\[
+\dd A=\frac12 r^2\dd\theta.
+\]
+故面积速度
+\[
+\dv{A}{t}=\frac12 r^2\dot\theta=\frac{h}{2}=\text{常量}.
+\]
+证毕。
+
+这个定理告诉我们：行星离太阳近时速度快，离太阳远时速度慢。于是“近日点快、远日点慢”不再只是结论，而是角动量守恒的直接推论。
+
+\subsection{第三定律：周期定律}
+
+\begin{theorem}[开普勒第三定律的牛顿推导]
+若质量为 $m$ 的行星绕质量远大于它的恒星 $M$ 运动，则轨道半长轴为 $a$、周期为 $T$ 时满足
+\[
+T^2=\frac{4\pi^2}{GM}a^3.
+\]
+因此同一中心天体的所有行星都满足
+\[
+\frac{T^2}{a^3}=\text{常量}.
+\]
+\end{theorem}
+
+\textbf{证明思路：} 对椭圆轨道，整个轨道面积为 $\pi ab$，其中 $a,b$ 分别为半长轴、半短轴。由于面积速度恒为 $h/2$，故
+\[
+T=\frac{\pi ab}{h/2}=\frac{2\pi ab}{h}.
+\]
+另一方面，对椭圆有
+\[
+p=a(1-e^2)=\frac{b^2}{a},\qquad h^2=GMp=GM\frac{b^2}{a}.
+\]
+于是
+\[
+h=b\sqrt{\frac{GM}{a}}.
+\]
+代入周期公式：
+\[
+T=\frac{2\pi ab}{b\sqrt{GM/a}}=2\pi\sqrt{\frac{a^3}{GM}}.
+\]
+两边平方即得
+\[
+T^2=\frac{4\pi^2}{GM}a^3.
+\]
+证毕。
+
+\begin{remark}
+圆轨道是椭圆轨道的特例，此时 $a=r$。所以高中的卫星周期公式
+\[
+T=2\pi\sqrt{\frac{r^3}{GM}}
+\]
+既可以从匀速圆周运动推出，也可以看作开普勒第三定律的特殊情形。
+\end{remark}
+
+\section{宇宙速度}
+
+宇宙速度问题本质上是“给定初始位置，至少需要多大的初速度，才能使机械能达到某种临界值”。因为引力是保守力，所以最直接的方法是写出机械能守恒。
+
+\subsection{第一宇宙速度}
+
+第一宇宙速度指物体在天体表面附近做圆周运动所需的最小环绕速度。对地球而言，取轨道半径约为 $R_\oplus$，有
+\[
+\frac{mv_1^2}{R_\oplus}=G\frac{M_\oplus m}{R_\oplus^2}.
+\]
+故
+\[
+v_1=\sqrt{\frac{GM_\oplus}{R_\oplus}}=\sqrt{gR_\oplus}.
+\]
+这就是第一宇宙速度。
+
+\subsection{第二宇宙速度}
+
+第二宇宙速度是从地球表面出发、恰好逃离地球引力束缚所需的最小初速度。临界条件是到无穷远时速度降为零，即总机械能为零：
+\[
+\frac12 mv_2^2-\frac{GM_\oplus m}{R_\oplus}=0.
+\]
+因此
+\[
+v_2=\sqrt{\frac{2GM_\oplus}{R_\oplus}}=\sqrt{2}\,v_1.
+\]
+它比第一宇宙速度大，是因为圆轨道只要求“绕起来”，而逃逸则要求“永不回来”。
+
+\subsection{第三宇宙速度}
+
+第三宇宙速度指从地球表面出发、最终逃离太阳系所需的最小初速度。这个问题有两层引力束缚：先摆脱地球，再摆脱太阳。
+
+设地球绕太阳公转速度为
+\[
+v_E=\sqrt{\frac{GM_\odot}{r_E}},
+\]
+其中 $r_E$ 是地球轨道半径。若飞船在脱离地球引力后沿地球公转方向飞行，则相对于太阳的初速度最有利。要恰好逃离太阳系，在地球轨道处必须满足太阳系总机械能为零：
+\[
+\frac12 m v_{\text{helio}}^2-\frac{GM_\odot m}{r_E}=0,
+\]
+故所需日心速度为
+\[
+v_{\text{helio}}=\sqrt{\frac{2GM_\odot}{r_E}}=\sqrt{2}\,v_E.
+\]
+飞船离开地球后，相对地球还需具有的最小“超额速度”为
+\[
+v_\infty=v_{\text{helio}}-v_E=(\sqrt{2}-1)v_E.
+\]
+又因为从地球表面飞到无穷远（相对地球）需要第二宇宙速度 $v_2$，所以第三宇宙速度满足
+\[
+\frac12 mv_3^2-\frac{GM_\oplus m}{R_\oplus}=\frac12 m v_\infty^2.
+\]
+即
+\[
+v_3=\sqrt{v_2^2+v_\infty^2}=\sqrt{v_2^2+\left((\sqrt2-1)v_E\right)^2}.
+\]
+对地球代入数据可得约 $16.7\,\text{km/s}$。
+
+\begin{remark}
+由
+\[
+v_1=\sqrt{\frac{GM}{R}},\qquad v_2=\sqrt{\frac{2GM}{R}}
+\]
+立刻可得
+\[
+v_2=\sqrt2\,v_1.
+\]
+因此第二宇宙速度不是“比第一宇宙速度多一点”，而是在速度上多出 $\sqrt2$ 倍，在所需动能上则恰好多出一倍。
+\end{remark}
+
+\section{潮汐力}
+
+\subsection{潮汐力来自“引力不均匀”}
+
+若一个天体各部分受到的引力完全相同，那么整个天体只会整体平移，不会发生形变。潮汐现象的关键在于：\emph{引力随距离变化，不同位置所受引力略有差别。} 这种“差值效应”正是导数所刻画的对象。
+
+设月球质量为 $M$，地球中心到月球中心距离为 $R$，地球半径为 $a$，且 $a\ll R$。在地月连线上，靠近月球的一侧到月球距离约为 $R-a$，地心处为 $R$，远离月球的一侧为 $R+a$。相应引力加速度分别为
+\[
+g_{\text{近}}=\frac{GM}{(R-a)^2},\qquad g_0=\frac{GM}{R^2},\qquad g_{\text{远}}=\frac{GM}{(R+a)^2}.
+\]
+潮汐力关心的不是这些加速度本身，而是相对于地心的差值：
+\[
+\Delta g_{\text{近}}=g_{\text{近}}-g_0,\qquad \Delta g_{\text{远}}=g_{\text{远}}-g_0.
+\]
+
+\subsection{用泰勒展开求潮汐近似}
+
+把
+\[
+g(r)=\frac{GM}{r^2}
+\]
+看作一元函数，则
+\[
+g'(r)=-\frac{2GM}{r^3}.
+\]
+当位移很小（$a\ll R$）时，用一阶泰勒展开：
+\[
+g(R\pm a)\approx g(R)\pm g'(R)a.
+\]
+因此
+\[
+\Delta g_{\text{近}}\approx -g'(R)a=\frac{2GMa}{R^3},
+\]
+\[
+\Delta g_{\text{远}}\approx g'(R)a=-\frac{2GMa}{R^3}.
+\]
+这表明：近月侧相对地心受到更强的吸引，远月侧相对地心受到更弱的吸引，于是地球沿地月连线方向被“拉长”，形成两个潮汐隆起。
+
+\begin{theorem}[潮汐加速度的量级]
+若外部天体质量为 $M$，被作用天体半径为 $a$，两者中心距离为 $R\gg a$，则潮汐加速度量级满足
+\[
+\abs{\Delta g}\sim \frac{2GMa}{R^3}.
+\]
+因此潮汐效应与外部天体质量成正比、与距离的三次方成反比。
+\end{theorem}
+
+这个 $1/R^3$ 比例极其重要。它解释了为什么太阳虽然对地球的总引力远大于月球对地球上某个小水滴的引力，但真正比较潮汐时，必须看的是“引力梯度”而不是“引力本身”。由于月球更近，月球潮汐效应反而更显著。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \fill[blue!20] (0,0) circle (1.0);
+  \draw[thick] (0,0) circle (1.0);
+  \fill[gray!40] (5.0,0) circle (0.45);
+  \draw[thick] (5.0,0) circle (0.45);
+  \node at (0,0) {地球};
+  \node at (5.0,0) {月球};
+  \draw[dashed] (0,0) -- (5.0,0);
+  \draw[->, thick, blue!70!black] (-1.0,0) -- (-1.8,0);
+  \draw[->, thick, blue!70!black] (1.0,0) -- (2.2,0);
+  \node[blue!70!black] at (-2.2,0.35) {远月侧};
+  \node[blue!70!black] at (2.5,0.35) {近月侧};
+  \draw[->, thick] (0,1.0) -- (0,1.8);
+  \draw[->, thick] (0,-1.0) -- (0,-1.8);
+  \node at (0,2.15) {海水隆起};
+  \node at (0,-2.1) {海水隆起};
+\end{tikzpicture}
+\caption{潮汐形变示意图：地月连线方向与垂直方向的相对差异}
+\end{figure}
+
+\begin{example}
+设外部天体引力场写成 $g(r)=GM/r^2$。若一个半径为 $a$ 的小天体整体处在距离 $R$ 处，求其前后两端的引力差近似值。
+
+\textbf{解：} 前后两端相距约 $2a$，因此引力差近似为
+\[
+\Delta g\approx \abs{g'(R)}\cdot 2a=\frac{2GM}{R^3}\cdot 2a=\frac{4GMa}{R^3}.
+\]
+若比较任一端与中心的差值，则是
+\[
+\frac{2GMa}{R^3}.
+\]
+这正体现了“导数乘以长度”给出微小变化量的思想。
+\end{example}
+
+\begin{remark}
+更严格的潮汐理论需要考虑地球自转、海洋形状、海岸线、海盆共振以及月球轨道倾角等因素。本节只保留最核心的微积分骨架：潮汐是引力场的空间变化率造成的。
+\end{remark}
+
+\section{高考题微积分视角}
+
+\begin{gaokao}[title={高考题的微积分视角：同步卫星与轨道半径}]
+\textbf{题目：} 某同步卫星绕地球做圆周运动，周期与地球自转周期相同。试用微积分与牛顿力学说明其轨道半径满足什么关系，并解释为何同步卫星不可能位于低轨道。
+
+\textbf{解析：} 圆轨道满足
+\[
+\frac{mv^2}{r}=\frac{GM_\oplus m}{r^2},\qquad v=r\omega=r\frac{2\pi}{T}.
+\]
+代入得
+\[
+\frac{m r^2\omega^2}{r}=\frac{GM_\oplus m}{r^2}
+\quad\Rightarrow\quad
+r^3=\frac{GM_\oplus}{\omega^2}=GM_\oplus\left(\frac{T}{2\pi}\right)^2.
+\]
+即
+\[
+r=\left[GM_\oplus\left(\frac{T}{2\pi}\right)^2\right]^{1/3}.
+\]
+由于 $T$ 已被“同步”条件固定为一天，所以 $r$ 也被唯一确定，不能任意取小。若轨道太低，则由
+\[
+T=2\pi\sqrt{\frac{r^3}{GM_\oplus}}
+\]
+可知周期必远小于一天，因此不可能保持相对地面静止。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：双星系统中的角速度}]
+\textbf{题目：} 两颗恒星质量分别为 $m_1,m_2$，相距恒定为 $L$，绕共同质心做匀速圆周运动。求系统角速度 $\omega$。
+
+\textbf{解析：} 设两星到质心距离分别为 $r_1,r_2$，则
+\[
+m_1r_1=m_2r_2,\qquad r_1+r_2=L.
+\]
+解得
+\[
+r_1=\frac{m_2}{m_1+m_2}L,
+\qquad
+r_2=\frac{m_1}{m_1+m_2}L.
+\]
+对质量 $m_1$ 的恒星，由万有引力提供向心力：
+\[
+m_1\omega^2 r_1=G\frac{m_1m_2}{L^2}.
+\]
+代入 $r_1$ 并约去 $m_1$：
+\[
+\omega^2\frac{m_2}{m_1+m_2}L=G\frac{m_2}{L^2}.
+\]
+故
+\[
+\omega^2=G\frac{m_1+m_2}{L^3},
+\qquad
+\omega=\sqrt{G\frac{m_1+m_2}{L^3}}.
+\]
+这与单星绕固定中心的形式非常相似，只是中心质量换成了总质量。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：近地卫星变轨中的能量判断}]
+\textbf{题目：} 一颗卫星原来在半径为 $r_1$ 的圆轨道上运行，经短时点火后进入半径更大的圆轨道 $r_2$。判断其速度、动能、势能、总机械能如何变化，并说明依据。
+
+\textbf{解析：} 对圆轨道有
+\[
+v=\sqrt{\frac{GM}{r}},\qquad K=\frac{GMm}{2r},\qquad U=-\frac{GMm}{r},\qquad E=-\frac{GMm}{2r}.
+\]
+因此当 $r$ 从 $r_1$ 增大到 $r_2$ 时：
+\begin{itemize}
+  \item 轨道速度 $v$ 减小；
+  \item 动能 $K$ 减小；
+  \item 势能 $U$ 增大（数值变得不那么负）；
+  \item 总机械能 $E$ 增大。
+\end{itemize}
+很多同学会疑惑：既然点火加速，为什么最终轨道速度反而变小？原因在于点火增加的是总机械能，使卫星进入更高轨道；而在更高轨道上，维持圆周运动所需的平衡速度本来就更小。
+\end{gaokao}
+
+\section*{本章小结}
+
+本章把引力问题放到微积分框架下重新整理，可以归纳为四条主线：
+\begin{enumerate}
+  \item \textbf{场的观点：} 由 $F=GMm/r^2$ 过渡到 $\vb{g}(\vb{r})=-GM\vb{r}/r^3$；
+  \item \textbf{势能的观点：} 由积分得到 $U(r)=-GMm/r$；
+  \item \textbf{微分方程的观点：} 由牛顿第二定律推出轨道方程 $r=p/(1+e\cos\theta)$；
+  \item \textbf{近似展开的观点：} 由导数与泰勒展开分析潮汐力和引力随高度的变化。
+\end{enumerate}
+掌握这四条主线后，高中阶段大量天体运动题都可以被统一理解，而不是零散记忆公式。
+
+\section*{习题}
+
+\begin{exercise}
+证明：若把地球看成半径为 $R$、质量为 $M$ 的球对称天体，则距地心 $r$ 处的圆轨道速度满足 $v\propto r^{-1/2}$。
+\end{exercise}
+
+\begin{exercise}
+从势能函数
+\[
+U(r)=-\frac{GMm}{r}
+\]
+出发，利用 $F_r=-\dv{U}{r}$ 再次推出万有引力公式。
+\end{exercise}
+
+\begin{exercise}
+一颗卫星在半径为 $r$ 的圆轨道上运行。求其动能、势能、总机械能之比 $K:U:E$，并说明符号含义。
+\end{exercise}
+
+\begin{exercise}
+某行星绕太阳作椭圆运动，近日点距离为 $r_1$，远日点距离为 $r_2$。利用角动量守恒证明近日点速度与远日点速度之比为 $v_1:v_2=r_2:r_1$。
+\end{exercise}
+
+\begin{exercise}
+设某行星绕太阳做半径为 $r$ 的圆周运动。仅用牛顿第二定律与万有引力定律，推导开普勒第三定律在圆轨道情形下的表达式。
+\end{exercise}
+
+\begin{exercise}
+证明：若地球半径增加到原来的 $2$ 倍而质量保持不变，则其第一宇宙速度变为原来的 $1/\sqrt2$ 倍。
+\end{exercise}
+
+\begin{exercise}
+设外部天体对某星球表面的引力加速度为 $g(r)=GM/r^2$。当距离从 $R$ 改变到 $R+a$ 时，用微分近似求 $\Delta g$，并写出误差来源。
+\end{exercise}
+
+\begin{exercise}
+某探测器从地球表面竖直发射，初速度为 $v_0$，忽略空气阻力。利用机械能守恒，求其能到达的最大距离 $r_{\max}$（以地心为参考，设 $v_0<v_2$）。
+\end{exercise}
+
+\begin{exercise}
+在双星系统中，若两星质量相等、中心距为 $L$，求它们各自绕质心运动的线速度和周期。
+\end{exercise}
+
+\begin{exercise}
+阅读本章关于潮汐力的推导，解释为何潮汐效应与距离的三次方成反比，而不是二次方成反比。
+\end{exercise}

@@ -1,0 +1,1042 @@
+\chapter{数学预备：微积分速览}
+
+高中物理里，我们已经熟悉了位移、速度、加速度、功、冲量、电场力等概念；但很多公式往往是以“结论”的形式出现，例如
+\[
+  v = \dv{x}{t}, \qquad a = \dv{v}{t}, \qquad W = \int \vb{F} \cdot \dd \vb{r}.
+\]
+这些符号背后的思想，就是微积分。微积分并不是一套神秘的技巧，而是一种研究\emph{变化}与\emph{累积}的语言：导数研究瞬时变化率，积分研究连续累积量，微分方程则把二者联系起来。学完本章后，你应当能够看懂后续章节中的基本数学表达，并把它们和物理图像对应起来。
+
+\section{函数与极限}
+
+\subsection{函数：把一个量与另一个量联系起来}
+
+在物理学中，几乎所有定律都可以看成函数关系。位置可以是时间的函数，温度可以是位置的函数，电势可以是空间坐标的函数。
+
+\begin{definition}
+设集合 $D$ 中的每一个元素 $x$，都按照某条确定规则对应到唯一的数 $y$，记作
+\[
+  y = f(x),
+\]
+则称 $f$ 是定义在 $D$ 上的\textbf{函数}，$D$ 称为它的\textbf{定义域}，所有函数值组成的集合称为\textbf{值域}。
+\end{definition}
+
+最常见的函数表示方式有三种：
+\begin{itemize}
+  \item 解析式：如 $f(x) = x^2 + 1$；
+  \item 表格：列出若干输入与输出；
+  \item 图像：在坐标平面上画出 $(x, f(x))$ 的轨迹。
+\end{itemize}
+
+在物理里，图像尤其重要。例如做直线运动时，位置函数 $x(t)$ 的图像可以直接告诉我们物体运动得快慢如何变化。
+
+\begin{example}
+竖直上抛或自由下落都可以用位移函数描述。若一个静止释放的小球做自由落体运动，取竖直向下为正方向，则
+\[
+  s(t) = \frac{1}{2}gt^2.
+\]
+在地球表面附近可取 $g \approx 9.8$。这说明位移 $s$ 不是时间 $t$ 的线性函数，而是二次函数：时间加倍，位移会变成原来的四倍。
+\end{example}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \draw[->] (-0.2,0) -- (4.8,0) node[right] {$t$};
+    \draw[->] (0,-0.2) -- (0,4.8) node[above] {$s$};
+    \draw[thick, blue, domain=0:4, samples=100] plot (\x, {0.25*\x*\x});
+    \node[blue] at (3.4,3.8) {$s \propto t^2$};
+    \draw[dashed] (2,0) -- (2,1) -- (0,1);
+    \draw[dashed] (4,0) -- (4,4) -- (0,4);
+  \end{tikzpicture}
+  \caption{自由落体位移随时间变化的示意图：抛物线反映出“越落越快”}
+\end{figure}
+
+\subsection{极限的直觉：无限逼近时会发生什么}
+
+微积分的核心问题之一是：当自变量非常接近某个值时，函数值会接近什么？这就是极限。
+
+\begin{definition}
+若当 $x$ 无限接近 $a$ 时，$f(x)$ 无限接近某个确定的数 $L$，则称 $f(x)$ 当 $x \to a$ 时的极限是 $L$，记作
+\[
+  \lim_{x \to a} f(x) = L.
+\]
+\end{definition}
+
+这里的关键不是 $x$ 是否真的等于 $a$，而是 $x$ 在 $a$ 附近时，$f(x)$ 的行为如何。因此，函数在 $a$ 点的值和极限值有时可以不同。
+
+\begin{example}
+考虑函数
+\[
+  f(x) = \frac{x^2-1}{x-1}, \qquad x \ne 1.
+\]
+对 $x \ne 1$，可约去因子得到
+\[
+  f(x) = x+1.
+\]
+因此虽然在 $x=1$ 处分式没有定义，但当 $x$ 趋近于 $1$ 时，函数值趋近于
+\[
+  \lim_{x \to 1} \frac{x^2-1}{x-1} = \lim_{x \to 1}(x+1)=2.
+\]
+这说明“在一点没有定义”并不妨碍我们讨论“靠近这一点时的趋势”。
+\end{example}
+
+在物理上，极限常用来把“平均量”过渡到“瞬时量”。例如在时间间隔 $\Delta t$ 内的平均速度是
+\[
+  \frac{\Delta x}{\Delta t} = \frac{x(t+\Delta t)-x(t)}{\Delta t}.
+\]
+当 $\Delta t$ 取得越来越小时，这个平均速度会逼近某个极限，这个极限就是瞬时速度。
+
+\subsection{从表格到图像：极限的几何理解}
+
+极限既可以从数值表格理解，也可以从图像理解。若函数图像在 $x=a$ 的左右两侧都逼近同一个高度 $L$，我们就说极限存在且等于 $L$。若左右两侧逼近不同高度，则极限不存在。
+
+\begin{remark}
+极限不存在，并不一定意味着函数“完全混乱”。常见情形有三种：
+\begin{enumerate}
+  \item 左极限与右极限不同；
+  \item 函数值无限增大或减小，例如趋向 $\infty$；
+  \item 函数在附近持续振荡，无法稳定逼近某个数。
+\end{enumerate}
+在后续物理模型中，我们主要接触的是光滑、连续的函数，因此极限通常表现良好。
+\end{remark}
+
+\subsection{连续：没有“突然断开”}
+
+\begin{definition}
+若函数 $f(x)$ 在点 $x=a$ 满足：
+\begin{enumerate}
+  \item $f(a)$ 有定义；
+  \item $\lim_{x\to a} f(x)$ 存在；
+  \item $\lim_{x\to a} f(x)=f(a)$；
+\end{enumerate}
+则称 $f(x)$ 在 $x=a$ 处\textbf{连续}。
+\end{definition}
+
+连续函数的图像可以大致理解为“笔不离纸地画出来”。虽然这不是严格定义，但非常符合直觉。物理中的大多数宏观量，如位置、速度、温度、电势，通常都被视为连续函数。
+
+\begin{example}
+自由落体位移函数 $s(t)=\frac12 gt^2$ 是多项式函数，因此处处连续。它意味着物体的位置不会在某一瞬间“跳跃”到另一个地方；若模型预测位置发生跳跃，那通常说明模型本身不适用，而不是物理对象真的瞬间穿越空间。
+\end{example}
+
+\begin{theorem}
+若 $f(x)$ 与 $g(x)$ 在 $x=a$ 处都连续，则下列函数在 $x=a$ 处也连续：
+\[
+  f(x)+g(x), \qquad f(x)-g(x), \qquad f(x)g(x), \qquad \frac{f(x)}{g(x)}\ \text{(当 } g(a)\ne 0\text{)}.
+\]
+多项式函数在全体实数上连续，有理函数在分母不为零的地方连续。
+\end{theorem}
+
+以上定理告诉我们：绝大多数高中物理中的常见表达式都足够“平滑”，可以放心进行后续的导数与积分运算。
+
+\subsection{极限运算的基本规律}
+
+在实际计算中，我们不可能每次都回到极限的原始定义，而是依赖一组稳定的运算法则。
+
+\begin{theorem}
+若当 $x\to a$ 时，
+\[
+  \lim_{x\to a}f(x)=L, \qquad \lim_{x\to a}g(x)=M,
+\]
+则有
+\[
+  \lim_{x\to a}\bigl(f(x)+g(x)\bigr)=L+M,
+\]
+\[
+  \lim_{x\to a}\bigl(f(x)g(x)\bigr)=LM,
+\]
+\[
+  \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M} \qquad (M\ne 0).
+\]
+若 $n$ 为正整数，则
+\[
+  \lim_{x\to a}x^n = a^n.
+\]
+因此多项式与有理函数的极限，通常都可以直接代入计算（只要分母不为零）。
+\end{theorem}
+
+\begin{example}
+某质点的位置函数为
+\[
+  x(t)=3t^2-2t+1.
+\]
+求 $t\to 2$ 时的位置极限。
+
+\textbf{解：} 这是多项式函数，可直接代入：
+\[
+  \lim_{t\to 2}(3t^2-2t+1)=3\times 2^2-2\times 2+1=9.
+\]
+这说明当时刻无限接近 $2$ 秒时，质点位置无限接近 $9$。对于连续函数，极限值与函数值一致。
+\end{example}
+
+\begin{remark}
+极限最值得记住的一点不是“算出一个数字”，而是理解\textbf{邻近行为}。在物理测量中，我们常常只能把时间、位置、电压等量测到某个精度范围内；极限思想保证了：只要模型连续，输入量的小误差一般不会引起输出量的突变。
+\end{remark}
+
+\section{导数}
+
+\subsection{平均变化率到瞬时变化率}
+
+设物体的位置是时间的函数 $x(t)$。在从 $t$ 到 $t+\Delta t$ 的一段时间内，它的平均速度是
+\[
+  \frac{x(t+\Delta t)-x(t)}{\Delta t}.
+\]
+若让时间间隔 $\Delta t$ 越来越小，这个平均速度会趋近于一个极限，于是得到速度在时刻 $t$ 的瞬时值。
+
+\begin{definition}
+函数 $y=f(x)$ 在点 $x$ 处的\textbf{导数}定义为
+\[
+  f'(x) = \lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x},
+\]
+若该极限存在。也记作
+\[
+  \dv{y}{x}, \qquad \dv{f}{x}.
+\]
+\end{definition}
+
+导数刻画的是函数在某一点的\textbf{瞬时变化率}。若把函数图像看成一条曲线，那么导数还代表该点处切线的斜率。
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=1.0]
+    \draw[->] (-0.4,0) -- (5.2,0) node[right] {$x$};
+    \draw[->] (0,-0.4) -- (0,4.4) node[above] {$y$};
+    \draw[thick, blue, domain=0.4:4.5, samples=100] plot (\x, {0.2*(\x-1.2)^2 + 0.7});
+    \fill (2.2,0.9) circle (1.5pt) node[below right] {$P$};
+    \fill (3.5,1.826) circle (1.5pt) node[above right] {$Q$};
+    \draw[red, thick] (1.2,0.35) -- (4.2,2.25);
+    \draw[dashed] (2.2,0) -- (2.2,0.9);
+    \draw[dashed] (3.5,0) -- (3.5,1.826);
+    \node[red] at (4.0,1.2) {割线};
+  \end{tikzpicture}
+  \caption{当点 $Q$ 沿曲线逼近点 $P$ 时，割线斜率趋向切线斜率}
+\end{figure}
+
+\subsection{导数的物理意义}
+
+在物理学中，导数的意义极其直接：
+\[
+  v = \dv{x}{t}, \qquad a = \dv{v}{t} = \dv[2]{x}{t}.
+\]
+也就是说：
+\begin{itemize}
+  \item 位置对时间的导数是速度；
+  \item 速度对时间的导数是加速度；
+  \item 位置对时间的二阶导数也是加速度。
+\end{itemize}
+
+如果某一时刻导数为正，说明函数在该处向上增加；若导数为负，说明函数在该处向下减小；若导数为零，则常常意味着该点附近可能出现极大值、极小值或暂时平缓的状态。
+
+\begin{example}
+某质点的位置函数为
+\[
+  x(t) = 5t^2 + 2t.
+\]
+求其速度与加速度。
+
+\textbf{解：} 对 $t$ 求导，得
+\[
+  v(t) = \dv{x}{t} = 10t + 2.
+\]
+再求导，得
+\[
+  a(t) = \dv{v}{t} = 10.
+\]
+因此这是一个匀加速运动，加速度恒为 $10$。当 $t=3$ 时，速度为
+\[
+  v(3)=32.
+\]
+这比直接从位移图像读速度更精确，也更方便。
+\end{example}
+
+\subsection{用定义计算导数}
+
+虽然实际计算常依赖公式，但必须先理解定义。
+
+\begin{example}
+用导数定义求 $f(x)=x^2$ 的导数。
+
+\textbf{解：}
+\begin{align*}
+  f'(x)
+  &= \lim_{\Delta x\to 0} \frac{(x+\Delta x)^2-x^2}{\Delta x} \\
+  &= \lim_{\Delta x\to 0} \frac{2x\Delta x + (\Delta x)^2}{\Delta x} \\
+  &= \lim_{\Delta x\to 0} (2x + \Delta x) \\
+  &= 2x.
+\end{align*}
+所以
+\[
+  \dv{x^2}{x} = 2x.
+\]
+这个结果告诉我们：抛物线 $y=x^2$ 越往右越陡，斜率随 $x$ 线性增加。
+\end{example}
+
+\subsection{常用求导公式}
+
+\begin{theorem}
+设 $c$ 为常数，$n$ 为实数，则常用导数公式有
+\[
+  \dv{c}{x} = 0, \qquad \dv{x^n}{x} = nx^{n-1},
+\]
+\[
+  \dv{(\sin x)}{x} = \cos x, \qquad \dv{(\cos x)}{x} = -\sin x,
+\]
+\[
+  \dv{(\mathrm{e}^x)}{x} = \mathrm{e}^x, \qquad \dv{(\ln x)}{x} = \frac{1}{x} \quad (x>0).
+\]
+并且满足线性性质
+\[
+  \dv{(f+g)}{x} = \dv{f}{x} + \dv{g}{x},
+  \qquad
+  \dv{(cf)}{x} = c\dv{f}{x}.
+\]
+若 $f,g$ 可导，则
+\[
+  \dv{(fg)}{x} = f'g + fg',
+\]
+\[
+  \dv{}{x}\left(\frac{f}{g}\right)=\frac{f'g-fg'}{g^2} \quad (g\ne 0).
+\]
+\end{theorem}
+
+这些公式是今后所有计算的基础。就像代数里熟练掌握乘法公式一样，导数公式也要通过反复使用变成熟练直觉。
+
+\subsection{链式法则：处理“函数的函数”}
+
+在物理学中，很多量依赖于中间变量。例如位移 $x$ 依赖于时间 $t$，而势能 $U$ 又依赖于位置 $x$。于是 $U$ 实际上也依赖于时间。这时就需要链式法则。
+
+\begin{theorem}[链式法则]
+若 $y=f(u)$，$u=g(x)$，且二者都可导，则复合函数 $y=f(g(x))$ 的导数为
+\[
+  \dv{y}{x} = \dv{y}{u}\dv{u}{x}.
+\]
+\end{theorem}
+
+链式法则可以理解为“变化率的传递”：$x$ 改变一点，引起 $u$ 改变，再进一步引起 $y$ 改变，总效果是两段变化率相乘。
+
+\begin{example}
+设某球体半径随时间变化为 $r(t)=2t+1$，球体体积为
+\[
+  V = \frac{4}{3}\pi r^3.
+\]
+求体积对时间的变化率 $\dv{V}{t}$。
+
+\textbf{解：} 把 $V$ 视为 $r$ 的函数，再把 $r$ 视为 $t$ 的函数。由链式法则，
+\[
+  \dv{V}{t} = \dv{V}{r}\dv{r}{t}.
+\]
+而
+\[
+  \dv{V}{r} = 4\pi r^2, \qquad \dv{r}{t}=2,
+\]
+因此
+\[
+  \dv{V}{t} = 8\pi r^2 = 8\pi(2t+1)^2.
+\]
+这说明球半径线性增长时，体积增长却会越来越快。
+\end{example}
+
+\subsection{导数与图像性质}
+
+导数不仅给出计算结果，还帮助我们读懂图像：
+\begin{itemize}
+  \item 若 $f'(x)>0$，函数在该区间递增；
+  \item 若 $f'(x)<0$，函数在该区间递减；
+  \item 若 $f'(x)=0$，该点可能是极值点或平坦点；
+  \item 二阶导数 $f''(x)$ 反映弯曲方向：$f''(x)>0$ 时图像向上凸，$f''(x)<0$ 时向下凸。
+\end{itemize}
+
+在力学中，这些性质很有用：速度为零并不意味着加速度为零；正如物体到达最高点时速度瞬时为零，但重力加速度仍然向下。
+
+\subsection{微分与线性近似}
+
+导数还带来一个很实用的思想：当自变量只发生很小变化时，函数的变化可以用切线来近似。
+
+若 $y=f(x)$，当 $x$ 从原值变为 $x+\dd x$ 时，函数值的改变量满足近似关系
+\[
+  \dd y \approx f'(x)\,\dd x.
+\]
+这称为\textbf{线性近似}或\textbf{微分近似}。它的意思是：在足够小的尺度上，弯曲的曲线可以暂时看成一条直线。
+
+\begin{example}
+圆的面积为
+\[
+  A=\pi r^2.
+\]
+若半径测量值为 $r=10$，存在小误差 $\dd r=0.1$，求面积改变量的近似值。
+
+\textbf{解：} 对 $r$ 求导：
+\[
+  \dv{A}{r}=2\pi r.
+\]
+因此
+\[
+  \dd A \approx 2\pi r\,\dd r = 2\pi \times 10 \times 0.1 = 2\pi.
+\]
+这说明当半径只增加约 $1\%$ 时，面积大约增加 $2\pi$。在实验误差估计中，这类近似非常常见。
+\end{example}
+
+\begin{remark}
+线性近似并不是精确等式，而是“小变化下的好近似”。这正是微积分在物理建模中的强大之处：只要局部规律够简单，就能在很小范围内用线性模型描述复杂现象。
+\end{remark}
+
+\section{积分}
+
+\subsection{从“求导的逆过程”说起}
+
+如果已知某个函数的导数，能不能反过来找原函数？这就是不定积分的问题。
+
+\begin{definition}
+若函数 $F(x)$ 满足
+\[
+  F'(x) = f(x),
+\]
+则称 $F(x)$ 是 $f(x)$ 的一个\textbf{原函数}。$f(x)$ 的全体原函数记作
+\[
+  \int f(x)\,\dd x = F(x) + C,
+\]
+称为 $f(x)$ 的\textbf{不定积分}，其中 $C$ 为任意常数。
+\end{definition}
+
+之所以需要加上常数 $C$，是因为常数的导数恒为零。例如
+\[
+  \dv{}{x}(x^2+3)=2x, \qquad \dv{}{x}(x^2-100)=2x.
+\]
+因此 $2x$ 的原函数不是唯一的，而是一族相差常数的函数。
+
+\subsection{常用积分公式}
+
+\begin{theorem}
+常用不定积分公式有
+\[
+  \int x^n\,\dd x = \frac{x^{n+1}}{n+1}+C \qquad (n\ne -1),
+\]
+\[
+  \int \frac{1}{x}\,\dd x = \ln|x| + C,
+\]
+\[
+  \int \mathrm{e}^x\,\dd x = \mathrm{e}^x + C,
+\]
+\[
+  \int \sin x\,\dd x = -\cos x + C,
+  \qquad
+  \int \cos x\,\dd x = \sin x + C.
+\]
+并且积分满足线性性质
+\[
+  \int \bigl(af(x)+bg(x)\bigr)\,\dd x
+  = a\int f(x)\,\dd x + b\int g(x)\,\dd x.
+\]
+\end{theorem}
+
+\subsection{定积分：连续累积量}
+
+如果导数描述的是“瞬时变化率”，那么定积分描述的就是“许多微小贡献的总和”。
+
+\begin{definition}
+函数 $f(x)$ 在区间 $[a,b]$ 上的\textbf{定积分}记作
+\[
+  \int_a^b f(x)\,\dd x.
+\]
+几何上，当 $f(x)\ge 0$ 时，它表示曲线 $y=f(x)$、$x$ 轴以及直线 $x=a$、$x=b$ 围成的面积。
+\end{definition}
+
+更准确地说，定积分来源于“把区间切成许多小段，再把每一小段上的函数值乘以宽度，然后求和，最后取极限”。这和高中物理里“很多小量相加”的思维是一致的。
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \draw[->] (-0.2,0) -- (5.5,0) node[right] {$x$};
+    \draw[->] (0,-0.2) -- (0,4.0) node[above] {$y$};
+    \draw[thick, blue, domain=0.5:5.0, samples=100] plot (\x, {0.35*\x + 0.25*sin(120*\x) + 0.6});
+    \fill[blue!15, domain=1:4, samples=80] (1,0) -- plot (\x, {0.35*\x + 0.25*sin(120*\x) + 0.6}) -- (4,0) -- cycle;
+    \draw[dashed] (1,0) -- (1,1.1);
+    \draw[dashed] (4,0) -- (4,2.0);
+    \node at (1,-0.25) {$a$};
+    \node at (4,-0.25) {$b$};
+  \end{tikzpicture}
+  \caption{定积分的几何意义：曲线下方的有向面积}
+\end{figure}
+
+\begin{remark}
+定积分是\textbf{有向面积}。若函数在 $x$ 轴下方，则对应部分积分为负。因此定积分不总是“普通面积”，而更像“正贡献减去负贡献”的总代数和。
+\end{remark}
+
+\subsection{积分的物理意义：位移是速度的积分}
+
+若已知速度 $v(t)$，那么在很短的时间 $\Delta t$ 内，位移近似为
+\[
+  \Delta x \approx v(t)\Delta t.
+\]
+把整个时间段分成许多很短的小段，再把这些小位移相加，就得到总位移：
+\[
+  x(t_2)-x(t_1) = \int_{t_1}^{t_2} v(t)\,\dd t.
+\]
+这就是“位移等于速度对时间的积分”。类似地，若已知加速度，则速度变化量为
+\[
+  v(t_2)-v(t_1)=\int_{t_1}^{t_2} a(t)\,\dd t.
+\]
+
+\begin{example}
+一质点的速度为
+\[
+  v(t)=3t^2-2t+1.
+\]
+求它从 $t=0$ 到 $t=2$ 的位移。
+
+\textbf{解：}
+\begin{align*}
+  \Delta x
+  &= \int_0^2 (3t^2-2t+1)\,\dd t \\
+  &= \left[t^3 - t^2 + t\right]_0^2 \\
+  &= (8-4+2)-0 = 6.
+\end{align*}
+因此从 $0$ 到 $2$ 秒内，质点总位移为 $6$。
+
+若速度始终为正，这也等于路程；若速度有正有负，则位移与路程就不再相同。
+\end{example}
+
+\subsection{积分基本定理}
+
+导数与积分并不是彼此孤立的两个概念，它们实际上互为逆过程。
+
+\begin{theorem}[积分基本定理]
+若 $f(x)$ 在区间上连续，定义
+\[
+  F(x)=\int_a^x f(t)\,\dd t,
+\]
+则
+\[
+  F'(x)=f(x).
+\]
+反过来，若 $F'(x)=f(x)$，则
+\[
+  \int_a^b f(x)\,\dd x = F(b)-F(a).
+\]
+\end{theorem}
+
+这个定理的重要性在于：它把看似复杂的“累积极限”问题，转化成了“找原函数并代入上下限”的代数计算。
+
+\begin{example}
+一辆汽车沿直线运动，速度为 $v(t)=10-2t$，求它在 $0\le t\le 4$ 内的位移，并解释结果。
+
+\textbf{解：}
+\[
+  \Delta x = \int_0^4 (10-2t)\,\dd t = \left[10t-t^2\right]_0^4 = 40-16 = 24.
+\]
+所以位移为 $24$。
+
+注意在 $t=5$ 时速度才变为零，因此在 $0$ 到 $4$ 秒内汽车始终向正方向运动，位移与路程相同。若积分区间延长到 $t>5$，那么后半段速度为负，积分会自动体现“向反方向走回去”的效果。
+\end{example}
+
+\subsection{换元积分的最基本思想}
+
+当积分中出现复合函数时，常常可以通过变量替换把它化成熟悉的形式。最基本的情况是：若令 $u=g(x)$，则
+\[
+  \dd u = g'(x)\,\dd x.
+\]
+因此像
+\[
+  \int 2x\cos(x^2)\,\dd x
+\]
+这样的积分，就可以令 $u=x^2$，得到
+\[
+  \int \cos u\,\dd u = \sin u + C = \sin(x^2)+C.
+\]
+这种技巧本质上与链式法则互为逆过程。
+
+\subsection{变力做功：为什么要用积分}
+
+在高中物理中，我们熟悉恒力做功公式
+\[
+  W = Fs\cos\theta.
+\]
+但这个公式默认力的大小与方向在整个过程中都不变。若力随位置变化，就必须把每一小段位移上的微小功加起来，即
+\[
+  W = \int \vb{F}\cdot \dd\vb{r}.
+\]
+在一维情况下，若力与位移同向，就简化为
+\[
+  W = \int_{x_1}^{x_2} F(x)\,\dd x.
+\]
+
+\begin{example}
+弹簧满足胡克定律 $F=kx$。把弹簧从原长缓慢拉伸到位移 $x$，外力所做的功是多少？
+
+\textbf{解：} 由于每个位置处所需拉力不同，因此不能直接用 $Fx$，而要积分：
+\[
+  W = \int_0^x kx\,\dd x = \left[\frac12 kx^2\right]_0^x = \frac12 kx^2.
+\]
+这就是弹性势能公式的来源。由此也能看出：积分往往比熟悉的结果公式更根本。
+\end{example}
+
+\begin{remark}
+一旦理解了“把每一小段贡献加起来”这一思想，积分就不再只是在求面积。质量、总电荷、总概率、总能量、总冲量，都可以通过积分来表示。
+\end{remark}
+
+\section{微分方程初步}
+
+\subsection{什么是微分方程}
+
+在很多物理问题中，我们不知道未知函数本身，却知道它与导数之间满足某种关系。例如牛顿第二定律
+\[
+  m\dv[2]{x}{t}=F
+\]
+就是一个关于位置函数 $x(t)$ 的微分方程。
+
+\begin{definition}
+含有未知函数及其导数的方程，称为\textbf{微分方程}。
+\end{definition}
+
+如果未知函数只依赖一个自变量，如 $y(x)$ 或 $x(t)$，则称为\textbf{常微分方程}（ODE）。若含有偏导数，则称为偏微分方程（PDE）。本书前半部分主要用到常微分方程。
+
+\begin{remark}
+物理定律之所以常写成微分方程，是因为自然界更关心“局部规律”：此时此地的变化率由此时此地的状态决定。只要把这种局部规律沿时间不断累积，就得到整个运动过程。
+\end{remark}
+
+\subsection{分离变量法}
+
+最简单的一类方程可以写成
+\[
+  \dv{y}{x} = g(x)h(y).
+\]
+如果能把所有含 $y$ 的项移到一边，把所有含 $x$ 的项移到另一边，就可以积分求解，这称为\textbf{分离变量法}。
+
+\begin{theorem}[分离变量法]
+对于方程
+\[
+  \dv{y}{x} = g(x)h(y), \qquad h(y)\ne 0,
+\]
+可改写为
+\[
+  \frac{1}{h(y)}\,\dd y = g(x)\,\dd x,
+\]
+两边积分得
+\[
+  \int \frac{1}{h(y)}\,\dd y = \int g(x)\,\dd x + C.
+\]
+\end{theorem}
+
+\begin{example}
+放射性衰变满足
+\[
+  \dv{N}{t} = -\lambda N,
+\]
+其中 $N(t)$ 是尚未衰变的粒子数，$\lambda>0$ 是衰变常数。求 $N(t)$。
+
+\textbf{解：} 分离变量：
+\[
+  \frac{1}{N}\,\dd N = -\lambda\,\dd t.
+\]
+两边积分：
+\[
+  \int \frac{1}{N}\,\dd N = \int -\lambda\,\dd t,
+\]
+得
+\[
+  \ln|N| = -\lambda t + C.
+\]
+指数化后可写为
+\[
+  N(t)=N_0\mathrm{e}^{-\lambda t},
+\]
+其中 $N_0$ 为 $t=0$ 时的粒子数。
+
+这说明：衰变快慢与当前剩余粒子数成正比，因此粒子数按指数规律减少。
+\end{example}
+
+\subsection{一阶线性微分方程}
+
+另一类常见方程是
+\[
+  \dv{y}{x} + P(x)y = Q(x),
+\]
+称为\textbf{一阶线性常微分方程}。
+
+当 $Q(x)=0$ 时，它退化为齐次方程，容易分离变量；当 $Q(x)\ne 0$ 时，常用\textbf{积分因子法}求解。
+
+\begin{theorem}[积分因子法]
+对于一阶线性方程
+\[
+  \dv{y}{x}+P(x)y=Q(x),
+\]
+令积分因子
+\[
+  \mu(x)=\mathrm{e}^{\int P(x)\,\dd x},
+\]
+则方程可化为
+\[
+  \dv{}{x}\bigl(\mu(x)y(x)\bigr)=\mu(x)Q(x).
+\]
+因此
+\[
+  y(x)=\frac{1}{\mu(x)}\left(\int \mu(x)Q(x)\,\dd x + C\right).
+\]
+\end{theorem}
+
+这个公式看起来有些长，但它的思想很简单：乘上一个精心挑选的函数后，左边正好变成一个乘积的导数，于是就能直接积分。
+
+\begin{example}
+求解微分方程
+\[
+  \dv{y}{x} + 2y = x.
+\]
+
+\textbf{解：} 这里 $P(x)=2$，所以积分因子为
+\[
+  \mu(x)=\mathrm{e}^{\int 2\,\dd x}=\mathrm{e}^{2x}.
+\]
+两边同乘 $\mathrm{e}^{2x}$：
+\[
+  \mathrm{e}^{2x}\dv{y}{x} + 2\mathrm{e}^{2x}y = x\mathrm{e}^{2x}.
+\]
+左边正好是
+\[
+  \dv{}{x}\left(\mathrm{e}^{2x}y\right)=x\mathrm{e}^{2x}.
+\]
+于是
+\[
+  \mathrm{e}^{2x}y = \int x\mathrm{e}^{2x}\,\dd x + C.
+\]
+分部积分可得
+\[
+  \int x\mathrm{e}^{2x}\,\dd x = \frac12 x\mathrm{e}^{2x} - \frac14 \mathrm{e}^{2x} + C.
+\]
+因此
+\[
+  y = \frac12 x - \frac14 + C\mathrm{e}^{-2x}.
+\]
+\end{example}
+
+\subsection{物理中的微分方程直觉}
+
+微分方程不是“高级数学附加题”，而是物理学的母语。下面是两个最重要的直觉：
+\begin{enumerate}
+  \item \textbf{状态决定变化率。} 例如 $\dv{N}{t}=-\lambda N$ 表示“当前剩多少，就按多大速度衰变”；
+  \item \textbf{变化率决定未来。} 一旦给定初始条件，如 $N(0)=N_0$ 或 $x(0),v(0)$，整个演化过程就被确定下来。
+\end{enumerate}
+这就是为什么我们在力学、电磁学、量子力学中都反复遇到微分方程。
+
+\subsection{一个力学例子：线性阻力下的下落}
+
+设下落物体所受重力为 $mg$，阻力与速度成正比，大小为 $kv$，方向与运动方向相反。若取竖直向下为正方向，则牛顿第二定律写成
+\[
+  m\dv{v}{t}=mg-kv.
+\]
+整理得
+\[
+  \dv{v}{t}+\frac{k}{m}v=g.
+\]
+这正是一阶线性微分方程。
+
+\begin{example}
+设物体从静止开始下落，即 $v(0)=0$。求速度随时间的变化规律。
+
+\textbf{解：} 积分因子为
+\[
+  \mu(t)=\mathrm{e}^{\int (k/m)\,\dd t}=\mathrm{e}^{kt/m}.
+\]
+两边同乘积分因子：
+\[
+  \dv{}{t}\left(\mathrm{e}^{kt/m}v\right)=g\mathrm{e}^{kt/m}.
+\]
+积分得
+\[
+  \mathrm{e}^{kt/m}v = \int g\mathrm{e}^{kt/m}\,\dd t + C = \frac{mg}{k}\mathrm{e}^{kt/m}+C.
+\]
+于是
+\[
+  v(t)=\frac{mg}{k} + C\mathrm{e}^{-kt/m}.
+\]
+代入初始条件 $v(0)=0$，得 $C=-\frac{mg}{k}$，故
+\[
+  v(t)=\frac{mg}{k}\left(1-\mathrm{e}^{-kt/m}\right).
+\]
+\end{example}
+
+这个结果有很清楚的物理含义：开始时速度从零增长；随着速度增大，阻力也增大，最终速度逐渐逼近
+\[
+  v_{\text{term}} = \frac{mg}{k},
+\]
+称为\textbf{终端速度}。这类“先快后慢地趋于稳定”的行为，在很多实际系统中都会出现。
+
+\section{矢量与矢量运算}
+
+\subsection{标量与矢量}
+
+在物理中，有些量只需要大小就能描述，例如质量、温度、时间、能量；这类量称为\textbf{标量}。另一些量既要说明大小，还要说明方向，例如位移、速度、加速度、力、电场；这类量称为\textbf{矢量}。
+
+\begin{definition}
+同时具有大小和方向，并遵循平行四边形法则进行加法的量，称为\textbf{矢量}。
+\end{definition}
+
+本书中常用粗体或箭头表示矢量，例如 $\vb{A}$、$\vb{v}$、$\vb{F}$。矢量的大小（模）记为
+\[
+  \magn{\vb{A}}.
+\]
+
+\subsection{矢量的几何表示与分量表示}
+
+在平面直角坐标系中，一个二维矢量可以写成
+\[
+  \vb{A}=A_x\uvec{i}+A_y\uvec{j},
+\]
+三维空间中则写成
+\[
+  \vb{A}=A_x\uvec{i}+A_y\uvec{j}+A_z\uvec{k}.
+\]
+它的模长为
+\[
+  \magn{\vb{A}} = \sqrt{A_x^2 + A_y^2 + A_z^2}.
+\]
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=1.0]
+    \draw[->] (-0.2,0) -- (4.5,0) node[right] {$x$};
+    \draw[->] (0,-0.2) -- (0,3.8) node[above] {$y$};
+    \draw[->, very thick, blue] (0,0) -- (3.2,2.3) node[above right] {$\vb{A}$};
+    \draw[dashed] (3.2,0) -- (3.2,2.3) -- (0,2.3);
+    \node at (1.6,-0.25) {$A_x$};
+    \node at (-0.35,1.15) {$A_y$};
+  \end{tikzpicture}
+  \caption{矢量的分量表示：一个矢量等于各坐标方向分量之和}
+\end{figure}
+
+这种分量表示非常重要，因为复杂的几何问题往往可以转化成代数计算。牛顿第二定律
+\[
+  \vb{F}=m\vb{a}
+\]
+在坐标系中常被分解为
+\[
+  F_x=ma_x, \qquad F_y=ma_y, \qquad F_z=ma_z.
+\]
+
+\subsection{矢量加减法}
+
+若
+\[
+  \vb{A}=(A_x,A_y,A_z), \qquad \vb{B}=(B_x,B_y,B_z),
+\]
+则
+\[
+  \vb{A}+\vb{B}=(A_x+B_x,\ A_y+B_y,\ A_z+B_z),
+\]
+\[
+  \vb{A}-\vb{B}=(A_x-B_x,\ A_y-B_y,\ A_z-B_z).
+\]
+几何上，矢量加法对应平行四边形法则或三角形法则。矢量减法可理解为“加上相反矢量”。
+
+\begin{example}
+一船相对于水的速度为 $\vb{v}_{\text{船/水}}=(4,0)$，河水相对于地面的速度为 $\vb{v}_{\text{水/地}}=(0,3)$。则船相对于地面的速度为
+\[
+  \vb{v}_{\text{船/地}} = \vb{v}_{\text{船/水}} + \vb{v}_{\text{水/地}} = (4,3).
+\]
+其大小为
+\[
+  \magn{\vb{v}_{\text{船/地}}} = \sqrt{4^2+3^2}=5.
+\]
+这说明斜向运动的实际速度可以由两个互相垂直的分速度合成。
+\end{example}
+
+\subsection{点积：与“沿某方向的投影”有关}
+
+\begin{definition}
+两个矢量 $\vb{A}$、$\vb{B}$ 的\textbf{点积}定义为
+\[
+  \vb{A}\cdot\vb{B} = \magn{\vb{A}}\magn{\vb{B}}\cos\theta,
+\]
+其中 $\theta$ 是它们的夹角。
+\end{definition}
+
+若用分量表示，则
+\[
+  \vb{A}\cdot\vb{B}=A_xB_x + A_yB_y + A_zB_z.
+\]
+
+点积的结果是一个\textbf{标量}。它反映了一个矢量在另一个矢量方向上的投影大小，因此常用于计算功。
+
+\begin{example}
+恒力 $\vb{F}=(3,4)$ 作用下，物体位移为 $\vb{s}=(5,0)$。则该力做功为
+\[
+  W = \vb{F}\cdot\vb{s} = 3\times 5 + 4\times 0 = 15.
+\]
+这说明只有力在位移方向上的分量真正做功；垂直于位移的分量不做功。
+\end{example}
+
+\begin{remark}
+若 $\vb{A}\cdot\vb{B}=0$，则两个非零矢量互相垂直。这一判据在物理和几何里都很常用。例如等势面与电场方向互相垂直，本质上就与“投影为零”的思想有关。
+\end{remark}
+
+\subsection{叉积：与“垂直于平面”的方向有关}
+
+在三维空间中，还常用到叉积。
+
+\begin{definition}
+两个矢量 $\vb{A}$、$\vb{B}$ 的\textbf{叉积} $\vb{A}\times\vb{B}$ 是一个新矢量，其大小为
+\[
+  \magn{\vb{A}\times\vb{B}} = \magn{\vb{A}}\magn{\vb{B}}\sin\theta,
+\]
+方向垂直于 $\vb{A}$ 与 $\vb{B}$ 所在平面，并由右手定则确定。
+\end{definition}
+
+在直角坐标系中，
+\[
+  \vb{A}\times\vb{B}=
+  \begin{vmatrix}
+    \uvec{i} & \uvec{j} & \uvec{k} \\
+    A_x & A_y & A_z \\
+    B_x & B_y & B_z
+  \end{vmatrix}.
+\]
+展开得
+\[
+  \vb{A}\times\vb{B} =
+  (A_yB_z-A_zB_y)\uvec{i}
+  -(A_xB_z-A_zB_x)\uvec{j}
+  +(A_xB_y-A_yB_x)\uvec{k}.
+\]
+
+叉积的结果是一个\textbf{矢量}。它常出现在力矩、角动量和洛伦兹力中：
+\[
+  \vb{\tau}=\vb{r}\times\vb{F}, \qquad \vb{L}=\vb{r}\times\vb{p}.
+\]
+
+\begin{example}
+若作用点位置矢量为 $\vb{r}=(2,0,0)$，受力为 $\vb{F}=(0,3,0)$，则力矩
+\[
+  \vb{\tau}=\vb{r}\times\vb{F}
+  =
+  \begin{vmatrix}
+    \uvec{i} & \uvec{j} & \uvec{k} \\
+    2 & 0 & 0 \\
+    0 & 3 & 0
+  \end{vmatrix}
+  = 6\uvec{k}.
+\]
+这说明力矩方向沿 $z$ 轴正向，大小为 $6$。从几何上看，这正是“力乘以力臂”的矢量表达。
+\end{example}
+
+\subsection{单位矢量与投影}
+
+单位矢量是长度为 $1$ 的矢量，用来表示方向。在直角坐标系中，$\uvec{i},\uvec{j},\uvec{k}$ 分别表示 $x,y,z$ 轴正方向上的单位矢量。
+
+若已知矢量 $\vb{A}$，则沿某单位方向 $\uvec{n}$ 的标量投影为
+\[
+  \vb{A}\cdot\uvec{n}.
+\]
+因此，任一矢量都可以分解为“沿某方向的分量”和“垂直于该方向的分量”。这在斜面问题、受力分解、电场分解里都非常重要。
+
+\begin{example}
+重力 $\vb{G}=m\vb{g}$ 作用在倾角为 $\theta$ 的斜面上。取一个轴沿斜面向下，另一个轴垂直斜面，则重力沿斜面方向的分量大小为
+\[
+  G_{\parallel}=mg\sin\theta,
+\]
+垂直斜面的分量大小为
+\[
+  G_{\perp}=mg\cos\theta.
+\]
+这并不是“背公式”，而是矢量投影的直接结果：我们只是把同一个矢量拆成了两个互相垂直的方向分量。
+\end{example}
+
+\subsection{矢量思想为何重要}
+
+以后我们学习牛顿定律、电场、磁场、动量与角动量时，会不断遇到矢量。标量公式只能告诉我们“有多大”，而矢量公式还能告诉我们“指向哪里”。
+
+特别要注意：
+\begin{itemize}
+  \item 写矢量方程时，大小与方向同时成立；
+  \item 把矢量投影到坐标轴上，可以得到标量分量方程；
+  \item 点积适合处理功、功率、投影；
+  \item 叉积适合处理转动效应、面积矢量和垂直方向。
+\end{itemize}
+
+\section*{本章小结}
+
+本章给出了后续全书最常用的数学语言：
+\begin{enumerate}
+  \item 函数描述量与量之间的对应关系，极限研究“无限逼近”时的行为；
+  \item 导数给出瞬时变化率，在物理中对应速度、加速度等概念；
+  \item 积分描述连续累积，在物理中对应位移、总功、电量等总效果；
+  \item 微分方程把函数与其导数联系起来，是物理定律的常见写法；
+  \item 矢量让我们同时处理大小与方向，是力学和电磁学不可缺少的工具。
+\end{enumerate}
+
+如果你在本章中最先建立起两个直觉，那么它们应当是：\textbf{导数对应局部变化率，积分对应整体累积量。} 只要抓住这两点，微积分就不再是陌生符号，而会逐渐成为理解物理规律的自然语言。
+
+\section*{习题}
+
+\begin{exercise}
+已知位置函数 $x(t)=t^3-6t^2+9t$。
+\begin{enumerate}
+  \item 求速度 $v(t)$ 与加速度 $a(t)$；
+  \item 求 $t=1$ 时与 $t=3$ 时的速度；
+  \item 判断物体在哪些时刻瞬时静止。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+利用导数定义计算下列函数的导数：
+\begin{enumerate}
+  \item $f(x)=3x+1$；
+  \item $f(x)=x^2$；
+  \item $f(x)=\dfrac{1}{x}$（提示：先通分再化简）。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+设速度函数为 $v(t)=4t-1$。
+\begin{enumerate}
+  \item 求 $t=0$ 到 $t=3$ 之间的位移；
+  \item 求 $t=0$ 到 $t=3$ 之间的路程；
+  \item 说明位移与路程为何不同。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+求下列不定积分：
+\begin{enumerate}
+  \item $\int (2x^3-5x+4)\,\dd x$；
+  \item $\int (\cos x + \mathrm{e}^x)\,\dd x$；
+  \item $\int \dfrac{1}{x}\,\dd x$；
+  \item $\int 6x\sin(3x^2)\,\dd x$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+求解微分方程
+\[
+  \dv{y}{x}=3xy,
+\]
+并满足初始条件 $y(0)=2$。
+\end{exercise}
+
+\begin{exercise}
+求解一阶线性方程
+\[
+  \dv{y}{x}+y=1,
+\]
+并验证你的解确实满足原方程。
+\end{exercise}
+
+\begin{exercise}
+已知
+\[
+  \vb{A}=(1,2,3), \qquad \vb{B}=(2,-1,4).
+\]
+求：
+\begin{enumerate}
+  \item $\vb{A}+\vb{B}$ 与 $\vb{A}-\vb{B}$；
+  \item $\vb{A}\cdot\vb{B}$；
+  \item $\vb{A}\times\vb{B}$；
+  \item 两个矢量是否互相垂直。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+一质点在平面内的位移为 $\vb{r}(t)=(3t^2,\ 2t)$。
+\begin{enumerate}
+  \item 求速度矢量 $\vb{v}(t)$；
+  \item 求加速度矢量 $\vb{a}(t)$；
+  \item 求 $t=1$ 时速度的大小；
+  \item 说明“速度大小”和“速度矢量”有何区别。
+\end{enumerate}
+\end{exercise}

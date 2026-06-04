@@ -1,0 +1,950 @@
+\chapter{运动学}
+
+运动学研究的是``怎样运动''，而暂时不追问``为什么这样运动''。在第一章中，我们已经学习了导数与积分：导数描述瞬时变化率，积分描述累积效应。运动学正是这两种思想最直接的舞台：位置对时间求导得到速度，速度对时间求导得到加速度；反过来，对加速度积分又能恢复速度，对速度积分又能恢复位置。
+
+本章的目标有两个：第一，把高中物理中的运动学公式重新放回微积分框架中理解；第二，为下一章牛顿定律做好语言准备。学完本章后，读者应当把
+\[
+\text{位置} \xrightarrow{\dv{}{t}} \text{速度} \xrightarrow{\dv{}{t}} \text{加速度}
+\]
+以及
+\[
+\text{加速度} \xrightarrow{\int \dd t} \text{速度} \xrightarrow{\int \dd t} \text{位置}
+\]
+看作一条完整的逻辑链，而不再把若干公式零散记忆。
+
+\section{位置、位移与参考系}
+
+\subsection{参考系与坐标描述}
+
+描述运动的第一步不是写公式，而是先回答：``相对于谁在运动？'' 一个在列车车厢内静止的行李箱，相对于车厢是静止的，相对于地面却在高速前进。因此，任何运动描述都离不开参考系。
+
+\begin{definition}[参考系]
+参考系是描述物体位置与运动状态所选定的标准。通常我们还要在参考系中建立坐标系，并规定时间起点与空间原点。
+\end{definition}
+
+高中物理里常默认地面参考系、竖直向上为正方向、某一时刻为 $t=0$。这些看似平常的约定，本质上都是数学建模的一部分。若参考系改变，位置、速度的数值一般会改变，但同一物理过程并没有改变。
+
+\begin{remark}
+运动学中的公式总是依赖于参考系；物理规律则应当能够在不同惯性参考系中保持相容。这一点将在后面讨论牛顿定律与相对运动时再次出现。
+\end{remark}
+
+\subsection{位置矢量}
+
+在一维直线运动中，位置可用一个坐标 $x(t)$ 表示；在二维或三维空间中，更自然的对象是位置矢量。
+
+\begin{definition}[位置矢量]
+设空间中一点 $P$ 在时刻 $t$ 的坐标为 $(x(t),y(t),z(t))$，则它相对于原点 $O$ 的位置矢量定义为
+\[
+\vb{r}(t)=x(t)\vb{i}+y(t)\vb{j}+z(t)\vb{k}.
+\]
+其中 $\vb{i},\vb{j},\vb{k}$ 是直角坐标系的单位基矢。
+\end{definition}
+
+位置矢量把``物体在哪里''编码为一个随时间变化的向量函数。以后一旦看到 $\vb{r}(t)$，应立即想到：它既包含了距离原点多远，也包含了方向信息。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \draw[->] (-0.2,0) -- (4.8,0) node[below] {$x$};
+  \draw[->] (0,-0.2) -- (0,3.8) node[left] {$y$};
+  \coordinate (P) at (3.6,2.5);
+  \draw[->, thick, blue] (0,0) -- (P) node[midway, above left] {$\vb{r}(t)$};
+  \draw[dashed] (P) -- (3.6,0) node[below] {$x(t)$};
+  \draw[dashed] (P) -- (0,2.5) node[left] {$y(t)$};
+  \fill (P) circle (2pt) node[above right] {$P$};
+\end{tikzpicture}
+\caption{二维平面中的位置矢量}
+\end{figure}
+
+\subsection{位移与路程}
+
+若物体从时刻 $t_1$ 运动到时刻 $t_2$，其位置矢量从 $\vb{r}(t_1)$ 变为 $\vb{r}(t_2)$，则这段时间内的位移定义为
+\[
+\Delta \vb{r}=\vb{r}(t_2)-\vb{r}(t_1).
+\]
+
+\begin{definition}[位移]
+位移是末位置矢量减去初位置矢量所得的矢量，反映的是位置变化，而不是路径长短。
+\end{definition}
+
+在一维中，若初位置为 $x_1$、末位置为 $x_2$，则位移为 $\Delta x=x_2-x_1$。注意位移可以为正、负或零。
+
+\begin{remark}
+位移与路程不同。位移只看起点与终点，路程则是轨迹长度。例如一个人从家出发绕操场一圈回到原地，位移为零，但路程不为零。
+\end{remark}
+
+\begin{example}[往返运动中的位移]
+某质点在 $x$ 轴上运动，先从 $x=1\,
+\text{m}$ 移到 $x=5\,\text{m}$，再返回到 $x=2\,\text{m}$。求全过程位移与路程。
+
+\textbf{解：}
+初位置 $x_0=1$，末位置 $x=2$，故位移为
+\[
+\Delta x=2-1=1.
+\]
+而路程为
+\[
+(5-1)+(5-2)=7.
+\]
+所以位移是 $1\,\text{m}$，路程是 $7\,\text{m}$。这说明位移是具有方向的整体变化，路程则是过程累积。
+\end{example}
+
+\section{速度与加速度}
+
+\subsection{平均速度与瞬时速度}
+
+若在时间间隔 $\Delta t=t_2-t_1$ 内，位置变化为 $\Delta x=x(t_2)-x(t_1)$，则平均速度定义为
+\[
+\bar v=\frac{\Delta x}{\Delta t}.
+\]
+
+它告诉我们：如果用一个匀速运动来替代这段真实运动，那么应取多大的速度才能在同样时间内完成同样位移。
+
+但是，真实运动往往快慢不一，于是我们需要把时间间隔压缩到无限小。
+
+\begin{definition}[瞬时速度]
+若位置函数 $x(t)$ 在时刻 $t$ 可导，则该时刻的瞬时速度定义为
+\[
+ v(t)=\lim_{\Delta t\to 0}\frac{x(t+\Delta t)-x(t)}{\Delta t}=\dv{x}{t}.
+\]
+在矢量形式下，瞬时速度为
+\[
+\vb{v}(t)=\dv{\vb{r}}{t}.
+\]
+\end{definition}
+
+导数在这里第一次以非常物理的方式出现：它测量的是位置函数图像的切线斜率，也就是``此刻走得多快、朝哪边走''。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95, >=Latex]
+  \draw[->] (-0.2,0) -- (6.4,0) node[below] {$t$};
+  \draw[->] (0,-0.2) -- (0,4.2) node[left] {$x$};
+  \draw[thick, blue, domain=0.3:5.6, smooth] plot(\x,{0.35*\x*\x/2 + 0.4});
+  \coordinate (A) at (3.2,{0.35*3.2*3.2/2 + 0.4});
+  \fill (A) circle (2pt) node[above right] {$\bigl(t,x(t)\bigr)$};
+  \draw[red, thick] (1.6,{0.35*3.2*3.2/2 + 0.4 - 0.35*3.2*(3.2-1.6)}) --
+                    (4.9,{0.35*3.2*3.2/2 + 0.4 + 0.35*3.2*(4.9-3.2)});
+  \node[red] at (5.1,3.7) {切线斜率 $=\dv{x}{t}$};
+\end{tikzpicture}
+\caption{$x$--$t$ 图像上的切线斜率给出瞬时速度}
+\end{figure}
+
+\subsection{速度的矢量意义}
+
+设
+\[
+\vb{r}(t)=x(t)\vb{i}+y(t)\vb{j}+z(t)\vb{k},
+\]
+则对时间逐分量求导可得
+\[
+\vb{v}(t)=\dv{\vb{r}}{t}=\dv{x}{t}\vb{i}+\dv{y}{t}\vb{j}+\dv{z}{t}\vb{k}.
+\]
+
+因此，速度不仅有大小，还有方向；它总是沿轨迹的切线方向。速度大小
+\[
+ v=\magn{\vb{v}}
+\]
+叫作速率。严格地说，``速度''是向量，``速率''才是标量，但在日常语言里两者常混用。
+
+\subsection{加速度的定义}
+
+速度本身也可能变化，于是我们继续对时间求导。
+
+\begin{definition}[加速度]
+若速度函数 $\vb{v}(t)$ 在时刻 $t$ 可导，则该时刻的加速度定义为
+\[
+\vb{a}(t)=\dv{\vb{v}}{t}=\dv[2]{\vb{r}}{t}.
+\]
+在一维直线运动中，
+\[
+ a(t)=\dv{v}{t}=\dv[2]{x}{t}.
+\]
+\end{definition}
+
+加速度描述的不是``速度大''，而是``速度变化快''。汽车以 $100\,\text{km/h}$ 匀速行驶时速度很大，但加速度为零；而从静止猛然起步时即便速度不大，加速度却可能很大。
+
+\begin{theorem}[位置、速度、加速度的微积分链]
+只要相关函数足够光滑，一维运动满足
+\[
+ v(t)=\dv{x}{t},\qquad a(t)=\dv{v}{t}=\dv[2]{x}{t}.
+\]
+反过来，若已知某一初始时刻 $t_0$ 的位置 $x_0$ 与速度 $v_0$，则
+\[
+ v(t)=v_0+\int_{t_0}^{t} a(\tau)\,\dd \tau,
+\]
+\[
+ x(t)=x_0+\int_{t_0}^{t} v(\tau)\,\dd \tau.
+\]
+\end{theorem}
+
+这个定理几乎可以看作整章的总纲。高中的很多结论只是它在特殊情形下的直接推论。
+
+\begin{example}[由位置函数求速度与加速度]
+设质点沿直线运动的位置函数为
+\[
+ x(t)=t^3-6t^2+9t+2.
+\]
+求速度、加速度，并指出何时速度为零。
+
+\textbf{解：}
+由定义
+\[
+ v(t)=\dv{x}{t}=3t^2-12t+9=3(t-1)(t-3),
+\]
+\[
+ a(t)=\dv{v}{t}=6t-12.
+\]
+因此速度为零的时刻是 $t=1$ 与 $t=3$。其中 $t=1$ 附近加速度为负，$t=3$ 附近加速度为正，说明物体在这两个时刻都发生了瞬时静止，但前后的运动趋势不同。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95, >=Latex]
+  \draw[->] (-0.2,0) -- (6.2,0) node[below] {$t$};
+  \draw[->] (0,-0.8) -- (0,3.2) node[left] {$v$};
+  \draw[thick, blue, domain=0:5, smooth] plot(\x,{0.32*(\x-1)*(\x-3)});
+  \draw[dashed] (1,0) -- (1,-0.2) node[below] {$1$};
+  \draw[dashed] (3,0) -- (3,-0.2) node[below] {$3$};
+  \node[blue] at (4.7,2.2) {$v(t)$};
+\end{tikzpicture}
+\caption{$v$--$t$ 图像与速度为零的时刻}
+\end{figure}
+
+\subsection{平均加速度与瞬时加速度}
+
+类似地，在时间间隔 $\Delta t$ 内的平均加速度为
+\[
+\bar a=\frac{\Delta v}{\Delta t}.
+\]
+取极限后得到瞬时加速度
+\[
+ a(t)=\lim_{\Delta t\to 0}\frac{v(t+\Delta t)-v(t)}{\Delta t}=\dv{v}{t}.
+\]
+
+\begin{remark}
+若 $v$ 的单位是 $\text{m/s}$，则 $a$ 的单位是 $\text{m/s}^2$。这个平方秒并不神秘，它只是说明：加速度是``每一秒钟速度变化多少''这一量的变化率。
+\end{remark}
+
+\section{匀变速直线运动}
+
+高中最常见的模型之一是匀变速直线运动，即加速度为常量的直线运动。与其记住三条公式，不如从微积分出发把它们一次推出来。
+
+\subsection{由常加速度积分得到速度公式}
+
+设加速度恒为常数 $a$，则
+\[
+\dv{v}{t}=a.
+\]
+对时间积分：
+\[
+\int_{0}^{t} \dv{v}{\tau}\,\dd \tau=\int_0^t a\,\dd \tau.
+\]
+左边按微积分基本定理化为 $v(t)-v_0$，右边为 $at$，于是
+\[
+ v(t)=v_0+at.
+\]
+
+这就是匀变速直线运动的速度公式。它不是经验猜测，而是微分方程
+\[
+\dv{v}{t}=a
+\]
+的解。
+
+\subsection{再积分得到位置公式}
+
+把 $v(t)=v_0+at$ 代入
+\[
+\dv{x}{t}=v(t)
+\]
+得
+\[
+\dv{x}{t}=v_0+at.
+\]
+再从 $0$ 积分到 $t$：
+\[
+ x(t)-x_0=\int_0^t (v_0+a\tau)\,\dd \tau=v_0 t+\frac12 at^2.
+\]
+故
+\[
+ x(t)=x_0+v_0 t+\frac12 at^2.
+\]
+
+\subsection{消去时间得到位移速度关系}
+
+由
+\[
+ v=v_0+at
+\]
+得
+\[
+ t=\frac{v-v_0}{a}\qquad (a\neq 0).
+\]
+代入位移公式也可以得到熟悉的结果，但更优雅的方法是用链式法则：
+\[
+ a=\dv{v}{t}=\dv{v}{x}\dv{x}{t}=v\dv{v}{x}.
+\]
+于是
+\[
+ v\dv{v}{x}=a.
+\]
+对 $x$ 积分得
+\[
+ \int_{v_0}^{v} v\,\dd v=\int_{x_0}^{x} a\,\dd x,
+\]
+从而
+\[
+ \frac12 (v^2-v_0^2)=a(x-x_0),
+\]
+即
+\[
+ v^2=v_0^2+2a(x-x_0).
+\]
+
+\begin{theorem}[匀变速直线运动公式]
+若一维运动的加速度恒为常量 $a$，则对于任意时刻 $t$ 都有
+\[
+ v(t)=v_0+at,
+\]
+\[
+ x(t)=x_0+v_0 t+\frac12 at^2,
+\]
+\[
+ v^2=v_0^2+2a(x-x_0).
+\]
+这三式本质上来自两次积分与一次链式法则。
+\end{theorem}
+
+\subsubsection*{自由落体作为匀变速的特例}
+取竖直向上为正方向，自由落体初速度为零，重力加速度记为 $-g$。因为
+\[
+ a=-g,
+\]
+所以
+\[
+ v(t)=-gt,
+\qquad
+ y(t)=y_0+\int_0^t (-g\tau)\,\dd \tau=y_0-\frac12 gt^2.
+\]
+若地面为 $y=0$，则落地时刻满足
+\[
+ y_0-\frac12 gt^2=0,
+\qquad
+ t=\sqrt{\frac{2y_0}{g}}.
+\]
+这说明自由落体只是匀变速直线运动在竖直方向上的一个直接实例。
+
+\begin{example}[汽车刹车]
+汽车以初速度 $v_0=20\,\text{m/s}$ 匀减速刹车，加速度为 $a=-4\,\text{m/s}^2$。求停车时间与刹车距离。
+
+\textbf{解：}
+停车条件是 $v=0$，由
+\[
+ 0=20-4t
+\]
+得 $t=5\,\text{s}$。位移为
+\[
+ x-x_0=20\times 5+\frac12(-4)\times 5^2=50\,\text{m}.
+\]
+也可直接用
+\[
+ 0^2-20^2=2(-4)(x-x_0)
+\]
+得到 $x-x_0=50\,\text{m}$。后者尤其适合不关心时间时使用。
+\end{example}
+
+\section{变加速运动}
+
+自然界中更常见的是加速度随时间、速度或位置改变的情形。此时高中公式不再直接适用，但微积分方法依然有效。
+
+\subsection{已知 $a(t)$ 时的积分方法}
+
+若加速度是时间的已知函数 $a(t)$，则先积分求速度：
+\[
+ v(t)=v_0+\int_{t_0}^{t} a(\tau)\,\dd \tau.
+\]
+再积分求位置：
+\[
+ x(t)=x_0+\int_{t_0}^{t} v(\tau)\,\dd \tau.
+\]
+
+这是处理变加速运动最基本的套路：
+\[
+ a(t) \longrightarrow v(t) \longrightarrow x(t).
+\]
+
+\begin{example}[线性增大的加速度]
+设质点从静止开始沿直线运动，加速度满足
+\[
+ a(t)=kt \qquad (k>0).
+\]
+求速度与位移。
+
+\textbf{解：}
+因为 $v(0)=0$，
+\[
+ v(t)=\int_0^t k\tau\,\dd \tau=\frac12 kt^2.
+\]
+若 $x(0)=x_0$，则
+\[
+ x(t)=x_0+\int_0^t \frac12 k\tau^2\,\dd \tau=x_0+\frac16 kt^3.
+\]
+这个例子说明：当加速度是一次函数时，速度是二次函数，位置是三次函数；每积分一次，函数的``次数''就升高一级。
+\end{example}
+
+\subsection{已知 $v(t)$ 时的积分方法}
+
+有时实验更容易直接测得速度随时间的关系。例如测速仪、打点计时器、传感器都可能给出 $v(t)$ 图像。此时位置由面积给出：
+\[
+ x(t)-x_0=\int_{t_0}^{t} v(\tau)\,\dd \tau.
+\]
+
+这也解释了为什么高中常说``$v$--$t$ 图像与时间轴围成的面积表示位移''：那句话并不是新规则，而只是定积分的几何意义。
+
+\subsection{已知 $a(x)$ 时的链式法则}
+
+若加速度不方便写成时间函数，而是位置的函数 $a(x)$，则可以用
+\[
+ a=\dv{v}{t}=\dv{v}{x}\dv{x}{t}=v\dv{v}{x}.
+\]
+于是得到微分方程
+\[
+ v\dv{v}{x}=a(x).
+\]
+
+这一步非常重要：它把时间变量消掉了。在很多题目中，只关心速度和位置的关系而不关心具体时间，此法尤其高效。
+
+\begin{theorem}[变加速运动的三种基本求解路径]
+对于一维运动：
+\begin{enumerate}
+  \item 若已知 $a(t)$，则先积分得 $v(t)$，再积分得 $x(t)$；
+  \item 若已知 $v(t)$，则对时间积分得位移；
+  \item 若已知 $a(x)$，则可用 $a=v\dv*{v}{x}$ 把问题化为关于 $v$ 与 $x$ 的方程。
+\end{enumerate}
+\end{theorem}
+
+\subsection{一维阻力运动示例}
+
+考虑阻力与速度成正比的模型：
+\[
+ a=-cv \qquad (c>0).
+\]
+这表示物体越快，所受阻滞越强，常用来描述低速流体阻力下的小球或滑块。
+
+\subsubsection*{阻力与速度成正比的解析解}
+若
+\[
+\dv{v}{t}=-cv,
+\qquad v(0)=v_0>0,
+\]
+则这是可分离变量方程：
+\[
+\frac{\dd v}{v}=-c\,\dd t.
+\]
+积分后得
+\[
+ v(t)=v_0 e^{-ct}.
+\]
+再对时间积分可得
+\[
+ x(t)=x_0+\int_0^t v_0 e^{-c\tau}\,\dd \tau
+      =x_0+\frac{v_0}{c}\qty(1-e^{-ct}).
+\]
+因此当 $t\to\infty$ 时，位置趋向极限 $x_0+v_0/c$。这类问题最能体现微积分在变加速运动中的力量：虽然加速度不是常量，但方程仍可精确求解。
+
+\begin{remark}
+许多真实问题并没有一个可背诵的标准公式，但只要能写出微分方程，就可以用微积分推进。高中物理常见题型在这里统一成了``求导''和``积分''的不同外观。
+\end{remark}
+
+\section{抛体运动}
+
+抛体运动是二维运动的第一个完整例子。它之所以重要，不只是因为题目多，更因为它展示了向量、分解、微分方程三者如何自然结合。
+
+\subsection{无空气阻力时的运动分解}
+
+设物体从原点以初速度 $v_0$、仰角 $\theta$ 抛出。取水平方向为 $x$ 轴，竖直向上为 $y$ 轴，则初速度分解为
+\[
+ v_{0x}=v_0\cos\theta,\qquad v_{0y}=v_0\sin\theta.
+\]
+若忽略空气阻力，则加速度为常向量
+\[
+\vb{a}=-g\vb{j}.
+\]
+因此分量方程为
+\[
+\dv[2]{x}{t}=0,\qquad \dv[2]{y}{t}=-g.
+\]
+
+水平方向作匀速运动，竖直方向作匀加速运动。于是
+\[
+ x(t)=v_0\cos\theta\, t,
+\]
+\[
+ y(t)=v_0\sin\theta\, t-\frac12 gt^2.
+\]
+
+\begin{law}[平抛与斜抛的分运动独立性]
+在忽略空气阻力时，抛体运动可分解为互不影响的两个方向：水平方向的匀速运动与竖直方向的匀变速运动。总运动是这两个分运动的矢量合成。
+\end{law}
+
+消去时间 $t$ 可得轨迹方程：
+\[
+ t=\frac{x}{v_0\cos\theta},
+\]
+故
+\[
+ y=x\tan\theta-\frac{g}{2v_0^2\cos^2\theta}x^2.
+\]
+这是一条开口向下的抛物线。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9, >=Latex]
+  \draw[->] (-0.2,0) -- (7.4,0) node[below] {$x$};
+  \draw[->] (0,-0.2) -- (0,4.8) node[left] {$y$};
+  \draw[thick, blue, domain=0:6.3, smooth] plot(\x,{0.9*\x-0.12*\x*\x});
+  \draw[->, thick, red] (0,0) -- (1.8,1.6) node[midway, above] {$\vb{v}_0$};
+  \draw (1.0,0) arc (0:41:1.0);
+  \node at (1.35,0.35) {$\theta$};
+  \node[blue] at (5.5,1.9) {轨迹};
+\end{tikzpicture}
+\caption{无空气阻力时的抛体轨迹}
+\end{figure}
+
+\subsection{射程、最高点与飞行时间}
+
+若落点与出发点等高，则由 $y(T)=0$ 得
+\[
+ T=\frac{2v_0\sin\theta}{g}.
+\]
+射程为
+\[
+ R=x(T)=v_0\cos\theta\cdot \frac{2v_0\sin\theta}{g}
+=\frac{v_0^2\sin 2\theta}{g}.
+\]
+最高点时刻满足竖直速度为零：
+\[
+ v_y(t)=v_0\sin\theta-gt=0,
+\]
+故
+\[
+ t_{\max}=\frac{v_0\sin\theta}{g}.
+\]
+代回得最高高度
+\[
+ H=\frac{v_0^2\sin^2\theta}{2g}.
+\]
+
+\begin{example}[斜抛的最高点]
+某球以速度 $20\,\text{m/s}$、仰角 $30^\circ$ 抛出，忽略空气阻力，取 $g=10\,\text{m/s}^2$。求最高点高度和射程。
+
+\textbf{解：}
+竖直初速度为
+\[
+ v_{0y}=20\sin 30^\circ=10.
+\]
+因此最高点高度为
+\[
+ H=\frac{10^2}{2\times 10}=5\,\text{m}.
+\]
+飞行总时间
+\[
+ T=\frac{2\times 10}{10}=2\,\text{s}.
+\]
+水平初速度为
+\[
+ v_{0x}=20\cos 30^\circ=10\sqrt{3},
+\]
+故射程
+\[
+ R=10\sqrt{3}\times 2=20\sqrt{3}\,\text{m}.
+\]
+\end{example}
+
+\subsection{有空气阻力时的微积分模型}
+
+一旦考虑空气阻力，运动就不再是简单抛物线。为了保留可解性，我们考虑低速情形下的线性阻力模型：阻力与速度成正比，方向与速度相反，即
+\[
+\vb{F}_d=-b\vb{v}.
+\]
+若质量为 $m$，则由牛顿第二定律（这里只把它当作建模来源）得到
+\[
+ m\dv{\vb{v}}{t}=-mg\vb{j}-b\vb{v}.
+\]
+记
+\[
+ k=\frac{b}{m},
+\]
+则分量方程为
+\[
+\dv{v_x}{t}=-kv_x,
+\qquad
+\dv{v_y}{t}=-g-kv_y.
+\]
+
+第一式解为
+\[
+ v_x(t)=v_0\cos\theta\, e^{-kt}.
+\]
+第二式可写成
+\[
+\dv{v_y}{t}+kv_y=-g,
+\]
+解得
+\[
+ v_y(t)=\qty(v_0\sin\theta+\frac{g}{k})e^{-kt}-\frac{g}{k}.
+\]
+
+进一步积分得到位置：
+\[
+ x(t)=\int_0^t v_0\cos\theta\, e^{-k\tau}\,\dd \tau
+=\frac{v_0\cos\theta}{k}\qty(1-e^{-kt}),
+\]
+\[
+ y(t)=\int_0^t \qty[\qty(v_0\sin\theta+\frac{g}{k})e^{-k\tau}-\frac{g}{k}]\dd \tau
+=\frac{1}{k}\qty(v_0\sin\theta+\frac{g}{k})\qty(1-e^{-kt})-\frac{g}{k}t.
+\]
+
+\begin{remark}
+与无阻力情形相比，$x(t)$ 不再与 $t$ 成正比，$y(t)$ 也不再是简单二次函数；轨迹通常无法写成漂亮的抛物线方程。这里微积分的价值更加明显：即便图像不再简单，运动规律仍可由微分方程系统刻画。
+\end{remark}
+
+\subsubsection*{水平抛出的一个观察}
+若初速度水平，即 $\theta=0$，则
+\[
+ v_x(t)=v_0 e^{-kt},
+\qquad
+ x(t)=\int_0^t v_0 e^{-k\tau}\,\dd \tau=\frac{v_0}{k}\qty(1-e^{-kt}).
+\]
+于是当 $t\to\infty$ 时有
+\[
+ x(t)\to\frac{v_0}{k}.
+\]
+这说明在线性阻力模型中，水平方向的速度会指数衰减，因而单看水平位移会出现上界；真正的射程还需结合竖直方向的落地条件来确定。
+
+\subsection{从高中方法到微积分方法}
+
+高中处理抛体运动时，往往把各方向公式直接写出；微积分方法则先写向量微分方程，再分解求解。前者快，后者深。当前者遇到空气阻力、变重力场、斜面落点等复杂情形时，后者依然能继续工作。
+
+\section{圆周运动}
+
+圆周运动展示了：即使速率不变，速度也可能变化，因为速度方向在变。这个结论最好通过向量微积分来理解。
+
+\subsection{角位置、角速度与角加速度}
+
+设质点在半径为 $R$ 的圆周上运动，用极角 $\theta(t)$ 描述其位置，则
+\[
+\vb{r}(t)=R\cos\theta(t)\,\vb{i}+R\sin\theta(t)\,\vb{j}.
+\]
+
+\begin{definition}[角速度与角加速度]
+角速度定义为
+\[
+ \omega=\dv{\theta}{t},
+\]
+角加速度定义为
+\[
+ \alpha=\dv{\omega}{t}=\dv[2]{\theta}{t}.
+\]
+\end{definition}
+
+若 $\omega$ 为常量，则称为匀速圆周运动；若 $\omega$ 变化，则为变速圆周运动。
+
+\subsection{速度的微积分推导}
+
+对位置矢量求导：
+\[
+\vb{v}=\dv{\vb{r}}{t}
+=R\omega\qty(-\sin\theta\,\vb{i}+\cos\theta\,\vb{j}).
+\]
+因此速度大小为
+\[
+ v=R\omega,
+\]
+方向与半径垂直，沿切线方向。
+
+\subsection{向心加速度的推导}
+
+继续求导：
+\begin{align*}
+\vb{a}
+&=\dv{\vb{v}}{t}\\
+&=R\alpha\qty(-\sin\theta\,\vb{i}+\cos\theta\,\vb{j})
+ -R\omega^2\qty(\cos\theta\,\vb{i}+\sin\theta\,\vb{j}).
+\end{align*}
+
+于是可写成
+\[
+\vb{a}=R\alpha\,\uvec{\theta}-R\omega^2\,\uvec{r}.
+\]
+其中 $\uvec{r}$ 为径向单位矢量，$\uvec{\theta}$ 为切向单位矢量。特别地，在匀速圆周运动中 $\alpha=0$，故
+\[
+\vb{a}=-R\omega^2\uvec{r}.
+\]
+其大小为
+\[
+ a_c=R\omega^2=\frac{v^2}{R},
+\]
+方向始终指向圆心，这就是向心加速度。
+
+\begin{theorem}[圆周运动加速度分解]
+任意平面圆周运动都可把加速度分解为切向分量与法向分量：
+\[
+\vb{a}=a_t\uvec{\theta}+a_n(-\uvec{r}),
+\]
+其中
+\[
+ a_t=R\alpha=\dv{v}{t},
+\qquad
+ a_n=R\omega^2=\frac{v^2}{R}.
+\]
+切向分量负责改变速率，法向分量负责改变方向。
+\end{theorem}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \draw[thick] (0,0) circle (2.2);
+  \coordinate (P) at ({2.2*cos(40)},{2.2*sin(40)});
+  \fill (0,0) circle (1.8pt) node[below left] {$O$};
+  \fill (P) circle (2pt) node[above right] {$P$};
+  \draw[->, thick, blue] (0,0) -- (P) node[midway, above] {$\vb{r}$};
+  \draw[->, thick, red] (P) -- ++({1.2*cos(130)},{1.2*sin(130)}) node[above] {$\vb{v}$};
+  \draw[->, thick, violet] (P) -- ++({1.0*cos(220)},{1.0*sin(220)}) node[left] {$\vb{a}_n$};
+  \draw[->, thick, orange] (P) -- ++({1.0*cos(130)},{1.0*sin(130)}) node[left] {$\vb{a}_t$};
+\end{tikzpicture}
+\caption{圆周运动中的径向、切向与加速度分解}
+\end{figure}
+
+\begin{example}[转盘边缘上一点的加速度]
+一转盘半径为 $R=0.5\,\text{m}$，其角速度随时间变化为
+\[
+ \omega(t)=2+t.
+\]
+求 $t=2\,\text{s}$ 时边缘一点的切向加速度、向心加速度及总加速度大小。
+
+\textbf{解：}
+角加速度为
+\[
+ \alpha=\dv{\omega}{t}=1.
+\]
+故切向加速度
+\[
+ a_t=R\alpha=0.5.
+\]
+当 $t=2$ 时，
+\[
+ \omega=4,
+\qquad
+ a_n=R\omega^2=0.5\times 16=8.
+\]
+由于切向与法向互相垂直，总加速度大小为
+\[
+ a=\sqrt{a_t^2+a_n^2}=\sqrt{0.25+64}=\sqrt{64.25}.
+\]
+可见即使切向加速度不大，向心加速度也可能因角速度较大而占主导。
+\end{example}
+
+\section{高考题微积分视角专栏}
+
+下面选取三类经典高考运动学题。每一道题先用微积分重述，再与高中常规解法对照。读者会发现：高中方法并没有错，只是它往往把微积分已经做完后的结果直接拿来使用。
+
+\begin{gaokao}[title={高考题的微积分视角：题一 竖直上抛的最高点}]
+\textbf{题目：} 一小球从地面竖直上抛，初速度为 $v_0$，忽略空气阻力，重力加速度为 $g$。求最高点高度与回到出发点所需时间。
+
+\textbf{微积分解：}
+取竖直向上为正方向，则
+\[
+ a=-g.
+\]
+积分得
+\[
+ v(t)=v_0-gt.
+\]
+最高点满足 $v(t)=0$，故
+\[
+ t_{\max}=\frac{v_0}{g}.
+\]
+再对速度积分：
+\[
+ y(t)=\int_0^t (v_0-g\tau)\,\dd \tau=v_0 t-\frac12 gt^2.
+\]
+于是最高点高度为
+\[
+ H=y(t_{\max})=\frac{v_0^2}{2g}.
+\]
+回到原点满足 $y(T)=0$，即
+\[
+ v_0T-\frac12 gT^2=0,
+\]
+除去 $T=0$ 外得
+\[
+ T=\frac{2v_0}{g}.
+\]
+
+\textbf{与高中方法对比：}
+高中通常直接套用 $v^2-v_0^2=2a\Delta y$ 与对称性。微积分方法则把``最高点速度为零''解释为导数为零、把高度解释为速度积分。这样一来，若以后加速度不是常量，思路仍可保留。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：题二 汽车刹车距离}]
+\textbf{题目：} 汽车以速度 $v_0$ 匀减速刹车，已知刹车加速度大小为 $a$。求刹车距离。
+
+\textbf{微积分解：}
+设速度方向为正，则加速度为 $-a$。由于题目只问距离，不问时间，最适合使用链式法则：
+\[
+ \dv{v}{t}=-a,
+ \qquad
+ \dv{v}{t}=\dv{v}{x}\dv{x}{t}=v\dv{v}{x}.
+\]
+所以
+\[
+ v\dv{v}{x}=-a.
+\]
+从 $(x_0,v_0)$ 积分到停车点 $(x,0)$：
+\[
+ \int_{v_0}^{0} v\,\dd v=\int_{x_0}^{x} (-a)\,\dd x.
+\]
+得
+\[
+ -\frac12 v_0^2=-a(x-x_0),
+\]
+于是
+\[
+ x-x_0=\frac{v_0^2}{2a}.
+\]
+
+\textbf{与高中方法对比：}
+高中直接记忆结论 $v^2-v_0^2=2a\Delta x$。微积分的好处是：你知道这条式子从哪里来，也知道当 $a$ 改成 $a(x)$ 时该如何替换，而不是被公式卡住。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：题三 斜抛最大射程}]
+\textbf{题目：} 在同一水平面上以固定初速度 $v_0$ 斜向上抛出小球，忽略空气阻力。问仰角 $\theta$ 取何值时射程最大？
+
+\textbf{微积分解：}
+无阻力时射程为
+\[
+ R(\theta)=\frac{v_0^2}{g}\sin 2\theta.
+\]
+要使射程最大，只需对角度求极值。因为
+\[
+ \dv{R}{\theta}=\frac{2v_0^2}{g}\cos 2\theta,
+\]
+令其为零得
+\[
+ \cos 2\theta=0 \quad \Rightarrow \quad 2\theta=\frac{\pi}{2},
+\]
+故
+\[
+ \theta=\frac{\pi}{4}=45^\circ.
+\]
+再由
+\[
+ \dv[2]{R}{\theta}=-\frac{4v_0^2}{g}\sin 2\theta
+\]
+知在 $45^\circ$ 处二阶导数为负，因此确为最大值点。
+
+\textbf{与高中方法对比：}
+高中常用 $\sin 2\theta\le 1$ 立即得出结论。这当然更快；但微积分方法强调``最值问题就是导数为零再判别''这一普适原则。以后遇到有阻力、斜坡着地、发射高度不同时，三角恒等式未必够用，而求导思路仍然成立。
+\end{gaokao}
+
+\section{本章小结}
+
+本章的核心不在于多记几条公式，而在于建立下面三层认识：
+\begin{enumerate}
+  \item 运动必须相对于参考系描述，位置最好看成矢量函数 $\vb{r}(t)$；
+  \item 速度与加速度分别是位置的一阶导数与二阶导数；
+  \item 已知加速度时，通过积分就能恢复速度与位置；已知更复杂的关系时，可借助链式法则、分离变量与分运动思想继续求解。
+\end{enumerate}
+
+从这个角度看，匀变速运动、抛体运动、圆周运动都不再是彼此孤立的章节，而是同一套微积分语言在不同几何场景中的展开。
+
+\section{习题}
+
+\begin{exercise}
+在一维直线运动中，质点位置函数为
+\[
+ x(t)=2t^3-9t^2+12t-1.
+\]
+求：
+\begin{enumerate}
+  \item 速度函数与加速度函数；
+  \item 速度为零的时刻；
+  \item 在 $t=0$ 到 $t=4$ 内的总位移。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+一质点沿 $x$ 轴运动，其速度满足
+\[
+ v(t)=3t^2-6t+2.
+\]
+已知 $x(0)=1$。求 $x(t)$，并求从 $t=0$ 到 $t=3$ 的位移与路程。
+\end{exercise}
+
+\begin{exercise}
+某物体做匀变速直线运动，已知 $x_0=0$，$v_0=5\,\text{m/s}$，$a=-2\,\text{m/s}^2$。求：
+\begin{enumerate}
+  \item 任意时刻的速度与位置；
+  \item 速度第一次变为零的时刻；
+  \item 该时刻前的最大位移。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+设一维运动的加速度满足
+\[
+ a(t)=4-2t.
+\]
+已知 $v(0)=1$，$x(0)=0$。用积分求 $v(t)$ 与 $x(t)$，并判断何时加速度变号。
+\end{exercise}
+
+\begin{exercise}
+已知一质点从静止出发，其加速度与位置满足
+\[
+ a(x)=kx \qquad (k>0).
+\]
+利用
+\[
+ a=v\dv{v}{x}
+\]
+求速度与位置的关系式 $v(x)$。
+\end{exercise}
+
+\begin{exercise}
+一小球以初速度 $v_0$ 从地面竖直上抛，忽略空气阻力。请用微积分方法推导最高点高度，并说明为什么最高点对应于位置函数的极大值点。
+\end{exercise}
+
+\begin{exercise}
+一物体以初速度 $v_0$、仰角 $\theta$ 做斜抛运动，忽略空气阻力。推导其轨迹方程
+\[
+ y=x\tan\theta-\frac{g}{2v_0^2\cos^2\theta}x^2,
+\]
+并由此解释轨迹为何是抛物线。
+\end{exercise}
+
+\begin{exercise}
+在线性空气阻力模型下，抛体满足
+\[
+\dv{v_x}{t}=-kv_x,
+\qquad
+\dv{v_y}{t}=-g-kv_y.
+\]
+若初速度水平，即 $v_x(0)=v_0$、$v_y(0)=0$，求 $v_x(t)$、$v_y(t)$ 与 $y(t)$。
+\end{exercise}
+
+\begin{exercise}
+设质点做半径为 $R$ 的圆周运动，角位置为
+\[
+ \theta(t)=\omega_0 t+\frac12 \alpha t^2.
+\]
+求：
+\begin{enumerate}
+  \item 角速度 $\omega(t)$；
+  \item 速率 $v(t)$；
+  \item 切向加速度与法向加速度。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+阅读本章后，请用不超过 200 字的话说明：为什么说``高中运动学公式其实都是微积分结论的特殊情形''？并任选一个公式写出它的微积分推导线索。
+\end{exercise}

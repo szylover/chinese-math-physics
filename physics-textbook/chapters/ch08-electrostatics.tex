@@ -1,0 +1,556 @@
+\chapter{静电场}
+
+静电学研究的是\emph{静止电荷}所产生的相互作用。它既是高中电学的起点，也是矢量分析、面积分与体积分最早出现的物理舞台之一。与力学中“质量产生引力”相对应，电磁学中“电荷产生电场”；但电荷有正负两种，这使得电现象比万有引力更丰富。一个统一的主线是：
+\begin{center}
+点电荷 $\to$ 电场 $\to$ 叠加积分 $\to$ 通量 $\to$ 高斯定理 $\to$ 对称性求解。
+\end{center}
+
+\section{电荷与库仑定律}
+
+\begin{definition}[电荷与点电荷]
+电荷是描述物体电性质的物理量，记作 $q$。按照实验事实，电荷分为正电荷与负电荷，且满足电荷守恒。若带电体的几何尺寸远小于它与其他带电体之间的距离，则可将其近似为\emph{点电荷}。
+\end{definition}
+
+在宏观尺度上，我们把电荷看成连续分布的量；在微观尺度上，电荷具有量子化特征，但在高中与本章的讨论中，可将其视作连续可分的物理量。
+
+\begin{law}[库仑定律]
+真空中两个静止点电荷 $q_1,q_2$ 相距 $r$ 时，彼此间作用力的大小为
+\begin{equation}
+F = k\frac{|q_1 q_2|}{r^2},
+\end{equation}
+其中
+\begin{equation}
+ k = \frac{1}{4\pi \varepsilon_0},
+\end{equation}
+$\varepsilon_0$ 为真空介电常量。力的方向沿两电荷连线：同号相斥，异号相吸。
+
+若用矢量形式表示，设从 $q_1$ 指向 $q_2$ 的位矢为 $\vb{r}_{12}$，其模为 $r_{12}$，对应单位矢量为 $\vu{r}_{12}$，则 $q_1$ 对 $q_2$ 的作用力为
+\begin{equation}
+\vb{F}_{12} = \frac{1}{4\pi \varepsilon_0}\frac{q_1 q_2}{r_{12}^2}\vu{r}_{12}
+= \frac{1}{4\pi \varepsilon_0}\frac{q_1 q_2}{r_{12}^3}\vb{r}_{12}.
+\end{equation}
+\end{law}
+
+库仑定律与万有引力定律在数学形式上非常相似，都是反平方律；不同之处在于，引力总是吸引，而电力既可以吸引也可以排斥。正因如此，多个电荷叠加时常会出现“抵消”“平衡”“屏蔽”等现象。
+
+\begin{remark}
+库仑定律适用于\emph{静止点电荷}。若电荷运动很快，电场与磁场会耦合在一起，必须进入完整的电磁学框架。
+\end{remark}
+
+\paragraph{算例：两点电荷间的作用力} 两个点电荷分别为 $q_1=+2q$ 与 $q_2=-q$，相距 $a$。由库仑定律，力的大小为
+\begin{equation}
+F = \frac{1}{4\pi\varepsilon_0}\frac{2q^2}{a^2}.
+\end{equation}
+由于两电荷异号，因此相互吸引。若取从 $q_1$ 指向 $q_2$ 为正方向，则 $q_1$ 受力方向指向 $q_2$，$q_2$ 受力方向指向 $q_1$，大小相等、方向相反，符合牛顿第三定律。
+
+\begin{definition}[试探电荷]
+为了描述某一点附近电场的性质，我们在该点放入一个足够小的正点电荷 $q_0$，称其为\emph{试探电荷}。它只用来“测试”电场，而不显著改变原有电荷分布。
+\end{definition}
+
+\section{电场与电场强度}
+
+牛顿力学强调“物体直接作用于物体”，而法拉第的思想是：电荷先在周围空间中建立一种物理状态，这种状态再对其他电荷施力。这个中介就是\emph{电场}。
+
+\begin{definition}[电场与电场强度]
+在空间某点放入试探电荷 $q_0$，若其所受电场力为 $\vb{F}$，则定义该点的\emph{电场强度}为
+\begin{equation}
+\vb{E} = \frac{\vb{F}}{q_0}.
+\end{equation}
+它是一个矢量，方向规定为正试探电荷在该点受力的方向。
+\end{definition}
+
+对于单个点电荷 $Q$，距其 $r$ 处的电场强度为
+\begin{equation}
+\vb{E}(\vb{r}) = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}\vu{r}
+= \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^3}\vb{r}.
+\end{equation}
+若 $Q>0$，电场线向外发散；若 $Q<0$，电场线向内汇聚。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \fill[red!70] (0,0) circle (0.08);
+  \node[above right] at (0,0) {$+Q$};
+  \foreach \ang in {0,30,...,330} {
+    \draw[->, thick, blue!70] (0,0) -- ({2.0*cos(\ang)},{2.0*sin(\ang)});
+  }
+  \draw[thick, gray!60] (0,0) circle (1.1);
+  \draw[thick, gray!60] (0,0) circle (1.7);
+  \node[right] at (2.2,0) {$\vb{E}$ 向外};
+\end{tikzpicture}
+\caption{正点电荷的电场线示意图}
+\end{figure}
+
+\begin{remark}
+电场线不是“真实存在的细线”，而是一种图像化表示：某点切线方向表示该点电场方向，线越密处表示电场越强。由于电场强度是矢量，所以求电场时要按矢量规则相加，而不能只加大小。
+\end{remark}
+
+\paragraph{算例：轴线上两点电荷的合场强} $x$ 轴上有两个点电荷：在 $x=0$ 处放置 $+Q$，在 $x=a$ 处放置 $-Q$。中点到两电荷距离都为 $a/2$。由正电荷产生的电场方向背离正电荷，即向右；由负电荷产生的电场方向指向负电荷，也向右。因此两场同向叠加：
+\begin{equation}
+E = 2\times \frac{1}{4\pi\varepsilon_0}\frac{Q}{(a/2)^2}
+= \frac{1}{4\pi\varepsilon_0}\frac{8Q}{a^2}.
+\end{equation}
+方向沿 $+x$ 方向。
+
+从微积分角度看，$\vb{E}(x,y,z)$ 是定义在空间中每一点的矢量函数，即一个\emph{矢量场}。今后我们将不断遇到“给定电荷分布，求空间各点电场”这一典型问题。
+
+\section{电场的叠加}
+
+\begin{theorem}[电场叠加原理]
+若空间中存在多个电荷，则某一点的总电场等于各个电荷单独存在时在该点所产生电场的矢量和：
+\begin{equation}
+\vb{E} = \sum_i \vb{E}_i.
+\end{equation}
+若电荷连续分布，则求和推广为积分：
+\begin{equation}
+\vb{E}(\vb{r}) = \frac{1}{4\pi\varepsilon_0}\int \frac{\dd q}{R^2}\vu{R}
+= \frac{1}{4\pi\varepsilon_0}\int \frac{\vb{R}}{R^3}\,\dd q,
+\end{equation}
+其中 $\vb{R}$ 是从电荷元指向场点的位矢。
+\end{theorem}
+
+\subsection*{离散电荷的叠加}
+
+对有限个点电荷，只要先分别求出每个电荷在场点产生的电场，再进行矢量合成即可。利用坐标分解，常写成
+\begin{equation}
+E_x = \sum_i E_{ix}, \qquad E_y = \sum_i E_{iy}, \qquad E_z = \sum_i E_{iz}.
+\end{equation}
+
+\subsection*{连续分布电荷的积分表示}
+
+若电荷沿曲线分布，线电荷密度定义为
+\begin{equation}
+\lambda = \dv{q}{l}, \qquad \dd q = \lambda\,\dd l.
+\end{equation}
+于是
+\begin{equation}
+\vb{E}(\vb{r}) = \frac{1}{4\pi\varepsilon_0}\int \frac{\vb{R}}{R^3}\lambda\,\dd l.
+\end{equation}
+
+若电荷分布在曲面上，面电荷密度定义为
+\begin{equation}
+\sigma = \dv{q}{A}, \qquad \dd q = \sigma\,\dd A,
+\end{equation}
+于是
+\begin{equation}
+\vb{E}(\vb{r}) = \frac{1}{4\pi\varepsilon_0}\iint \frac{\vb{R}}{R^3}\sigma\,\dd A.
+\end{equation}
+
+面电荷积分的典型模型是均匀带电圆盘。设半径为 $R$ 的圆盘面密度为 $\sigma$，求轴线上距圆心 $x$ 处的电场。把圆盘分解为半径为 $\rho$、宽为 $\dd\rho$ 的同心细环，则
+\begin{equation}
+\dd q = \sigma\cdot 2\pi\rho\,\dd\rho.
+\end{equation}
+每个细环在轴线上产生的场强沿轴向，故
+\begin{equation}
+\dd E_x = \frac{1}{4\pi\varepsilon_0}\frac{x\,\dd q}{(x^2+\rho^2)^{3/2}}.
+\end{equation}
+积分得
+\begin{align}
+E_x &= \frac{1}{4\pi\varepsilon_0}\int_0^R \frac{x\sigma 2\pi\rho\,\dd\rho}{(x^2+\rho^2)^{3/2}} \\
+&= \frac{\sigma}{2\varepsilon_0}\left(1-\frac{x}{\sqrt{x^2+R^2}}\right), \qquad x>0.
+\end{align}
+当 $R\to\infty$ 时，上式自然过渡为无限大平面的结果 $E=\sigma/(2\varepsilon_0)$。这说明“面对称高斯定理”与“面电荷积分”并不是彼此割裂的两种方法，而是同一物理规律在不同难度层次下的两种表达。
+
+更一般地，体电荷密度 $\rho=\dv*{q}{V}$ 时，有
+\begin{equation}
+\vb{E}(\vb{r}) = \frac{1}{4\pi\varepsilon_0}\iiint \frac{\vb{R}}{R^3}\rho\,\dd V.
+\end{equation}
+虽然高中阶段多见点电荷与简单对称分布，但上述积分形式已经展示了微积分进入电磁学的方式：把整体电荷切成无限多个电荷元，再把每个元的贡献累加起来。
+
+\begin{example}[均匀带电细环轴线上一点的电场]
+半径为 $R$ 的细环均匀带电，总电荷为 $Q$。求其轴线上距环心 $x$ 处的电场强度。
+
+\textbf{解：} 取环上一小段电荷元 $\dd q$。它到轴上场点的距离为
+\begin{equation}
+r = \sqrt{R^2+x^2}.
+\end{equation}
+由对称性，环上相对位置电荷元的横向分量彼此抵消，只留下轴向分量：
+\begin{equation}
+\dd E_x = \frac{1}{4\pi\varepsilon_0}\frac{\dd q}{r^2}\cos\theta
+= \frac{1}{4\pi\varepsilon_0}\frac{x\,\dd q}{r^3}.
+\end{equation}
+对整环积分得
+\begin{equation}
+E_x = \frac{1}{4\pi\varepsilon_0}\frac{x}{(R^2+x^2)^{3/2}}\int \dd q
+= \frac{1}{4\pi\varepsilon_0}\frac{Qx}{(R^2+x^2)^{3/2}}.
+\end{equation}
+当 $x\gg R$ 时，近似为
+\begin{equation}
+E_x \approx \frac{1}{4\pi\varepsilon_0}\frac{Q}{x^2},
+\end{equation}
+说明远处看去，整个带电环近似像一个点电荷。
+\end{example}
+
+\begin{example}[有限长均匀带电直线在中垂线上一点的电场]
+长度为 $2L$ 的细棒均匀带电，线电荷密度为 $\lambda$，置于 $x$ 轴上，中心在原点。求点 $P(0,a)$ 处的电场。
+
+\textbf{解：} 由对称性，左右对称电荷元产生的 $x$ 分量相消，只需求 $y$ 分量。取位置 $x$ 处电荷元 $\dd q=\lambda\dd x$，则
+\begin{equation}
+\dd E_y = \frac{1}{4\pi\varepsilon_0}\frac{\lambda\dd x}{(x^2+a^2)}\frac{a}{\sqrt{x^2+a^2}}
+= \frac{1}{4\pi\varepsilon_0}\frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}}.
+\end{equation}
+于是
+\begin{align}
+E_y &= \frac{1}{4\pi\varepsilon_0}\int_{-L}^{L}\frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}} \\
+&= \frac{1}{4\pi\varepsilon_0}\,2\lambda\int_0^L \frac{a\,\dd x}{(x^2+a^2)^{3/2}} \\
+&= \frac{1}{4\pi\varepsilon_0}\frac{2\lambda L}{a\sqrt{L^2+a^2}}.
+\end{align}
+方向沿 $+y$ 轴。若 $L\to \infty$，则得到无限长直线电荷的结果
+\begin{equation}
+E = \frac{\lambda}{2\pi\varepsilon_0 a}.
+\end{equation}
+\end{example}
+
+\begin{remark}
+连续分布电荷的积分计算有两个核心：一是选取合适的电荷元 $\dd q$；二是充分利用对称性判断哪些分量抵消、哪些分量保留下来。这与力学中求引力场的方法完全类似。
+\end{remark}
+
+\section{电通量与高斯定理}
+
+对复杂电荷分布，直接积分往往很繁琐。高斯定理给出一种“绕开局部细节、抓住整体结构”的方法。它的核心概念是\emph{电通量}。
+
+\begin{definition}[电通量]
+穿过一小块面积元 $\dd \vb{A}$ 的电通量定义为
+\begin{equation}
+\dd \Phi_E = \vb{E}\cdot \dd \vb{A} = E\cos\theta\,\dd A,
+\end{equation}
+其中 $\dd\vb{A}$ 的方向规定为面积元的法向方向。对整个曲面 $S$，电通量为
+\begin{equation}
+\Phi_E = \iint_S \vb{E}\cdot \dd \vb{A}.
+\end{equation}
+若 $S$ 是封闭曲面，则记作
+\begin{equation}
+\Phi_E = \oiint_S \vb{E}\cdot \dd \vb{A}.
+\end{equation}
+\end{definition}
+
+通量刻画的是“有多少电场线穿过给定曲面”。严格地说，电场线只是形象图，但通量本身是严格定义的面积分。
+
+\begin{law}[高斯定理]
+任意闭合曲面 $S$ 上电场强度的通量，等于该曲面所包围的总电荷 $Q_{\text{in}}$ 与真空介电常量之比：
+\begin{equation}
+\oiint_S \vb{E}\cdot \dd \vb{A} = \frac{Q_{\text{in}}}{\varepsilon_0}.
+\end{equation}
+\end{law}
+
+这个公式告诉我们：闭合曲面上的总通量只与\emph{内部净电荷}有关，而与曲面外电荷无关。外部电荷当然会影响曲面上各点的电场分布，但它们贡献的总净通量为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \draw[thick] (0,0) ellipse (2.1 and 1.4);
+  \fill[red!70] (-0.3,0.1) circle (0.08);
+  \node[above] at (-0.3,0.1) {$+Q$};
+  \foreach \x/\y/\u/\v in {
+    -1.5/0.7/-2.4/1.1,
+    -1.7/-0.2/-2.6/-0.4,
+    -0.8/1.0/-1.0/1.8,
+    0.9/0.9/1.6/1.5,
+    1.3/0.1/2.4/0.1,
+    0.8/-0.9/1.5/-1.5,
+    -0.6/-0.9/-0.9/-1.7
+  } {
+    \draw[->, blue!70, thick] (\x,\y) -- (\u,\v);
+  }
+  \node at (0,-1.9) {闭合曲面 $S$};
+\end{tikzpicture}
+\caption{高斯面与穿出闭合曲面的电场通量}
+\end{figure}
+
+\begin{theorem}[点电荷情形下高斯定理的验证]
+若闭合曲面包围一个点电荷 $Q$，则无论曲面形状如何，总有
+\begin{equation}
+\oiint_S \vb{E}\cdot\dd\vb{A} = \frac{Q}{\varepsilon_0}.
+\end{equation}
+\end{theorem}
+
+\textbf{证明思路：} 对于以点电荷为球心、半径为 $r$ 的球面，处处有 $\vb{E}$ 与面元法线平行，且大小相同，于是
+\begin{equation}
+\Phi_E = E\cdot 4\pi r^2 = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}\cdot 4\pi r^2 = \frac{Q}{\varepsilon_0}.
+\end{equation}
+更一般的曲面可视为对同一组立体角的重新切分，每一束电场线穿出的“份额”不变，故总通量不变。
+
+\paragraph{算例：立方体中心放一点电荷的通量分配} 一个点电荷 $Q$ 放在立方体中心。由高斯定理，整个立方体的总通量为
+\begin{equation}
+\Phi_{\text{总}} = \frac{Q}{\varepsilon_0}.
+\end{equation}
+又由于立方体六个面完全对称，每个面的通量相同，因此
+\begin{equation}
+\Phi_{\text{每面}} = \frac{Q}{6\varepsilon_0}.
+\end{equation}
+该题的关键不在积分，而在认识对称性与“总量分配”的思想。
+
+\begin{remark}
+高斯定理始终成立，但并非任何题目都能直接用它求出 $E$。只有当电荷分布具有足够高的对称性，才能把面积分化简为“$E$ 乘面积”。
+\end{remark}
+
+\section{高斯定理的应用}
+
+本节讨论三类最经典的对称性：球对称、柱对称与面对称。它们分别对应球面、圆柱面和平面高斯面。
+
+\subsection*{球对称：点电荷、均匀带电球壳、均匀带电实心球}
+
+若电荷分布关于某一点完全对称，则电场只可能沿径向，且在同一半径的球面上大小处处相同。这时选取同心球面作为高斯面最自然。
+
+\begin{example}[均匀带电薄球壳的电场]
+半径为 $R$ 的薄球壳总电荷为 $Q$，且均匀分布在球面上。求球壳内外的电场。
+
+\textbf{解：}
+\begin{itemize}
+  \item 当 $r>R$ 时，取半径为 $r$ 的同心球面，由对称性知球面上 $E$ 恒定且沿法向，故
+  \begin{equation}
+  E\cdot 4\pi r^2 = \frac{Q}{\varepsilon_0}
+  \quad\Rightarrow\quad
+  E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}.
+  \end{equation}
+  球壳外场等效于球心处一点电荷。
+  \item 当 $r<R$ 时，高斯面包围净电荷为零，所以
+  \begin{equation}
+  E\cdot 4\pi r^2 = 0 \quad\Rightarrow\quad E=0.
+  \end{equation}
+\end{itemize}
+这说明静电平衡导体壳内部无电场，也解释了静电屏蔽的基本原理。
+\end{example}
+
+若为半径 $R$、体电荷密度均匀为 $\rho$ 的实心球，总电荷 $Q=\rho\cdot \frac{4}{3}\pi R^3$。当 $r<R$ 时，高斯面内包围电荷为
+\begin{equation}
+Q_{\text{in}} = \rho\cdot \frac{4}{3}\pi r^3.
+\end{equation}
+代入高斯定理得
+\begin{equation}
+E\cdot 4\pi r^2 = \frac{\rho \cdot \frac{4}{3}\pi r^3}{\varepsilon_0}
+\quad\Rightarrow\quad
+E = \frac{\rho r}{3\varepsilon_0}.
+\end{equation}
+可见球内场强与 $r$ 成正比，而非反比平方。
+
+\subsection*{柱对称：无限长直线电荷}
+
+若电荷分布绕某一轴旋转后不变，且沿轴方向平移后也不变，则具有柱对称。最典型的例子是无限长均匀带电直线。
+
+\begin{example}[无限长直线电荷的电场]
+设无限长直线电荷的线密度为 $\lambda$，求距直线 $r$ 处的电场强度。
+
+\textbf{解：} 取半径为 $r$、高为 $h$ 的同轴圆柱面为高斯面。由对称性，电场沿径向，且在侧面上大小恒定；在上下底面上，电场与法向垂直，所以底面通量为零。于是
+\begin{equation}
+\Phi_E = E\cdot (2\pi r h).
+\end{equation}
+圆柱内部所包围电荷为
+\begin{equation}
+Q_{\text{in}} = \lambda h.
+\end{equation}
+由高斯定理
+\begin{equation}
+E\cdot 2\pi r h = \frac{\lambda h}{\varepsilon_0},
+\end{equation}
+故
+\begin{equation}
+E = \frac{\lambda}{2\pi\varepsilon_0 r}.
+\end{equation}
+该结果与前面由积分求出的极限结果完全一致。
+\end{example}
+
+\subsection*{面对称：无限大均匀带电平面}
+
+若电荷分布关于某一平面平移不变，并且绕垂直于该平面的轴旋转也不变，则具有面对称。对于无限大均匀带电平面，电场只能垂直于平面，且平面两侧等大反向。
+
+\begin{example}[无限大均匀带电平面的电场]
+设无限大平面带有均匀面电荷密度 $\sigma$，求平面两侧的电场强度。
+
+\textbf{解：} 取跨越平面的薄圆柱（又称“药盒形高斯面”）作为高斯面。由对称性，侧面无通量，只有上下两个底面有贡献：
+\begin{equation}
+\Phi_E = EA + EA = 2EA.
+\end{equation}
+高斯面内所包围电荷为
+\begin{equation}
+Q_{\text{in}} = \sigma A.
+\end{equation}
+由高斯定理
+\begin{equation}
+2EA = \frac{\sigma A}{\varepsilon_0},
+\end{equation}
+得
+\begin{equation}
+E = \frac{\sigma}{2\varepsilon_0}.
+\end{equation}
+值得注意的是，这个结果与到平面的距离无关，反映了无限大平面的理想对称性。
+\end{example}
+
+\begin{remark}
+把高斯定理真正“用起来”的步骤通常是：
+\begin{enumerate}
+  \item 先判断电荷分布是否具备高对称性；
+  \item 再猜测电场方向与大小在哪些点相同；
+  \item 最后选取与该对称性匹配的高斯面，把面积分化简。
+\end{enumerate}
+若不能完成前两步，高斯定理虽成立，却未必能直接给出场强。
+\end{remark}
+
+\section{电偶极子}
+
+两个等量异号点电荷 $+q$ 与 $-q$ 相距很近时，构成最简单但又极其重要的电荷组合：\emph{电偶极子}。它揭示了“总电荷可以为零，但空间电场仍不为零”这一更深刻的结构。
+
+\begin{definition}[电偶极子与电偶极矩]
+由两个等量异号点电荷 $+q$ 与 $-q$ 组成、间距矢量为 $\vb{d}$（从负电荷指向正电荷）的体系称为电偶极子。定义其\emph{电偶极矩}
+\begin{equation}
+\vb{p} = q\vb{d}.
+\end{equation}
+方向从负电荷指向正电荷。
+\end{definition}
+
+设偶极子中心为原点，两电荷位于 $x$ 轴上。若场点到偶极子距离远大于电荷间距，即 $r\gg d$，则可作远场近似。
+
+在偶极轴线上，电场大小近似为
+\begin{equation}
+E_{\text{轴}} \approx \frac{1}{4\pi\varepsilon_0}\frac{2p}{r^3}.
+\end{equation}
+在偶极子中垂线上，电场大小近似为
+\begin{equation}
+E_{\perp} \approx \frac{1}{4\pi\varepsilon_0}\frac{p}{r^3}.
+\end{equation}
+可见偶极子的远场按 $1/r^3$ 衰减，比点电荷的 $1/r^2$ 衰减更快。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \fill[blue!70] (-1.4,0) circle (0.08);
+  \fill[red!70] (1.4,0) circle (0.08);
+  \node[below] at (-1.4,0) {$-q$};
+  \node[below] at (1.4,0) {$+q$};
+  \draw[->, thick] (-0.7,0.4) -- (0.7,0.4);
+  \node[above] at (0,0.4) {$\vb{p}$};
+  \draw[gray!60] (0,0) ellipse (3.0 and 2.0);
+  \draw[->, blue!70] (0,1.8) -- (0,2.5);
+  \draw[->, blue!70] (2.6,0.6) -- (3.2,0.9);
+  \draw[->, blue!70] (-2.6,0.6) -- (-3.2,0.9);
+  \draw[->, blue!70] (2.6,-0.6) -- (3.2,-0.9);
+  \draw[->, blue!70] (-2.6,-0.6) -- (-3.2,-0.9);
+\end{tikzpicture}
+\caption{电偶极子及其远处电场分布示意}
+\end{figure}
+
+\begin{example}[电偶极子轴线上远处场强估算]
+一电偶极子的电荷量为 $\pm q$，间距为 $d$。求距偶极子中心 $r$（且 $r\gg d$）的轴线上一点的场强近似式。
+
+\textbf{解：} 轴线上该点到两电荷的距离分别约为 $r-d/2$ 与 $r+d/2$，于是
+\begin{equation}
+E = \frac{1}{4\pi\varepsilon_0}\left[\frac{q}{(r-d/2)^2}-\frac{q}{(r+d/2)^2}\right].
+\end{equation}
+对 $d/r\ll 1$ 作一阶展开，可得
+\begin{equation}
+E \approx \frac{1}{4\pi\varepsilon_0}\frac{2qd}{r^3}
+= \frac{1}{4\pi\varepsilon_0}\frac{2p}{r^3}.
+\end{equation}
+方向沿偶极矩方向。
+\end{example}
+
+\begin{remark}
+很多分子虽然整体不带净电荷，却表现出电偶极性质，例如极性分子。电偶极矩因而成为连接微观结构与宏观电学性质的重要桥梁。
+\end{remark}
+
+\section{高考题微积分视角}
+
+下面选取三类经典高考风格问题，展示如何用“分解、电荷元、积分、对称性”来提升理解深度。
+
+\begin{gaokao}[title={高考题的微积分视角：双点电荷平衡点}]
+\textbf{题目：} 在一条直线上相距 $a$ 的两点固定两个正点电荷，电荷量分别为 $Q$ 与 $4Q$。求连线之间电场强度为零的位置。
+
+\textbf{常规思路：} 两个正电荷在中间区域电场方向相反，因此平衡点一定在它们之间。设平衡点距 $Q$ 为 $x$，则距 $4Q$ 为 $a-x$。由场强大小相等：
+\begin{equation}
+\frac{1}{4\pi\varepsilon_0}\frac{Q}{x^2}
+=
+\frac{1}{4\pi\varepsilon_0}\frac{4Q}{(a-x)^2}.
+\end{equation}
+解得
+\begin{equation}
+a-x = 2x \quad\Rightarrow\quad x = \frac{a}{3}.
+\end{equation}
+
+\textbf{微积分视角：} 平衡点的本质是矢量场 $E(x)$ 的零点。随着 $x$ 从左向右变化，左侧电荷贡献随 $x^{-2}$ 快速减小，右侧电荷贡献随 $(a-x)^{-2}$ 快速增大；二者曲线交点就是零场点。将电场看成函数，有助于理解“零点唯一性”。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：带电细杆中垂线上的电场}]
+\textbf{题目：} 长为 $2L$ 的均匀带电细杆，总电荷为 $Q$，求杆中垂线上距杆中心 $a$ 处的电场强度。
+
+\textbf{解题关键：} 令线电荷密度为 $\lambda = Q/(2L)$，取电荷元 $\dd q = \lambda\dd x$。由对称性，横向分量抵消，只需积分纵向分量：
+\begin{equation}
+E = \frac{1}{4\pi\varepsilon_0}\int_{-L}^{L} \frac{\lambda a\,\dd x}{(x^2+a^2)^{3/2}}
+= \frac{1}{4\pi\varepsilon_0}\frac{Q}{a\sqrt{L^2+a^2}}.
+\end{equation}
+
+\textbf{微积分视角：} 这类题若只记结论，容易机械；若从“把细杆切成无数电荷元”的过程出发，则不仅知道答案，还知道当 $L\to\infty$ 时如何自然过渡到无限长直线电荷的模型。
+\end{gaokao}
+
+\begin{gaokao}[title={高考题的微积分视角：均匀带电球体内外电场}]
+\textbf{题目：} 半径为 $R$ 的均匀带电实心球，总电荷为 $Q$。求球内、球外距球心 $r$ 处的电场强度。
+
+\textbf{解：} 体电荷密度为
+\begin{equation}
+\rho = \frac{Q}{\frac{4}{3}\pi R^3}.
+\end{equation}
+当 $r>R$ 时，由高斯定理
+\begin{equation}
+E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}.
+\end{equation}
+当 $r<R$ 时，包围电荷
+\begin{equation}
+Q_{\text{in}} = \rho\cdot \frac{4}{3}\pi r^3 = Q\frac{r^3}{R^3},
+\end{equation}
+于是
+\begin{equation}
+E\cdot 4\pi r^2 = \frac{Q r^3}{\varepsilon_0 R^3}
+\quad\Rightarrow\quad
+E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{R^3}r.
+\end{equation}
+
+\textbf{微积分视角：} 这一结果体现了“局部电场由内部累积电荷决定”。球内 $E\propto r$，意味着从球心出发，随着包围体积按 $r^3$ 增长，而高斯面面积按 $r^2$ 增长，二者相除留下一个 $r$。
+\end{gaokao}
+
+\section*{本章小结}
+
+\begin{itemize}
+  \item 库仑定律给出点电荷之间的反平方相互作用；
+  \item 电场强度 $\vb{E}=\vb{F}/q$ 把“电荷受力”转化为“空间每一点的场”；
+  \item 对离散电荷做矢量求和，对连续电荷做积分；
+  \item 电通量是面积分，\;高斯定理 $\oiint \vb{E}\cdot\dd\vb{A}=Q_{\text{in}}/\varepsilon_0$ 是静电学的核心结构；
+  \item 对称性决定高斯面，进而决定解题效率；
+  \item 电偶极子说明“净电荷为零不代表电场为零”，其远场遵循 $1/r^3$ 衰减。
+\end{itemize}
+
+\section*{习题}
+
+\begin{exercise}
+两个点电荷 $+q$ 与 $+4q$ 相距 $3a$。求在它们连线上电场强度为零的位置，并说明为什么零点不可能出现在两电荷外侧的某些区域。
+\end{exercise}
+
+\begin{exercise}
+在边长为 $a$ 的正方形四个顶点上，分别放置四个相同的正点电荷 $q$。求正方形中心处的电场强度与电势（只需口头说明电势是否为零，并解释原因）。
+\end{exercise}
+
+\begin{exercise}
+一电荷量为 $Q$ 的点电荷位于立方体一个顶点。设由八个同样的小立方体可拼成一个大立方体，使该电荷位于大立方体中心。利用高斯定理求原来小立方体各面总通量，并进一步讨论三个过该顶点的面上通量为何为零。
+\end{exercise}
+
+\begin{exercise}
+长度为 $2L$ 的均匀带电细杆，线密度为 $\lambda$。求其延长线上、距杆中心 $x$（$x>L$）处的电场强度，并验证当 $x\gg L$ 时可化为点电荷近似。
+\end{exercise}
+
+\begin{exercise}
+半径为 $R$ 的均匀带电圆环总电荷为 $Q$。求轴线上电场强度的极大值位置，并说明当场点靠近环心时场强为何趋于零。
+\end{exercise}
+
+\begin{exercise}
+利用高斯定理求半径为 $R$、体电荷密度均匀为 $\rho$ 的实心球在球内外的电场强度，并画出 $E$ 随 $r$ 变化的大致图像。
+\end{exercise}
+
+\begin{exercise}
+两块无限大平行金属板分别带有面电荷密度 $+\sigma$ 与 $-\sigma$。忽略边缘效应，利用单个无限大带电平面的场强结果，求板间与板外的合电场。
+\end{exercise}
+
+\begin{exercise}
+设电偶极子由 $\pm q$ 组成，间距为 $d$。试从精确表达式出发，推导其轴线上远场近似 $E \approx \dfrac{1}{4\pi\varepsilon_0}\dfrac{2p}{r^3}$。
+\end{exercise}
+
+\begin{exercise}
+阅读并比较：为什么高斯定理对任意闭合曲面都成立，但我们通常只在球对称、柱对称、面对称问题中用它直接求场强？请结合“积分是否易于化简”作答。
+\end{exercise}

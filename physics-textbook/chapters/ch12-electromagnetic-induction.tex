@@ -1,0 +1,624 @@
+\chapter{电磁感应}
+
+电和磁并不是彼此孤立的两门学问。静止电荷产生电场，稳恒电流产生磁场，而一旦磁场随时间变化，或者导体在磁场中运动，电路中又会出现新的电动势与电流。这种由磁引电的现象就叫作\emph{电磁感应}。从微积分的角度看，电磁感应的核心只有一句话：\textbf{磁通量随时间的变化率决定感应电动势的大小，而负号决定感应效应总要反抗原来的变化。}
+
+本章将用面积分、线积分与常微分方程，把高中阶段关于磁通量、法拉第定律、楞次定律、动生电动势、感生电动势、自感互感以及 RL 电路串成一个统一的理论链条。
+
+\section{磁通量}
+
+\begin{definition}
+设空间中有磁场 $\vb{B}$，曲面 $S$ 上取有向面积元
+\[
+\dd \vb{A}=\uvec{n}\,\dd A,
+\]
+其中 $\uvec{n}$ 是曲面的单位法向量，则穿过曲面 $S$ 的\textbf{磁通量}定义为
+\[
+\Phi_B=\iint_S \vb{B}\cdot \dd \vb{A}=\iint_S \vb{B}\cdot \uvec{n}\,\dd A.
+\]
+\end{definition}
+
+磁通量衡量的不是“有多少磁场”，而是“有多少磁场沿法向穿过该面”。因此，磁通量同时依赖于三个因素：磁场强弱、曲面面积大小、曲面的空间取向。
+
+当磁场为匀强磁场，且曲面是平面时，上式化为熟悉的高中表达式
+\[
+\Phi_B=BA\cos\theta,
+\]
+其中 $\theta$ 是磁场方向与曲面法线之间的夹角，而不是与平面本身的夹角。
+
+\begin{remark}
+磁通量是一个\textbf{标量}，但它带正负号。正负号来自法向量的选取：如果 $\vb{B}$ 与 $\uvec{n}$ 大致同向，则 $\Phi_B>0$；若反向，则 $\Phi_B<0$。对闭合回路应用法拉第定律时，回路绕行方向与曲面法向必须满足右手定则，否则正负号会混乱。
+\end{remark}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (2.1,1.1);
+  \coordinate (N) at (2.8,2.7);
+  \coordinate (B) at (2.7,2.0);
+  \fill[blue!8] (0,0) -- (3,0.8) -- (4.2,2.2) -- (1.2,1.4) -- cycle;
+  \draw[thick] (0,0) -- (3,0.8) -- (4.2,2.2) -- (1.2,1.4) -- cycle;
+  \draw[->, very thick, red!70!black] (O) -- (N) node[right] {$\uvec{n}$};
+  \draw[->, very thick, blue!70!black] (0.6,2.7) -- (B) node[right] {$\vb{B}$};
+  \path pic[draw, ->, "$\theta$", angle radius=0.55cm] {angle = B--O--N};
+  \node at (2.1,-0.5) {曲面法向与磁场的夹角决定磁通量};
+\end{tikzpicture}
+\end{center}
+
+若磁场或曲面并不均匀，就不能再用简单的 $BA\cos\theta$，而应回到面积分定义。把曲面分成许多小块，每一小块上的磁场近似不变，则
+\[
+\Phi_B\approx \sum_i \vb{B}_i\cdot \Delta \vb{A}_i,
+\]
+再令小块无限细分，就得到面积分极限。这正是“总量由局部量累加得到”的微积分思想。
+
+\begin{example}
+一面积为 $A$ 的矩形线圈置于匀强磁场 $\vb{B}$ 中，线圈法线与磁场夹角为 $\theta(t)=\omega t$。求任意时刻的磁通量，并指出磁通量变化最快的时刻。
+
+\textbf{解：} 由定义
+\[
+\Phi_B(t)=BA\cos \theta(t)=BA\cos(\omega t).
+\]
+故其变化率为
+\[
+\dv{\Phi_B}{t}=-BA\omega \sin(\omega t).
+\]
+当 $\sin(\omega t)=\pm 1$ 时，磁通量变化率的绝对值最大，即
+\[
+\omega t=\frac{\pi}{2},\ \frac{3\pi}{2},\ \dots
+\]
+此时线圈平面与磁场平行，虽然瞬时磁通量本身为零，但磁通量变化得最快。
+\end{example}
+
+\begin{example}
+半径为 $R$ 的圆面位于非均匀磁场中，磁场大小满足 $B(r)=B_0\left(1-\dfrac{r^2}{R^2}\right)$，方向处处垂直圆面向外。求穿过该圆面的磁通量。
+
+\textbf{解：} 采用极坐标面积元 $\dd A=2\pi r\,\dd r$，因磁场与法线同向，故
+\[
+\Phi_B=\int_0^R B(r)\,2\pi r\,\dd r
+=2\pi B_0 \int_0^R \left(1-\frac{r^2}{R^2}\right)r\,\dd r.
+\]
+计算得
+\[
+\Phi_B=2\pi B_0\left[\frac{r^2}{2}-\frac{r^4}{4R^2}\right]_0^R
+=2\pi B_0\left(\frac{R^2}{2}-\frac{R^2}{4}\right)
+=\frac{1}{2}\pi B_0 R^2.
+\]
+这个例子说明：即使圆面面积是 $\pi R^2$，有效磁通量也未必等于中心磁场乘面积，而必须对每一环带逐层积分。
+\end{example}
+
+\section{法拉第电磁感应定律}
+
+实验表明，只要穿过闭合回路的磁通量发生变化，回路中就会出现感应电动势。变化可以来自磁场本身变化，也可以来自回路面积或方向变化。
+
+\begin{law}[法拉第电磁感应定律]
+对任意闭合回路 $C$ 及其所围曲面 $S$，感应电动势满足
+\[
+\mathcal{E}=-\dv{\Phi_B}{t}=-\dv{}{t}\iint_S \vb{B}\cdot \dd \vb{A}.
+\]
+若线圈有 $N$ 匝且每匝穿过的磁通量相同，则
+\[
+\mathcal{E}=-N\dv{\Phi_B}{t}.
+\]
+\end{law}
+
+这里的负号不是数学装饰，而是物理内容的浓缩，它将在下一节由楞次定律解释。
+
+从平均量的角度，若在时间间隔 $\Delta t$ 内磁通量改变了 $\Delta \Phi_B$，则平均感应电动势为
+\[
+\mathcal{E}_{\text{avg}}=-\frac{\Delta \Phi_B}{\Delta t}.
+\]
+令 $\Delta t\to 0$，就得到瞬时形式 $\mathcal{E}=-\dv{\Phi_B}{t}$。因此，法拉第定律是一个标准的导数定律：\textbf{电磁感应关心的不是磁通量有多大，而是它变化得有多快。}
+
+\begin{remark}
+很多题目中“磁通量为零”并不等于“没有感应电动势”。只要 $\dv{\Phi_B}{t}\neq 0$，即使某一时刻 $\Phi_B=0$，也仍然可能有感应电动势。上一节旋转线圈的例子就是如此。
+\end{remark}
+
+\begin{example}
+一个 $N$ 匝线圈面积为 $A$，以角速度 $\omega$ 在匀强磁场 $B$ 中绕与磁场垂直的轴匀速转动。若初始时线圈法线与磁场同向，求感应电动势随时间的变化规律。
+
+\textbf{解：} 每匝磁通量为
+\[
+\Phi_B(t)=BA\cos(\omega t).
+\]
+因此总磁链为 $N\Phi_B$，感应电动势
+\[
+\mathcal{E}(t)=-N\dv{\Phi_B}{t}=NBA\omega \sin(\omega t).
+\]
+于是交流发电机输出的是正弦交流电，其峰值为
+\[
+\mathcal{E}_{\max}=NBA\omega.
+\]
+这个公式说明，提高匝数、面积、磁场强度或转速，都能提高发电机输出电压。
+\end{example}
+
+\begin{theorem}[广义法拉第定律]
+若回路本身也在运动，则总电动势应写为
+\[
+\oint_C \left(\vb{E}+\vb{v}\times\vb{B}\right)\cdot \dd \vb{l}
+=-\dv{}{t}\iint_S \vb{B}\cdot \dd \vb{A}.
+\]
+左边第一项对应感生电动势，第二项对应动生电动势。两者并不是彼此割裂的规律，而是同一电磁感应定律在不同情形下的表现。
+\end{theorem}
+
+这个定理告诉我们：当我们说“磁通量变化产生感应电动势”时，不必拘泥于变化究竟来自磁场、来自面积，还是来自回路位置。只要右边的磁通量作为时间函数发生改变，左边一定能在回路上找到与之对应的电动势来源。
+
+\section{楞次定律}
+
+法拉第定律给出大小，楞次定律给出方向。
+
+\begin{law}[楞次定律]
+感应电流（或感应电动势）所激发的磁场，总是\textbf{阻碍原来磁通量的变化}。
+\end{law}
+
+若穿过线圈的外磁通量增加，则感应电流产生的磁场要试图减小这种增加；若外磁通量减小，则感应电流产生的磁场要试图维持原来的磁通量。简言之，不是“反抗磁通量本身”，而是“反抗磁通量的变化”。
+
+楞次定律实际上是能量守恒的必然结果。若感应电流总去“帮助”磁通量变化，那么系统便会无中生有地放大变化，产生免费的机械功或电功，这与能量守恒矛盾。负号 $-$ 正是在数学上排除了这种荒谬可能。
+
+\begin{remark}
+\textbf{方向示例：} 一根条形磁铁的 $N$ 极沿线圈轴线方向靠近静止线圈。此时穿过线圈的磁通量增大，根据楞次定律，线圈中感应电流产生的磁场必须阻碍这种“增大”，故线圈靠近磁铁的一侧应表现为 $N$ 极，从而排斥来近的磁铁。用右手螺旋定则判断，若从磁铁一侧观察，线圈中的感应电流应为逆时针方向。由于感应磁场对磁铁有排斥作用，外力若想继续把磁铁推近，就必须克服排斥力做正功；该机械功最终转化为电路中的焦耳热或磁场能量。
+\end{remark}
+
+\begin{remark}
+判断感应电流方向时，最稳妥的步骤是：
+\begin{enumerate}
+  \item 先判断原磁通量是增大还是减小；
+  \item 再判断感应磁场应当顺着原方向还是反着原方向；
+  \item 最后用右手定则把感应磁场方向转化为电流方向。
+\end{enumerate}
+不要一上来就死记“靠近顺逆、远离顺逆”，因为一旦题目几何方向稍变，口诀就容易失效。
+\end{remark}
+
+\section{动生电动势}
+
+\begin{definition}
+当导体或回路的一部分在磁场中运动时，导体内自由电荷受到洛伦兹力
+\[
+\vb{F}_m=q\vb{v}\times\vb{B},
+\]
+从而沿导体定向分离，形成的电动势叫作\textbf{动生电动势}。其一般表达式为
+\[
+\mathcal{E}_{\text{mot}}=\int (\vb{v}\times\vb{B})\cdot \dd \vb{l}.
+\]
+\end{definition}
+
+当导体棒长度为 $\ell$，速度 $\vb{v}$、磁场 $\vb{B}$ 与导体棒三者互相垂直时，上式简化为
+\[
+\mathcal{E}=B\ell v.
+\]
+这是高中题中最常见的切割磁力线模型。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[thick] (0,0) -- (5,0);
+  \draw[thick] (0,2.2) -- (5,2.2);
+  \draw[very thick] (1.2,0) -- (2.0,2.2);
+  \draw[->, thick] (2.2,1.1) -- (3.6,1.1) node[right] {$\vb{v}$};
+  \foreach \x in {0.6,1.6,2.6,3.6,4.6} {
+    \node at (\x,1.1) {$\otimes$};
+  }
+  \node at (4.4,1.75) {$\vb{B}$ 垂直纸面向里};
+  \node[below] at (2.5,-0.1) {导轨};
+  \node[above] at (2.6,2.3) {导轨};
+  \node[left] at (1.2,1.1) {导体棒};
+\end{tikzpicture}
+\end{center}
+
+在微观上，正电荷受到 $q\vb{v}\times\vb{B}$ 力而向导体一端聚集，负电荷向另一端聚集，直到静电力与磁力平衡。若导体两端再接成闭合回路，电荷便持续流动，形成感应电流。
+
+\begin{example}
+两平行光滑导轨间距为 $\ell$，置于竖直向下的匀强磁场 $B$ 中，一根金属棒以速度 $v$ 向右匀速滑动，导轨与棒构成闭合回路，总电阻为 $R$。求感应电流、安培力和外力功率。
+
+\textbf{解：} 动生电动势大小为
+\[
+\mathcal{E}=B\ell v.
+\]
+故感应电流
+\[
+I=\frac{\mathcal{E}}{R}=\frac{B\ell v}{R}.
+\]
+棒中电流在磁场中受安培力，其大小为
+\[
+F=B I \ell=\frac{B^2\ell^2 v}{R}.
+\]
+根据楞次定律，该力方向必与运动方向相反，所以外力若要维持匀速，必须提供同样大小的拉力。外力功率为
+\[
+P_{\text{ext}}=Fv=\frac{B^2\ell^2 v^2}{R}.
+\]
+而电路中的焦耳热功率
+\[
+P_J=I^2R=\left(\frac{B\ell v}{R}\right)^2R=\frac{B^2\ell^2 v^2}{R}.
+\]
+两者相等，表明机械能通过电磁感应完整转化为内能。
+\end{example}
+
+\begin{remark}
+“导体切割磁感线”只是动生电动势的一种形象说法。严格地说，关键不是是否看见“切割了线”，而是回路中电荷是否具有相对于磁场的速度，从而受到 $q\vb{v}\times\vb{B}$ 力。
+\end{remark}
+
+\section{感生电动势}
+
+当回路静止而磁场随时间变化时，电荷即使没有整体运动速度，仍然可能在空间中受到电场作用而沿回路运动。这种由变化磁场激发出的电动势叫作\textbf{感生电动势}。
+
+\begin{law}[变化磁场产生电场]
+若闭合回路静止，则感应电动势满足
+\[
+\oint_C \vb{E}\cdot \dd \vb{l}=-\dv{\Phi_B}{t}.
+\]
+这说明变化的磁场会在空间中激发环形电场。
+\end{law}
+
+与静电场不同，这种电场的电场线不是从正电荷出发到负电荷终止，而是绕成闭合曲线，因此它是\textbf{非保守电场}。用麦克斯韦方程的微分形式表示，即
+\[
+\curl \vb{E}=-\pdv{\vb{B}}{t}.
+\]
+右边不为零，说明此时电场具有旋度，不可能由单值静电势在全空间中简单描述。
+
+\begin{remark}
+动生电动势和感生电动势在本质上都属于电磁感应，但受力机制不同：
+\begin{itemize}
+  \item 动生电动势：电荷主要受磁场力 $q\vb{v}\times\vb{B}$；
+  \item 感生电动势：电荷主要受变化磁场激发的感应电场力 $q\vb{E}$。
+\end{itemize}
+在复杂情形中，两种贡献可以同时存在，必须用广义法拉第定律统一处理。
+\end{remark}
+
+\begin{example}
+半径为 $R$ 的圆形区域内存在均匀磁场 $\vb{B}(t)=B(t)\uvec{z}$，其外部磁场可忽略。已知 $\dv*{B}{t}=k$ 为常数。求以该区域圆心为中心、半径为 $r$ 的圆周上的感应电场大小 $E(r)$。
+
+\textbf{解：} 由对称性，感应电场沿圆周切向分布，且同一圆周上大小相等，因此
+\[
+\oint \vb{E}\cdot \dd \vb{l}=E(r)\cdot 2\pi r.
+\]
+分两种情况：
+
+\textbf{(1) $r<R$：} 取半径为 $r$ 的回路，穿过回路的磁通量为
+\[
+\Phi_B=B(t)\pi r^2,
+\]
+故
+\[
+E(r)\,2\pi r=-\dv{}{t}(B\pi r^2)=-\pi r^2 k.
+\]
+于是
+\[
+E(r)=-\frac{k r}{2}.
+\]
+其大小为
+\[
+|E(r)|=\frac{|k|r}{2}.
+\]
+
+\textbf{(2) $r>R$：} 真正有磁通变化的区域仍只有半径 $R$ 的圆盘，因此
+\[
+\Phi_B=B(t)\pi R^2,
+\]
+故
+\[
+E(r)\,2\pi r=-\pi R^2 k,
+\qquad
+|E(r)|=\frac{|k|R^2}{2r}.
+\]
+
+因此感应电场先随 $r$ 线性增大，超过磁场区域后再按 $1/r$ 衰减。这类分段函数正是面积分与线积分共同决定的结果。
+\end{example}
+
+\section{自感与互感}
+
+电流变化会改变自身产生的磁场，因此不仅外磁场变化能引起感应电动势，回路中\textbf{自身电流的变化}也会导致感应现象。
+
+\begin{definition}
+若一个线圈中电流为 $I$，穿过每匝线圈的磁通量为 $\Phi_B$，且在线性介质中有
+\[
+N\Phi_B=LI,
+\]
+则称 $L$ 为该线圈的\textbf{自感系数}，简称\textbf{电感}。
+\end{definition}
+
+于是线圈中的自感电动势满足
+\[
+\mathcal{E}_L=-L\dv{I}{t}.
+\]
+电流增加时，自感电动势阻碍电流增加；电流减小时，自感电动势又阻碍电流减小。这正是楞次定律在“回路对自身变化”的体现。
+
+对长直螺线管，若长度为 $l$，截面积为 $A$，单位长度匝数为 $n$，则其内部磁场近似为
+\[
+B=\mu_0 n I.
+\]
+总匝数 $N=nl$，于是磁链为
+\[
+N\Phi_B=N(BA)=nl(\mu_0 n I A).
+\]
+故电感近似为
+\[
+L=\mu_0 n^2 A l.
+\]
+这说明电感与线圈几何结构密切相关：匝数密、截面大、长度长，都有利于储存更多磁场能量。
+
+\begin{definition}
+若线圈 1 中的电流 $I_1$ 在线圈 2 中产生磁通量 $\Phi_{21}$，并满足
+\[
+N_2\Phi_{21}=M I_1,
+\]
+则称 $M$ 为两线圈之间的\textbf{互感系数}。线圈 2 中产生的感应电动势为
+\[
+\mathcal{E}_2=-M\dv{I_1}{t}.
+\]
+\end{definition}
+
+互感是变压器工作的基础。交流电通过原线圈时，原线圈中的电流不断变化，于是铁芯中的磁通量不断变化，再在副线圈中激发感应电动势。
+
+\begin{law}[理想变压器关系]
+忽略漏磁、线圈电阻和能量损失时，理想变压器满足
+\[
+\frac{V_1}{V_2}=\frac{N_1}{N_2},
+\qquad
+\frac{I_1}{I_2}=\frac{N_2}{N_1},
+\qquad
+P_1\approx P_2.
+\]
+\end{law}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[thick] (0,0) arc[start angle=-90,end angle=90,radius=0.25]
+               (0.5,0) arc[start angle=-90,end angle=90,radius=0.25]
+               (1.0,0) arc[start angle=-90,end angle=90,radius=0.25]
+               (1.5,0) arc[start angle=-90,end angle=90,radius=0.25];
+  \draw[thick] (4,0) arc[start angle=90,end angle=-90,radius=0.25]
+               (4.5,0) arc[start angle=90,end angle=-90,radius=0.25]
+               (5.0,0) arc[start angle=90,end angle=-90,radius=0.25]
+               (5.5,0) arc[start angle=90,end angle=-90,radius=0.25];
+  \draw[very thick, fill=gray!20] (2.2,-1.7) rectangle (3.3,1.7);
+  \node at (2.75,0) {铁芯};
+  \draw[thick] (0,-1.0) -- (0,-1.8);
+  \draw[thick] (1.75,-1.0) -- (1.75,-1.8);
+  \draw[thick] (4,-1.0) -- (4,-1.8);
+  \draw[thick] (5.75,-1.0) -- (5.75,-1.8);
+  \node at (0.9,2.0) {原线圈 $N_1$};
+  \node at (4.9,2.0) {副线圈 $N_2$};
+  \draw[->, blue!70!black, thick] (1.8,1.2) .. controls (2.5,1.8) and (3.0,1.8) .. (4.0,1.2);
+  \draw[->, blue!70!black, thick] (4.0,-1.2) .. controls (3.2,-1.8) and (2.6,-1.8) .. (1.8,-1.2);
+  \node[blue!70!black] at (2.8,2.2) {$\Phi_B(t)$};
+\end{tikzpicture}
+\end{center}
+
+\section{RL 电路与电磁能量}
+
+电感元件接入电路后，电流一般不再“瞬间跳变”，而要满足微分方程。最基本的模型是串联的 RL 电路。
+
+\begin{center}
+\begin{circuitikz}[american]
+  \draw (0,0)
+    to[battery1,l=$\mathcal{E}$] (0,3)
+    to[R,l=$R$] (3,3)
+    to[L,l=$L$] (6,3)
+    -- (6,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+
+由基尔霍夫回路定律可得
+\[
+\mathcal{E}-IR-L\dv{I}{t}=0,
+\]
+即
+\[
+L\dv{I}{t}+RI=\mathcal{E}.
+\]
+这是一个一阶线性常微分方程。若在 $t=0$ 接通电源且初始电流 $I(0)=0$，其解为
+\[
+I(t)=\frac{\mathcal{E}}{R}\left(1-e^{-t/\tau}\right),
+\qquad
+\tau=\frac{L}{R}.
+\]
+其中 $\tau$ 称为\textbf{时间常数}。它刻画电流建立的快慢：$\tau$ 越大，电流变化越慢。
+
+若把电源移去，只剩电阻和电感构成回路，则满足
+\[
+L\dv{I}{t}+RI=0,
+\]
+解为
+\[
+I(t)=I_0 e^{-t/\tau}.
+\]
+可见电感并不会维持电流永不消失，而只是通过释放原先储存在磁场中的能量，使电流缓慢衰减。
+
+电感中的磁场能量为
+\[
+U_B=\frac{1}{2}LI^2.
+\]
+对于磁场近似均匀分布的区域，还可写成能量密度形式
+\[
+ u_B=\frac{B^2}{2\mu_0}.
+\]
+它与静电场能量密度 $u_E=\dfrac{1}{2}\varepsilon_0 E^2$ 共同说明：\textbf{电磁场本身就能储存能量}。
+
+\begin{example}
+一串联 RL 电路中，电源电动势为 $\mathcal{E}$，电阻为 $R$，电感为 $L$。求接通后 $t=\tau=L/R$ 时的电流，并求此时电感中储存的磁场能量占稳定时最大值的比例。
+
+\textbf{解：} 电流随时间变化为
+\[
+I(t)=\frac{\mathcal{E}}{R}\left(1-e^{-t/\tau}\right).
+\]
+故当 $t=\tau$ 时，
+\[
+I(\tau)=\frac{\mathcal{E}}{R}\left(1-e^{-1}\right).
+\]
+稳定后最大电流为 $I_{\infty}=\dfrac{\mathcal{E}}{R}$，故最大磁场能量
+\[
+U_{\max}=\frac{1}{2}L\left(\frac{\mathcal{E}}{R}\right)^2.
+\]
+而 $t=\tau$ 时
+\[
+U(\tau)=\frac{1}{2}L I^2(\tau)=\frac{1}{2}L\left(\frac{\mathcal{E}}{R}\right)^2\left(1-e^{-1}\right)^2.
+\]
+因此所占比例为
+\[
+\frac{U(\tau)}{U_{\max}}=\left(1-e^{-1}\right)^2\approx 0.40.
+\]
+所以经过一个时间常数，电流已达到稳态值的约 $63\%$，但能量只达到约 $40\%$，因为能量与电流的平方成正比。
+\end{example}
+
+\begin{remark}
+由 $U_B=\dfrac{1}{2}LI^2$ 可见，电感类似于力学中的“惯性”元件：它反抗电流变化，并把外界做功暂时存入磁场，再在需要时释放出来。这也是各种滤波、电能转换与暂态控制电路的基础。
+\end{remark}
+
+\section{高考题微积分视角}
+
+下面选取三道典型高考风格题，展示如何把“公式套用”提升为“函数、导数与积分”的统一理解。
+
+\begin{gaokao}[title={\bfseries 高考题 1：导体棒切割磁力线}]
+已知两平行导轨间距为 $\ell$，导轨电阻不计，左端接电阻 $R$。一根质量为 $m$、电阻不计的金属棒在竖直向下的匀强磁场 $B$ 中沿导轨向右滑动。若某时刻棒的速度为 $v$，求：
+\begin{enumerate}
+  \item 回路中的感应电流；
+  \item 棒所受安培力；
+  \item 若仅受安培力阻碍，写出速度满足的微分方程。
+\end{enumerate}
+
+\textbf{微积分解：}
+动生电动势
+\[
+\mathcal{E}=B\ell v.
+\]
+故感应电流
+\[
+I=\frac{B\ell v}{R}.
+\]
+安培力大小
+\[
+F=B I\ell=\frac{B^2\ell^2}{R}v,
+\]
+方向与速度反向。于是由牛顿第二定律
+\[
+m\dv{v}{t}=-\frac{B^2\ell^2}{R}v.
+\]
+这已经是一个可分离变量方程，解为
+\[
+ v(t)=v_0\exp\left(-\frac{B^2\ell^2}{mR}t\right).
+\]
+可见电磁阻尼使速度指数衰减，而不是匀减速。这正是“受力与速度成正比”所对应的微分方程特征。
+\end{gaokao}
+
+\begin{gaokao}[title={\bfseries 高考题 2：线圈中磁通量随时间变化}]
+一匝数为 $N$、面积为 $A$ 的线圈固定不动，所在区域磁场垂直线圈平面且满足
+\[
+B(t)=B_0+kt^2 \qquad (k>0).
+\]
+设线圈总电阻为 $R$。求：
+\begin{enumerate}
+  \item 任意时刻的感应电动势；
+  \item 任意时刻的感应电流；
+  \item 从 $0$ 到 $T$ 时间内通过线圈某截面的电荷量。
+\end{enumerate}
+
+\textbf{微积分解：}
+磁通量为
+\[
+\Phi_B(t)=B(t)A=(B_0+kt^2)A.
+\]
+于是
+\[
+\mathcal{E}(t)=-N\dv{\Phi_B}{t}=-N\cdot 2ktA.
+\]
+故感应电流为
+\[
+I(t)=\frac{\mathcal{E}(t)}{R}=-\frac{2NkAt}{R}.
+\]
+若求通过某截面的电荷量，只需积分电流：
+\[
+Q=\int_0^T I(t)\,\dd t
+=-\frac{2NkA}{R}\int_0^T t\,\dd t
+=-\frac{NkAT^2}{R}.
+\]
+故电荷量大小为
+\[
+|Q|=\frac{NkAT^2}{R}.
+\]
+这道题最值得注意的地方是：\textbf{电荷量不是用某个瞬时公式代入，而是对电流函数做定积分。}
+\end{gaokao}
+
+\begin{gaokao}[title={\bfseries 高考题 3：线框出入磁场区域}]
+边长为 $a$、总电阻为 $R$ 的正方形线框，以恒定速度 $v$ 水平穿过宽度大于 $a$ 的匀强磁场区域，磁场方向垂直纸面向里，磁感应强度为 $B$。求线框刚进入磁场过程中的感应电动势与感应电流，并说明为何在线框完全进入后电流变为零。
+
+\textbf{微积分解：}
+设线框进入深度为 $x(t)=vt$，在刚进入阶段 $0\le x\le a$。此时处于磁场中的有效面积为
+\[
+A_{\text{in}}(t)=a\,x(t)=avt.
+\]
+故磁通量
+\[
+\Phi_B(t)=B A_{\text{in}}(t)=Bavt.
+\]
+感应电动势
+\[
+\mathcal{E}=-\dv{\Phi_B}{t}=-Bav.
+\]
+其大小恒为 $Bav$，故电流大小为
+\[
+I=\frac{Bav}{R}.
+\]
+当线框完全进入磁场后，有效面积恒为 $a^2$，于是
+\[
+\Phi_B=Ba^2=\text{常量},
+\qquad
+\dv{\Phi_B}{t}=0.
+\]
+所以虽然线框仍在磁场中运动，但磁通量不再变化，感应电流便消失。由此可见，“是否在磁场中”不是关键，\textbf{关键在于穿过回路的磁通量是否随时间变化。}
+\end{gaokao}
+
+\section*{本章小结}
+
+\begin{itemize}
+  \item 磁通量是磁场对有向面积的面积分：$\Phi_B=\iint_S \vb{B}\cdot \dd \vb{A}$。
+  \item 法拉第定律给出大小：$\mathcal{E}=-\dv{\Phi_B}{t}$；楞次定律给出方向：感应效应总阻碍原磁通量变化。
+  \item 动生电动势来自 $q\vb{v}\times\vb{B}$，感生电动势来自变化磁场激发的环形电场。
+  \item 自感与互感把“电流变化”转化为“感应电动势”，变压器则是互感的直接应用。
+  \item RL 电路满足一阶线性微分方程，电感中的能量为 $U_B=\dfrac{1}{2}LI^2$，磁场能量密度为 $u_B=\dfrac{B^2}{2\mu_0}$。
+\end{itemize}
+
+\section*{习题}
+
+\begin{exercise}
+设一平面线圈面积为 $A$，其法线与匀强磁场夹角满足 $\theta(t)=\alpha t^2$。写出磁通量 $\Phi_B(t)$ 与感应电动势 $\mathcal{E}(t)$ 的表达式。
+\end{exercise}
+
+\begin{exercise}
+半径为 $R$ 的圆线圈处在磁场 $B(t)=B_0 e^{-\lambda t}$ 中，磁场始终垂直线圈平面。求线圈中感应电动势随时间的函数关系，并判断其方向如何变化。
+\end{exercise}
+
+\begin{exercise}
+一长度为 $\ell$ 的金属棒以速度 $v(x)=v_0+kx$ 在匀强磁场中沿导轨滑动。若回路总电阻为 $R$，求感应电流关于位置 $x$ 的函数关系，并写出单位时间内产生的焦耳热功率。
+\end{exercise}
+
+\begin{exercise}
+证明：对固定回路，若穿过回路的磁通量保持常量，则尽管磁场可能在空间中重新分布，回路中的总感应电动势仍可为零。请结合法拉第定律说明原因。
+\end{exercise}
+
+\begin{exercise}
+一长直螺线管长度为 $l$，截面积为 $A$，总匝数为 $N$。在空气中近似认为内部磁场均匀。试推导其电感公式
+\[
+L=\mu_0 \frac{N^2A}{l}.
+\]
+并说明该结果与 $L=\mu_0 n^2Al$ 的一致性。
+\end{exercise}
+
+\begin{exercise}
+某理想变压器原线圈匝数为 $500$，副线圈匝数为 $100$。若原线圈输入交流有效值电压为 $220\,\mathrm{V}$，求副线圈输出电压；若副线圈电流为 $2\,\mathrm{A}$，求原线圈电流。
+\end{exercise}
+
+\begin{exercise}
+一 RL 串联电路中，$L=0.20\,\mathrm{H}$，$R=10\,\Omega$，电源电动势为 $12\,\mathrm{V}$。求时间常数 $\tau$、稳定电流，以及接通后 $0.010\,\mathrm{s}$ 时的电流大小。
+\end{exercise}
+
+\begin{exercise}
+证明感应电场不是保守场，即说明在变化磁场存在时沿闭合回路有
+\[
+\oint \vb{E}\cdot \dd \vb{l}\neq 0.
+\]
+并比较它与静电场 $\oint \vb{E}\cdot \dd \vb{l}=0$ 的根本差别。
+\end{exercise}
+
+\begin{exercise}
+一闭合金属环从无磁场区域进入磁场区域，又完全离开磁场区域。请画出磁通量 $\Phi_B(t)$、感应电动势 $\mathcal{E}(t)$ 与感应电流 $I(t)$ 的大致图像，并说明三个图像之间的导数关系。
+\end{exercise}
+
+\begin{exercise}
+设某区域磁场能量密度满足 $u_B=\dfrac{B^2}{2\mu_0}$。若该区域体积为 $V$，且磁场近似均匀为 $B$，证明总磁场能量为 $U_B=u_BV$。再将其与长螺线管的 $\dfrac{1}{2}LI^2$ 比较，说明两种表达式为何一致。
+\end{exercise}

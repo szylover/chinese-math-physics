@@ -1,0 +1,831 @@
+\chapter{振动与波}
+\label{chap:oscillations-waves}
+
+振动与波是高中物理中最能体现“微分方程思想”的主题之一。一个质点如果总被某种回复作用拉回平衡位置，就会产生振动；许多相邻质点之间若存在耦合，局部振动便会向外传播，形成波。用微积分的语言说，振动研究的是时间函数的微分方程，波研究的是时空函数的偏微分方程。
+
+本章将以最典型的二阶线性方程为主线：先从简谐运动出发，再讨论单摆、阻尼振动和受迫振动，最后进入波动方程、干涉与驻波，并用高考题说明微积分视角如何把“记结论”变成“会推导”。
+
+\section{简谐运动}
+
+\subsection{从牛顿第二定律到微分方程}
+
+设质点在一条直线上运动，平衡位置取为 $x=0$。若回复力满足胡克定律
+\[
+F=-kx,
+\]
+其中 $k>0$ 为劲度系数，则由牛顿第二定律 $m\ddot x=F$ 得
+\[
+ m\ddot x=-kx.
+\]
+整理为
+\begin{equation}
+\ddot x+\omega^2 x=0,
+\label{eq:sho-ode}
+\end{equation}
+其中
+\[
+\omega\coloneqq \sqrt{\frac{k}{m}}
+\]
+称为\emph{角频率}。
+
+\begin{definition}
+满足微分方程
+\[
+\ddot x+\omega^2x=0
+\]
+的运动称为\emph{简谐运动}。其中振幅记为 $A$，周期记为 $T$，频率记为 $f$，相位记为 $\omega t+\varphi$，初相记为 $\varphi$。
+\end{definition}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1]
+  \draw[fill=gray!20] (-0.5,-0.8) rectangle (0,0.8);
+  \draw[thick] (0,0) -- (0.5,0);
+  \draw[thick] (0.5,0) -- (0.8,0.25) -- (1.1,-0.25) -- (1.4,0.25) -- (1.7,-0.25) -- (2.0,0.25) -- (2.3,-0.25) -- (2.6,0);
+  \draw[fill=blue!15, thick] (2.6,-0.45) rectangle (4.1,0.45);
+  \draw[->, thick] (3.35,0) -- (4.35,0) node[right] {$x$};
+  \draw[dashed] (3.35,-0.7) -- (3.35,0.7);
+  \node[below] at (3.35,-0.7) {平衡位置};
+  \node at (3.35,0) {$m$};
+  \node[above] at (1.55,0.35) {$k$};
+\end{tikzpicture}
+\caption{弹簧振子的理想模型}
+\end{figure}
+
+\subsection{通解与运动学量}
+
+方程 \eqref{eq:sho-ode} 的特征方程为
+\[
+r^2+\omega^2=0,
+\]
+其根为 $r=\pm i\omega$。因此有如下结论。
+
+\begin{theorem}
+简谐运动方程
+\[
+\ddot x+\omega^2x=0
+\]
+的实数通解为
+\begin{equation}
+ x(t)=A\cos(\omega t+\varphi),
+\label{eq:sho-general}
+\end{equation}
+其中 $A\ge 0$，$\varphi$ 为常数。等价地，也可写成
+\[
+ x(t)=C_1\cos \omega t+C_2\sin \omega t.
+\]
+其速度与加速度分别为
+\[
+ v(t)=\dot x=-A\omega\sin(\omega t+\varphi),
+\qquad
+ a(t)=\ddot x=-\omega^2x.
+\]
+故加速度始终指向平衡位置，且与位移成正比、反向。
+\end{theorem}
+
+由 $\omega=2\pi/T=2\pi f$ 可得
+\[
+T=\frac{2\pi}{\omega},
+\qquad
+f=\frac{\omega}{2\pi}.
+\]
+这说明只要知道系统的“恢复快慢”，就能确定振动节奏。
+
+\begin{remark}
+把 $x=A\cos(\omega t+\varphi)$ 投影到圆周运动上理解，是学习简谐运动的经典方法：设一点在半径为 $A$ 的圆上做匀速圆周运动，其在某一直径上的投影便做简谐运动。这个几何图像能帮助我们理解相位差、超前与滞后。
+\end{remark}
+
+\subsection{能量观点}
+
+简谐振动虽然速度和位移都在不断变化，但总机械能保持不变。
+
+\begin{law}
+对理想弹簧振子，动能与势能分别为
+\[
+K=\frac12 m\dot x^2,
+\qquad
+U=\frac12 kx^2=\frac12 m\omega^2x^2.
+\]
+总机械能
+\begin{equation}
+E=K+U=\frac12 m\dot x^2+\frac12 m\omega^2x^2
+\label{eq:sho-energy}
+\end{equation}
+恒为常数，且
+\[
+E=\frac12 kA^2=\frac12 m\omega^2A^2.
+\]
+\end{law}
+
+证明很直接：对式 \eqref{eq:sho-energy} 对时间求导，得
+\[
+\dv{E}{t}=m\dot x\ddot x+m\omega^2x\dot x
+= m\dot x(\ddot x+\omega^2x)=0.
+\]
+因此 $E$ 守恒。
+
+\begin{example}
+已知某振子满足 $x(0)=3\text{ cm}$，$v(0)=-4\omega\text{ cm/s}$。求其振幅和一个可取的解析式。
+
+\textbf{解：} 设
+\[
+x=C_1\cos\omega t+C_2\sin\omega t.
+\]
+由初始条件得
+\[
+C_1=3,
+\qquad
+v(0)=\omega C_2=-4\omega,
+\]
+故 $C_2=-4$，于是
+\[
+x=3\cos\omega t-4\sin\omega t.
+\]
+振幅为
+\[
+A=\sqrt{3^2+(-4)^2}=5\text{ cm}.
+\]
+若写成振幅—初相形式，则可取
+\[
+x=5\cos(\omega t+\varphi),
+\qquad
+\cos\varphi=\frac35,
+\quad
+\sin\varphi=\frac45.
+\]
+因此可取 $\varphi=\arctan(4/3)$。
+\end{example}
+
+\begin{example}
+一质量为 $m$ 的物体做简谐运动，振幅为 $A$，角频率为 $\omega$。求其最大速度、最大加速度，以及当 $x=A/2$ 时的速度大小。
+
+\textbf{解：} 由
+\[
+v=-A\omega\sin(\omega t+\varphi)
+\]
+可知最大速度为
+\[
+v_{\max}=A\omega.
+\]
+由 $a=-\omega^2x$ 得最大加速度为
+\[
+a_{\max}=\omega^2A.
+\]
+当 $x=A/2$ 时，由机械能守恒
+\[
+\frac12 m v^2+\frac12 m\omega^2\left(\frac{A}{2}\right)^2
+=\frac12 m\omega^2A^2,
+\]
+解得
+\[
+v=\pm \frac{\sqrt3}{2}A\omega.
+\]
+若问速度大小，则答案为 $\frac{\sqrt3}{2}A\omega$。
+\end{example}
+
+\begin{exercise}
+设质点做简谐运动 $x=A\cos(\omega t+\varphi)$。证明速度与位移满足
+\[
+v^2=\omega^2\left(A^2-x^2\right).
+\]
+并据此说明为什么在平衡位置速度最大，在端点速度为零。
+\end{exercise}
+
+\begin{exercise}
+某弹簧振子周期为 $0.50\text{ s}$，振幅为 $8\text{ cm}$。求角频率、最大速度与最大加速度。
+\end{exercise}
+
+\section{单摆}
+
+\subsection{单摆方程与小角近似}
+
+长度为 $\ell$、摆球质量为 $m$ 的理想单摆，在竖直平面内摆动。取偏角 $\theta$ 为广义坐标，则切向方向上有
+\[
+m\ell\ddot\theta=-mg\sin\theta,
+\]
+即
+\begin{equation}
+\ddot\theta+\frac{g}{\ell}\sin\theta=0.
+\label{eq:pendulum-exact}
+\end{equation}
+这就是单摆的精确方程。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \coordinate (O) at (0,2.2);
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.3,0.32);
+  \draw[thick] (-0.8,2.2) -- (0.8,2.2);
+  \fill (O) circle (2pt);
+  \draw[dashed] (O) -- (A);
+  \draw[thick] (O) -- (B);
+  \fill[blue!15] (B) circle (0.16);
+  \pic [draw, ->, "$\theta$", angle eccentricity=1.35, angle radius=0.48cm] {angle = A--O--B};
+  \node[right] at (0.7,1.1) {$\ell$};
+  \draw[->] (B) -- ++(0,-1.0) node[below] {$mg$};
+  \node[below] at (A) {平衡位置};
+\end{tikzpicture}
+\caption{单摆的几何模型}
+\end{figure}
+
+当偏角很小时，$\sin\theta\approx\theta$，于是 \eqref{eq:pendulum-exact} 近似为
+\begin{equation}
+\ddot\theta+\frac{g}{\ell}\theta=0.
+\label{eq:pendulum-small-angle}
+\end{equation}
+它正是简谐运动方程，因此
+\[
+\theta(t)=\Theta_0\cos\left(\sqrt{\frac{g}{\ell}}\,t+\varphi\right),
+\qquad
+T\approx 2\pi\sqrt{\frac{\ell}{g}}.
+\]
+
+\begin{definition}
+若用 $\sin\theta\approx\theta$ 将单摆方程线性化，则称为\emph{小角近似}。通常当 $\theta\lesssim 10^\circ$ 时，该近似对周期的误差已相当小；当振幅增大时，周期会比小角公式稍长。
+\end{definition}
+
+\subsection{精确周期与椭圆积分}
+
+单摆不是严格的简谐振动。要得到精确周期，可从机械能出发。若摆角最大值为 $\theta_0$，则在任意时刻有
+\[
+\frac12 m\ell^2\dot\theta^2+mg\ell(1-\cos\theta)=mg\ell(1-\cos\theta_0).
+\]
+化简得
+\[
+\dot\theta^2=\frac{2g}{\ell}(\cos\theta-\cos\theta_0).
+\]
+从 $\theta=0$ 摆到 $\theta=\theta_0$ 所需时间是四分之一周期，于是
+\[
+\frac{T}{4}=\sqrt{\frac{\ell}{2g}}\int_0^{\theta_0}\frac{\dd\theta}{\sqrt{\cos\theta-\cos\theta_0}}.
+\]
+作代换
+\[
+\sin\frac{\theta}{2}=k\sin\phi,
+\qquad
+k=\sin\frac{\theta_0}{2},
+\]
+可化为
+\begin{equation}
+T=4\sqrt{\frac{\ell}{g}}\,K(k),
+\qquad
+K(k)=\int_0^{\pi/2}\frac{\dd\phi}{\sqrt{1-k^2\sin^2\phi}}.
+\label{eq:elliptic-period}
+\end{equation}
+其中 $K(k)$ 称为\emph{第一类完全椭圆积分}。
+
+\begin{remark}
+式 \eqref{eq:elliptic-period} 已经给出了单摆周期的精确表达式。它不像简谐运动那样能用初等函数写出，但“无法写成初等函数”并不意味着不能研究：通过积分表达式，我们仍能得到近似、数值计算和误差估计。
+\end{remark}
+
+当 $\theta_0$ 不大时，椭圆积分可展开为
+\[
+T=2\pi\sqrt{\frac{\ell}{g}}\left(1+\frac{\theta_0^2}{16}+\frac{11\theta_0^4}{3072}+\cdots\right),
+\]
+这清楚说明：摆幅越大，周期越长。
+
+\begin{example}
+长度 $\ell=1.0\text{ m}$ 的单摆在某地做小振幅摆动，取 $g=9.8\text{ m/s}^2$。求其小角近似周期；若最大摆角为 $0.40\text{ rad}$，用二阶修正估计真实周期。
+
+\textbf{解：} 小角近似下
+\[
+T_0=2\pi\sqrt{\frac{\ell}{g}}\approx 2.01\text{ s}.
+\]
+若考虑振幅修正，则
+\[
+T\approx T_0\left(1+\frac{\theta_0^2}{16}\right)
+=2.01\left(1+\frac{0.40^2}{16}\right)
+\approx 2.03\text{ s}.
+\]
+可见摆幅为 $0.40\text{ rad}$ 时，周期虽然只增加约百分之一，但已经偏离“与振幅无关”的理想结论。
+\end{example}
+
+\begin{exercise}
+从单摆精确方程 \eqref{eq:pendulum-exact} 出发，解释为什么“小角近似”本质上是把非线性项 $\sin\theta$ 用线性项 $\theta$ 代替。非线性会给周期带来什么影响？
+\end{exercise}
+
+\begin{exercise}
+设某单摆长度为 $0.64\text{ m}$。求其小角近似周期。若要使周期约为 $2.0\text{ s}$，摆长应调到多少？
+\end{exercise}
+
+\section{阻尼振动}
+
+现实系统中总会有摩擦、空气阻力或内耗。若阻力近似与速度成正比，即 $f=-b\dot x$，则弹簧振子的运动方程变为
+\[
+m\ddot x+b\dot x+kx=0.
+\]
+除以 $m$ 后写成标准形式
+\begin{equation}
+\ddot x+2\gamma \dot x+\omega_0^2x=0,
+\label{eq:damped}
+\end{equation}
+其中
+\[
+\gamma\coloneqq \frac{b}{2m},
+\qquad
+\omega_0\coloneqq \sqrt{\frac{k}{m}}.
+\]
+
+\begin{definition}
+方程
+\[
+\ddot x+2\gamma\dot x+\omega_0^2x=0
+\]
+描述的振动称为\emph{阻尼振动}。参数 $\gamma$ 描述阻尼强弱，$\omega_0$ 是无阻尼时的固有角频率。
+\end{definition}
+
+令 $x=e^{rt}$，得到特征方程
+\[
+r^2+2\gamma r+\omega_0^2=0.
+\]
+其根为
+\[
+r=-\gamma\pm\sqrt{\gamma^2-\omega_0^2}.
+\]
+
+\begin{theorem}
+阻尼振动按 $\gamma$ 与 $\omega_0$ 的大小关系分为三类：
+\begin{enumerate}
+  \item \textbf{欠阻尼}（$\gamma<\omega_0$）：此时根为共轭复根，解为
+  \[
+  x(t)=A e^{-\gamma t}\cos(\omega t+\varphi),
+  \qquad
+  \omega=\sqrt{\omega_0^2-\gamma^2}.
+  \]
+  物体仍振动，但振幅按指数规律衰减。
+  \item \textbf{临界阻尼}（$\gamma=\omega_0$）：此时根为二重根 $r=-\gamma$，解为
+  \[
+  x(t)=(C_1+C_2 t)e^{-\gamma t}.
+  \]
+  物体不振荡，并且在“不发生往复”的前提下最快回到平衡位置附近。
+  \item \textbf{过阻尼}（$\gamma>\omega_0$）：此时根为两个不同实根，解为
+  \[
+  x(t)=C_1 e^{r_1 t}+C_2 e^{r_2 t},
+  \qquad
+  r_{1,2}=-\gamma\pm\sqrt{\gamma^2-\omega_0^2}.
+  \]
+  物体同样不振荡，但回到平衡位置较慢。
+\end{enumerate}
+\end{theorem}
+
+对欠阻尼情况，包络线为 $\pm A e^{-\gamma t}$。由于机械能与振幅平方成正比，故能量近似满足
+\[
+E(t)\propto e^{-2\gamma t}.
+\]
+这说明轻微阻尼下，振幅衰减得慢，能量却按更快的指数规律流失。
+
+\begin{remark}
+高中题里常说“振幅逐渐减小”，微积分语言给出更精确的说法：如果阻力与速度成正比，则振幅不是线性减小，而是指数衰减。也就是说，前几次看上去衰减明显，越到后面越“拖尾”。
+\end{remark}
+
+\begin{example}
+已知阻尼方程
+\[
+\ddot x+6\dot x+25x=0.
+\]
+判断阻尼类型，并写出其通解。
+
+\textbf{解：} 与标准形式比较得
+\[
+2\gamma=6\Rightarrow \gamma=3,
+\qquad
+\omega_0=5.
+\]
+由于 $\gamma<\omega_0$，故为欠阻尼。阻尼后的角频率为
+\[
+\omega=\sqrt{\omega_0^2-\gamma^2}=\sqrt{25-9}=4.
+\]
+因此通解为
+\[
+x(t)=A e^{-3t}\cos(4t+\varphi).
+\]
+若改写为正弦余弦线性组合，则也可写成
+\[
+x(t)=e^{-3t}(C_1\cos4t+C_2\sin4t).
+\]
+\end{example}
+
+\begin{exercise}
+判断下列方程对应的阻尼类型，并写出解的基本形式：
+\[
+\text{(1)}\ \ddot x+4\dot x+4x=0,
+\qquad
+\text{(2)}\ \ddot x+10\dot x+9x=0.
+\]
+\end{exercise}
+
+\begin{exercise}
+某欠阻尼振子振幅满足 $A(t)=A_0 e^{-\gamma t}$。若经过 $5\text{ s}$ 振幅衰减为初值的 $1/2$，求 $\gamma$；再求经过同样时间后能量衰减为初值的几分之几。
+\end{exercise}
+
+\section{受迫振动与共振}
+
+\subsection{受迫振动的稳态解}
+
+若系统除恢复力与阻力外，还受到周期性驱动力
+\[
+F(t)=F_0\cos\Omega t,
+\]
+则方程变为
+\begin{equation}
+\ddot x+2\gamma\dot x+\omega_0^2x=\frac{F_0}{m}\cos\Omega t.
+\label{eq:forced}
+\end{equation}
+它的总解由“瞬态解 $+$ 稳态解”组成。瞬态部分会因阻尼逐渐消失，长期保留下来的是与外力同频的稳态振动。
+
+设稳态解形如
+\[
+x_p=X\cos(\Omega t-\delta),
+\]
+代入 \eqref{eq:forced} 可得振幅与相位差分别为
+\begin{equation}
+X(\Omega)=\frac{F_0/m}{\sqrt{(\omega_0^2-\Omega^2)^2+4\gamma^2\Omega^2}},
+\label{eq:forced-amplitude}
+\end{equation}
+以及
+\begin{equation}
+\tan\delta=\frac{2\gamma\Omega}{\omega_0^2-\Omega^2}.
+\label{eq:forced-phase}
+\end{equation}
+当 $\Omega$ 很小时，系统几乎跟着外力同步摆动，$\delta\approx 0$；当 $\Omega$ 很大时，位移明显滞后于驱动力，$\delta$ 接近 $\pi$。
+
+\begin{definition}
+在周期外力作用下，系统经过足够长时间后保留下来的与外力同频振动，称为\emph{稳态受迫振动}。若在某个驱动频率附近振幅显著增大，则称系统发生了\emph{共振}。
+\end{definition}
+
+\subsection{共振频率}
+
+共振并不是“频率相同”这句话的机械重复，而是振幅函数 \eqref{eq:forced-amplitude} 取得最大值的问题。令分母最小，即研究
+\[
+D(\Omega)=(\omega_0^2-\Omega^2)^2+4\gamma^2\Omega^2.
+\]
+对 $\Omega$ 求导并令其为零，可得（除去 $\Omega=0$ 的平凡情形）
+\[
+\Omega_r=\sqrt{\omega_0^2-2\gamma^2}.
+\]
+因此只有当 $\gamma<\omega_0/\sqrt2$ 时，振幅曲线才在正频率处有明显峰值。
+
+\begin{remark}
+无阻尼极限 $\gamma\to 0$ 时，$\Omega_r\to\omega_0$，这就是教材常说“驱动力频率等于固有频率时共振”。一旦存在阻尼，共振峰会变矮、变宽，并且峰值位置略小于 $\omega_0$。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[->] (0,0) -- (6.4,0) node[right] {$\Omega$};
+  \draw[->] (0,0) -- (0,3.8) node[above] {$X$};
+  \draw[thick, blue!70!black, smooth] plot coordinates {
+    (0.35,0.4) (0.8,0.55) (1.4,0.9) (2.0,1.6) (2.5,3.0) (2.8,3.3) (3.1,2.5) (3.6,1.5) (4.2,0.95) (5.0,0.6) (5.8,0.42)
+  };
+  \draw[dashed] (2.8,0) -- (2.8,3.3);
+  \node[below] at (2.8,0) {$\Omega_r$};
+  \node[above right] at (3.4,2.9) {共振峰};
+\end{tikzpicture}
+\caption{阻尼受迫振动的振幅—频率曲线示意图}
+\end{figure}
+
+\begin{example}
+某受迫振动满足
+\[
+\ddot x+0.40\dot x+4x=2\cos\Omega t.
+\]
+求稳态振幅 $X(\Omega)$，并求共振频率。
+
+\textbf{解：} 由标准形式可知
+\[
+2\gamma=0.40\Rightarrow \gamma=0.20,
+\qquad
+\omega_0=2,
+\qquad
+\frac{F_0}{m}=2.
+\]
+由 \eqref{eq:forced-amplitude}
+\[
+X(\Omega)=\frac{2}{\sqrt{(4-\Omega^2)^2+0.16\Omega^2}}.
+\]
+共振频率为
+\[
+\Omega_r=\sqrt{\omega_0^2-2\gamma^2}
+=\sqrt{4-2\times 0.2^2}
+=\sqrt{3.92}
+\approx 1.98.
+\]
+它略小于无阻尼时的固有角频率 $2$。
+\end{example}
+
+\begin{exercise}
+无阻尼受迫振动满足
+\[
+\ddot x+\omega_0^2x=f_0\cos\Omega t.
+\]
+当 $\Omega\neq\omega_0$ 时，求一个特解；并讨论当 $\Omega\to\omega_0$ 时该特解的振幅会发生什么变化。
+\end{exercise}
+
+\section{波动方程}
+
+\subsection{从离散振子到连续介质}
+
+波可以看成“振动的传播”。最典型的模型是张紧弦上的横波。设弦的线密度为 $\mu$，张力大小近似恒为 $T$，挠度记为 $y(x,t)$。取弦上一小段 $[x,x+\Delta x]$，在小振幅近似下，竖直方向合力约为
+\[
+T\pdv{y}{x}(x+\Delta x,t)-T\pdv{y}{x}(x,t)
+\approx T\pdv[2]{y}{x}\Delta x.
+\]
+而这小段弦的质量为 $\mu\Delta x$，故由牛顿第二定律得
+\[
+\mu\Delta x\pdv[2]{y}{t}=T\pdv[2]{y}{x}\Delta x.
+\]
+约去 $\Delta x$，便得到一维波动方程
+\begin{equation}
+\pdv[2]{y}{t}=v^2\pdv[2]{y}{x},
+\qquad
+v\coloneqq \sqrt{\frac{T}{\mu}}.
+\label{eq:wave}
+\end{equation}
+
+\begin{definition}
+若函数 $y(x,t)$ 满足
+\[
+\pdv[2]{y}{t}=v^2\pdv[2]{y}{x},
+\]
+则称其描述了一维介质中的\emph{波动}，$v$ 称为\emph{波速}。
+\end{definition}
+
+\begin{theorem}
+一维波动方程 \eqref{eq:wave} 的一般解可写为
+\begin{equation}
+ y(x,t)=F(x-vt)+G(x+vt),
+\label{eq:dalembert}
+\end{equation}
+其中 $F,G$ 为任意二次可导函数。$F(x-vt)$ 表示沿 $+x$ 方向传播的行波，$G(x+vt)$ 表示沿 $-x$ 方向传播的行波。
+\end{theorem}
+
+验证并不困难。例如对 $y=F(x-vt)$，有
+\[
+\pdv{y}{t}=-vF'(x-vt),
+\qquad
+\pdv[2]{y}{t}=v^2F''(x-vt),
+\]
+而
+\[
+\pdv{y}{x}=F'(x-vt),
+\qquad
+\pdv[2]{y}{x}=F''(x-vt),
+\]
+所以确有 $\partial_t^2 y=v^2\partial_x^2 y$。
+
+最常见的简谐行波写成
+\begin{equation}
+ y(x,t)=A\cos(kx-\omega t+\varphi),
+\label{eq:harmonic-wave}
+\end{equation}
+其中
+\[
+\omega=vk,
+\qquad
+\lambda=\frac{2\pi}{k},
+\qquad
+f=\frac{\omega}{2\pi},
+\qquad
+v=f\lambda.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (-0.2,0) -- (6.6,0) node[right] {$x$};
+  \draw[->] (0,-1.6) -- (0,1.6) node[above] {$y$};
+  \draw[thick, blue!70!black, domain=0:6.1, samples=120] plot (\x,{0.9*sin(deg(1.6*\x))});
+  \draw[->, red!70!black, thick] (4.8,1.1) -- (5.8,1.1) node[right] {$v$};
+  \node[above] at (2.7,1.0) {某时刻的行波形状};
+\end{tikzpicture}
+\caption{向右传播的简谐行波示意图}
+\end{figure}
+
+例如，函数
+\[
+y(x,t)=0.02\cos(4\pi x-200\pi t)
+\]
+就是式 \eqref{eq:harmonic-wave} 的具体实例，其中 $k=4\pi$、$\omega=200\pi$，故
+\[
+v=\frac{\omega}{k}=50,
+\qquad
+\lambda=\frac{2\pi}{k}=0.50,
+\qquad
+f=\frac{\omega}{2\pi}=100.
+\]
+它是 $F(x-vt)$ 型函数，所以满足一维波动方程，并沿 $+x$ 方向传播。
+
+\begin{exercise}
+证明：若 $y=A\sin(kx+\omega t)$，则它也是波动方程的解，并指出它沿哪个方向传播。
+\end{exercise}
+
+\section{波的叠加与干涉}
+
+\subsection{叠加原理}
+
+线性波动方程最重要的性质之一是线性叠加。
+
+\begin{law}
+若 $y_1(x,t)$ 与 $y_2(x,t)$ 都满足线性波动方程
+\[
+\pdv[2]{y}{t}=v^2\pdv[2]{y}{x},
+\]
+则任意线性组合
+\[
+y(x,t)=c_1y_1(x,t)+c_2y_2(x,t)
+\]
+仍然满足该方程。这称为\emph{叠加原理}。
+\end{law}
+
+叠加原理意味着不同波形可以“穿过彼此”而瞬时相加。宏观上看到的干涉图样，本质上正是相位关系造成的线性相加结果。
+
+\subsection{驻波}
+
+两列振幅相同、频率相同、波速相同、传播方向相反的简谐波
+\[
+y_1=A\cos(kx-\omega t),
+\qquad
+y_2=A\cos(kx+\omega t)
+\]
+叠加后得到
+\begin{equation}
+ y=2A\cos kx\cos\omega t.
+\label{eq:standing-wave}
+\end{equation}
+这就是\emph{驻波}。它看起来“不向前传播”，因为空间部分 $\cos kx$ 与时间部分 $\cos\omega t$ 已经分离。
+
+由 \eqref{eq:standing-wave} 可知：
+\begin{itemize}
+  \item 当 $\cos kx=0$ 时，振幅恒为零，称为\emph{波节}；
+  \item 当 $|\cos kx|=1$ 时，振幅最大为 $2A$，称为\emph{波腹}。
+\end{itemize}
+
+若弦长为 $L$，两端固定，则边界条件要求
+\[
+L=n\frac{\lambda}{2}
+\qquad (n=1,2,3,\dots),
+\]
+于是允许出现一系列本征频率
+\[
+f_n=n\frac{v}{2L}.
+\]
+
+\subsection{拍频}
+
+若两列同方向传播的简谐波频率很接近，例如
+\[
+y_1=A\cos\omega_1 t,
+\qquad
+y_2=A\cos\omega_2 t,
+\]
+则叠加后
+\begin{equation}
+ y=2A\cos\frac{\omega_1-\omega_2}{2}t\cdot \cos\frac{\omega_1+\omega_2}{2}t.
+\label{eq:beat}
+\end{equation}
+快速振动由平均角频率控制，缓慢变化的包络由差频控制。若记 $f_1=\omega_1/(2\pi)$、$f_2=\omega_2/(2\pi)$，则拍频为
+\[
+f_{\text{beat}}=|f_1-f_2|.
+\]
+
+\begin{remark}
+拍频现象很适合用来调音：当两个音叉频率非常接近时，人耳会听到声音强弱周期性起伏。起伏越慢，说明两者频率越接近；当拍频消失时，两者几乎同频。
+\end{remark}
+
+\begin{example}
+一根两端固定的弦长为 $L=0.60\text{ m}$，波速为 $120\text{ m/s}$。求其基频；再求频率为 $256\text{ Hz}$ 与 $260\text{ Hz}$ 的两列声波叠加时的拍频。
+
+\textbf{解：} 两端固定弦的基频为
+\[
+f_1=\frac{v}{2L}=\frac{120}{1.2}=100\text{ Hz}.
+\]
+若考虑两声波拍频，则
+\[
+f_{\text{beat}}=|260-256|=4\text{ Hz}.
+\]
+这意味着每秒听到 $4$ 次强弱变化。
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \draw[->] (-0.2,0) -- (6.6,0) node[right] {$x$};
+  \draw[->] (0,-1.8) -- (0,1.8) node[above] {$y$};
+  \draw[thick, blue!70!black, domain=0:6.1, samples=180] plot (\x,{1.2*sin(deg(2*\x))*cos(deg(0.0))});
+  \foreach \p in {0.785,2.356,3.927,5.498} {
+    \draw[dashed] (\p,-1.5) -- (\p,1.5);
+  }
+  \node[below] at (0.785,-1.5) {波节};
+  \node[below] at (2.356,-1.5) {波节};
+  \node[above] at (1.57,1.35) {波腹};
+  \node[above] at (4.71,1.35) {波腹};
+\end{tikzpicture}
+\caption{驻波的瞬时形状示意图}
+\end{figure}
+
+\begin{exercise}
+由驻波表达式
+\[
+y=2A\cos kx\cos\omega t
+\]
+求相邻两个波节之间的距离，并说明它与波长的关系。
+\end{exercise}
+
+\begin{exercise}
+两列声波频率分别为 $440\text{ Hz}$ 和 $444\text{ Hz}$。求拍频，并求声音强弱变化的周期。
+\end{exercise}
+
+\section{高考题微积分视角}
+
+下面选取三道常见振动、波动题型，说明微积分方法如何使题目的结构更清晰。
+
+\begin{gaokao}[title={\bfseries 高考题1：弹簧振子的图像与微分方程}]
+某弹簧振子经过平衡位置时速度大小为 $v_0$，最大位移为 $A$。求其角频率，并写出从最大位移处开始计时的位移函数。
+
+\textbf{微积分视角：} 在平衡位置 $x=0$ 处，简谐运动速度达到最大值，故
+\[
+v_{\max}=\omega A=v_0.
+\]
+于是
+\[
+\omega=\frac{v_0}{A}.
+\]
+若从最大位移处开始计时，则初始条件为
+\[
+x(0)=A,
+\qquad
+\dot x(0)=0.
+\]
+代入方程
+\[
+\ddot x+\omega^2x=0
+\]
+的通解 $x=C_1\cos\omega t+C_2\sin\omega t$，立得
+\[
+C_1=A,
+\qquad
+C_2=0.
+\]
+因此
+\[
+x(t)=A\cos\frac{v_0}{A}t.
+\]
+这个解法的关键不是“记住某个图像”，而是抓住二阶方程与初值条件。
+\end{gaokao}
+
+\begin{gaokao}[title={\bfseries 高考题2：单摆周期为什么近似不变}]
+某实验中，同一单摆在小振幅下多次摆动，测得周期几乎不随振幅变化。请解释这一现象；并指出当振幅增大时会出现怎样的系统偏差。
+
+\textbf{微积分视角：} 单摆精确方程为
+\[
+\ddot\theta+\frac{g}{\ell}\sin\theta=0.
+\]
+在小角度条件下，$\sin\theta\approx\theta$，于是方程线性化为
+\[
+\ddot\theta+\frac{g}{\ell}\theta=0,
+\]
+故周期近似为
+\[
+T\approx 2\pi\sqrt{\frac{\ell}{g}},
+\]
+其中不含振幅，所以实验上会观察到“近似等时性”。
+
+但若振幅不可忽略，精确周期满足
+\[
+T=2\pi\sqrt{\frac{\ell}{g}}\left(1+\frac{\theta_0^2}{16}+\cdots\right),
+\]
+因此振幅越大，周期越长。若仍套用小角公式，就会把理论周期估计得偏小。
+\end{gaokao}
+
+\begin{gaokao}[title={\bfseries 高考题3：波形传播与质点振动的区分}]
+已知某时刻绳上的波形为正弦曲线，并知波沿 $+x$ 方向传播。如何写出波函数？又如何判断绳上某一点下一时刻是向上运动还是向下运动？
+
+\textbf{微积分视角：} 若波沿 $+x$ 方向传播，波函数一般写作
+\[
+y(x,t)=A\cos(kx-\omega t+\varphi).
+\]
+其中负号“$-\omega t$”体现了波峰随时间向右移动。若已知 $t=0$ 时的波形为
+\[
+y(x,0)=A\cos(kx+\varphi),
+\]
+则只需把空间表达式中的 $x$ 替换为 $x-vt$ 即可得到行波解。
+
+判断某点下一时刻的运动方向，本质上是看该点的速度
+\[
+\pdv{y}{t}=\omega A\sin(kx-\omega t+\varphi).
+\]
+在指定时刻、指定位置代入后：若 $\partial y/\partial t>0$，则质点向上运动；若 $\partial y/\partial t<0$，则质点向下运动。这说明“波向哪边传”和“介质点往哪边动”是两个不同问题，前者看相位 $kx-\omega t$ 的传播，后者看偏导数 $\partial y/\partial t$ 的符号。
+\end{gaokao}
+
+\section*{本章小结}
+
+本章的核心线索可以概括为以下几点：
+\begin{itemize}
+  \item 简谐运动由二阶常系数线性方程 $\ddot x+\omega^2x=0$ 描述，其解为余弦函数，机械能守恒；
+  \item 单摆的小角近似把非线性方程化为简谐方程，而精确周期需要借助椭圆积分；
+  \item 阻尼振动对应方程 $\ddot x+2\gamma\dot x+\omega_0^2x=0$，可分为欠阻尼、临界阻尼和过阻尼；
+  \item 受迫振动的稳态振幅取决于驱动频率，阻尼存在时共振峰出现于 $\Omega_r=\sqrt{\omega_0^2-2\gamma^2}$；
+  \item 波动方程 $\partial_t^2 y=v^2\partial_x^2 y$ 的基本解是行波，叠加后可出现干涉、驻波和拍频。
+\end{itemize}
+
+从“振动”到“波”，物理图景在变，但数学思想始终统一：先建立微分方程，再结合初始条件、边界条件和对称性分析其解的结构。这正是微积分物理学的基本范式。

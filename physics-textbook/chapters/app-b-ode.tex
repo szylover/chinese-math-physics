@@ -1,0 +1,214 @@
+\chapter{常用微分方程解法}
+
+物理学中的许多定律都可以写成微分方程。本附录总结最常见的几类常微分方程及其标准求解步骤。
+
+\section{可分离变量方程}
+
+标准形式为
+\[
+\dv{y}{x}=g(x)h(y).
+\]
+
+若 $h(y)\neq 0$，可整理为
+\[
+\frac{1}{h(y)}\dd y=g(x)\dd x,
+\]
+再两边积分：
+\[
+\int \frac{1}{h(y)}\dd y=\int g(x)\dd x+C.
+\]
+
+\subsection*{典型例子：指数衰减}
+
+放射性衰变、RC 放电、牛顿冷却都常出现
+\[
+\dv{N}{t}=-\lambda N.
+\]
+
+分离变量得
+\[
+\frac{\dd N}{N}=-\lambda\dd t,
+\]
+因此
+\[
+N(t)=N_0 e^{-\lambda t}.
+\]
+
+\section{一阶线性 ODE（积分因子法）}
+
+标准形式为
+\[
+\dv{y}{x}+P(x)y=Q(x).
+\]
+
+取积分因子
+\[
+\mu(x)=e^{\int P(x)\dd x}.
+\]
+
+原方程同乘 $\mu(x)$ 后，可化为
+\[
+\dv{}{x}\qty[\mu(x)y]=\mu(x)Q(x).
+\]
+
+积分得到通解：
+\[
+ y=\frac{1}{\mu(x)}\qty(\int \mu(x)Q(x)\dd x+C).
+\]
+
+\subsection*{典型例子：受迫一阶驰豫}
+
+例如电容充电方程
+\[
+\dv{q}{t}+\frac{1}{RC}q=\frac{V_0}{R}.
+\]
+
+积分因子为 $\mu(t)=e^{t/(RC)}$，故
+\[
+q(t)=CV_0+\qty(q_0-CV_0)e^{-t/(RC)}.
+\]
+
+\section{二阶常系数齐次 ODE（特征方程法）}
+
+标准形式为
+\[
+ a\dv[2]{y}{x}+b\dv{y}{x}+cy=0.
+\]
+
+设试探解 $y=e^{rx}$，代入得特征方程
+\[
+ ar^2+br+c=0.
+\]
+
+根据根的类型分三种情况：
+
+\subsection*{（1）两个不同实根 $r_1\neq r_2$}
+\[
+ y=C_1 e^{r_1 x}+C_2 e^{r_2 x}.
+\]
+
+\subsection*{（2）重根 $r_1=r_2=r$}
+\[
+ y=(C_1+C_2 x)e^{rx}.
+\]
+
+\subsection*{（3）共轭复根 $r=\alpha\pm i\beta$}
+\[
+ y=e^{\alpha x}\qty(C_1\cos\beta x+C_2\sin\beta x).
+\]
+
+\subsection*{典型例子：简谐振动}
+
+无阻尼弹簧振子满足
+\[
+ m\dv[2]{x}{t}+kx=0.
+\]
+
+特征方程为 $mr^2+k=0$，故
+\[
+ r=\pm i\sqrt{\frac{k}{m}}=\pm i\omega,
+\qquad
+\omega=\sqrt{\frac{k}{m}}.
+\]
+
+因此解为
+\[
+ x(t)=A\cos \omega t+B\sin \omega t.
+\]
+
+\section{二阶常系数非齐次 ODE（待定系数法）}
+
+标准形式为
+\[
+ a\dv[2]{y}{x}+b\dv{y}{x}+cy=f(x).
+\]
+
+求解思路：
+\begin{enumerate}
+  \item 先求对应齐次方程的通解 $y_h$；
+  \item 再根据外力项 $f(x)$ 的形式猜测一个特解 $y_p$；
+  \item 总解为 $y=y_h+y_p$。
+\end{enumerate}
+
+\subsection*{常见试探形式}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+$f(x)$ 的形式 & 可选特解形式 \\
+\midrule
+多项式 $P_n(x)$ & 同阶多项式 \\
+$e^{\alpha x}$ & $Ae^{\alpha x}$ \\
+$\sin \beta x$ 或 $\cos \beta x$ & $A\cos \beta x+B\sin \beta x$ \\
+$e^{\alpha x}P_n(x)$ & $e^{\alpha x}$ 乘同阶多项式 \\
+$e^{\alpha x}\cos \beta x$、$e^{\alpha x}\sin \beta x$ & $e^{\alpha x}(A\cos \beta x+B\sin \beta x)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+若试探特解与齐次解重复，则需乘以 $x$（必要时乘以更高次幂）以保持线性无关。
+
+\subsection*{典型例子：恒力驱动}
+
+方程
+\[
+\dv[2]{x}{t}+\omega^2 x=\frac{F_0}{m}
+\]
+对应齐次解为
+\[
+ x_h=A\cos\omega t+B\sin\omega t.
+\]
+
+因为右端是常数，可设特解 $x_p=C$，代入得
+\[
+ \omega^2 C=\frac{F_0}{m}
+ \quad\Rightarrow\quad
+ C=\frac{F_0}{m\omega^2}.
+\]
+
+故总解为
+\[
+ x(t)=A\cos\omega t+B\sin\omega t+\frac{F_0}{m\omega^2}.
+\]
+
+\section{常见物理微分方程总结表}
+
+\begin{longtable}{p{0.22\textwidth}p{0.32\textwidth}p{0.38\textwidth}}
+\toprule
+物理情景 & 微分方程 & 通解或关键结论 \\
+\midrule
+\endfirsthead
+
+\toprule
+物理情景 & 微分方程 & 通解或关键结论 \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+自由衰减与冷却 & $\dv{y}{t}=-ky$ & $y(t)=y_0 e^{-kt}$ \\
+
+受恒定源驱动的一阶过程 & $\dv{y}{t}+ky=q$ & $y=y_{\infty}+(y_0-y_{\infty})e^{-kt}$，其中 $y_{\infty}=q/k$ \\
+
+简谐振动 & $\dv[2]{x}{t}+\omega^2 x=0$ & $x=A\cos\omega t+B\sin\omega t$ \\
+
+阻尼振动 & $\dv[2]{x}{t}+2\beta\dv{x}{t}+\omega_0^2 x=0$ & 由特征根决定：欠阻尼、临界阻尼、过阻尼三类 \\
+
+受迫振动 & $\dv[2]{x}{t}+2\beta\dv{x}{t}+\omega_0^2 x=f(t)$ & 总解为齐次解加特解；周期驱动下会出现共振 \\
+
+RC 电路充放电 & $R\dv{q}{t}+\frac{1}{C}q=V(t)$ & 若 $V$ 为常数，则电荷以时间常数 $RC$ 指数逼近平衡值 \\
+
+RL 电路电流增长 & $L\dv{I}{t}+RI=\mathcal{E}$ & $I(t)=\frac{\mathcal{E}}{R}+\qty(I_0-\frac{\mathcal{E}}{R})e^{-Rt/L}$ \\
+
+牛顿第二定律的一维形式 & $m\dv[2]{x}{t}=F(x,t,v)$ & 根据受力模型选用分离变量、线性法或数值法 \\
+
+\end{longtable}
+
+\section{解题提醒}
+
+\begin{itemize}
+  \item 先辨别方程类别，再选方法，不要一上来就盲目积分。
+  \item 求出通解后，务必利用初始条件或边界条件确定积分常数。
+  \item 在物理问题中，指数衰减、简谐振动与受迫振动是最常见的三大原型。
+\end{itemize}

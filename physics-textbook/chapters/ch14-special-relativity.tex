@@ -1,0 +1,691 @@
+\chapter{狭义相对论基础}
+
+牛顿力学默认存在一个绝对的时间与绝对的空间：不同惯性系之间只需做伽利略变换，时间坐标保持不变，速度按简单相加规律组合。这个框架在低速世界中极其成功，但当电磁学建立之后，一个根本性张力出现了：麦克斯韦方程组预言电磁波在真空中的传播速度为常数 $c$，似乎并不依赖于光源或观察者的运动状态。本章将说明，正是这一张力推动了狭义相对论的诞生。
+
+我们从迈克尔逊--莫雷实验出发，看到以太假说的失败；随后给出爱因斯坦的两个公设，并从中推导洛伦兹变换；在此基础上系统讨论时间膨胀、长度收缩、速度叠加以及闵可夫斯基时空中的因果结构。第十五章将在这些运动学结论之上继续建立相对论动力学。
+
+\section{迈克尔逊--莫雷实验——以太假说的失败}
+
+十九世纪后半叶，许多物理学家相信光和声一样需要某种介质传播，这种遍布宇宙、几乎不可探测的介质被称为\emph{以太}。若以太存在，那么地球绕日运动时应当穿过以太海洋，从而形成“以太风”。在这种观点下，光在不同方向上的传播时间会出现微小差别。
+
+\begin{definition}
+所谓\emph{以太假说}，是指真空中的光波传播依赖于某个优先静止参考系；在该参考系中光速恰为 $c$，而在相对该参考系运动的实验室里，光速应按经典速度合成规律表现出方向差异。
+\end{definition}
+
+迈克尔逊干涉仪正是为了探测这种差异而设计的。仪器把一束光分成两路，分别沿互相垂直的两臂传播，到达反射镜后返回并重新叠加。若两路传播时间不同，则会引起干涉条纹移动。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \coordinate (O) at (0,0);
+  \coordinate (R) at (4,0);
+  \coordinate (U) at (0,3);
+  \draw[thick] (-2,0) -- (5,0);
+  \draw[thick] (0,-1) -- (0,4);
+  \draw[fill=gray!20, rotate around={45:(0,0)}] (-0.18,-0.18) rectangle (0.18,0.18);
+  \draw[very thick, blue, ->] (-1.8,0) -- (-0.15,0);
+  \draw[very thick, blue, ->] (0.15,0) -- (3.7,0);
+  \draw[very thick, blue, ->] (3.7,0) -- (0.15,0);
+  \draw[very thick, red!70!black, ->] (0,0.15) -- (0,2.7);
+  \draw[very thick, red!70!black, ->] (0,2.7) -- (0,0.15);
+  \draw[thick] (4,-0.25) rectangle (4.25,0.25);
+  \draw[thick] (-0.25,3) rectangle (0.25,3.25);
+  \node[below] at (0,0) {分光镜};
+  \node[below] at (4.1,-0.25) {反射镜};
+  \node[left] at (-0.25,3.1) {反射镜};
+  \node[below] at (2,0) {$L$};
+  \node[left] at (0,1.5) {$L$};
+  \draw[->, thick] (-1.4,-0.9) -- (1.2,-0.9);
+  \node[below] at (-0.1,-0.9) {实验室相对“以太”速度 $v$};
+\end{tikzpicture}
+\caption{迈克尔逊干涉仪的示意图}
+\end{figure}
+
+设平行于“以太风”的干涉臂长度为 $L$。在经典图像里，去程光速应为 $c-v$，回程光速应为 $c+v$，因此沿平行臂的总时间为
+\[
+T_{\parallel}=\frac{L}{c-v}+\frac{L}{c+v}=\frac{2Lc}{c^2-v^2}=\frac{2L}{c}\frac{1}{1-v^2/c^2}.
+\]
+对于垂直臂，光必须斜着走，才能在仪器整体漂移时仍打到反射镜，因此有
+\[
+\left(\frac{cT_{\perp}}{2}\right)^2=L^2+\left(\frac{vT_{\perp}}{2}\right)^2,
+\]
+从而
+\[
+T_{\perp}=\frac{2L}{\sqrt{c^2-v^2}}=\frac{2L}{c}\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+当 $v\ll c$ 时，利用
+\[
+\frac{1}{1-\beta^2}\approx 1+\beta^2,
+\qquad
+\frac{1}{\sqrt{1-\beta^2}}\approx 1+\frac12\beta^2,
+\qquad \beta=\frac{v}{c},
+\]
+得到两路时间差的一阶近似：
+\[
+\Delta T=T_{\parallel}-T_{\perp}\approx \frac{L}{c}\frac{v^2}{c^2}.
+\]
+若把仪器整体旋转 $90^\circ$，两臂角色互换，预言中的时间差将反号，因此总改变量约为 $2\Delta T$，对应的光程差为
+\[
+\Delta \ell \approx 2L\frac{v^2}{c^2}.
+\]
+若以太存在，这一光程差应表现为可测的条纹移动。
+
+\begin{example}[经典以太模型下的条纹移动估计]
+取 $L=11\,\mathrm{m}$，地球公转速度近似 $v=3.0\times 10^4\,\mathrm{m/s}$，可见光波长取 $\lambda=5.5\times 10^{-7}\,\mathrm{m}$。则
+\[
+\frac{v^2}{c^2}\approx 10^{-8},
+\qquad
+\Delta \ell\approx 2\times 11\times 10^{-8}\,\mathrm{m}=2.2\times 10^{-7}\,\mathrm{m}.
+\]
+于是预言条纹移动数约为
+\[
+N\approx \frac{\Delta \ell}{\lambda}\approx \frac{2.2\times 10^{-7}}{5.5\times 10^{-7}}\approx 0.4.
+\]
+这已经落在迈克尔逊干涉技术可探测的数量级上。
+\end{example}
+
+然而实验结果是：无论仪器如何转动、季节如何变化，都没有观测到与地球相对以太运动相对应的系统性条纹漂移。结果并非“效应太小以至于测不到”，而是与经典以太预言根本不符。
+
+\begin{remark}
+历史上曾有人尝试用菲茨杰拉德收缩或洛伦兹的“局部时间”来拯救以太理论，但这些修补方案越来越像是在为一个不可观测的背景结构添加补丁。爱因斯坦的革命性做法是：不再把相对论效应看作物体在以太中运动时发生的动力学畸变，而是直接修改空间与时间本身的运动学结构。
+\end{remark}
+
+\section{爱因斯坦的两个公设——相对性原理，光速不变}
+
+狭义相对论建立在两个极其简洁、却极具冲击力的公设之上。
+
+\begin{law}[爱因斯坦的两个公设]
+在一切惯性参考系中：
+\begin{enumerate}
+  \item 一切物理定律具有相同形式，这称为\emph{相对性原理}；
+  \item 真空中光的传播速度恒为 $c$，与光源和观察者的运动状态无关，这称为\emph{光速不变原理}。
+\end{enumerate}
+\end{law}
+
+第一个公设否认了“绝对静止系”的可探测性；第二个公设则要求我们放弃经典的绝对时间观。因为若时间在所有惯性系中都相同，而空间坐标之间只做伽利略变换 $x'=x-vt$，那么一个在 $S$ 系中满足 $x=ct$ 的光脉冲，在 $S'$ 系中的速度将变为 $c-v$，这与第二公设矛盾。
+
+\begin{definition}
+若参考系 $S'$ 以恒速 $v$ 沿 $x$ 轴相对参考系 $S$ 运动，且两系原点在 $t=t'=0$ 时重合，则称这一设置为\emph{标准构型}。
+\end{definition}
+
+在标准构型下，我们希望寻找 $S$ 与 $S'$ 之间的新变换规律。它必须满足以下直觉要求：
+\begin{itemize}
+  \item 空间与时间的均匀性意味着变换应是线性的；
+  \item 各惯性系地位平等意味着正变换与逆变换应具有相同形式；
+  \item 当 $v\ll c$ 时，新理论必须退化为经典力学。
+\end{itemize}
+这些要求看似温和，却已经把答案逼近到唯一的形式。
+
+\begin{remark}
+狭义相对论不是在否认“同时钟可以同步”，而是在指出：同步本身依赖于所选参考系。不同惯性系使用爱因斯坦同步法建立起来的坐标网格，并不共享同一个“现在切片”。所谓\emph{同时性的相对性}，正是后面一切结论的源头。
+\end{remark}
+
+爱因斯坦的同步方法如下：在同一惯性系中，设时钟 $A$ 在时刻 $t_1$ 发出光信号，远处时钟 $B$ 在收到信号时立刻反射，$A$ 在时刻 $t_2$ 收到回波。若光来回传播速度都取为 $c$，则把 $B$ 的反射时刻定义为
+\[
+ t_B=\frac{t_1+t_2}{2}.
+\]
+这一定义看似朴素，实际上已经把“光在各方向上传播速度相同”写进了坐标系统的建立方式中。于是，不同惯性系的同步方案不同，也就不再拥有共同的绝对同时面。
+
+从教学角度看，爱因斯坦的两个公设并不是在“给出两个孤立事实”，而是在重新规定：\emph{如何用钟和尺去定义时空坐标}。一旦这一点发生变化，后续关于速度、长度和时间的一切结论都必须重新书写。
+
+\section{洛伦兹变换——从两个公设推导变换公式}
+
+下面在标准构型下推导时空坐标之间的变换。由于运动只沿 $x$ 方向发生，横向坐标不应受影响，因此先设
+\[
+y'=y,\qquad z'=z.
+\]
+对 $x,t$ 而言，线性假设允许我们写成
+\[
+x'=A(v)x+B(v)t,
+\qquad
+ t'=C(v)x+D(v)t.
+\]
+又因为 $S'$ 的原点满足 $x'=0$ 且在 $S$ 中轨迹为 $x=vt$，代入得
+\[
+0=A(v)vt+B(v)t,
+\qquad \text{故 } B(v)=-vA(v).
+\]
+于是
+\[
+x'=A(v)(x-vt).
+\]
+现在利用光速不变。若在两系原点重合时发出一个光脉冲，则在 $S$ 中有两条光线
+\[
+x=ct,\qquad x=-ct.
+\]
+根据第二公设，这两条世界线在 $S'$ 中也必须满足
+\[
+x'=ct',\qquad x'=-ct'.
+\]
+将 $x=ct$ 代入一般线性式，得到
+\[
+A(c-v)t=c\bigl(Cc+D\bigr)t.
+\]
+将 $x=-ct$ 代入，得到
+\[
+A(-c-v)t=-c\bigl(-Cc+D\bigr)t.
+\]
+联立两式可解得
+\[
+D=A,
+\qquad
+C=-\frac{v}{c^2}A.
+\]
+所以变换已经简化为
+\[
+x'=A(v)(x-vt),
+\qquad
+t'=A(v)\left(t-\frac{v}{c^2}x\right).
+\]
+接下来只剩下比例因子 $A(v)$。由相对性原理，逆变换应由把 $v$ 换成 $-v$ 得到：
+\[
+x=A(-v)(x'+vt'),
+\qquad
+t=A(-v)\left(t'+\frac{v}{c^2}x'\right).
+\]
+再将前式代回后式，要求复合变换为恒等映射，可得
+\[
+A(v)A(-v)\left(1-\frac{v^2}{c^2}\right)=1.
+\]
+由于空间各向同性要求 $A(v)=A(-v)$，于是
+\[
+A(v)=\frac{1}{\sqrt{1-v^2/c^2}}\equiv \gamma.
+\]
+因此得到狭义相对论的核心公式。
+
+\begin{theorem}[洛伦兹变换]
+在标准构型下，若 $S'$ 以速度 $v$ 沿 $x$ 轴相对 $S$ 运动，则两系坐标满足
+\[
+x'=\gamma(x-vt),
+\qquad
+y'=y,
+\qquad
+z'=z,
+\qquad
+t'=\gamma\left(t-\frac{vx}{c^2}\right),
+\]
+其中
+\[
+\gamma=\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+其逆变换为
+\[
+x=\gamma(x'+vt'),
+\qquad
+y=y',
+\qquad
+z=z',
+\qquad
+t=\gamma\left(t'+\frac{vx'}{c^2}\right).
+\]
+\end{theorem}
+
+\begin{proof}
+前面的线性分析已经导出了变换的形式；再由正逆变换互逆并结合 $A(v)=A(-v)$ 即可得到 $A(v)=\gamma$。逆变换只需把速度改为 $-v$ 后重新写回即可。
+\end{proof}
+
+洛伦兹变换最耐人寻味的一项是时间公式中的 $x$ 项：
+\[
+ t'=\gamma\left(t-\frac{vx}{c^2}\right).
+\]
+它表明“某一时刻”不再是全空间统一共享的概念，而会随着参考系变化而倾斜。
+
+\begin{theorem}[同时性的相对性]
+若两个事件在参考系 $S$ 中满足同时发生，即 $\Delta t=0$，但空间上相隔 $\Delta x\neq 0$，则在与 $S$ 相对速度为 $v$ 的参考系 $S'$ 中一般有
+\[
+\Delta t'=-\gamma\frac{v\Delta x}{c^2}\neq 0.
+\]
+因此，同时性不是绝对的，而依赖于参考系。
+\end{theorem}
+
+\begin{proof}
+由洛伦兹变换对时间作差，得到
+\[
+\Delta t'=\gamma\left(\Delta t-\frac{v\Delta x}{c^2}\right).
+\]
+若在 $S$ 中两事件同时，则 $\Delta t=0$，于是
+\[
+\Delta t'=-\gamma\frac{v\Delta x}{c^2}.
+\]
+只要 $v\neq 0$ 且 $\Delta x\neq 0$，就有 $\Delta t'\neq 0$。
+\end{proof}
+
+这一结果是相对论的逻辑枢纽：长度收缩之所以出现，是因为不同参考系对“测量物体两端的同一时刻”有不同判断；双生子问题之所以能够解开，也离不开同时性切片在转向前后的改变。
+
+\begin{remark}
+当 $v\ll c$ 时，$\gamma\approx 1$，并且 $vx/c^2$ 极小，因此
+\[
+x'\approx x-vt,
+\qquad t'\approx t.
+\]
+这说明经典力学并未被否定，而是作为低速极限被包含在更一般的理论中。
+\end{remark}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.05, >=Latex]
+  \draw[->] (-4.8,0) -- (5.2,0) node[below] {$x$};
+  \draw[->] (0,0) -- (0,5.2) node[left] {$ct$};
+  \draw[dashed] (0,0) -- (4.4,4.4);
+  \draw[dashed] (0,0) -- (-4.4,4.4);
+  \draw[->, thick, blue!70!black] (0,0) -- (1.8,4.8) node[right] {$ct'$};
+  \draw[->, thick, red!70!black] (0,0) -- (4.8,1.8) node[below] {$x'$};
+  \node[above right] at (3.6,3.6) {$x=ct$};
+  \draw[gray!60] (2.2,0) arc[start angle=0,end angle=69.4,radius=2.2];
+  \node at (1.8,1.1) {$\theta$};
+\end{tikzpicture}
+\caption{闵可夫斯基图中移动参考系的倾斜坐标轴}
+\end{figure}
+
+这幅图显示：在相对论中，坐标轴不再通过欧几里得旋转来联系，而是通过保持光线 $x=\pm ct$ 不变的“双曲旋转”联系。也正因此，时间和空间坐标会彼此混合。
+
+\section{时间膨胀——$\Delta t=\gamma\Delta t_0$，双生子佯谬}
+
+要理解时间膨胀，首先必须区分“某只钟自身记录的时间”和“另一个参考系测得的该钟走时”。
+
+\begin{definition}
+两个事件若在某个参考系中发生在同一空间位置，则该参考系中测得的时间间隔称为这两个事件之间的\emph{固有时}，记作 $\Delta t_0$。
+\end{definition}
+
+设一只钟静止在 $S'$ 系，因此钟的两次滴答满足 $\Delta x'=0$。由洛伦兹逆变换
+\[
+\Delta t=\gamma\left(\Delta t'+\frac{v\Delta x'}{c^2}\right)
+\]
+立刻得到
+\[
+\Delta t=\gamma\Delta t',
+\qquad (\Delta x'=0).
+\]
+把静止钟自身记录的时间记为 $\Delta t_0=\Delta t'$，便得到著名公式。
+
+\begin{theorem}[时间膨胀]
+相对实验室以速度 $v$ 匀速运动的时钟，其相邻两次滴答在实验室中测得的时间间隔为
+\[
+\Delta t=\gamma\Delta t_0,
+\qquad
+\gamma=\frac{1}{\sqrt{1-v^2/c^2}},
+\]
+其中 $\Delta t_0$ 是该时钟自己的固有时。因此运动钟在外部观察者看来走得更慢。
+\end{theorem}
+
+\begin{proof}
+对静止于 $S'$ 的钟，两次滴答满足 $\Delta x'=0$。由逆变换可得
+\[
+\Delta t=\gamma\left(\Delta t'+\frac{v\Delta x'}{c^2}\right)=\gamma\Delta t'.
+\]
+令 $\Delta t' = \Delta t_0$ 即得。
+\end{proof}
+
+也可以用“光钟”作几何解释：在钟自身静止系中，光在两镜之间上下反射；而在外部参考系里，光走的是更长的折线路径。由于光速恒定，只能用更长的传播时间来补偿更长的路程，于是运动钟变慢。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95, >=Latex]
+  \draw[->] (-0.5,0) -- (7.6,0) node[below] {$x$};
+  \draw[->] (0,-0.3) -- (0,5.2) node[left] {$ct$};
+  \draw[thick] (1.2,1.0) -- (1.2,4.0);
+  \draw[thick] (5.0,1.0) -- (5.0,4.0);
+  \draw[dashed] (1.2,1.0) -- (5.0,1.0);
+  \draw[dashed] (1.2,4.0) -- (5.0,4.0);
+  \draw[very thick, blue!70!black, ->] (1.2,1.0) -- (3.1,2.5);
+  \draw[very thick, blue!70!black, ->] (3.1,2.5) -- (5.0,4.0);
+  \node[left] at (1.2,1.0) {下镜};
+  \node[right] at (5.0,4.0) {上镜};
+  \node[below] at (3.1,0.1) {钟在实验室中向右运动};
+  \node[above] at (3.1,2.5) {光路};
+\end{tikzpicture}
+\caption{实验室参考系中运动光钟的折线光路}
+\end{figure}
+
+若光钟两镜在自身静止系中的间距为 $h$，则单次反射的固有时满足 $c\Delta t_0=2h$。在实验室中，光路构成等腰三角形，半程满足
+\[
+\left(\frac{c\Delta t}{2}\right)^2=h^2+\left(\frac{v\Delta t}{2}\right)^2,
+\]
+从而再次得到 $\Delta t=\gamma\Delta t_0$。这说明时间膨胀并非某种材料学效应，而是光速不变与时空几何共同作用的结果。
+
+\begin{example}[高空缪子的寿命]
+缪子静止时平均寿命约为 $\tau_0=2.2\,\mu\mathrm{s}$。若某束缪子以 $v=0.998c$ 飞行，则
+\[
+\gamma=\frac{1}{\sqrt{1-0.998^2}}\approx 15.8.
+\]
+实验室中测得寿命约为
+\[
+\tau=\gamma\tau_0\approx 34.8\,\mu\mathrm{s}.
+\]
+于是它在衰变前可飞行的平均距离约为
+\[
+v\tau\approx 0.998c\times 34.8\times 10^{-6}\,\mathrm{s}\approx 1.0\times 10^4\,\mathrm{m}.
+\]
+这就是为什么宇宙线产生的缪子能够穿过大气层抵达地面；若没有时间膨胀，它们只能飞行几百米。
+\end{example}
+
+时间膨胀常被误读成“每个人都看到对方慢，因此自相矛盾”。关键在于：相互比较时必须指定是哪两个事件被比较，而不同参考系对远方事件的同时性判断并不相同。
+
+\begin{remark}[双生子佯谬的实质]
+双生子问题中，一个人留在地球近似处于单一惯性系，另一个人乘飞船远行并返回。看似双方都可以说“对方的钟变慢”，但往返飞船必须经历转向，因此不能始终处于同一惯性系。真正对称的只是两段去程和回程中的局部匀速运动，而不是整个旅程。飞船一方在转向时切换了同时性切片，所以总固有时更短，并不矛盾。
+\end{remark}
+
+\begin{example}[双生子计算]
+设飞船以 $v=0.8c$ 匀速飞往距离地球 $8$ 光年的恒星，再以同样速率返回。地球系中单程所需时间为
+\[
+\Delta t_{\text{单}}=\frac{8\,\text{光年}}{0.8c}=10\,\text{年},
+\]
+故往返共 $20$ 年。由于
+\[
+\gamma=\frac{1}{\sqrt{1-0.8^2}}=\frac{5}{3},
+\]
+飞船上经历的总固有时为
+\[
+\Delta \tau=\frac{20}{\gamma}=12\,\text{年}.
+\]
+因此返回时地球上的双胞胎老了 $20$ 岁，而飞船上的只老了 $12$ 岁。
+\end{example}
+
+\section{长度收缩——$L=L_0/\gamma$}
+
+相对论中的长度测量与日常经验最大的不同，是它必须依赖\emph{同时测量}。要测量一根正在运动的杆在实验室中的长度，必须在实验室同一时刻记下杆前后端的位置差；若不是同一时刻，就已经不是“同一根杆的长度”，而是把物体运动混入了测量过程。
+
+\begin{definition}
+物体在其自身静止参考系中测得的长度称为\emph{固有长度}，记作 $L_0$。在相对该物体运动的参考系中，若对物体两端进行同时测量所得的长度记作 $L$。
+\end{definition}
+
+设杆静止在 $S'$ 系，故其两端坐标差为
+\[
+L_0=\Delta x'.
+\]
+现在在 $S$ 系中同时测量杆两端，所以 $\Delta t=0$。由洛伦兹变换
+\[
+\Delta x'=\gamma(\Delta x-v\Delta t)=\gamma\Delta x.
+\]
+因此
+\[
+L_0=\gamma L,
+\qquad \text{即} \qquad L=\frac{L_0}{\gamma}.
+\]
+
+\begin{theorem}[长度收缩]
+一根固有长度为 $L_0$ 的杆，若以速度 $v$ 平行于杆轴方向相对观察者运动，则观察者测得的长度为
+\[
+L=\frac{L_0}{\gamma}.
+\]
+因此运动方向上的长度变短，而垂直于运动方向的尺寸保持不变。
+\end{theorem}
+
+\begin{proof}
+长度测量要求在 $S$ 系中满足 $\Delta t=0$。由洛伦兹变换得
+\[
+\Delta x'=\gamma(\Delta x-v\Delta t)=\gamma\Delta x.
+\]
+令 $\Delta x'=L_0$、$\Delta x=L$，即得 $L=L_0/\gamma$。
+\end{proof}
+
+\begin{remark}
+长度收缩不是“物体主观上被压扁了”，而是不同参考系对“同一时刻截面”的选择不同。没有同时性的相对性，就没有长度收缩。正因如此，时间膨胀、长度收缩与同时性的相对性并不是三件彼此独立的现象，而是同一套洛伦兹几何的三个侧面。
+\end{remark}
+
+\begin{example}[运动飞船的长度]
+某飞船的静止长度为 $L_0=120\,\mathrm{m}$，相对地球以 $v=0.6c$ 运动，则
+\[
+\gamma=\frac{1}{\sqrt{1-0.6^2}}=1.25,
+\qquad
+L=\frac{120}{1.25}=96\,\mathrm{m}.
+\]
+地球观测者测得飞船长度缩短为 $96\,\mathrm{m}$；但在飞船自身参考系中，飞船仍然长 $120\,\mathrm{m}$，被收缩的是地球上的尺子和时钟组成的坐标网格对飞船的同时截面。
+\end{example}
+
+\section{速度叠加公式——相对论速度合成}
+
+经典力学中，若列车以速度 $v$ 前进，车上人又以速度 $u'$ 朝前走，那么地面看来其速度就是 $u=u'+v$。这一公式在低速下成立，但若直接推广到高速情形，就可能得到大于 $c$ 的结果，这与光速不变冲突。
+
+设粒子在 $S'$ 系中的轨迹为 $x'(t'),y'(t'),z'(t')$，其速度分量定义为
+\[
+u_x'=\frac{\dd x'}{\dd t'},
+\qquad
+u_y'=\frac{\dd y'}{\dd t'},
+\qquad
+u_z'=\frac{\dd z'}{\dd t'}.
+\]
+由洛伦兹变换微分得
+\[
+\dd x'=\gamma(\dd x-v\dd t),
+\qquad
+\dd t'=\gamma\left(\dd t-\frac{v}{c^2}\dd x\right).
+\]
+因此
+\[
+u_x'=\frac{\dd x'}{\dd t'}=\frac{u_x-v}{1-u_xv/c^2}.
+\]
+反过来解出 $u_x$，得到
+\[
+u_x=\frac{u_x'+v}{1+u_x'v/c^2}.
+\]
+对横向分量也可同样处理，得到完整公式。
+
+\begin{law}[相对论速度叠加公式]
+在标准构型下，若粒子在 $S'$ 系中的速度分量为 $(u_x',u_y',u_z')$，则其在 $S$ 系中的速度分量为
+\[
+u_x=\frac{u_x'+v}{1+u_x'v/c^2},
+\qquad
+u_y=\frac{u_y'}{\gamma\left(1+u_x'v/c^2\right)},
+\qquad
+u_z=\frac{u_z'}{\gamma\left(1+u_x'v/c^2\right)}.
+\]
+若运动仅沿 $x$ 轴，则简化为
+\[
+u=\frac{u'+v}{1+u'v/c^2}.
+\]
+\end{law}
+
+\begin{theorem}[光速是速度叠加公式的不动点]
+若某粒子在任一惯性系中的速度大小等于 $c$，则在任何其他惯性系中仍测得其速度大小为 $c$。
+\end{theorem}
+
+\begin{proof}
+只需考虑共线情形。令 $u'=c$，代入一维速度叠加公式：
+\[
+u=\frac{c+v}{1+v/c}=c.
+\]
+对反向传播的光令 $u'=-c$ 同理可得 $u=-c$。因此光速在不同惯性系之间保持不变。
+\end{proof}
+
+\begin{example}[两次高速推进后的速度]
+飞船相对地球以 $0.80c$ 前进，飞船前端又向前发射一枚探测器，探测器相对飞船速度为 $0.70c$。则地球测得探测器速度为
+\[
+u=\frac{0.70c+0.80c}{1+0.70\times 0.80}=\frac{1.50}{1.56}c\approx 0.962c.
+\]
+如果使用经典相加会得到 $1.50c$，显然违反光速上限；相对论修正恰好避免了这一问题。
+\end{example}
+
+\begin{remark}
+速度叠加公式不仅保证任何亚光速物体经过多次合成后仍保持亚光速，也解释了为什么粒子加速器只能让粒子速度越来越接近 $c$，却永远无法把有静质量的粒子加速到恰好等于 $c$。
+\end{remark}
+
+\section{闵可夫斯基时空——时空间隔，光锥，因果结构}
+
+爱因斯坦建立狭义相对论后，闵可夫斯基进一步指出：与其把洛伦兹变换看成“空间和时间各自发生奇怪扭曲”，不如把它看成四维时空中的几何对称。正如欧几里得旋转保持平面距离不变，洛伦兹变换保持某种新的“时空距离”不变。
+
+\begin{definition}
+对于两个事件之间的坐标差
+\[
+\Delta x,\quad \Delta y,\quad \Delta z,\quad \Delta t,
+\]
+定义其\emph{时空间隔}为
+\[
+\Delta s^2=c^2\Delta t^2-\Delta x^2-\Delta y^2-\Delta z^2.
+\]
+\end{definition}
+
+\begin{theorem}[时空间隔不变]
+在任意洛伦兹变换下，两个事件之间的间隔 $\Delta s^2$ 保持不变，即
+\[
+ c^2\Delta t'^2-\Delta x'^2-\Delta y'^2-\Delta z'^2
+ =
+ c^2\Delta t^2-\Delta x^2-\Delta y^2-\Delta z^2.
+\]
+\end{theorem}
+
+\begin{proof}
+只需验证标准构型。由
+\[
+\Delta x'=\gamma(\Delta x-v\Delta t),
+\qquad
+\Delta t'=\gamma\left(\Delta t-\frac{v\Delta x}{c^2}\right)
+\]
+以及 $\Delta y'=\Delta y$、$\Delta z'=\Delta z$，可得
+\begin{align*}
+ c^2\Delta t'^2-\Delta x'^2
+ &=\gamma^2\left[c^2\left(\Delta t-\frac{v\Delta x}{c^2}\right)^2-(\Delta x-v\Delta t)^2\right] \\
+ &=\gamma^2\left[(c^2-v^2)\Delta t^2-\left(1-\frac{v^2}{c^2}\right)\Delta x^2\right] \\
+ &=c^2\Delta t^2-\Delta x^2.
+\end{align*}
+再减去不变的横向部分 $\Delta y^2+\Delta z^2$ 即证。
+\end{proof}
+
+这一定理说明：固有时其实就是类时间隔的平方根。对于沿粒子世界线相邻的两个事件，若在粒子静止系中 $\Delta x'=\Delta y'=\Delta z'=0$，则
+\[
+\Delta s^2=c^2\Delta \tau^2,
+\qquad
+\Delta \tau=\frac{\Delta s}{c}.
+\]
+因此“谁更年轻”本质上是比较两条世界线之间哪一条具有更短的固有时。
+
+\begin{definition}
+粒子在时空中的轨迹称为它的\emph{世界线}。对有静质量的粒子而言，世界线必须始终落在每一点的光锥内部；对光子而言，世界线恰落在光锥表面。
+\end{definition}
+
+若把世界线参数化为 $(t,x(t),y(t),z(t))$，则沿世界线的微小时空间隔满足
+\[
+\dd s^2=c^2\dd t^2-\dd x^2-\dd y^2-\dd z^2
+=c^2\dd t^2\left(1-\frac{u^2}{c^2}\right),
+\]
+其中 $u$ 是粒子的瞬时速度大小。于是固有时微元为
+\[
+\dd \tau=\dd t\sqrt{1-\frac{u^2}{c^2}}=\frac{\dd t}{\gamma(u)}.
+\]
+对整段运动积分，就得到
+\[
+\tau=\int \sqrt{1-\frac{u^2(t)}{c^2}}\,\dd t.
+\]
+这一定积分公式把时间膨胀与世界线几何完全联系起来：速度越大，单位实验室时间所积累的固有时越少；若中途发生加速，必须沿真实世界线逐段累计，而不能简单套用单一的 $\gamma$ 因子。
+
+\begin{definition}
+设两个事件的间隔为 $\Delta s^2$。
+\begin{itemize}
+  \item 若 $\Delta s^2>0$，称为\emph{类时分离}；
+  \item 若 $\Delta s^2=0$，称为\emph{类光分离}；
+  \item 若 $\Delta s^2<0$，称为\emph{类空分离}。
+\end{itemize}
+\end{definition}
+
+这三类分离对应三种完全不同的物理关系：类时事件之间可以存在慢于光速的因果链；类光事件只能由光信号相连；类空事件则没有任何因果可能。由此可见，狭义相对论真正保留下来的不是欧几里得意义上的距离，而是“谁能影响谁”的结构。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0, >=Latex]
+  \draw[->] (-5,0) -- (5,0) node[below] {$x$};
+  \draw[->] (0,-5) -- (0,5) node[left] {$ct$};
+  \fill[blue!10] (0,0) -- (4.2,4.2) -- (-4.2,4.2) -- cycle;
+  \fill[blue!10] (0,0) -- (4.2,-4.2) -- (-4.2,-4.2) -- cycle;
+  \draw[thick, blue!70!black] (0,0) -- (4.4,4.4);
+  \draw[thick, blue!70!black] (0,0) -- (-4.4,4.4);
+  \draw[thick, blue!70!black] (0,0) -- (4.4,-4.4);
+  \draw[thick, blue!70!black] (0,0) -- (-4.4,-4.4);
+  \fill (0,0) circle (2pt);
+  \node[right] at (0,0) {$O$};
+  \node at (0,3.2) {绝对未来};
+  \node at (0,-3.2) {绝对过去};
+  \node at (3.0,0.8) {类空区};
+  \node at (-3.0,0.8) {类空区};
+  \node[above right] at (2.6,2.6) {光线};
+\end{tikzpicture}
+\caption{事件 $O$ 的光锥与因果区域}
+\end{figure}
+
+光锥把一个事件周围的时空分成三部分：未来光锥内的事件可以被该事件以不超过光速的信号影响；过去光锥内的事件可以影响该事件；光锥外的类空区域则与该事件不存在因果联系。
+
+\begin{theorem}[因果约束]
+若两个事件类空分离，则不存在任何速度不超过 $c$ 的信号能够把它们因果连接起来。
+\end{theorem}
+
+\begin{proof}
+若某信号从事件 $A$ 到达事件 $B$，则其速度大小必须满足
+\[
+ u=\frac{\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}}{\Delta t}\le c.
+\]
+于是
+\[
+ c^2\Delta t^2-\Delta x^2-\Delta y^2-\Delta z^2\ge 0.
+\]
+这说明可因果连接的事件只能是类时或类光分离。若两事件类空分离，即 $\Delta s^2<0$，则必需 $u>c$ 才能连接，故不可能。
+\end{proof}
+
+\begin{example}[判断两个事件是否可能有因果关系]
+事件 $A$ 发生在 $(x_A,t_A)=(0,0)$，事件 $B$ 发生在 $(x_B,t_B)=(900\,\mathrm{m},2\,\mu\mathrm{s})$，忽略 $y,z$ 方向。则
+\[
+ c\Delta t\approx 3.0\times 10^8\times 2\times 10^{-6}\,\mathrm{m}=600\,\mathrm{m}.
+\]
+因为 $\Delta x=900\,\mathrm{m}>c\Delta t$，所以
+\[
+\Delta s^2=c^2\Delta t^2-\Delta x^2<0.
+\]
+两事件类空分离，因此任何亚光速或光速信号都不可能从 $A$ 传播到 $B$。
+\end{example}
+
+\begin{remark}
+在闵可夫斯基图中，时间轴内的世界线对应亚光速粒子，恰落在光锥表面的世界线对应光子，位于光锥外的斜率则意味着超光速传播。相对论并不是简单地说“速度不能太大”，而是在几何上规定了因果结构的边界。
+\end{remark}
+
+至此，狭义相对论的运动学部分已经成型：迈克尔逊--莫雷实验迫使我们放弃以太；爱因斯坦两个公设给出新的时空对称性；洛伦兹变换统一解释了时间膨胀、长度收缩和速度叠加；闵可夫斯基几何则进一步把这些结论压缩成“间隔不变”与“光锥因果结构”两条核心语言。下一章将在这一几何框架上讨论动量、能量以及质能关系的相对论修正。
+
+\section*{习题}
+
+\begin{exercise}
+在经典以太模型中，证明迈克尔逊干涉仪平行臂与垂直臂传播时间分别为
+\[
+T_{\parallel}=\frac{2L}{c}\frac{1}{1-v^2/c^2},
+\qquad
+T_{\perp}=\frac{2L}{c}\frac{1}{\sqrt{1-v^2/c^2}}.
+\]
+并把它们在 $v\ll c$ 时展开到 $v^2/c^2$ 的最低非零阶。
+\end{exercise}
+
+\begin{exercise}
+设参考系 $S'$ 以速度 $v=0.5c$ 沿 $x$ 轴相对 $S$ 运动。事件在 $S$ 中的坐标为 $(x,t)=(600\,\mathrm{m},4\,\mu\mathrm{s})$。求该事件在 $S'$ 中的 $(x',t')$。
+\end{exercise}
+
+\begin{exercise}
+证明：若两事件在某参考系中发生在同一地点，则这两事件之间的时间间隔必为固有时，并且该时间间隔不大于任何其他惯性系测得的时间间隔。
+\end{exercise}
+
+\begin{exercise}
+某粒子在实验室中的寿命测得为静止寿命的 $10$ 倍。求其速度 $v/c$。
+\end{exercise}
+
+\begin{exercise}
+一根静止长度为 $2.0\,\mathrm{m}$ 的杆以 $0.90c$ 沿杆轴方向运动。求实验室中测得的长度；再说明为什么若不要求“同时测量”，这个问题本身就没有确定答案。
+\end{exercise}
+
+\begin{exercise}
+在一维情形下，从洛伦兹变换直接推导速度叠加公式
+\[
+ u=\frac{u'+v}{1+u'v/c^2}.
+\]
+然后证明：若 $|u'|<c$ 且 $|v|<c$，则必有 $|u|<c$。
+\end{exercise}
+
+\begin{exercise}
+地球上观测到一艘飞船以 $0.80c$ 飞离地球；飞船上又向前发射一束光。用速度叠加公式说明地球上仍测得该光速为 $c$。再讨论若飞船向后发射光束，地球上测得的速度是多少。
+\end{exercise}
+
+\begin{exercise}
+对于一维时空中的两个事件，证明以下命题等价：
+\begin{enumerate}
+  \item 两事件类空分离；
+  \item 存在某惯性系使它们同时发生；
+  \item 存在某惯性系使它们的先后顺序与另一惯性系相反。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+在单位制 $c=1$ 下，画出事件 $O$ 的光锥，并在图上标出点 $A=(t,x)=(5,3)$、$B=(2,4)$、$C=(4,4)$ 所属的区域，判断它们分别对应类时、类空还是类光分离。
+\end{exercise}

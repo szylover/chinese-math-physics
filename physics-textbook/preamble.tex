@@ -1,0 +1,162 @@
+% ============================================================================
+% preamble.tex — 《微积分物理学》包、字体、排版、数学/物理环境
+% ============================================================================
+
+% --- 中文支持 (XeLaTeX) ---
+\usepackage[fontset=fandol]{ctex}  % 中文排版核心，使用 Fandol 字体集
+\usepackage{fontspec}              % 字体选择
+
+% --- 页面布局 ---
+\usepackage[
+  a4paper,
+  top=2.5cm, bottom=2.5cm,
+  left=2.5cm, right=2.5cm
+]{geometry}
+
+% --- 数学 ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}          % \mathscr 花体
+\usepackage{mathtools}         % dcases, coloneqq 等
+\usepackage{bm}                % 粗体数学符号
+\usepackage{esint}             % 闭合曲面积分符号 \oiint
+\usepackage{physics}           % 物理符号: \vb, \dd, \dv, \pdv, \grad, \div, \curl
+
+% --- 图表 ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% --- 绘图 ---
+\usepackage{tikz}
+\usetikzlibrary{
+  positioning, calc, arrows.meta,
+  decorations.pathreplacing,
+  decorations.pathmorphing,
+  decorations.markings,
+  patterns,
+  angles, quotes,
+}
+\usepackage[american]{circuitikz}  % 电路图
+
+% --- 交叉引用与超链接 ---
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=cyan!50!black,
+}
+\usepackage[nameinlink]{cleveref}  % 智能引用: \cref
+
+% --- 索引 ---
+\usepackage{makeidx}
+\makeindex
+
+% --- 颜色 ---
+\usepackage{xcolor}
+
+% --- 彩色定理框 ---
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+% ============================================================================
+% 定理环境
+% ============================================================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{law}[theorem]{定律}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例题}
+\newtheorem{exercise}{习题}[chapter]
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注记}
+
+% --- tcolorbox 彩色框 ---
+% 定理/命题/引理/推论/定律：蓝色
+\tcolorboxenvironment{theorem}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!4, colframe=blue!40!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+\tcolorboxenvironment{proposition}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!4, colframe=blue!35!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+\tcolorboxenvironment{lemma}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!4, colframe=blue!35!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+\tcolorboxenvironment{corollary}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!4, colframe=blue!35!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+\tcolorboxenvironment{law}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!6, colframe=blue!50!black,
+  boxrule=0.8pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+
+% 定义：绿色
+\tcolorboxenvironment{definition}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=green!4, colframe=green!40!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+
+% 例题：橙色
+\tcolorboxenvironment{example}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=orange!4, colframe=orange!50!black,
+  boxrule=0.6pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+
+% 注记：灰色
+\tcolorboxenvironment{remark}{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=black!3, colframe=black!30,
+  boxrule=0.5pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+}
+
+% ============================================================================
+% 高考题专栏（紫色框）
+% ============================================================================
+\newtcolorbox{gaokao}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=12pt, after skip=12pt,
+  colback=violet!4, colframe=violet!50!black,
+  boxrule=0.8pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  title={\bfseries 高考题的微积分视角},
+  fonttitle=\large,
+  coltitle=white,
+  colbacktitle=violet!60!black,
+  #1
+}
+
+% ============================================================================
+% 物理常用符号
+% ============================================================================
+\newcommand{\vect}[1]{\vb{#1}}          % 矢量
+\newcommand{\uvec}[1]{\vu{#1}}          % 单位矢量
+\newcommand{\magn}[1]{\left|#1\right|}  % 模
+\newcommand{\avg}[1]{\langle #1 \rangle} % 平均值
+% \DeclareSIUnit\lightyear{ly}  % 需要 siunitx 包，暂不使用
