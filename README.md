@@ -28,6 +28,16 @@
 
 ---
 
+## 📝 全栈面试指南
+
+### Android / TypeScript / Node.js 面试完全指南 — `fullstack-interview-book/`（18 章）
+
+面向 Android + TypeScript + Node.js 技术栈的系统性面试手册。涵盖 Kotlin 协程/Jetpack Compose/Android 架构与性能优化、TypeScript 类型系统深度/React 原理/前端系统设计、Node.js Event Loop/框架对比/后端系统设计，以及 LeetCode 50 题（Kotlin+TS 双语解法）、计算机网络与操作系统、DevOps、行为面试与外企英文准备。共 340+ 道面试题、14 个系统设计案例。
+
+👉 [阅读全书](./fullstack-interview-book/README.md)
+
+---
+
 ## 📖 数学部分
 
 ### 线性代数 — `linear-algebra-book/`（241 页）
@@ -102,6 +112,7 @@ cd physics-textbook && lualatex main.tex && lualatex main.tex
 
 ```
 ├── ai-agent-book/             # 《AI Agent 转行与面试指南》(20章)
+├── fullstack-interview-book/  # 《全栈面试指南》(18章)
 ├── claude-code-book/          # 《深入剖析 Claude Code》技术书 (17章)
 ├── linear-algebra-book/       # 线性代数
 ├── abstract-algebra-book/     # 抽象代数
