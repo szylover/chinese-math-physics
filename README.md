@@ -1,10 +1,10 @@
-# 中文数学与物理教材
+# 中文技术书库
 
-以数学的严谨，讲物理的直觉。本仓库包含 6 本中文 LaTeX 教材，涵盖数学（线性代数、抽象代数、模形式）和物理（微积分物理学）。
+以数学的严谨，讲物理的直觉；以工程师的视角，写 AI 与面试指南。本仓库包含 **8 本**中文教材/技术书，涵盖数学、物理、AI Agent 和全栈面试。
 
-所有 PDF 集中存放在 `pdf/` 目录，共 **1339 页**。
+所有 PDF 集中存放在 `pdf/` 目录，数学物理部分共 **1339 页**。
 
-> 📥 **[点击这里下载全部 PDF](https://github.com/szylover/chinese-math-physics/releases/tag/v1.0)**（GitHub Release 资源下载）
+> 📥 **[点击这里下载数学物理 PDF](https://github.com/szylover/chinese-math-physics/releases/tag/v1.0)**（GitHub Release 资源下载）
 
 ---
 
