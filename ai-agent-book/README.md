@@ -70,6 +70,12 @@
 |------|------|------|
 | 第二十章 | [学习资源与路线图](./chapter-20-resources-roadmap.md) | `chapter-20-resources-roadmap.md` |
 
+### 第七部分：工程实践案例
+
+| 章节 | 标题 | 文件 |
+|------|------|------|
+| 第二十一章 | [Agentic Engineering 实战：大型移动端项目的 AI 工程化体系](./chapter-21-agentic-engineering-practice.md) | `chapter-21-agentic-engineering-practice.md` |
+
 ---
 
 ## 适合读者
