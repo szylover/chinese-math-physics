@@ -2,6 +2,8 @@
 
 > 面向传统软件工程师的 AI Agent 转行路线图
 
+> 💡 **想深入"模型层"（PyTorch / 深度学习 / 训练）应付 ML/DL 算法岗面试？** 本书聚焦 Agent **应用层**，模型层请参阅同仓库的 [《PyTorch 面试速通》](../pytorch-interview-book/README.md)，二者互补。
+
 ---
 
 ## 关于本书

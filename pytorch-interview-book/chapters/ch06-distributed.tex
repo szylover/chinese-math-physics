@@ -1,0 +1,285 @@
+\chapter{分布式训练面试速通}
+\section{为什么需要分布式训练}
+LLM 时代的训练瓶颈通常不是``代码能不能跑起来''，而是数据规模、模型规模和显存上限同时增长。单卡训练在小模型上足够直接，但当模型参数、激活值、优化器状态和 batch size 都变大时，很快会遇到显存墙和训练时间墙。
+\subsection{三个核心动机}
+\begin{itemize}
+  \item \textbf{数据量太大}：单卡吞吐有限，训练一个 epoch 可能需要数天甚至数周。
+  \item \textbf{模型太大}：参数、梯度、优化器状态和激活值无法同时放入单张 GPU。
+  \item \textbf{显存墙明显}：以 Adam 为例，参数之外还要保存梯度、一阶动量和二阶动量，训练显存远大于推理显存。
+\end{itemize}
+一个常见估算是：仅参数本身，$N$ 个参数在 fp16/bf16 下约占 $2N$ 字节；训练时再加梯度、优化器状态和激活值，实际显存开销会成倍增加。分布式训练的本质，就是把计算、数据或状态拆到多张 GPU 上。
+\begin{quickcard}
+分布式训练解决两类问题：用更多 GPU 加速吞吐，用更多显存容纳更大的模型。
+\end{quickcard}
+\section{DP vs DDP}
+PyTorch 中常被问到的两个概念是 DataParallel（DP）和 DistributedDataParallel（DDP）。面试中要明确：DP 是早期易用方案，DDP 是生产训练的主流方案。
+\subsection{DataParallel 的问题}
+DP 是单进程多线程模式。模型通常放在主 GPU 上，每次前向时复制到其他 GPU，输入被切分后并行计算，最后把结果和梯度汇总回主 GPU。
+它的问题包括：
+\begin{itemize}
+  \item 单进程多线程，Python 层会受到 GIL 影响。
+  \item 主 GPU 承担 gather 和参数更新，负载不均。
+  \item 每次前向复制模型，额外开销明显。
+  \item 扩展性较差，不适合多机训练。
+\end{itemize}
+\subsection{DDP 的优势}
+DDP 是多进程模式，通常每张 GPU 一个进程。每个进程持有一份模型副本，处理自己负责的数据切片。反向传播时，DDP 在梯度 ready 后触发通信，对梯度做 all-reduce，使各个进程得到一致的平均梯度。
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    对比项 & DataParallel & DistributedDataParallel \\
+    \midrule
+    进程模型 & 单进程多线程 & 多进程，通常每 GPU 一进程 \\
+    性能 & 受 GIL 和主卡瓶颈影响 & 通信计算可重叠，性能更好 \\
+    负载均衡 & 主 GPU 压力更大 & 各 GPU 更均衡 \\
+    多机支持 & 不适合 & 原生支持 \\
+    推荐程度 & 不推荐用于正式训练 & PyTorch 数据并行首选 \\
+    典型启动 & 普通 python 脚本 & \texttt{torchrun} 启动 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{trap}
+面试中不要说 DP 和 DDP 只是写法不同。关键差异是单进程多线程与多进程通信模型，DDP 的扩展性和性能都明显更好。
+\end{trap}
+\section{DDP 原理与最小代码骨架}
+\subsection{基本工作流}
+DDP 的核心逻辑可以概括为四步：
+\begin{enumerate}
+  \item 每个进程绑定一张 GPU，并初始化进程组。
+  \item 每个进程构造同样的模型，并用 DDP 包装。
+  \item 使用 \texttt{DistributedSampler} 切分数据，避免不同进程读到完全相同的数据。
+  \item 反向传播时对梯度做 all-reduce，保证各模型副本同步更新。
+\end{enumerate}
+DDP 中每个进程都有完整模型副本，所以它主要解决数据并行吞吐问题，并不从根本上减少每张 GPU 上的模型参数显存。
+\subsection{all-reduce 与 ring all-reduce 直觉}
+all-reduce 的目标是让所有进程都拿到规约后的结果。以梯度平均为例，假设有 $K$ 个进程，每个进程有本地梯度 $g_i$，DDP 需要得到
+\[
+  \bar{g} = \frac{1}{K}\sum_{i=1}^{K} g_i .
+\]
+ring all-reduce 的直觉是：把每个进程看成环上的一个节点，梯度被切成若干块，节点只和相邻节点通信。第一阶段 reduce-scatter，把不同块的求和结果分散到各节点；第二阶段 all-gather，把这些块再广播回所有节点。这样可以避免单个中心节点成为瓶颈。
+\subsection{DistributedSampler 与 SyncBatchNorm}
+\texttt{DistributedSampler} 的作用是把数据集按 rank 切开，使每个进程看到不同样本。每个 epoch 前通常要调用 \texttt{sampler.set\_epoch(epoch)}，否则 shuffle 顺序可能在不同 epoch 不变。
+BatchNorm 在 DDP 中也要注意。普通 BatchNorm 只使用本进程 mini-batch 的统计量；如果每张 GPU 的 batch 很小，统计量会不稳定。此时可考虑 \texttt{SyncBatchNorm}，在多个进程间同步均值和方差。
+\subsection{最小 DDP 代码骨架}
+\begin{lstlisting}
+import os
+import torch
+import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data.distributed import DistributedSampler
+def main():
+    dist.init_process_group(backend="nccl")
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    x = torch.randn(1024, 32)
+    y = torch.randn(1024, 1)
+    dataset = TensorDataset(x, y)
+    sampler = DistributedSampler(dataset, shuffle=True)
+    loader = DataLoader(dataset, batch_size=32, sampler=sampler)
+    model = torch.nn.Sequential(
+        torch.nn.Linear(32, 64),
+        torch.nn.ReLU(),
+        torch.nn.Linear(64, 1),
+    ).to(device)
+    model = DDP(model, device_ids=[local_rank])
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+    loss_fn = torch.nn.MSELoss()
+    for epoch in range(3):
+        sampler.set_epoch(epoch)
+        for xb, yb in loader:
+            xb = xb.to(device, non_blocking=True)
+            yb = yb.to(device, non_blocking=True)
+            optimizer.zero_grad(set_to_none=True)
+            pred = model(xb)
+            loss = loss_fn(pred, yb)
+            loss.backward()
+            optimizer.step()
+    dist.destroy_process_group()
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+常见单机 4 卡启动方式如下：
+\begin{lstlisting}[style=plainstyle]
+torchrun --nproc_per_node=4 train_ddp.py
+\end{lstlisting}
+多机训练还需要指定节点数、节点 rank、master 地址和端口。面试中通常不要求背参数，但要知道 DDP 依赖进程组和 rank 通信。
+\section{FSDP：Fully Sharded Data Parallel}
+DDP 每张 GPU 都有完整参数、梯度和优化器状态。FSDP 的核心是把这些训练状态分片到不同 GPU 上，从而显著降低单卡显存占用。
+\subsection{FSDP 分片了什么}
+FSDP 通常关注三类状态：
+\begin{itemize}
+  \item \textbf{参数}：模型权重不再长期完整保存在每张卡上。
+  \item \textbf{梯度}：反向后的梯度按 shard 存放。
+  \item \textbf{优化器状态}：Adam 的动量和方差等状态也可分片。
+\end{itemize}
+训练某一层时，FSDP 会在需要时 all-gather 出完整参数，计算结束后释放非本地 shard；反向传播时再 reduce-scatter 梯度。它用更多通信换更低显存。
+\subsection{FSDP 与 ZeRO}
+DeepSpeed ZeRO 和 FSDP 思路高度相关，都是把训练状态切分，避免每张 GPU 保存完整副本。面试中可以把 FSDP 理解为 PyTorch 原生生态中的 ZeRO-3 风格方案，但二者在实现、API、生态和工程细节上不同。
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    方案 & 分片参数 & 分片梯度 & 分片优化器状态 \\
+    \midrule
+    ZeRO-1 & 否 & 否 & 是 \\
+    ZeRO-2 & 否 & 是 & 是 \\
+    ZeRO-3 & 是 & 是 & 是 \\
+    FSDP & 是 & 是 & 是 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\subsection{auto wrap 与混合精度}
+FSDP 不一定要把整个模型作为一个巨大模块包起来。auto wrap policy 可以按 Transformer block 等粒度自动包装子模块，控制 all-gather 的范围和时机。粒度太粗会导致峰值显存高，粒度太细会增加通信和调度开销。
+FSDP 常与混合精度配合使用：参数通信和计算可使用 fp16 或 bf16，优化器状态可保持 fp32，以兼顾速度、显存和稳定性。LLM 训练中，bf16 因指数范围更大，经常比 fp16 更省心。
+\begin{quickcard}
+DDP 复制完整模型，FSDP 分片训练状态；DDP 主要提吞吐，FSDP 主要省显存。
+\end{quickcard}
+\section{三种并行方式}
+大模型训练常见并行方式包括数据并行、张量并行和流水线并行。实际 LLM 训练往往是混合并行，而不是只用一种。
+\subsection{数据并行}
+数据并行把 batch 切给不同 GPU。每张 GPU 有一份模型副本，处理不同数据，反向时同步梯度。DDP 就是典型数据并行。
+优点是简单、吞吐扩展好；缺点是每张 GPU 仍需容纳完整模型和优化器状态，模型太大时无能为力。
+\subsection{张量并行}
+张量并行把单个算子内部的大矩阵切开。例如 Megatron-LM 中常把 Transformer 的线性层权重按列或按行切分到多张 GPU。这样单层参数和计算被拆开，适合单层矩阵非常大的模型。
+张量并行的代价是算子之间需要频繁通信，对高速互联依赖强，通常更适合同一节点内的多卡。
+\subsection{流水线并行}
+流水线并行按层切分模型。前几层放在一组 GPU 上，后几层放在另一组 GPU 上。为了减少 GPU 空泡，会把一个大 batch 切成多个 micro-batch，让不同阶段像流水线一样同时工作。
+流水线并行适合层数很多、模型整体放不下单卡的场景，但要处理 pipeline bubble、调度和负载均衡问题。
+\subsection{如何选择}
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    并行方式 & 切分对象 & 主要解决 & 常见代价 \\
+    \midrule
+    数据并行 & 数据 batch & 提升吞吐 & 每卡仍需完整模型 \\
+    张量并行 & 单层矩阵或张量 & 单层太大 & 高频通信 \\
+    流水线并行 & 模型层 & 模型层数太多 & pipeline bubble \\
+    混合并行 & 数据、层、张量 & 超大模型训练 & 工程复杂度高 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+一个常见判断是：如果模型能放进单卡，优先 DDP；如果训练状态占显存太大，考虑 FSDP 或 ZeRO；如果单层矩阵也很大，加入张量并行；如果层数太多，加入流水线并行。
+\section{混合精度 AMP}
+混合精度训练用低精度做大部分矩阵计算，用高精度保存关键状态。PyTorch 2.x 中常用 \texttt{torch.autocast} 和 \texttt{GradScaler}。
+\subsection{为什么能省显存和提速}
+fp16 或 bf16 的张量通常只占 fp32 的一半显存。现代 GPU 对低精度矩阵乘法有 Tensor Core 加速，因此混合精度通常既省显存又提速。
+但低精度也有风险：fp16 指数范围较小，可能发生 underflow 或 overflow；因此 fp16 训练常配合 loss scaling。bf16 的尾数精度低于 fp32，但指数范围接近 fp32，数值稳定性通常优于 fp16。
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    类型 & 优点 & 注意点 \\
+    \midrule
+    fp16 & 速度快，显存低 & 指数范围小，常需 GradScaler \\
+    bf16 & 指数范围大，更稳定 & 需要硬件支持，精度尾数较短 \\
+    fp32 & 最稳定 & 显存和计算开销更高 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\subsection{最小 AMP 代码}
+\begin{lstlisting}
+import torch
+model = torch.nn.Linear(32, 1).cuda()
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+scaler = torch.amp.GradScaler("cuda")
+for xb, yb in loader:
+    xb = xb.cuda(non_blocking=True)
+    yb = yb.cuda(non_blocking=True)
+    optimizer.zero_grad(set_to_none=True)
+    with torch.autocast(device_type="cuda", dtype=torch.float16):
+        pred = model(xb)
+        loss = torch.nn.functional.mse_loss(pred, yb)
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+\end{lstlisting}
+如果使用 bf16，很多场景可以不使用 \texttt{GradScaler}：
+\begin{lstlisting}
+with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+    pred = model(xb)
+    loss = loss_fn(pred, yb)
+\end{lstlisting}
+\section{显存优化常见手段}
+\subsection{梯度累积}
+梯度累积用多个小 mini-batch 累积梯度，再执行一次 optimizer step，从而模拟更大的 global batch。若累积步数为 $A$，每卡 batch 为 $B$，数据并行进程数为 $K$，则有效 batch size 约为
+\[
+  B_{\mathrm{global}} = A \times B \times K .
+\]
+\begin{lstlisting}
+accum_steps = 4
+optimizer.zero_grad(set_to_none=True)
+for step, (xb, yb) in enumerate(loader):
+    with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+        pred = model(xb.cuda())
+        loss = loss_fn(pred, yb.cuda()) / accum_steps
+    loss.backward()
+    if (step + 1) % accum_steps == 0:
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+\end{lstlisting}
+关键点是 loss 要除以累积步数，否则梯度尺度会变大。DDP 中还可结合 \texttt{no\_sync()} 减少非 step 轮次的梯度同步开销。
+\subsection{梯度检查点}
+梯度检查点也叫 activation checkpointing。普通反向传播会保存中间激活值；检查点技术只保存部分节点，反向时重新计算被丢弃的激活值。它用额外计算换显存。
+适用场景是 Transformer 层数深、激活值占用很高的模型。代价是训练速度下降，因为反向阶段需要重算部分前向。
+\subsection{参数 offload}
+offload 是把部分参数、梯度或优化器状态放到 CPU 内存甚至 NVMe 中，需要时再搬回 GPU。它能进一步降低 GPU 显存压力，但会引入 PCIe 或存储 IO 开销。面试中可回答：offload 适合显存极紧张时保命，不是无成本加速。
+\section{高频面试题}
+\begin{interview}
+DDP 为什么通常比 DP 好？
+\end{interview}
+\begin{answer}
+DP 是单进程多线程，主 GPU 负责 gather 和更新，容易受 GIL、复制开销和主卡瓶颈影响。DDP 是多进程，通常每 GPU 一个进程，梯度通过 all-reduce 同步，负载更均衡，通信计算可重叠，也支持多机扩展，因此是生产训练首选。
+\end{answer}
+\begin{interview}
+all-reduce 是什么？DDP 为什么需要它？
+\end{interview}
+\begin{answer}
+all-reduce 是一种集合通信操作，把多个进程上的张量先做规约，例如求和或平均，再把结果发回所有进程。DDP 中每个进程处理不同数据，得到本地梯度；为了让模型副本保持一致，需要对梯度做 all-reduce，然后每个进程用相同的平均梯度更新参数。
+\end{answer}
+\begin{interview}
+FSDP 和 ZeRO 是什么关系？
+\end{interview}
+\begin{answer}
+二者都通过分片训练状态降低单卡显存。ZeRO-1 分片优化器状态，ZeRO-2 进一步分片梯度，ZeRO-3 分片参数、梯度和优化器状态。FSDP 也是参数、梯度、优化器状态分片的思路，可理解为 PyTorch 原生生态中的 ZeRO-3 风格方案，但实现和使用接口不同。
+\end{answer}
+\begin{interview}
+数据并行、张量并行、流水线并行的区别是什么？
+\end{interview}
+\begin{answer}
+数据并行切 batch，每张卡有完整模型，主要提升吞吐。张量并行切单层矩阵或张量，解决单层太大的问题，但通信频繁。流水线并行按层切模型，通过 micro-batch 让不同阶段同时工作，解决模型层数多、整体放不下的问题，但会有 pipeline bubble。
+\end{answer}
+\begin{interview}
+如果一个大模型放不下单卡，训练时有哪些方案？
+\end{interview}
+\begin{answer}
+先区分瓶颈。如果是优化器状态和梯度太大，可用 FSDP 或 ZeRO。若单层矩阵过大，可加张量并行。若层数太多，可用流水线并行。还可以配合 AMP、梯度检查点、梯度累积和 offload。实际 LLM 训练常用数据并行、张量并行、流水线并行和分片技术的混合方案。
+\end{answer}
+\begin{interview}
+梯度累积如何模拟大 batch？
+\end{interview}
+\begin{answer}
+把一个大 batch 拆成多个小 mini-batch，连续做前向和反向但暂不更新参数，累积若干次梯度后再执行一次 optimizer step。为了保持梯度尺度一致，通常把每次 loss 除以累积步数。有效 batch size 等于每卡 batch、累积步数和数据并行进程数的乘积。
+\end{answer}
+\begin{interview}
+fp16 和 bf16 有什么区别？
+\end{interview}
+\begin{answer}
+二者都比 fp32 省显存，适合混合精度训练。fp16 尾数相对更多但指数范围小，容易 overflow 或 underflow，通常需要 GradScaler。bf16 指数范围接近 fp32，数值稳定性更好，LLM 训练中更常见，但需要硬件支持，且尾数精度较低。
+\end{answer}
+\section{章末速记卡}
+\begin{quickcard}
+\textbf{DDP}：每 GPU 一个进程，每进程一份完整模型，反向时 all-reduce 梯度；比 DP 更快、更均衡、更适合多机。
+\end{quickcard}
+\begin{quickcard}
+\textbf{FSDP}：分片参数、梯度和优化器状态，用通信换显存；适合训练单卡放不下训练状态的大模型。
+\end{quickcard}
+\begin{quickcard}
+\textbf{三种并行}：数据并行切 batch，张量并行切矩阵，流水线并行切层；超大模型常用混合并行。
+\end{quickcard}
+\begin{quickcard}
+\textbf{AMP}：用 fp16/bf16 做主要计算以省显存和提速；fp16 常配 GradScaler，bf16 通常更稳定。
+\end{quickcard}

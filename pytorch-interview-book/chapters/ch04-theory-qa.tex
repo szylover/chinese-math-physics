@@ -1,0 +1,316 @@
+\chapter{高频理论面试题速记}
+\section{反向传播与梯度直觉}
+\begin{interview}
+反向传播的本质是什么？
+\end{interview}
+\begin{answer}
+反向传播就是在计算图上从后往前应用链式法则。前向传播计算输出并保存中间量；反向传播把损失对输出的梯度逐层传回，乘上每个节点的局部导数，得到所有参数的梯度。它负责“算梯度”，优化器才负责“更新参数”。
+\end{answer}
+\begin{interview}
+链式法则在神经网络中如何体现？
+\end{interview}
+\begin{answer}
+若 $L$ 依赖 $y$，$y$ 依赖 $x$，则
+\[
+\frac{\partial L}{\partial x}=\frac{\partial L}{\partial y}\frac{\partial y}{\partial x}.
+\]
+深层网络是函数复合，反传时梯度沿路径把各层局部梯度连乘。反向传播的高效之处在于复用中间梯度，避免对每个参数单独做数值求导。
+\end{answer}
+\begin{interview}
+手推两层全连接网络的梯度直觉。
+\end{interview}
+\begin{answer}
+设 $z_1=W_1x+b_1$，$h=\phi(z_1)$，$z_2=W_2h+b_2$，损失为 $L$。输出层误差记为 $\delta_2=\partial L/\partial z_2$，则
+\[
+\frac{\partial L}{\partial W_2}=\delta_2h^\top,
+\quad
+\frac{\partial L}{\partial b_2}=\delta_2.
+\]
+隐藏层误差为 $\delta_1=(W_2^\top\delta_2)\odot\phi'(z_1)$，所以
+\[
+\frac{\partial L}{\partial W_1}=\delta_1x^\top,
+\quad
+\frac{\partial L}{\partial b_1}=\delta_1.
+\]
+一句话：参数梯度约等于“本层误差信号”乘“本层输入”。
+\end{answer}
+\begin{trap}
+常见误区：把反向传播说成“从输出层开始更新参数”。准确说法是先反向计算梯度，再由 SGD、Adam 等优化器根据梯度更新参数。
+\end{trap}
+\section{梯度消失与梯度爆炸}
+\begin{interview}
+梯度消失和梯度爆炸的成因是什么？
+\end{interview}
+\begin{answer}
+核心原因是反传中的连乘。若每层导数或雅可比矩阵范数长期小于 $1$，梯度会越来越小，形成梯度消失；若长期大于 $1$，梯度会急剧变大，形成梯度爆炸。sigmoid、tanh 在饱和区导数接近 $0$，会进一步加剧梯度消失。
+\end{answer}
+\begin{interview}
+训练中如何识别梯度消失或爆炸？
+\end{interview}
+\begin{answer}
+梯度消失常表现为浅层几乎学不动、loss 下降很慢、深层网络退化；RNN 中表现为难以学习长距离依赖。梯度爆炸常表现为 loss 剧烈震荡、参数范数异常增大、梯度范数很大，甚至出现 \code{NaN}。
+\end{answer}
+\begin{interview}
+如何缓解梯度消失和梯度爆炸？
+\end{interview}
+\begin{answer}
+常见方法：使用 ReLU、LeakyReLU、GELU 等非饱和激活；用 Xavier 或 He 初始化保持方差稳定；加入 BatchNorm 或 LayerNorm；使用残差连接缩短梯度路径；对爆炸使用梯度裁剪；序列模型用 LSTM、GRU 的门控结构缓解长依赖训练困难。
+\end{answer}
+\section{激活函数对比}
+\begin{interview}
+为什么神经网络必须使用激活函数？
+\end{interview}
+\begin{answer}
+激活函数提供非线性。若没有激活函数，多层线性层复合仍等价于一个线性变换，网络再深也只能表达线性函数。加入非线性后，网络才能拟合复杂边界和高维非线性映射。
+\end{answer}
+\begin{interview}
+sigmoid、tanh、ReLU、LeakyReLU、GELU 如何对比？
+\end{interview}
+\begin{answer}
+面试可按输出范围、优点、缺点和适用场景回答：
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+激活 & 输出范围 & 优点 & 缺点与适用 \\
+\midrule
+sigmoid & $(0,1)$ & 概率解释 & 易饱和、非零中心；二分类输出或门控 \\
+tanh & $(-1,1)$ & 零中心 & 仍易饱和；早期 RNN 常见 \\
+ReLU & $[0,\infty)$ & 简单、收敛快 & 可能死亡 ReLU；CNN/MLP 常用 \\
+LeakyReLU & $(-\infty,\infty)$ & 负半轴有梯度 & 斜率需设定；缓解死亡 ReLU \\
+GELU & $(-\infty,\infty)$ & 平滑、效果好 & 计算稍复杂；Transformer 常用 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{answer}
+\begin{interview}
+什么是死亡 ReLU？为什么 GELU 常用于 Transformer？
+\end{interview}
+\begin{answer}
+死亡 ReLU 指神经元输入长期小于 $0$，输出和梯度都为 $0$，导致该神经元不再更新，可用较小学习率、合适初始化或 LeakyReLU 缓解。GELU 近似 $x\Phi(x)$，是平滑的软门控，负半轴也保留小幅信息，经验上适合 Transformer 的前馈层。
+\end{answer}
+\section{BatchNorm 与 LayerNorm}
+\begin{interview}
+BatchNorm 的原理是什么？
+\end{interview}
+\begin{answer}
+BatchNorm 对 mini-batch 内每个通道做标准化，再用可学习参数恢复表达能力：
+\[
+\mu_B=\frac{1}{m}\sum_i x_i,
+\quad
+\sigma_B^2=\frac{1}{m}\sum_i(x_i-\mu_B)^2,
+\]
+\[
+\hat{x}_i=\frac{x_i-\mu_B}{\sqrt{\sigma_B^2+\epsilon}},
+\quad
+ y_i=\gamma\hat{x}_i+\beta.
+\]
+它让中间特征分布更稳定，通常能加快收敛并提升训练稳定性。
+\end{answer}
+\begin{interview}
+BatchNorm 训练和推理时有什么区别？
+\end{interview}
+\begin{answer}
+训练时使用当前 mini-batch 的均值和方差，并更新 running mean 与 running var。推理时不再用当前 batch 统计，而使用训练阶段累计的 running 统计量，因此输出不依赖当前 batch 的样本组成。PyTorch 中要通过 \code{model.train()} 和 \code{model.eval()} 切换行为。
+\end{answer}
+\begin{interview}
+BatchNorm 为什么有效？放在激活前还是后？
+\end{interview}
+\begin{answer}
+BN 有效主要因为它稳定中间层尺度，改善优化条件，使网络能使用更大学习率，并带来轻微 batch 噪声正则化。经典 CNN 中最常见顺序是 \code{Conv -> BN -> ReLU}，即卷积后、激活前；也有激活后 BN 的设计，实际以架构和实验为准。
+\end{answer}
+\begin{interview}
+LayerNorm 和 BatchNorm 的区别是什么？
+\end{interview}
+\begin{answer}
+BatchNorm 沿 batch 维度统计，通常对每个通道归一化，依赖 batch size，适合 CNN 和较大 batch。LayerNorm 在单个样本内部沿特征维度统计，不依赖 batch，训练和推理行为一致，因此更适合 NLP、RNN 和 Transformer。
+\end{answer}
+\begin{interview}
+为什么 Transformer 常用 LayerNorm？
+\end{interview}
+\begin{answer}
+Transformer 常面对变长序列、小 batch、分布变化和自回归推理。BatchNorm 的 batch 统计可能不稳定，且训练推理行为不同；LayerNorm 对每个 token 或样本内部特征归一化，不依赖其他样本，因此更自然、更稳定。
+\end{answer}
+\section{Dropout、过拟合与欠拟合}
+\begin{interview}
+Dropout 的原理是什么？
+\end{interview}
+\begin{answer}
+Dropout 在训练时以概率 $p$ 随机把部分神经元输出置零，迫使模型不要过度依赖少数特征，可看作训练许多子网络并做隐式集成。它主要用于缓解过拟合，常见于全连接层和 Transformer 的若干位置。
+\end{answer}
+\begin{interview}
+训练和推理时 Dropout 有什么区别？什么是 inverted dropout？
+\end{interview}
+\begin{answer}
+训练时随机丢弃，推理时关闭丢弃。PyTorch 默认使用 inverted dropout：若 $m\sim\operatorname{Bernoulli}(1-p)$，训练输出为
+\[
+y=\frac{m\odot x}{1-p}.
+\]
+因此 $\mathbb{E}[y]=x$，推理时无需再乘保留概率。验证时忘记 \code{eval()} 会让指标随机波动。
+\end{answer}
+\begin{interview}
+如何诊断过拟合和欠拟合？
+\end{interview}
+\begin{answer}
+看 train/val 曲线。过拟合：训练 loss 低、训练指标好，但验证 loss 上升或验证指标变差。欠拟合：训练和验证表现都差，训练 loss 也降不下来。先判断问题类型，再决定是加强正则还是提升模型能力。
+\end{answer}
+\begin{interview}
+过拟合和欠拟合分别怎么处理？
+\end{interview}
+\begin{answer}
+过拟合可用 L2/weight decay、Dropout、数据增强、early stopping、更多数据、标签平滑、减小模型容量。欠拟合可增大模型、训练更久、减弱正则、改进特征或结构、调整学习率和优化器。口诀：过拟合管住模型，欠拟合放开模型。
+\end{answer}
+\section{权重初始化}
+\begin{interview}
+为什么权重初始化很重要？
+\end{interview}
+\begin{answer}
+初始化影响前向激活和反向梯度的方差。权重太小，信号逐层衰减；权重太大，激活和梯度可能爆炸。好的初始化目标是让各层输入、输出和梯度处在合适尺度，使训练一开始就比较稳定。
+\end{answer}
+\begin{interview}
+Xavier 和 He 初始化分别适合什么场景？
+\end{interview}
+\begin{answer}
+Xavier 适合 sigmoid、tanh 等较对称激活，典型方差为
+\[
+\operatorname{Var}(W)=\frac{2}{\mathrm{fan}_{\mathrm{in}}+\mathrm{fan}_{\mathrm{out}}}.
+\]
+He 初始化适合 ReLU/LeakyReLU，因为 ReLU 会截断约一半激活，常用
+\[
+\operatorname{Var}(W)=\frac{2}{\mathrm{fan}_{\mathrm{in}}}.
+\]
+面试中可答：tanh 用 Xavier，ReLU 用 He。
+\end{answer}
+\section{优化器}
+\begin{interview}
+SGD 和 Momentum 的更新式与特点是什么？
+\end{interview}
+\begin{answer}
+SGD 使用小批量梯度 $g_t=\nabla_\theta L(\theta_t)$：
+\[
+\theta_{t+1}=\theta_t-\eta g_t.
+\]
+它简单、显存省、泛化常好，但收敛慢且对学习率敏感。Momentum 引入速度
+\[
+v_t=\mu v_{t-1}+g_t,
+\quad
+\theta_{t+1}=\theta_t-\eta v_t.
+\]
+它在稳定方向加速，在震荡方向抵消，通常比普通 SGD 更稳。
+\end{answer}
+\begin{interview}
+Adam 的更新公式是什么？
+\end{interview}
+\begin{answer}
+Adam 同时估计一阶矩和二阶矩：
+\[
+g_t=\nabla_\theta L(\theta_t),
+\quad
+m_t=\beta_1m_{t-1}+(1-\beta_1)g_t,
+\]
+\[
+v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^2,
+\quad
+\hat{m}_t=\frac{m_t}{1-\beta_1^t},
+\quad
+\hat{v}_t=\frac{v_t}{1-\beta_2^t},
+\]
+\[
+\theta_{t+1}=\theta_t-\eta\frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon}.
+\]
+$m_t$ 类似动量，$v_t$ 用于按参数自适应缩放学习率。
+\end{answer}
+\begin{interview}
+Adam、AdamW、SGD Momentum 如何取舍？
+\end{interview}
+\begin{answer}
+Adam 收敛快、调参相对容易，适合稀疏梯度、NLP 和 Transformer。AdamW 将权重衰减与 Adam 梯度更新解耦，weight decay 含义更纯粹，是现代 Transformer 的常用默认选择。SGD Momentum 在 CNN 分类等任务上最终泛化可能很好，但通常需要更仔细调学习率。
+\end{answer}
+\section{学习率}
+\begin{interview}
+学习率过大或过小分别有什么现象？
+\end{interview}
+\begin{answer}
+学习率过大时，loss 震荡、不收敛，甚至参数爆炸和 \code{NaN}；过小时，loss 下降很慢，训练时间长，可能停在较差区域。学习率通常是最重要的超参数，要和 batch size、优化器、归一化方式一起考虑。
+\end{answer}
+\begin{interview}
+什么是 warmup？为什么常配合 AdamW 和 Transformer？
+\end{interview}
+\begin{answer}
+warmup 指训练初期从很小学习率逐步升到目标学习率。模型刚开始参数、梯度和归一化统计不稳定，直接用大学习率容易发散；warmup 能平滑启动训练。Transformer、大 batch、AdamW 训练中很常见。
+\end{answer}
+\begin{interview}
+常见学习率衰减策略有哪些？
+\end{interview}
+\begin{answer}
+常见策略包括 step decay、multi-step decay、exponential decay、cosine annealing、linear decay、ReduceLROnPlateau。直觉是前期较大学习率快速搜索，后期降低学习率精细收敛；现代训练常用 warmup 加 cosine 或 linear decay。
+\end{answer}
+\section{损失函数}
+\begin{interview}
+MSE 和交叉熵分别适合什么任务？
+\end{interview}
+\begin{answer}
+MSE 为
+\[
+L_{\mathrm{MSE}}=\frac{1}{n}\sum_{i=1}^{n}(\hat{y}_i-y_i)^2,
+\]
+常用于回归，并有高斯噪声下的最大似然解释。多分类交叉熵为
+\[
+L_{\mathrm{CE}}=-\sum_{k=1}^{K}y_k\log p_k,
+\quad
+p_k=\frac{e^{z_k}}{\sum_j e^{z_j}},
+\]
+常用于分类，等价于最大化真实类别概率。
+\end{answer}
+\begin{interview}
+为什么分类通常用交叉熵而不是 MSE？
+\end{interview}
+\begin{answer}
+交叉熵直接匹配概率建模和最大似然目标。softmax 加交叉熵有简洁梯度
+\[
+\frac{\partial L}{\partial z_k}=p_k-y_k,
+\]
+模型自信但错误时仍有强纠正信号；MSE 搭配饱和激活时梯度可能变弱，优化效率通常不如交叉熵。
+\end{answer}
+\begin{interview}
+PyTorch 中为什么常把 logits 直接传给损失函数？
+\end{interview}
+\begin{answer}
+\code{CrossEntropyLoss} 期望输入未归一化 logits，内部实现 \code{log\_softmax} 加 \code{NLLLoss}，比先手动 softmax 再取 log 更数值稳定。二分类同理，优先用 \code{BCEWithLogitsLoss}，它把 sigmoid 和 BCE 合并，避免数值下溢或上溢。
+\end{answer}
+\section{综合追问}
+\begin{interview}
+训练 loss 不下降，你会如何排查？
+\end{interview}
+\begin{answer}
+先查数据、标签和输入归一化，再查学习率是否过大或过小；确认模型处于 \code{train()}，梯度没有被 \code{detach}，也没有忘记 \code{zero\_grad()}。再检查输出和损失是否匹配，例如分类是否把 logits 传给 \code{CrossEntropyLoss}。最后考虑初始化、归一化、优化器和模型容量。
+\end{answer}
+\begin{interview}
+BatchNorm、Dropout、Weight Decay 都能防过拟合吗？
+\end{interview}
+\begin{answer}
+它们都可能改善泛化，但机制不同。Weight Decay 直接惩罚大权重；Dropout 随机屏蔽神经元，减少共适应；BatchNorm 主要稳定优化，同时 batch 噪声带来一定正则化效果。不要把 BN 只理解成正则化方法。
+\end{answer}
+\begin{interview}
+残差连接为什么能缓解深层网络训练困难？
+\end{interview}
+\begin{answer}
+残差块学习 $F(x)+x$，恒等分支给前向信号和反向梯度提供捷径。反传时梯度可以绕过若干非线性层直接传到浅层，减轻梯度消失，使很深的网络更容易优化。
+\end{answer}
+\begin{quickcard}
+\textbf{第 4 章面试速答清单}
+\begin{itemize}
+  \item 反向传播：计算图上的链式法则；每层梯度约等于误差信号乘本层输入。
+  \item 梯度问题：连乘导致消失/爆炸；用激活、初始化、归一化、残差、裁剪和 LSTM/GRU 缓解。
+  \item 激活函数：sigmoid/tanh 易饱和；ReLU 快但可能死亡；LeakyReLU 保留负梯度；GELU 平滑，Transformer 常用。
+  \item BatchNorm：训练用 batch 统计并更新 running 统计；推理用 running mean/var；CNN 常见 \code{Conv -> BN -> ReLU}。
+  \item LayerNorm：对单样本特征归一化，不依赖 batch，训练推理一致，所以 NLP/Transformer 常用。
+  \item Dropout：训练随机置零，推理关闭；inverted dropout 训练时除以 $1-p$ 保持期望。
+  \item 过拟合：train 好、val 差；用 L2、Dropout、数据增强、early stopping、更多数据或减小模型。
+  \item 欠拟合：train 和 val 都差；增大模型、训练更久、减弱正则、改结构或调优化。
+  \item 初始化：tanh/sigmoid 用 Xavier；ReLU/LeakyReLU 用 He；目标是稳定方差。
+  \item 优化器：SGD 泛化常好但慢；Momentum 加速；Adam 自适应；AdamW 解耦 weight decay。
+  \item 学习率：过大震荡或 \code{NaN}，过小收敛慢；warmup 稳定启动，衰减帮助后期收敛。
+  \item 损失：回归用 MSE；分类用交叉熵，因其匹配概率最大似然且 softmax 梯度为 $p-y$。
+\end{itemize}
+\end{quickcard}
+

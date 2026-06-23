@@ -1,0 +1,73 @@
+% ============================================================================
+% main.tex — 《PyTorch 面试速通：最快上手 + 高频面试题》
+% ============================================================================
+\documentclass[11pt, a4paper, openany]{book}
+
+\input{preamble}
+
+% ============================================================================
+\begin{document}
+
+\raggedbottom
+
+% --- 封面 ---
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+
+  {\fontsize{34}{42}\selectfont\bfseries PyTorch 面试速通\par}
+  \vspace{0.6cm}
+  {\LARGE 最快上手 $\cdot$ 高频面试题 $\cdot$ 冲刺速成\par}
+
+  \vspace{2.5cm}
+
+  {\large\itshape 不啃大部头，只学面试真考的\par}
+  \vspace{0.4cm}
+  {\normalsize 张量 $\cdot$ 训练 $\cdot$ 网络 $\cdot$ 分布式 $\cdot$ 面试八股\par}
+
+  \vfill
+
+  {\Large\bfseries SZY\par}
+  \vspace{0.3cm}
+  {\normalsize \today\par}
+  \vspace{2cm}
+\end{titlepage}
+
+% --- 前言 ---
+\chapter*{前言}
+\addcontentsline{toc}{chapter}{前言}
+
+本书面向\textbf{有 Python 基础、需要在短时间内冲刺面试}的读者。它不是 PyTorch 大部头教程，
+而是一份\textbf{尽量简单、精炼、高频}的速通指南：只讲面试真考、实战够用的内容，
+帮你\textbf{快速入门到能应付面试}。
+
+\textbf{怎么用这本书：}
+\begin{itemize}[leftmargin=2em]
+  \item 时间紧：直接看每章末的「面试速记卡」，再扫一遍第 4、5、7 章的高频题。
+  \item 有几天：从第 1 章顺序读到第 8 章，跟着敲一遍最小可跑代码。
+  \item 面试前一晚：只翻第 7 章（速查表+坑）和各章速记卡。
+\end{itemize}
+
+\textbf{深度取舍：}砍掉了论文复现、手写 autograd 引擎等深水区；但保留了 LLM 时代\textbf{面试高频的分布式训练}
+（DDP / FSDP / 并行策略，见第 6 章）。想深入 AI Agent 应用层，可参阅同仓库的《AI Agent 工程师转行与面试完全指南》。
+
+\vspace{0.5em}
+\noindent\textit{代码基于 PyTorch 2.x 现代 API，力求可运行、可复现。}
+
+% --- 目录 ---
+\tableofcontents
+\newpage
+
+% ============================================================================
+% 正文
+% ============================================================================
+\include{chapters/ch01-quickstart}
+\include{chapters/ch02-train-in-one}
+\include{chapters/ch03-must-know-nets}
+\include{chapters/ch04-theory-qa}
+\include{chapters/ch05-coding-qa}
+\include{chapters/ch06-distributed}
+\include{chapters/ch07-cheatsheet-traps}
+\include{chapters/ch08-interview-playbook}
+
+\end{document}

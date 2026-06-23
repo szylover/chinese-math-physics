@@ -1,0 +1,249 @@
+\chapter{面试打法与冲刺路线}
+\section{本章定位：把知识变成可录用的表达}
+前面几章解决的是「会不会」：张量、自动求导、训练循环、模型结构、优化调参与工程部署。
+本章解决的是「能不能在面试中讲清楚」。同样一个项目，有人只说「我用了 ResNet，准确率不错」；
+有人能讲清业务目标、数据来源、模型选择、指标取舍、上线风险和复盘改进。后者更容易让面试官相信：
+你不仅会调包，也能把模型放进真实问题里。
+面试表达的核心不是背答案，而是建立稳定框架。本章围绕三类场景展开：
+\begin{itemize}[leftmargin=2em]
+  \item 项目面试：把项目讲成「有问题、有方案、有指标、有复盘」的故事。
+  \item 系统设计：用简版机器学习系统设计框架回答开放题。
+  \item 行为面试与冲刺路线：把本书知识转化为可输出的话术。
+\end{itemize}
+\section{项目怎么讲：从流水账到结构化叙事}
+\subsection{STAR 框架}
+STAR 是项目面试和行为面试都适用的叙事结构：
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{S（Situation，背景）}：项目发生在什么场景中，为什么要做。
+  \item \textbf{T（Task，任务）}：你负责什么，目标和约束是什么。
+  \item \textbf{A（Action，行动）}：你如何分析数据、选择模型、训练调优、排查问题。
+  \item \textbf{R（Result，结果）}：指标提升、业务收益、工程效果和复盘结论。
+\end{itemize}
+\begin{quickcard}
+项目开场句式：
+「这个项目的目标是解决 \underline{\hspace{3em}} 问题。
+我主要负责 \underline{\hspace{3em}}。
+我们使用 \underline{\hspace{3em}} 数据，核心模型是 \underline{\hspace{3em}}，
+最终在 \underline{\hspace{3em}} 指标上从 \underline{\hspace{3em}} 提升到 \underline{\hspace{3em}}。」
+\end{quickcard}
+\subsection{问题--数据--模型--指标--优化--上线}
+深度学习项目最好不要只按时间顺序讲，更稳妥的方式是按工程闭环讲：
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{问题}：业务目标是什么，输入输出是什么，错误代价是什么。
+  \item \textbf{数据}：数据来自哪里，规模如何，标签如何获得，噪声在哪里。
+  \item \textbf{模型}：为什么选这个模型，baseline 是什么，复杂度是否匹配。
+  \item \textbf{指标}：离线指标和线上指标分别是什么，是否存在冲突。
+  \item \textbf{优化}：做了哪些调参、数据增强、损失函数、采样或工程优化。
+  \item \textbf{上线}：如何部署、监控、回滚、迭代，如何处理数据漂移。
+\end{enumerate}
+这个框架适合回答「介绍一个你最熟悉的项目」。面试官可以沿着每一层继续追问，而你的回答不会散。
+\subsection{把一个深度学习项目讲清楚的模板}
+\begin{interview}
+请介绍一个你做过的深度学习项目。
+\end{interview}
+\begin{answer}
+可以按下面模板回答：
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{背景与目标}：这个项目要解决什么问题，为什么传统规则或浅层模型不够。
+  \item \textbf{数据与标签}：数据规模、类别分布、标注方式、训练验证测试划分。
+  \item \textbf{模型与 baseline}：先做了什么简单 baseline，再选择了什么深度模型。
+  \item \textbf{训练细节}：损失函数、优化器、学习率策略、batch size、正则化与增强。
+  \item \textbf{评估指标}：主指标、辅助指标、错误样例分析。
+  \item \textbf{问题与优化}：过拟合、类别不平衡、训练不稳定、推理延迟等问题如何解决。
+  \item \textbf{结果与复盘}：指标提升、业务影响、上线监控、下一步计划。
+\end{enumerate}
+\end{answer}
+\subsection{示例话术：图像缺陷分类项目}
+\begin{answer}
+我做过一个工业图像缺陷分类项目，目标是根据产线相机拍摄的图片判断产品是否存在划痕、污点和边缘破损。
+业务上希望减少人工复检压力，同时不能漏掉严重缺陷，所以召回率比单纯准确率更重要。
+数据方面，我们一开始有约 8 万张图片，其中正常样本占比接近 80\%，缺陷类别明显不均衡。
+我先清洗重复图和曝光异常图，再按产线批次划分训练集、验证集和测试集，避免同一批产品同时出现在训练和测试中导致指标虚高。
+模型方面，我先用传统特征加 SVM 做 baseline，之后尝试 ResNet 系列，并用 ImageNet 预训练权重初始化。
+选择 ResNet 的原因是数据量中等、缺陷形态局部明显，残差结构训练稳定，工程上也容易部署。
+训练时使用交叉熵损失，针对类别不平衡加入 class weight，并使用随机裁剪、颜色扰动和轻微旋转做增强。
+优化器使用 AdamW，先冻结 backbone 训练分类头，再整体微调。
+主指标选择缺陷类 recall 和 macro F1，而不是只看 accuracy。主要问题是模型对反光区域误判较多。
+我通过错误样例分析发现这类样本覆盖不足，于是补充反光正常样本，并增加亮度扰动。
+最终缺陷召回率从 baseline 的 86\% 提升到 94\%，macro F1 提升到 0.91。
+上线前我们做了阈值调节和人工复核兜底，线上持续监控各类别分布和误报率。
+\end{answer}
+\subsection{常见追问与回答要点}
+\begin{interview}
+为什么选择这个模型，而不是更复杂的模型？
+\end{interview}
+\begin{answer}
+不要只说「效果好」。可以从数据规模、任务特征、训练稳定性和部署成本回答：
+「我先做简单 baseline，再比较 ResNet 和更大的 ViT。在我们的数据规模下，ResNet 已经能达到接近的验证集 F1，
+同时推理延迟更低、部署链路更成熟，所以最终选择它作为上线模型。」
+\end{answer}
+\begin{interview}
+为什么选择这个指标？
+\end{interview}
+\begin{answer}
+指标要和业务代价绑定。漏检代价高，就强调 recall；误报影响用户体验，就强调 precision；
+类别不均衡，就说明为什么不用 accuracy 作为唯一指标。最好同时说明离线指标和线上指标的关系。
+\end{answer}
+\begin{interview}
+你是如何调优的？项目中遇到过什么困难？
+\end{interview}
+\begin{answer}
+调优建议按「先数据、再模型、再训练、最后阈值」回答。常见动作包括清洗标签、处理类别不平衡、数据增强、
+学习率搜索、冻结与微调、正则化、早停、阈值移动、错误样例回流。困难要选择真实且有技术含量的问题，
+例如标签噪声、数据泄漏、线上分布漂移、训练不稳定、显存不足或推理延迟。回答顺序是：现象、定位、措施、结果、复盘。
+\end{answer}
+\begin{trap}
+项目面试的大坑是只讲模型名字。面试官真正想知道的是：你是否理解数据、指标和约束；
+是否能解释每个技术选择；是否能从错误中迭代，而不是只复述论文或 API。
+\end{trap}
+\section{简版机器学习系统设计答法}
+\subsection{面试中的七个模块}
+机器学习系统设计题通常不会要求完整工业级架构。面试官更关心你是否有端到端意识。
+推荐按下面七个模块组织：
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{需求}：输入、输出、用户、延迟、吞吐、准确性、可解释性和安全要求。
+  \item \textbf{数据与特征}：数据来源、采集方式、标签、特征处理、训练服务一致性。
+  \item \textbf{模型选型}：baseline、候选模型、复杂度、冷启动方案。
+  \item \textbf{训练管线}：样本构建、训练验证划分、调参、版本管理、实验追踪。
+  \item \textbf{评估指标}：离线指标、线上指标、A/B 测试、分桶评估。
+  \item \textbf{部署与监控}：批处理或在线服务、延迟、扩缩容、模型回滚、日志。
+  \item \textbf{迭代}：数据回流、漂移检测、主动学习、灰度发布。
+\end{enumerate}
+\subsection{例子一：设计一个图像分类服务}
+\begin{interview}
+如果让你设计一个商品图片分类服务，你会怎么做？
+\end{interview}
+\begin{answer}
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{需求}：输入商品图片，输出一级或多级类目；支持在线上传识别，延迟可控。
+  \item \textbf{数据}：使用历史图片和人工审核类目作为标签；清洗重复图、低质量图和错误标签；按商家或时间切分测试集。
+  \item \textbf{模型}：先用预训练 CNN 或 ViT 做 baseline；如果类目层级明显，可做层级分类或多头输出。
+  \item \textbf{训练}：使用交叉熵损失，处理类别不平衡；加入裁剪、颜色扰动等增强；记录模型版本和数据版本。
+  \item \textbf{评估}：离线看 top-1 accuracy、top-5 accuracy、macro F1；重点类目单独看召回率。
+  \item \textbf{部署}：导出为推理服务；图片先 resize 和归一化；设置超时、降级和人工审核兜底。
+  \item \textbf{监控}：监控请求量、延迟、错误率、预测分布、低置信度样本比例；定期用新标注数据再训练。
+\end{enumerate}
+\end{answer}
+\subsection{例子二：设计一个推荐打分服务}
+\begin{interview}
+如果让你设计一个推荐系统中的候选物品打分服务，你会怎么答？
+\end{interview}
+\begin{answer}
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{需求}：输入用户、上下文和候选物品，输出点击率或转化率预估分数；在线延迟要低。
+  \item \textbf{数据与特征}：用户历史行为、物品属性、上下文特征；注意曝光未点击样本、位置偏差和时间穿越。
+  \item \textbf{模型}：先用 LR 或 GBDT 做 baseline，再考虑 Wide \& Deep、DIN、双塔或序列兴趣模型。
+  \item \textbf{训练管线}：按时间切分训练和验证；特征离线生成并保证在线一致；负采样策略要和业务曝光逻辑一致。
+  \item \textbf{评估}：离线看 AUC、logloss、校准误差；线上看 CTR、CVR、停留时长和用户留存。
+  \item \textbf{部署}：高频特征放缓存，模型服务做批量打分；对超时请求使用轻量模型或热门结果降级。
+  \item \textbf{迭代}：监控特征缺失率、分数分布、线上离线差异；通过 A/B 测试逐步放量。
+\end{enumerate}
+\end{answer}
+\begin{trap}
+系统设计题不要一上来就报模型名。先澄清需求，再谈数据，再谈模型。没有数据闭环，再先进的模型也只是孤立组件。
+\end{trap}
+\section{行为面试：用 STAR 回答软技能问题}
+行为面试考察合作方式、抗压能力、复盘能力和职业成熟度。技术同学容易忽视这一部分，但它常常影响最终录用。
+\subsection{常见问题与答法要点}
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{p{0.34\linewidth}p{0.56\linewidth}}
+    \toprule
+    常见问题 & STAR 答法要点 \\
+    \midrule
+    讲一次你解决复杂问题的经历 & 背景具体，行动体现拆解、验证和复盘，结果最好有指标。 \\
+    讲一次你和他人意见不一致 & 不贬低对方；强调用数据、实验或用户价值对齐目标。 \\
+    讲一次失败经历 & 选择可控失败；说明当时判断、后续补救和机制改进。 \\
+    你如何学习新技术 & 给出路径：文档、最小 demo、源码或论文、项目落地、复盘输出。 \\
+    你如何处理 deadline 压力 & 说明优先级、风险沟通、范围裁剪和阶段性交付。 \\
+    为什么想做深度学习岗位 & 连接个人经历、能力积累、岗位需求和长期目标。 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\subsection{行为题示例话术}
+\begin{interview}
+请讲一次你遇到困难并最终解决的经历。
+\end{interview}
+\begin{answer}
+「在一个图像分类项目中，模型离线准确率较高，但上线灰度后误报率明显高于测试集。我负责定位这个问题。
+我先按时间、设备和场景切分线上样本，发现夜间低光场景的错误占比最高；随后回查训练集，发现这类样本覆盖不足，
+而且数据增强没有模拟低光条件。我补充采集低光样本，加入亮度扰动，并把测试集按场景分桶评估。
+调整后整体 F1 提升不大，但低光场景误报率下降约 30\%。这件事让我意识到，平均指标不足以代表线上表现，关键场景必须单独监控。」
+\end{answer}
+\begin{quickcard}
+行为面试不要讲成「我很努力」。要讲「我发现了什么问题、做了什么判断、采取了什么行动、产生了什么结果、沉淀了什么方法」。
+\end{quickcard}
+\section{冲刺学习路线}
+\subsection{3 天速成计划}
+3 天计划适合已有 Python 和机器学习基础、临近面试需要快速激活知识的人。
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{p{0.12\linewidth}p{0.34\linewidth}p{0.44\linewidth}}
+    \toprule
+    天数 & 对应章节 & 目标产出 \\
+    \midrule
+    Day 1 & 第 1--2 章：张量、自动求导、训练循环 & 能手写训练循环，讲清 tensor、grad、loss、optimizer、反向传播。 \\
+    Day 2 & 第 3--5 章：网络模块、CNN、序列与 Transformer & 能解释常见层、过拟合、卷积、注意力和模型选择理由。 \\
+    Day 3 & 第 6--8 章：优化调参、工程部署、面试打法 & 准备项目话术，背熟系统设计七模块和章末 quickcard。 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Day 1：打牢训练闭环。} 复习 tensor 形状、广播、索引、自动求导；手写最小训练循环；准备回答「反向传播」「梯度清零」「train/eval 区别」。
+  \item \textbf{Day 2：补齐模型知识。} 复习 nn.Module、loss、optimizer、CNN、RNN、attention；每个模型准备一句适用场景和一句局限性。
+  \item \textbf{Day 3：转成面试表达。} 用本章模板整理一个项目；练习图像分类或推荐打分服务的系统设计；整理 10 个高频问答并口述演练。
+\end{enumerate}
+\subsection{7 天速成计划}
+7 天计划适合基础一般但有一周准备时间的读者。建议每天安排一轮看书和一轮口述。
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Day 1：PyTorch 基础。} 对应第 1 章。掌握 tensor 创建、dtype、device、view/reshape、广播、索引和常见 API。
+  \item \textbf{Day 2：自动求导与训练循环。} 对应第 2 章。掌握计算图、requires\_grad、backward、no\_grad、梯度累积；能白板写训练循环。
+  \item \textbf{Day 3：网络模块与损失函数。} 对应第 3 章。复习 nn.Module、Sequential、参数注册、初始化、常见 loss。
+  \item \textbf{Day 4：CNN 与视觉任务。} 对应第 4 章。掌握卷积、池化、BatchNorm、ResNet、迁移学习和数据增强；准备图像分类项目话术。
+  \item \textbf{Day 5：序列模型与 Transformer。} 对应第 5 章。掌握 embedding、RNN/LSTM、attention、Transformer；能解释 self-attention。
+  \item \textbf{Day 6：优化、调参与工程问题。} 对应第 6--7 章。复习 Adam/SGD、学习率、过拟合、显存优化、混合精度、部署监控。
+  \item \textbf{Day 7：模拟面试。} 对应第 8 章。完成一次项目自述、一次 ML 系统设计、一次行为面试；准备 30 秒、2 分钟、5 分钟版本。
+\end{enumerate}
+\section{资源清单：少而精}
+\subsection{官方文档与关键 API}
+\begin{itemize}[leftmargin=2em]
+  \item PyTorch 官方文档：重点看 Tensor、Autograd、nn、optim、DataLoader、torchvision。
+  \item PyTorch Tutorials：复习训练循环、迁移学习、保存加载模型。
+  \item 关键 API：reshape、view、permute、cat、stack、requires\_grad、backward、detach、no\_grad、zero\_grad。
+  \item 模型与训练：nn.Module、forward、parameters、state\_dict、CrossEntropyLoss、MSELoss、SGD、Adam、AdamW。
+  \item 工程能力：model.train()、model.eval()、torch.save、torch.load、cuda、autocast、GradScaler。
+\end{itemize}
+\subsection{刷题方向}
+\begin{itemize}[leftmargin=2em]
+  \item 概念题：反向传播、过拟合、正则化、归一化、优化器区别。
+  \item 代码题：手写 Dataset、训练循环、冻结层、保存加载模型、计算准确率。
+  \item 项目题：准备一个视觉或 NLP 项目，能讲数据、模型、指标和问题定位。
+  \item 系统题：图像分类服务、推荐排序服务、文本分类服务、异常检测服务。
+  \item 行为题：失败经历、冲突处理、学习新技术、项目推进、压力管理。
+\end{itemize}
+\section{与《AI Agent 工程师转行与面试完全指南》的衔接}
+同仓库中的《AI Agent 工程师转行与面试完全指南》更偏应用层，而本书更偏模型层和 PyTorch 实践层。
+两者不是替代关系，而是上下游关系。
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{模型层（本书）}：关注张量、训练、损失函数、优化、神经网络结构、模型评估与部署基础。
+  \item \textbf{应用层（AI Agent 书）}：关注大模型应用、工具调用、RAG、记忆、规划、Agent 工作流、工程集成和产品落地。
+  \item \textbf{互补关系}：本书回答「模型怎么来」，AI Agent 书回答「模型怎么用」。
+\end{itemize}
+如果目标岗位是深度学习工程师、算法工程师或计算机视觉工程师，建议先读本书，重点打牢训练与模型基础。
+如果目标岗位是 AI 应用工程师、Agent 工程师或大模型产品工程师，建议在掌握本书第 1、2、6、7 章基础后，
+转向 AI Agent 书强化应用系统能力。如果岗位要求「既会训练又会落地」，两本书应结合使用。
+\section{章末 quickcard：面试当天行动清单}
+\begin{quickcard}
+\begin{enumerate}[leftmargin=2em]
+  \item 提前准备 1 个主项目和 1 个备选项目，每个都有 30 秒、2 分钟、5 分钟版本。
+  \item 项目介绍按「问题--数据--模型--指标--优化--上线」讲，不要只背模型名。
+  \item 所有指标都要能解释业务含义：为什么看它，它的缺点是什么。
+  \item 遇到不会的问题，先说理解，再拆解假设，不要沉默或硬编。
+  \item 系统设计先澄清需求，再讲数据、模型、训练、评估、部署和监控。
+  \item 行为题坚持 STAR：背景简短，行动具体，结果量化，复盘真诚。
+  \item 代码题先保证正确性，再谈效率；注意 tensor shape、device 和梯度清零。
+  \item 面试前复习高频 API：Dataset、DataLoader、nn.Module、optimizer、loss、state\_dict。
+  \item 准备 2--3 个反问：团队任务、数据规模、模型上线方式、评估与迭代流程。
+  \item 面试后立即复盘：记录没答好的问题，补到自己的题库里。
+\end{enumerate}
+\end{quickcard}

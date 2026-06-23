@@ -1,0 +1,300 @@
+\chapter{一章学会建模与训练}
+本章把 PyTorch 建模与训练的高频知识压成一条主线：写模型、选层、选损失、
+接优化器、喂数据，最后套标准训练循环。面试时只要抓住这条链路，多数问题都能
+回答得清楚：数据进入模型，模型输出 logits，损失计算标量，反向传播产生梯度，
+优化器根据梯度更新参数。
+\section{nn.Module：自定义模型}
+自定义模型通常继承 \code{nn.Module}。在 \code{\_\_init\_\_} 中声明层，在
+\code{forward} 中描述张量流动。调用 \code{model(x)} 时会自动执行
+\code{forward}，不要手动写 \code{model.forward(x)}。
+\begin{lstlisting}
+import torch
+from torch import nn
+class MLP(nn.Module):
+    def __init__(self, in_dim, hidden_dim, num_classes):
+        super().__init__()
+        self.fc1 = nn.Linear(in_dim, hidden_dim)
+        self.act = nn.ReLU()
+        self.drop = nn.Dropout(p=0.2)
+        self.fc2 = nn.Linear(hidden_dim, num_classes)
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.act(x)
+        x = self.drop(x)
+        return self.fc2(x)
+model = MLP(20, 64, 3)
+x = torch.randn(8, 20)
+logits = model(x)
+print(logits.shape)
+\end{lstlisting}
+\subsection{parameters、named\_parameters 与 device}
+\code{model.parameters()} 返回模型参数迭代器，常直接传给优化器。
+\code{model.named\_parameters()} 会同时返回参数名，适合调试、冻结层或给不同层设置
+不同学习率。
+\begin{lstlisting}
+for name, param in model.named_parameters():
+    print(name, tuple(param.shape), param.requires_grad)
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+\end{lstlisting}
+模型和数据必须在同一设备。标准写法是先确定 device，再把模型、输入和 target
+都移动过去。
+\begin{lstlisting}
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = MLP(20, 64, 3).to(device)
+x = torch.randn(8, 20).to(device)
+y = torch.randint(0, 3, (8,), device=device)
+logits = model(x)
+\end{lstlisting}
+\subsection{train 与 eval}
+\code{model.train()} 与 \code{model.eval()} 切换模块行为，不负责开关梯度。
+它们主要影响 Dropout 和 BatchNorm；关闭梯度应使用 \code{torch.no\_grad()}。
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+模式 & Dropout & BatchNorm \\
+\midrule
+\code{train()} & 随机丢弃神经元 & 使用当前 batch 统计量并更新 running 统计量 \\
+\code{eval()} & 关闭随机丢弃 & 使用训练期累计的 running 统计量 \\
+\bottomrule
+\end{tabular}
+\end{center}
+因此训练循环中先写 \code{model.train()}；验证和测试时写
+\code{model.eval()}，并把推理代码包在 \code{with torch.no\_grad():} 中。
+\section{常用层速览}
+\subsection{Linear、Conv2d 与激活函数}
+\code{nn.Linear(in\_features, out\_features)} 是全连接层，输入最后一维必须等于
+\code{in\_features}。\code{nn.Conv2d} 常用于图像，输入形状是 \code{[N, C, H, W]}。
+常见激活有 \code{nn.ReLU}、\code{nn.GELU}、\code{nn.Sigmoid} 和 \code{nn.Tanh}。
+\begin{lstlisting}
+linear = nn.Linear(128, 10)
+x = torch.randn(32, 128)
+print(linear(x).shape)
+conv = nn.Conv2d(3, 16, kernel_size=3, padding=1)
+image = torch.randn(4, 3, 32, 32)
+print(conv(image).shape)
+\end{lstlisting}
+\subsection{nn.Sequential}
+\code{nn.Sequential} 适合顺序堆叠网络层。若模型有多输入、多分支、条件逻辑或跳连，
+应直接在 \code{forward} 中写清楚。
+\begin{lstlisting}
+cnn = nn.Sequential(
+    nn.Conv2d(3, 16, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Conv2d(16, 32, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.AdaptiveAvgPool2d((1, 1)),
+    nn.Flatten(),
+    nn.Linear(32, 10),
+)
+\end{lstlisting}
+\section{损失函数}
+\subsection{MSELoss}
+\code{nn.MSELoss} 常用于回归，模型输出和 target 通常形状一致。
+\begin{lstlisting}
+criterion = nn.MSELoss()
+pred = torch.randn(16, 1)
+target = torch.randn(16, 1)
+loss = criterion(pred, target)
+\end{lstlisting}
+\subsection{CrossEntropyLoss}
+\code{nn.CrossEntropyLoss} 用于单标签多分类。它内部已经包含 \code{LogSoftmax}
+和负对数似然损失，所以输入必须是 logits，不要手动 softmax。target 是类别索引，
+形状通常为 \code{[N]}，类型为 \code{torch.long}，不是 one-hot。
+\begin{lstlisting}
+criterion = nn.CrossEntropyLoss()
+logits = torch.randn(8, 5)          # raw scores, not probabilities
+target = torch.tensor([0, 1, 4, 3, 2, 1, 0, 4])
+loss = criterion(logits, target)
+\end{lstlisting}
+\subsection{BCEWithLogitsLoss}
+\code{nn.BCEWithLogitsLoss} 用于二分类或多标签分类，内部包含 Sigmoid 和二元交叉熵，
+比先 \code{sigmoid} 再 \code{BCELoss} 更稳定。target 通常是与 logits 同形状的浮点张量。
+\begin{lstlisting}
+criterion = nn.BCEWithLogitsLoss()
+logits = torch.randn(8, 4)
+target = torch.randint(0, 2, (8, 4)).float()
+loss = criterion(logits, target)
+\end{lstlisting}
+\section{优化器与学习率调度}
+\code{optim.SGD} 简单稳定，配合 momentum 常用于视觉任务；\code{Adam} 自适应调整
+每个参数的步长，收敛初期通常更快；\code{AdamW} 将 weight decay 与 Adam 更新解耦，
+是 Transformer 等模型的常用选择。\code{weight\_decay} 用来抑制参数过大，降低过拟合。
+\begin{lstlisting}
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
+\end{lstlisting}
+\code{StepLR} 按固定间隔衰减学习率；\code{CosineAnnealingLR} 按余弦曲线平滑下降。
+warmup 指训练初期从小学习率逐步升到目标学习率，常用于大模型或大 batch 训练。
+\begin{lstlisting}
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+for epoch in range(30):
+    train_one_epoch()
+    scheduler.step()
+cosine = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=30)
+\end{lstlisting}
+\section{Dataset 与 DataLoader}
+自定义 \code{Dataset} 至少实现 \code{\_\_len\_\_} 和 \code{\_\_getitem\_\_}。
+\code{DataLoader} 负责 batch 化、打乱、并行加载和拼接样本。
+\begin{lstlisting}
+from torch.utils.data import Dataset, DataLoader
+class TensorDataset2D(Dataset):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def __len__(self):
+        return len(self.x)
+    def __getitem__(self, index):
+        return self.x[index], self.y[index]
+dataset = TensorDataset2D(torch.randn(100, 20), torch.randint(0, 3, (100,)))
+loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=0)
+\end{lstlisting}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+参数 & 作用 \\
+\midrule
+\code{batch\_size} & 每个 batch 的样本数 \\
+\code{shuffle} & 训练集通常为 True，验证集通常为 False \\
+\code{num\_workers} & 子进程加载数据的数量 \\
+\code{drop\_last} & 是否丢弃最后一个不足 batch 的小批次 \\
+\code{collate\_fn} & 自定义样本如何拼成 batch，常用于变长序列 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\section{完整训练循环模板}
+标准五步是 \code{optimizer.zero\_grad()} $\rightarrow$ forward $\rightarrow$ loss
+$\rightarrow$ \code{loss.backward()} $\rightarrow$ \code{optimizer.step()}。
+下面代码可直接运行，模拟一个三分类任务。
+\begin{lstlisting}
+import torch
+from torch import nn
+from torch.utils.data import DataLoader, Dataset
+class ToyDataset(Dataset):
+    def __init__(self, n=512, in_dim=20, num_classes=3):
+        self.x = torch.randn(n, in_dim)
+        w = torch.randn(in_dim, num_classes)
+        self.y = (self.x @ w).argmax(dim=1)
+    def __len__(self):
+        return len(self.x)
+    def __getitem__(self, index):
+        return self.x[index], self.y[index]
+class Classifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(20, 64),
+            nn.ReLU(),
+            nn.Dropout(p=0.1),
+            nn.Linear(64, 3),
+        )
+    def forward(self, x):
+        return self.net(x)
+def train_one_epoch(model, loader, criterion, optimizer, device):
+    model.train()
+    total_loss, total_correct, total_count = 0.0, 0, 0
+    for x, y in loader:
+        x, y = x.to(device), y.to(device)
+        optimizer.zero_grad()
+        logits = model(x)
+        loss = criterion(logits, y)
+        loss.backward()
+        optimizer.step()
+        batch_size = x.size(0)
+        total_loss += loss.item() * batch_size
+        total_correct += (logits.argmax(dim=1) == y).sum().item()
+        total_count += batch_size
+    return total_loss / total_count, total_correct / total_count
+def evaluate(model, loader, criterion, device):
+    model.eval()
+    total_loss, total_correct, total_count = 0.0, 0, 0
+    with torch.no_grad():
+        for x, y in loader:
+            x, y = x.to(device), y.to(device)
+            logits = model(x)
+            loss = criterion(logits, y)
+            batch_size = x.size(0)
+            total_loss += loss.item() * batch_size
+            total_correct += (logits.argmax(dim=1) == y).sum().item()
+            total_count += batch_size
+    return total_loss / total_count, total_correct / total_count
+def main():
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    train_loader = DataLoader(ToyDataset(512), batch_size=32, shuffle=True)
+    val_loader = DataLoader(ToyDataset(128), batch_size=64, shuffle=False)
+    model = Classifier().to(device)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+    for epoch in range(10):
+        train_loss, train_acc = train_one_epoch(
+            model, train_loader, criterion, optimizer, device
+        )
+        val_loss, val_acc = evaluate(model, val_loader, criterion, device)
+        scheduler.step()
+        print(
+            f"epoch={epoch + 1} train_loss={train_loss:.4f} "
+            f"train_acc={train_acc:.4f} val_loss={val_loss:.4f} "
+            f"val_acc={val_acc:.4f}"
+        )
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+\begin{trap}
+三类坑最常见：忘记 \code{optimizer.zero\_grad()} 会让梯度跨 batch 累加；验证时
+忘记 \code{model.eval()} 会让 Dropout 和 BatchNorm 仍按训练模式工作；统计 loss
+时应累加 \code{loss.item()}，否则可能保留计算图并导致显存增长。
+\end{trap}
+\section{面试高频问答}
+\begin{interview}
+使用 \code{CrossEntropyLoss} 前要先 softmax 吗？
+\end{interview}
+\begin{answer}
+不要。\code{nn.CrossEntropyLoss} 内部已经包含 \code{LogSoftmax} 和 NLLLoss，
+输入应是 logits。手动 softmax 会降低数值稳定性，也可能影响梯度。target 应是类别索引。
+\end{answer}
+\begin{interview}
+为什么必须 \code{zero\_grad()}？
+\end{interview}
+\begin{answer}
+PyTorch 默认累加梯度，而不是自动覆盖梯度。普通训练中如果不清零，本 batch 梯度会叠加
+历史 batch 梯度，导致更新方向和步长错误。只有明确做梯度累积时才故意不每步清零。
+\end{answer}
+\begin{interview}
+\code{model.train()} 与 \code{model.eval()} 有什么区别？
+\end{interview}
+\begin{answer}
+它们切换模块行为，主要影响 Dropout 和 BatchNorm。训练模式启用 Dropout 并更新
+BatchNorm running 统计量；推理模式关闭 Dropout，并使用累计统计量。关闭梯度要靠
+\code{torch.no\_grad()}。
+\end{answer}
+\begin{interview}
+Adam 和 SGD 如何取舍？
+\end{interview}
+\begin{answer}
+Adam 收敛快、调参省心，适合快速建立 baseline；SGD 加 momentum 简单稳定，在部分视觉
+任务中泛化好但更依赖学习率调度。现代项目常优先试 AdamW，再按任务验证 SGD。
+\end{answer}
+\begin{interview}
+\code{DataLoader} 的 \code{num\_workers} 是什么？越大越好吗？
+\end{interview}
+\begin{answer}
+它控制用多少子进程加载数据，可减少 GPU 等数据的时间。但不是越大越好，过大会增加
+进程切换、内存占用和 I/O 竞争。调试或 Windows 环境常用 0，训练时逐步测试 2、4、8。
+\end{answer}
+\section{章末速记}
+\begin{quickcard}
+\textbf{标准训练循环模板}
+\begin{enumerate}
+  \item \code{model.to(device)}，每个 batch 的 \code{x} 和 \code{y} 也要到同一 device。
+  \item 训练前 \code{model.train()}。
+  \item 五步：\code{optimizer.zero\_grad()} $\rightarrow$ \code{logits = model(x)}
+  $\rightarrow$ \code{loss = criterion(logits, y)} $\rightarrow$
+  \code{loss.backward()} $\rightarrow$ \code{optimizer.step()}。
+  \item 验证前 \code{model.eval()}，外层写 \code{with torch.no\_grad():}。
+  \item \code{CrossEntropyLoss} 吃 logits，target 是类别索引；统计 loss 用
+  \code{loss.item()}。
+\end{enumerate}
+\end{quickcard}

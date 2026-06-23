@@ -1,0 +1,299 @@
+\chapter{快速上手：环境、张量与 autograd}
+\section{本章定位}
+PyTorch 入门面试题高频考三类能力：环境能否跑通，张量 API 是否熟练，autograd 是否理解。
+本章用精炼示例覆盖安装、GPU、张量、NumPy 互转和自动求导。
+
+\section{环境与 GPU 安装}
+\subsection{pip 与 conda 安装}
+PyTorch 2.x 的安装命令应以官网为准，因为系统、Python 版本、CUDA 版本都会影响安装包。
+常见 pip 写法如下：
+\begin{lstlisting}[style=plainstyle]
+python -m pip install torch torchvision torchaudio
+\end{lstlisting}
+常见 conda 写法如下：
+\begin{lstlisting}[style=plainstyle]
+conda install pytorch torchvision torchaudio -c pytorch
+\end{lstlisting}
+如果要使用 NVIDIA GPU，需要显卡驱动、PyTorch CUDA 构建和运行时 GPU 可见性都正确。
+很多 PyTorch wheel 已自带 CUDA 运行时库，本机不一定要额外安装完整 CUDA Toolkit。
+
+\subsection{查版本、查 GPU、选 device}
+安装后先运行：
+\begin{lstlisting}
+import torch
+print(torch.__version__)
+print(torch.version.cuda)
+print(torch.cuda.is_available())
+print(torch.cuda.device_count())
+\end{lstlisting}
+标准 device 写法如下：
+\begin{lstlisting}
+import torch
+device = "cuda" if torch.cuda.is_available() else "cpu"
+x = torch.randn(2, 3, device=device)
+print(x.device)
+\end{lstlisting}
+\begin{trap}
+\code{torch.version.cuda} 表示 PyTorch 构建对应的 CUDA 版本，不代表机器一定有可用 GPU。
+运行时判断 GPU，应使用 \code{torch.cuda.is_available()}。
+\end{trap}
+
+\section{张量基础}
+\subsection{创建张量}
+常见创建函数包括 \code{torch.tensor}、\code{zeros}、\code{ones}、\code{randn} 和 \code{arange}：
+\begin{lstlisting}
+import torch
+a = torch.tensor([[1, 2], [3, 4]])
+z = torch.zeros(2, 3)
+o = torch.ones(2, 3)
+r = torch.randn(2, 3)
+t = torch.arange(0, 6)
+print(a)
+print(z.shape, o.shape, r.dtype, t)
+\end{lstlisting}
+\code{torch.tensor} 会根据输入推断 dtype。训练中常用 \code{torch.float32} 表示特征和权重，分类标签常用 \code{torch.long}。
+
+\subsection{dtype 与转换}
+dtype 影响数值范围、显存占用和算子行为：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1, 2, 3])
+y = x.float()
+label = torch.tensor([0, 1, 2], dtype=torch.long)
+half_y = y.to(torch.float16)
+print(x.dtype, y.dtype, label.dtype, half_y.dtype)
+\end{lstlisting}
+常用转换：\code{x.float()}、\code{x.long()}、\code{x.to(dtype=torch.float16)}、\code{x.to(device)}。
+
+\subsection{shape、索引与切片}
+形状可用 \code{shape} 或 \code{size()} 查看，索引和切片接近 NumPy：
+\begin{lstlisting}
+import torch
+x = torch.arange(12).reshape(3, 4)
+print(x.shape)
+print(x.size())
+print(x[0])
+print(x[:, 1])
+print(x[1:3, 2:])
+\end{lstlisting}
+切片通常返回 view，可能与原张量共享底层存储。
+
+\subsection{广播规则}
+广播从最后一个维度向前比较：
+\begin{enumerate}[label=\arabic*.]
+  \item 维度相等，可以广播。
+  \item 其中一个维度为 $1$，可以扩展。
+  \item 维度更少的一方，在前面补 $1$ 再比较。
+  \item 既不相等也没有 $1$，则不能广播。
+\end{enumerate}
+例子：
+\begin{lstlisting}
+import torch
+x = torch.ones(2, 3)
+b = torch.tensor([10.0, 20.0, 30.0])
+y = x + b
+print(y)
+print(y.shape)
+\end{lstlisting}
+这里 \code{x} 是 $(2,3)$，\code{b} 是 $(3)$，可看成 $(1,3)$，再扩展到 $(2,3)$。
+\code{keepdim=True} 常用于保留规约维度，方便后续广播：
+\begin{lstlisting}
+import torch
+x = torch.randn(4, 3)
+mean = x.mean(dim=0, keepdim=True)
+std = x.std(dim=0, keepdim=True)
+y = (x - mean) / (std + 1e-6)
+print(mean.shape, y.shape)
+\end{lstlisting}
+
+\subsection{reshape、view、permute 与 transpose}
+常见形状操作如下：
+\begin{lstlisting}
+import torch
+x = torch.arange(12)
+a = x.reshape(3, 4)
+b = a.view(2, 6)
+c = a.transpose(0, 1)
+d = a.reshape(1, 3, 4).permute(0, 2, 1)
+print(a.shape, b.shape, c.shape, d.shape)
+\end{lstlisting}
+\code{view} 要求张量 contiguous；\code{reshape} 会尽量返回 view，必要时复制。
+\code{transpose} 交换两个维度，\code{permute} 可重排多个维度。
+\begin{lstlisting}
+import torch
+x = torch.arange(12).reshape(3, 4)
+y = x.t()
+print(y.is_contiguous())
+z = y.contiguous().view(12)
+print(z)
+\end{lstlisting}
+\begin{trap}
+\code{transpose} 和 \code{permute} 常返回非 contiguous 张量，之后直接 \code{view} 可能报错。
+稳妥写法是先 \code{contiguous()} 再 \code{view}，或直接用 \code{reshape}。
+\end{trap}
+
+\subsection{CPU 到 GPU 迁移}
+张量和模型必须在同一个 device 上计算：
+\begin{lstlisting}
+import torch
+device = "cuda" if torch.cuda.is_available() else "cpu"
+x = torch.randn(2, 3)
+x = x.to(device)
+y = torch.ones(2, 3, device=device)
+z = x + y
+print(z.cpu().device)
+\end{lstlisting}
+\code{x.to(device)} 通常返回新张量；不接返回值，原 \code{x} 可能仍在原 device 上。
+
+\subsection{与 NumPy 互转}
+CPU 张量和 NumPy 数组可以互转，且通常共享内存：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1.0, 2.0, 3.0])
+a = x.numpy()
+a[0] = 100.0
+print(x)
+y = torch.from_numpy(a)
+y[1] = 200.0
+print(a)
+\end{lstlisting}
+GPU 张量转 NumPy 前要先到 CPU，训练结果通常还要先 \code{detach()}：
+\begin{lstlisting}
+import torch
+device = "cuda" if torch.cuda.is_available() else "cpu"
+x = torch.randn(3, device=device)
+a = x.detach().cpu().numpy()
+print(a)
+\end{lstlisting}
+\begin{trap}
+NumPy 互转共享内存很高效，但修改一方会影响另一方。
+如果需要独立副本，可用 \code{x.detach().cpu().clone().numpy()} 或 NumPy 的 \code{copy()}。
+\end{trap}
+
+\subsection{常用算子}
+矩阵乘法、规约、拼接和维度增删是高频操作：
+\begin{lstlisting}
+import torch
+a = torch.randn(2, 3)
+b = torch.randn(3, 4)
+c = a @ b
+d = torch.matmul(a, b)
+x = torch.randn(2, 3, 4)
+s = x.sum()
+m = x.mean(dim=1)
+v, idx = x.max(dim=2)
+p = torch.randn(2, 3)
+q = torch.randn(2, 3)
+cat0 = torch.cat([p, q], dim=0)
+stack0 = torch.stack([p, q], dim=0)
+u = p.unsqueeze(0)
+sq = u.squeeze(0)
+print(c.shape, d.shape)
+print(s.shape, m.shape, v.shape, idx.shape)
+print(cat0.shape, stack0.shape, u.shape, sq.shape)
+\end{lstlisting}
+\code{cat} 沿已有维度拼接；\code{stack} 新增一个维度后堆叠。
+
+\section{autograd 自动求导}
+\subsection{requires grad、计算图与叶子张量}
+设置 \code{requires_grad=True} 后，PyTorch 会记录可微运算并构建动态计算图：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+y = x * x + 2.0
+loss = y.mean()
+print(loss)
+print(loss.grad_fn)
+\end{lstlisting}
+\code{x} 是叶子张量，\code{y} 和 \code{loss} 是运算产生的非叶子张量。
+反向传播后，梯度通常保存在叶子张量的 \code{grad} 字段中。
+
+\subsection{backward、grad 与梯度累加}
+标量 loss 可直接调用 \code{backward()}：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+loss = (x * x).sum()
+loss.backward()
+print(x.grad)
+\end{lstlisting}
+这里 $loss=x_1^2+x_2^2+x_3^2$，所以 $\partial loss/\partial x_i=2x_i$。
+如果输出不是标量，需要传入同形状上游梯度。
+PyTorch 梯度默认累加，因此训练循环要清零：
+\begin{lstlisting}
+import torch
+model = torch.nn.Linear(3, 1)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+x = torch.randn(4, 3)
+y = torch.randn(4, 1)
+pred = model(x)
+loss = torch.nn.functional.mse_loss(pred, y)
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+\end{lstlisting}
+
+\subsection{no grad、detach 与 in-place 风险}
+\code{with torch.no_grad()} 临时关闭梯度记录，常用于验证和推理：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+with torch.no_grad():
+    y = x * 2.0
+print(y.requires_grad)
+\end{lstlisting}
+\code{detach()} 返回从当前计算图分离的新张量：
+\begin{lstlisting}
+import torch
+x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+y = x * 2.0
+z = y.detach()
+print(y.requires_grad)
+print(z.requires_grad)
+\end{lstlisting}
+in-place 操作会直接修改原张量，常以末尾下划线表示，例如 \code{zero_()}。
+它可能破坏 autograd 保存的中间值，因此对需要梯度的张量要谨慎。
+
+\section{高频面试题}
+\begin{interview}
+\textbf{view 和 reshape 有什么区别？什么时候 view 会失败？}
+\end{interview}
+\begin{answer}
+\code{view} 只改变形状视图，要求底层内存 contiguous；非 contiguous 张量直接 \code{view} 可能失败。
+\code{reshape} 会尽量返回 view，做不到时会复制数据。一句话：\code{view} 更严格，\code{reshape} 更省心但可能有拷贝。
+\end{answer}
+\begin{interview}
+\textbf{PyTorch 的广播规则是什么？}
+\end{interview}
+\begin{answer}
+从最后一维向前比较。维度相等，或其中一个为 $1$，就能广播；缺失的前置维度按 $1$ 处理。
+例如 $(2,3)$ 与 $(3)$ 可看成 $(2,3)$ 与 $(1,3)$，结果为 $(2,3)$。
+\end{answer}
+\begin{interview}
+\textbf{requires\_grad、detach 和 no\_grad 有什么区别？}
+\end{interview}
+\begin{answer}
+\code{requires_grad=True} 表示需要追踪梯度；\code{detach()} 把已有结果从当前计算图分离；
+\code{torch.no_grad()} 在代码块内暂停记录新运算，常用于推理。
+\end{answer}
+\begin{interview}
+\textbf{为什么 numpy() 与 tensor 可能共享内存？}
+\end{interview}
+\begin{answer}
+CPU tensor 调用 \code{numpy()} 时通常不复制数据，而是与 NumPy 数组共享底层内存以提升效率。
+风险是修改一方会影响另一方。需要副本时使用 \code{clone()} 或 NumPy 的 \code{copy()}。
+\end{answer}
+\begin{interview}
+\textbf{标量 .item() 有什么作用？}
+\end{interview}
+\begin{answer}
+\code{.item()} 把单元素 tensor 转成 Python 数值，常用于日志和打印。
+它只能用于单元素张量；若张量在 GPU 上，调用 \code{.item()} 会触发 CPU 与 GPU 同步，频繁调用会拖慢训练。
+\end{answer}
+\begin{quickcard}\begin{itemize}
+  \item 查版本：\code{torch.__version__}；查 CUDA 构建：\code{torch.version.cuda}；查 GPU：\code{torch.cuda.is_available()}；标准 device：\code{device = "cuda" if torch.cuda.is_available() else "cpu"}。
+  \item 广播从后往前比；相等或有一个为 $1$ 才兼容；\code{view} 要求 contiguous，\code{reshape} 更通用但可能复制。
+  \item \code{cat} 沿已有维度拼接；\code{stack} 新增维度堆叠；CPU tensor 与 NumPy 通常共享内存。
+  \item \code{requires_grad=True} 追踪梯度；梯度默认累加，训练循环中要 \code{optimizer.zero_grad()}。
+  \item \code{torch.no_grad()} 关闭记录；\code{detach()} 分离已有计算图；\code{.item()} 会取 Python 标量并可能触发 GPU 同步。
+\end{itemize}\end{quickcard}

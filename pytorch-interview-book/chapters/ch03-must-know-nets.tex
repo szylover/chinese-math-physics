@@ -1,0 +1,310 @@
+\chapter{必会网络速查：MLP / CNN / RNN / Transformer}
+
+\section{本章定位}
+
+面试问网络结构，重点不是背论文细节，而是讲清楚：结构是什么、输入输出形状如何变化、参数量怎么算、解决了什么问题、有什么常见坑。本章按 MLP、CNN、RNN/LSTM/GRU、Transformer 四类速查，并给出 PyTorch 2.x 最小可跑代码。
+
+\begin{quickcard}
+答网络结构题的顺序：输入形状 \(\rightarrow\) 核心层 \(\rightarrow\) 输出形状 \(\rightarrow\) 参数量 \(\rightarrow\) 训练难点 \(\rightarrow\) 为什么有效。
+\end{quickcard}
+
+\section{MLP：全连接网络}
+
+\subsection{结构与直觉}
+
+MLP（Multi-Layer Perceptron，多层感知机）由线性层和非线性激活函数堆叠而成：
+\[
+x \rightarrow \mathrm{Linear} \rightarrow \mathrm{ReLU} \rightarrow \mathrm{Linear} \rightarrow y.
+\]
+线性层做仿射变换，激活函数提供非线性。若输入维度为 \(d_{in}\)，隐藏层维度为 \(h\)，输出维度为 \(d_{out}\)，两层 MLP 参数量为：
+\[
+d_{in}h+h+hd_{out}+d_{out}.
+\]
+MLP 简单通用，但不显式利用图像局部性，也不显式建模序列顺序。
+
+\subsection{最小 MLP 代码}
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Linear(10, 32),
+    nn.ReLU(),
+    nn.Linear(32, 2),
+)
+
+x = torch.randn(4, 10)
+y = model(x)
+print(y.shape)
+\end{lstlisting}
+
+输入是 \code{[batch, features]}，输出是 \code{[4, 2]}。
+
+\section{CNN：局部特征提取器}
+
+\subsection{\code{Conv2d} 参数与输出尺寸}
+
+\code{nn.Conv2d} 的常见参数包括：\code{in\_channels}、\code{out\_channels}、\code{kernel\_size}、\code{stride}、\code{padding}。输入通常是 \code{[N, C, H, W]}，输出通道数等于卷积核个数。
+
+对单个空间方向，卷积输出尺寸为：
+\[
+H_{out}=\left\lfloor \frac{H_{in}+2p-k}{s} \right\rfloor +1.
+\]
+宽度方向同理：
+\[
+W_{out}=\left\lfloor \frac{W_{in}+2p-k}{s} \right\rfloor +1.
+\]
+其中 \(p\) 是 padding，\(k\) 是 kernel size，\(s\) 是 stride。
+
+\begin{trap}
+``padding 为 1 尺寸不变'' 只在 \(k=3\)、\(s=1\) 时成立。若 \(k=5\)、\(s=1\)，要保持尺寸通常需要 \(p=2\)。
+\end{trap}
+
+\subsection{池化、感受野与参数量}
+
+池化用于下采样。最大池化保留局部最强响应，平均池化保留局部均值，二者通常没有可学习参数。感受野指输出特征图上一个位置能看到的输入区域。堆叠小卷积可以扩大感受野；两个 \(3\times 3\) 卷积在步幅为 \(1\) 时有效感受野相当于 \(5\times 5\)，但参数更少且多一次非线性。
+
+普通二维卷积参数量为：
+\[
+k_h k_w C_{in} C_{out}+C_{out}.
+\]
+若 \code{bias=False}，则没有最后的 \(C_{out}\)。
+
+\subsection{\(1\times 1\) 卷积}
+
+\(1\times 1\) 卷积不混合空间邻域，只在通道维度做线性组合。它常用于升维或降维、通道融合、瓶颈结构中减少后续 \(3\times 3\) 卷积的计算量。例如从 \(256\) 通道降到 \(64\) 通道，参数量是 \(1\times 1\times 256\times 64+64\)。
+
+\subsection{最小 CNN 代码}
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Conv2d(3, 8, kernel_size=3, stride=1, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=1),
+    nn.ReLU(),
+    nn.AdaptiveAvgPool2d((1, 1)),
+    nn.Flatten(),
+    nn.Linear(16, 10),
+)
+
+x = torch.randn(4, 3, 32, 32)
+y = model(x)
+print(y.shape)
+\end{lstlisting}
+
+第一层卷积保持 \(32\times 32\)，池化后变成 \(16\times 16\)。\code{AdaptiveAvgPool2d((1, 1))} 把每个通道压成一个数，因此线性层输入维度是 \(16\)。
+
+\subsection{LeNet 思路}
+
+LeNet 的主线是：
+\[
+\mathrm{Conv} \rightarrow \mathrm{Pool} \rightarrow \mathrm{Conv} \rightarrow \mathrm{Pool} \rightarrow \mathrm{MLP}.
+\]
+它体现了 CNN 的经典范式：卷积提局部特征，池化降采样，全连接做分类。现代 CNN 更深更宽，但这个思路仍是基础。
+
+\subsection{ResNet 残差块}
+
+ResNet 让网络学习残差：
+\[
+y=F(x)+x.
+\]
+若最优映射接近恒等映射，令 \(F(x)\) 接近 \(0\) 比直接学习 \(H(x)=x\) 更容易。
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+
+class BasicBlock(nn.Module):
+    def __init__(self, channels):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Conv2d(channels, channels, 3, padding=1, bias=False),
+            nn.BatchNorm2d(channels),
+            nn.ReLU(),
+            nn.Conv2d(channels, channels, 3, padding=1, bias=False),
+            nn.BatchNorm2d(channels),
+        )
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        out = self.net(x)
+        out = out + x
+        return self.relu(out)
+
+block = BasicBlock(8)
+x = torch.randn(2, 8, 16, 16)
+y = block(x)
+print(y.shape)
+\end{lstlisting}
+
+残差连接缓解梯度消失的直觉是：反向传播时梯度可以沿 shortcut 更直接地传回浅层，不必完全穿过多层非线性变换。它不是保证梯度永不消失，而是提供更短、更稳定的优化路径。
+
+\section{RNN / LSTM / GRU：序列建模}
+
+\subsection{RNN 与梯度消失}
+
+RNN 用隐藏状态递归处理序列：
+\[
+h_t=f(x_t,h_{t-1}).
+\]
+它适合文本、时间序列等有顺序的数据。普通 RNN 的问题是长序列上容易梯度消失或爆炸，因为反向传播要反复乘以权重矩阵和激活函数导数，小于 \(1\) 的因子连乘会迅速变小。
+
+\subsection{LSTM 的三个门}
+
+LSTM 引入 cell state \(c_t\)，让信息更稳定地跨时间传播。三个门的直觉是：遗忘门决定旧记忆丢掉什么，输入门决定新信息写入多少，输出门决定从 cell state 暴露多少到隐藏状态 \(h_t\)。可以把 cell state 理解成信息高速公路，门控机制负责选择性保留、写入和输出。
+
+\subsection{GRU 简化}
+
+GRU 是 LSTM 的简化版本，没有单独的 cell state，通常用更新门和重置门控制信息流。它参数更少、计算更轻，在一些短序列或小数据任务上表现不输 LSTM。
+
+\subsection{\code{nn.LSTM} 最小用法}
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+
+lstm = nn.LSTM(
+    input_size=5,
+    hidden_size=8,
+    num_layers=1,
+    batch_first=True,
+)
+
+x = torch.randn(4, 6, 5)
+out, (h_n, c_n) = lstm(x)
+
+print(out.shape)
+print(h_n.shape)
+print(c_n.shape)
+\end{lstlisting}
+
+当 \code{batch\_first=True} 时，输入形状是 \code{[batch, seq, feature]}。\code{out} 形状是 \code{[4, 6, 8]}，包含每个时间步输出；\code{h\_n} 和 \code{c\_n} 形状是 \code{[1, 4, 8]}。
+
+\section{Transformer：注意力与并行序列建模}
+
+\subsection{Self-Attention 公式}
+
+给定查询 \(Q\)、键 \(K\)、值 \(V\)，缩放点积注意力为：
+\[
+\mathrm{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V.
+\]
+它让每个位置都能直接关注序列中其他位置。
+
+\subsection{为何除以 \(\sqrt{d_k}\)}
+
+若 \(Q\) 和 \(K\) 的元素方差大致为 \(1\)，点积 \(QK^\top\) 的尺度会随 \(d_k\) 增大。不缩放时 softmax 输入可能过大，分布过尖，梯度变小。除以 \(\sqrt{d_k}\) 可以稳定数值尺度和训练过程。
+
+\subsection{Multi-Head、位置编码与结构}
+
+Multi-head attention 把表示拆到多个子空间，让不同头学习不同依赖关系，再拼接投影融合。Self-attention 本身对顺序不敏感，因此需要位置编码注入位置信息，常见做法有正弦余弦位置编码、可学习位置向量和相对位置编码。
+
+Encoder 通常堆叠 self-attention 和 feed-forward 子层，并配残差连接和 LayerNorm。Decoder 在 masked self-attention 后加入 cross-attention，用来读取 encoder 输出；mask 防止当前位置看到未来 token。
+
+\subsection{相比 RNN 的优势}
+
+RNN 的 \(h_t\) 依赖 \(h_{t-1}\)，训练时难以完全并行。Transformer 的 self-attention 可一次性计算所有位置之间的相关性，因此并行性更强；任意两个位置之间只需一次 attention 连接，长依赖路径更短。代价是标准 attention 对序列长度 \(n\) 的时间和显存复杂度为 \(O(n^2)\)。
+
+\subsection{\code{nn.MultiheadAttention} 最小示例}
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+
+attn = nn.MultiheadAttention(
+    embed_dim=16,
+    num_heads=4,
+    batch_first=True,
+)
+
+x = torch.randn(2, 5, 16)
+y, weights = attn(x, x, x)
+
+print(y.shape)
+print(weights.shape)
+\end{lstlisting}
+
+这里 \(Q=K=V=x\)，所以是 self-attention。输出 \code{y} 形状是 \code{[2, 5, 16]}；默认 \code{weights} 是平均后的注意力权重，通常为 \code{[batch, target\_len, source\_len]}。
+
+\section{面试题速答}
+
+\begin{interview}
+卷积输出尺寸怎么算？
+\end{interview}
+
+\begin{answer}
+单个方向使用 \(H_{out}=\left\lfloor (H_{in}+2p-k)/s \right\rfloor +1\)。其中 \(p\) 是 padding，\(k\) 是 kernel size，\(s\) 是 stride。宽度方向同理。
+\end{answer}
+
+\begin{interview}
+\(1\times 1\) 卷积干嘛？
+\end{interview}
+
+\begin{answer}
+它在通道维度做线性组合，不扩大空间感受野。常用于升降维、通道融合、瓶颈结构降计算量。
+\end{answer}
+
+\begin{interview}
+残差为何有效？
+\end{interview}
+
+\begin{answer}
+残差块输出 \(F(x)+x\)，让网络学习相对输入的增量。shortcut 给梯度提供更短路径，深层网络更容易优化。
+\end{answer}
+
+\begin{interview}
+LSTM 为何缓解梯度消失？
+\end{interview}
+
+\begin{answer}
+LSTM 用 cell state 保存长期信息，并用遗忘门、输入门、输出门控制信息流，减少普通 RNN 中长链式连乘带来的梯度衰减。
+\end{answer}
+
+\begin{interview}
+Attention 为何 scale？
+\end{interview}
+
+\begin{answer}
+点积尺度会随 \(d_k\) 增大。不除以 \(\sqrt{d_k}\) 时 softmax 可能过尖，梯度变小；缩放能稳定训练。
+\end{answer}
+
+\begin{interview}
+Multi-head 的意义是什么？
+\end{interview}
+
+\begin{answer}
+多个头能在不同子空间学习不同关系，例如局部依赖、长距离依赖或语义关系，最后拼接投影融合。
+\end{answer}
+
+\begin{interview}
+Transformer 为何能并行？
+\end{interview}
+
+\begin{answer}
+RNN 要按时间步递推；Transformer 的 self-attention 可同时计算所有位置之间的相关性，所以训练阶段并行性更强。
+\end{answer}
+
+\section{章末速记卡}
+
+\begin{quickcard}
+\begin{tabular}{lll}
+\toprule
+网络 & 一句话要点 & 关键公式或关键词 \\
+\midrule
+MLP & 全连接加非线性，通用但结构先验少 & \(Wx+b\) \\
+CNN & 局部连接和权值共享，适合图像 & \(H_{out}=\lfloor(H_{in}+2p-k)/s\rfloor+1\) \\
+RNN & 递归处理序列，长依赖训练困难 & \(h_t=f(x_t,h_{t-1})\) \\
+LSTM & 门控加 cell state 保留长期信息 & 遗忘门、输入门、输出门 \\
+GRU & LSTM 的轻量简化版本 & 更新门、重置门 \\
+Transformer & attention 建模全局依赖且可并行 & \(\operatorname{softmax}(QK^\top/\sqrt{d_k})V\) \\
+\bottomrule
+\end{tabular}
+\end{quickcard}
+
+\begin{quickcard}
+一句话记忆：MLP 做通用函数拟合；CNN 抓局部空间特征；RNN/LSTM/GRU 按时间递推建模序列；Transformer 用 attention 直接建模全局依赖。
+\end{quickcard}

@@ -1,6 +1,6 @@
 # 中文技术书库
 
-以数学的严谨，讲物理的直觉；以工程师的视角，写 AI 与面试指南。本仓库包含 **8 本**中文教材/技术书，涵盖数学、物理、AI Agent 和全栈面试。
+以数学的严谨，讲物理的直觉；以工程师的视角，写 AI 与面试指南。本仓库包含 **10 本**中文教材/技术书，涵盖数学、物理、AI Agent、深度学习与全栈面试。
 
 所有 PDF 集中存放在 `pdf/` 目录，数学物理部分共 **1339 页**。
 
@@ -35,6 +35,16 @@
 面向 Android + TypeScript + Node.js 技术栈的系统性面试手册。涵盖 Kotlin 协程/Jetpack Compose/Android 架构与性能优化、TypeScript 类型系统深度/React 原理/前端系统设计、Node.js Event Loop/框架对比/后端系统设计，以及 LeetCode 50 题（Kotlin+TS 双语解法）、计算机网络与操作系统、DevOps、行为面试与外企英文准备。共 340+ 道面试题、14 个系统设计案例。
 
 👉 [阅读全书](./fullstack-interview-book/README.md)
+
+---
+
+## 🔥 PyTorch 面试速通
+
+### PyTorch 面试速通：最快上手 + 高频面试题 — `pytorch-interview-book/`（8 章）
+
+面向有 Python 基础、需在短时间内冲刺 ML/DL/算法工程师面试的读者。**尽量简单、精炼、高频**，快速入门到能应付面试：环境与张量/autograd 速通、一章学会建模与训练、必会网络速查（MLP/CNN/RNN/Transformer）、高频理论面试题、手写编码面试题（attention/层/训练循环），以及 **LLM 时代高频的分布式训练**（DataParallel vs DDP、FSDP/ZeRO、数据/张量/流水线并行、AMP 与显存优化）、速查表与常见坑、面试打法与冲刺路线。与《AI Agent 转行指南》互补：本书讲"模型层"，AI Agent 书讲"应用层"。
+
+👉 [阅读全书](./pytorch-interview-book/README.md)
 
 ---
 
@@ -113,6 +123,7 @@ cd physics-textbook && lualatex main.tex && lualatex main.tex
 ```
 ├── ai-agent-book/             # 《AI Agent 转行与面试指南》(20章)
 ├── fullstack-interview-book/  # 《全栈面试指南》(18章)
+├── pytorch-interview-book/    # 《PyTorch 面试速通》(8章, LaTeX)
 ├── claude-code-book/          # 《深入剖析 Claude Code》技术书 (17章)
 ├── linear-algebra-book/       # 线性代数
 ├── abstract-algebra-book/     # 抽象代数

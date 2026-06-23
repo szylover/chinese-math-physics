@@ -1,0 +1,360 @@
+\chapter{高频编码面试题}
+
+\section{手写 Scaled Dot-Product Attention}
+\begin{interview}
+给定 \code{q}、\code{k}、\code{v}，手写缩放点积注意力。要求支持 mask，mask 中 \code{False} 的位置不能被关注。
+\end{interview}
+\begin{answer}
+公式为
+\[
+  \operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V.
+\]
+\begin{lstlisting}
+import math
+import torch
+
+
+def scaled_dot_product_attention(q, k, v, mask=None, dropout=None):
+    """
+    q: (..., tgt_len, d_k)
+    k: (..., src_len, d_k)
+    v: (..., src_len, d_v)
+    mask: broadcastable to (..., tgt_len, src_len), True means keep
+    """
+    scores = torch.matmul(q, k.transpose(-2, -1))
+    scores = scores / math.sqrt(q.size(-1))
+    if mask is not None:
+        scores = scores.masked_fill(~mask, torch.finfo(scores.dtype).min)
+    attn = torch.softmax(scores, dim=-1)
+    if dropout is not None:
+        attn = dropout(attn)
+    out = torch.matmul(attn, v)
+    return out, attn
+\end{lstlisting}
+\paragraph{要点} \code{k.transpose(-2, -1)} 只交换最后两维；mask 要能广播到注意力分数形状；softmax 沿 key 维，即 \code{dim=-1}。
+\end{answer}
+\begin{trap}
+不要先 softmax 再 mask；被屏蔽位置应在 softmax 前填成足够小的值。
+\end{trap}
+
+\section{手写 Multi-Head Attention}
+\begin{interview}
+用 \code{nn.Linear} 实现多头注意力：线性投影、拆头、缩放点积注意力、合头、输出投影。
+\end{interview}
+\begin{answer}
+多头注意力把 \code{embed\_dim} 分成多个 \code{head\_dim}，每个头独立做 attention。
+\begin{lstlisting}
+import math
+import torch
+from torch import nn
+
+
+class MultiHeadAttention(nn.Module):
+    def __init__(self, embed_dim, num_heads, dropout=0.0):
+        super().__init__()
+        if embed_dim % num_heads != 0:
+            raise ValueError("embed_dim must be divisible by num_heads")
+        self.embed_dim = embed_dim
+        self.num_heads = num_heads
+        self.head_dim = embed_dim // num_heads
+        self.q_proj = nn.Linear(embed_dim, embed_dim)
+        self.k_proj = nn.Linear(embed_dim, embed_dim)
+        self.v_proj = nn.Linear(embed_dim, embed_dim)
+        self.out_proj = nn.Linear(embed_dim, embed_dim)
+        self.dropout = nn.Dropout(dropout)
+
+    def split_heads(self, x):
+        bsz, seq_len, _ = x.shape
+        x = x.view(bsz, seq_len, self.num_heads, self.head_dim)
+        return x.transpose(1, 2)
+
+    def merge_heads(self, x):
+        bsz, heads, seq_len, head_dim = x.shape
+        x = x.transpose(1, 2).contiguous()
+        return x.view(bsz, seq_len, heads * head_dim)
+
+    def forward(self, query, key, value, mask=None):
+        q = self.split_heads(self.q_proj(query))
+        k = self.split_heads(self.k_proj(key))
+        v = self.split_heads(self.v_proj(value))
+        scores = q @ k.transpose(-2, -1) / math.sqrt(self.head_dim)
+        if mask is not None:
+            if mask.dim() == 3:
+                mask = mask.unsqueeze(1)
+            scores = scores.masked_fill(~mask, torch.finfo(scores.dtype).min)
+        attn = self.dropout(torch.softmax(scores, dim=-1))
+        out = self.merge_heads(attn @ v)
+        return self.out_proj(out), attn
+\end{lstlisting}
+\paragraph{要点} 输入常用 \code{(batch, seq\_len, embed\_dim)}；拆头后是 \code{(batch, heads, seq\_len, head\_dim)}；\code{transpose} 后再 \code{view} 前通常要 \code{contiguous()}。
+\end{answer}
+
+\section{用 \code{nn.Parameter} 手写 Linear 层}
+\begin{interview}
+不用 \code{nn.Linear}，只用 \code{nn.Parameter} 手写全连接层，包含初始化和 \code{forward}。
+\end{interview}
+\begin{answer}
+线性层计算 $Y=XW^\top+b$。PyTorch 线性层权重形状为 \code{(out\_features, in\_features)}。
+\begin{lstlisting}
+import math
+import torch
+from torch import nn
+
+
+class MyLinear(nn.Module):
+    def __init__(self, in_features, out_features, bias=True):
+        super().__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        self.weight = nn.Parameter(torch.empty(out_features, in_features))
+        if bias:
+            self.bias = nn.Parameter(torch.empty(out_features))
+        else:
+            self.register_parameter("bias", None)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        bound = 1.0 / math.sqrt(self.in_features)
+        nn.init.uniform_(self.weight, -bound, bound)
+        if self.bias is not None:
+            nn.init.uniform_(self.bias, -bound, bound)
+
+    def forward(self, x):
+        y = x.matmul(self.weight.t())
+        if self.bias is not None:
+            y = y + self.bias
+        return y
+\end{lstlisting}
+\paragraph{要点} 可训练张量必须是 \code{nn.Parameter}；无 bias 时用 \code{register\_parameter("bias", None)}；bias 自动广播到最后一维。
+\end{answer}
+
+\section{手写 BatchNorm1d}
+\begin{interview}
+手写 \code{BatchNorm1d}，区分训练/推理分支，训练时更新 \code{running\_mean} 与 \code{running\_var}。
+\end{interview}
+\begin{answer}
+BatchNorm 先归一化再仿射变换：$\hat{x}=(x-\mu)/\sqrt{\sigma^2+\epsilon}$，$y=\gamma\hat{x}+\beta$。
+\begin{lstlisting}
+import torch
+from torch import nn
+
+
+class MyBatchNorm1d(nn.Module):
+    def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True):
+        super().__init__()
+        self.eps = eps
+        self.momentum = momentum
+        self.affine = affine
+        if affine:
+            self.weight = nn.Parameter(torch.ones(num_features))
+            self.bias = nn.Parameter(torch.zeros(num_features))
+        else:
+            self.register_parameter("weight", None)
+            self.register_parameter("bias", None)
+        self.register_buffer("running_mean", torch.zeros(num_features))
+        self.register_buffer("running_var", torch.ones(num_features))
+
+    def forward(self, x):
+        if x.dim() not in (2, 3):
+            raise ValueError("expected 2D or 3D input")
+        reduce_dims = (0,) if x.dim() == 2 else (0, 2)
+        shape = (1, -1) if x.dim() == 2 else (1, -1, 1)
+        if self.training:
+            mean = x.mean(dim=reduce_dims, keepdim=True)
+            var = x.var(dim=reduce_dims, unbiased=False, keepdim=True)
+            with torch.no_grad():
+                self.running_mean.mul_(1 - self.momentum).add_(
+                    self.momentum * mean.view(-1)
+                )
+                self.running_var.mul_(1 - self.momentum).add_(
+                    self.momentum * var.view(-1)
+                )
+        else:
+            mean = self.running_mean.view(shape)
+            var = self.running_var.view(shape)
+        y = (x - mean) / torch.sqrt(var + self.eps)
+        if self.affine:
+            y = y * self.weight.view(shape) + self.bias.view(shape)
+        return y
+\end{lstlisting}
+\paragraph{要点} running stats 是 buffer 不是参数；\code{(N,C,L)} 要在 \code{N} 和 \code{L} 维统计；更新 buffer 放进 \code{torch.no\_grad()}。
+\end{answer}
+\begin{trap}
+官方实现对 running variance 的无偏估计更细；面试重点通常是分支、buffer 与广播。
+\end{trap}
+
+\section{手写 Dropout}
+\begin{interview}
+实现 inverted dropout：训练时随机置零并缩放，推理时直接返回输入。
+\end{interview}
+\begin{answer}
+inverted dropout 在训练阶段除以 \code{1-p}，推理阶段无需缩放。
+\begin{lstlisting}
+import torch
+from torch import nn
+
+
+class MyDropout(nn.Module):
+    def __init__(self, p=0.5):
+        super().__init__()
+        if p < 0.0 or p >= 1.0:
+            raise ValueError("p must be in [0, 1)")
+        self.p = p
+
+    def forward(self, x):
+        if not self.training or self.p == 0.0:
+            return x
+        keep_prob = 1.0 - self.p
+        mask = torch.rand_like(x) < keep_prob
+        return x * mask.to(x.dtype) / keep_prob
+\end{lstlisting}
+\paragraph{要点} 训练时输出期望保持不变；推理时不要再乘 \code{1-p}；用 \code{torch.rand\_like(x)} 可自动匹配 device。
+\end{answer}
+
+\section{手写交叉熵损失}
+\begin{interview}
+手写多分类交叉熵损失，要求用 \code{log\_softmax + nll}，输入是 logits 和类别索引。
+\end{interview}
+\begin{answer}
+不要先 softmax 再取 log；稳定写法是直接计算 \code{log\_softmax}。
+\begin{lstlisting}
+import torch
+import torch.nn.functional as F
+
+
+def cross_entropy_from_logits(logits, target, reduction="mean"):
+    log_probs = F.log_softmax(logits, dim=-1)
+    nll = -log_probs.gather(1, target.view(-1, 1)).squeeze(1)
+    if reduction == "mean":
+        return nll.mean()
+    if reduction == "sum":
+        return nll.sum()
+    if reduction == "none":
+        return nll
+    raise ValueError("invalid reduction")
+\end{lstlisting}
+\paragraph{要点} logits 不需要预先归一化；target 形状通常是 \code{(batch,)} 且 dtype 为 \code{torch.long}；\code{gather} 的 index 维度要匹配。
+\end{answer}
+
+\section{手写完整训练循环}
+\begin{interview}
+实现 \code{train\_one\_epoch(model, loader, opt, loss\_fn, device)}，包含训练模式、搬运数据、前向、反向、更新和平均损失统计。
+\end{interview}
+\begin{answer}
+训练循环的标准顺序是清梯度、前向、算损失、反向、更新参数。
+\begin{lstlisting}
+import torch
+
+
+def train_one_epoch(model, loader, opt, loss_fn, device):
+    model.train()
+    total_loss = 0.0
+    total_count = 0
+    for batch in loader:
+        if isinstance(batch, (tuple, list)):
+            x, y = batch[0], batch[1]
+        else:
+            x, y = batch["x"], batch["y"]
+        x = x.to(device)
+        y = y.to(device)
+        opt.zero_grad(set_to_none=True)
+        pred = model(x)
+        loss = loss_fn(pred, y)
+        loss.backward()
+        opt.step()
+        batch_size = x.size(0)
+        total_loss += loss.detach().item() * batch_size
+        total_count += batch_size
+    return total_loss / max(total_count, 1)
+\end{lstlisting}
+\paragraph{要点} 顺序是 \code{zero\_grad -> forward -> loss -> backward -> step}；统计 loss 时用 \code{detach().item()}；若 loss 是 batch mean，累计时乘 batch size。
+\end{answer}
+\begin{trap}
+评估循环才使用 \code{model.eval()} 和 \code{torch.no\_grad()}；训练循环不能包 \code{no\_grad}。
+\end{trap}
+
+\section{张量操作题：不用 Python for 循环}
+\begin{interview}
+不用 Python for 循环实现：按行 softmax、按标签取概率、广播计算成对欧氏距离、topk、masked\_fill。
+\end{interview}
+\begin{answer}
+这类题考维度意识，应优先用广播、\code{gather}、\code{topk}、\code{masked\_fill} 等原语。
+\begin{lstlisting}
+import torch
+import torch.nn.functional as F
+
+
+def row_softmax(x):
+    return torch.softmax(x, dim=1)
+
+
+def take_class_prob(probs, labels):
+    return probs.gather(1, labels.view(-1, 1)).squeeze(1)
+
+
+def pairwise_l2_distance(x, y):
+    diff = x[:, None, :] - y[None, :, :]
+    return torch.sqrt((diff * diff).sum(dim=-1))
+
+
+def pairwise_l2_distance_fast(x, y):
+    x2 = (x * x).sum(dim=1, keepdim=True)
+    y2 = (y * y).sum(dim=1).unsqueeze(0)
+    dist2 = (x2 + y2 - 2.0 * x @ y.t()).clamp_min(0.0)
+    return torch.sqrt(dist2)
+
+
+def topk_values_indices(x, k):
+    return torch.topk(x, k=k, dim=1)
+
+
+def mask_logits(logits, valid_mask):
+    return logits.masked_fill(~valid_mask, torch.finfo(logits.dtype).min)
+
+
+def demo_tensor_ops():
+    logits = torch.tensor([[1.0, 2.0, 3.0], [3.0, 1.0, 0.0]])
+    labels = torch.tensor([2, 0])
+    probs = F.softmax(logits, dim=1)
+    chosen = take_class_prob(probs, labels)
+    x = torch.randn(4, 5)
+    y = torch.randn(6, 5)
+    dist = pairwise_l2_distance_fast(x, y)
+    values, indices = topk_values_indices(logits, k=2)
+    mask = torch.tensor([[True, True, False], [True, False, True]])
+    masked = mask_logits(logits, mask)
+    return chosen, dist, values, indices, masked
+\end{lstlisting}
+\paragraph{要点} \code{gather} 适合按样本取类别；\code{x[:, None, :]} 和 \code{y[None, :, :]} 可广播；\code{topk} 返回 values 和 indices；先说明 mask 中 \code{True} 的含义。
+\end{answer}
+
+\section{可选：Label Smoothing 交叉熵}
+\begin{interview}
+实现 label smoothing 版本交叉熵。输入 logits 和类别索引 target，平滑系数为 \code{smoothing}。
+\end{interview}
+\begin{answer}
+label smoothing 把少量概率质量分给非正确类别，可缓解模型过度自信。
+\begin{lstlisting}
+import torch
+import torch.nn.functional as F
+
+def label_smoothing_cross_entropy(logits, target, smoothing=0.1):
+    num_classes = logits.size(-1)
+    log_probs = F.log_softmax(logits, dim=-1)
+    with torch.no_grad():
+        true_dist = torch.full_like(log_probs, smoothing / (num_classes - 1))
+        true_dist.scatter_(1, target.view(-1, 1), 1.0 - smoothing)
+    loss = -(true_dist * log_probs).sum(dim=-1)
+    return loss.mean()
+\end{lstlisting}
+\paragraph{要点} \code{scatter\_} 写入正确类别概率；构造软标签不需要梯度；实际任务应保证 \code{num\_classes > 1}。
+\end{answer}
+\begin{quickcard}
+\textbf{手写模板速记}
+\begin{itemize}
+  \item Attention/MHA：$QK^\top/\sqrt{d_k}$，mask 后对最后一维 softmax；多头要线性投影、拆头、合头。
+  \item Linear/BatchNorm/Dropout：参数用 \code{nn.Parameter}，running stats 用 buffer，inverted dropout 训练除以 \code{1-p}。
+  \item CrossEntropy/Train loop：稳定写法是 \code{log\_softmax + gather}；训练顺序是清梯度、前向、反向、更新。
+  \item Tensor ops：多用广播、\code{gather}、\code{topk}、\code{masked\_fill}，并先说明 mask 中 \code{True} 的语义。
+\end{itemize}
+\end{quickcard}

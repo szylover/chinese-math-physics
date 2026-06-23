@@ -1,0 +1,293 @@
+\chapter{速查表与常见坑}
+
+\section{常用张量操作速查}
+
+本章像一张考前小抄：先把高频 API、输入输出形状和训练流程压成表格，再集中列出最容易在面试和项目中踩到的坑。
+阅读时建议边看边问自己三个问题：张量形状是什么、梯度图还在不在、数据和模型是否在同一设备上。
+
+\subsection{创建、形状、索引、拼接与规约}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.18\textwidth}p{0.32\textwidth}X}
+\toprule
+类别 & 常用写法 & 要点 \\
+\midrule
+从数据创建 & \code{torch.tensor(data)} & 会复制数据；可指定 \code{dtype} 和 \code{device}。 \\
+未初始化 & \code{torch.empty(2, 3)} & 只分配内存，不保证初值，调试时不要当作零张量。 \\
+全零/全一 & \code{torch.zeros(2, 3)}，\code{torch.ones\_like(x)} & \code{\_like} 版本继承形状，通常也继承 dtype 和 device。 \\
+随机数 & \code{torch.randn(4, 5)}，\code{torch.randint(0, 10, (3,))} & \code{randn} 是标准正态；\code{rand} 是 $[0,1)$ 均匀分布。 \\
+区间序列 & \code{torch.arange(0, 10, 2)}，\code{torch.linspace(0, 1, 5)} & \code{arange} 类似 Python \code{range}，右端通常不包含。 \\
+形状查看 & \code{x.shape}，\code{x.size()}，\code{x.dim()} & \code{shape} 是属性，\code{size()} 返回 \code{torch.Size}。 \\
+类型转换 & \code{x.float()}，\code{x.long()}，\code{x.to(dtype=torch.float32)} & 分类标签常用 \code{long}；回归输入常用浮点。 \\
+索引切片 & \code{x[:, 0]}，\code{x[mask]}，\code{x[idx]} & 布尔索引和高级索引通常会产生新张量。 \\
+拼接 & \code{torch.cat([a, b], dim=0)} & 只在指定维度上大小可不同，其他维度必须相同。 \\
+新增维拼接 & \code{torch.stack([a, b], dim=0)} & 会新增一个维度，所有输入形状必须完全相同。 \\
+规约 & \code{x.sum(dim=1)}，\code{x.mean()}，\code{x.max(dim=1)} & \code{max(dim)} 返回值和索引两个张量。 \\
+保留维度 & \code{x.sum(dim=1, keepdim=True)} & 便于后续广播，减少手动 \code{unsqueeze}。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{形状操作对照}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.18\textwidth}p{0.32\textwidth}X}
+\toprule
+操作 & 示例 & 记忆点 \\
+\midrule
+\code{view} & \code{x.view(batch, -1)} & 要求内存连续；\code{-1} 表示自动推断。 \\
+\code{reshape} & \code{x.reshape(batch, -1)} & 更宽松；必要时可能复制数据。 \\
+\code{permute} & \code{x.permute(0, 2, 3, 1)} & 任意重排维度，常用于 NCHW 与 NHWC 转换。 \\
+\code{transpose} & \code{x.transpose(1, 2)} & 只交换两个维度，是 \code{permute} 的常见特例。 \\
+\code{squeeze} & \code{x.squeeze(1)} & 删除大小为 $1$ 的维度；建议指定 \code{dim}。 \\
+\code{unsqueeze} & \code{x.unsqueeze(0)} & 插入大小为 $1$ 的维度，常用于补 batch 维。 \\
+\code{flatten} & \code{torch.flatten(x, 1)} & 从指定维开始展平，CNN 接全连接层常用。 \\
+\code{expand} & \code{x.expand(4, 3)} & 共享存储的广播视图，不真正复制。 \\
+\code{repeat} & \code{x.repeat(4, 1)} & 真正复制数据，显存开销更大。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{lstlisting}
+# CNN 特征接 Linear 的典型写法
+x = torch.flatten(x, start_dim=1)   # [N, C, H, W] -> [N, C*H*W]
+logits = classifier(x)
+\end{lstlisting}
+
+\section{模型层、损失、优化器与调度器}
+
+\subsection{常用层速查}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.2\textwidth}p{0.32\textwidth}X}
+\toprule
+层 & 常见输入/输出 & 面试要点 \\
+\midrule
+\code{nn.Linear} & 输入 \code{[..., in\_features]}，输出 \code{[..., out\_features]} & 只作用在最后一维；参数量为 \code{in\_features * out\_features + out\_features}。 \\
+\code{nn.Conv2d} & \code{[N,C,H,W]} 到 \code{[N,C\_out,H\_out,W\_out]} & 关注 \code{kernel\_size}、\code{stride}、\code{padding}、\code{groups}。 \\
+\code{nn.BatchNorm2d} & 常接在卷积后，输入 \code{[N,C,H,W]} & 训练时用 batch 统计量，推理时用 running mean/var。 \\
+\code{nn.LayerNorm} & 常用于 Transformer，按最后若干维归一化 & 不依赖 batch 统计量，小 batch 更稳定。 \\
+\code{nn.Dropout} & 训练时随机置零，推理时恒等映射 & 受 \code{model.train()} 和 \code{model.eval()} 控制。 \\
+\code{nn.Embedding} & 输入整型索引，输出 dense 向量 & 输入 dtype 应为 \code{torch.long}；本质是查表。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{损失函数对照}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.23\textwidth}X}
+\toprule
+损失 & 用途 & 输入要求 \\
+\midrule
+\code{nn.CrossEntropyLoss} & 单标签多分类 & 输入 raw logits，形状 \code{[N,C]}；标签为类别下标 \code{[N]}，dtype 为 \code{long}。 \\
+\code{nn.BCEWithLogitsLoss} & 二分类或多标签分类 & 输入 raw logits；标签通常为同形状浮点 $0/1$。内部已包含 sigmoid。 \\
+\code{nn.MSELoss} & 回归、重建 & 预测和目标形状相同，均为浮点。 \\
+\code{nn.L1Loss} & 对异常值更鲁棒的回归 & 优化绝对误差，梯度不像 MSE 那样随误差线性增大。 \\
+\code{nn.KLDivLoss} & 分布匹配、蒸馏 & 默认输入是 log probability；常配合 \code{log\_softmax}。 \\
+\code{nn.CosineEmbeddingLoss} & 表征相似度学习 & 输入两个向量和标签 $1/-1$。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{优化器与调度器对照}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.26\textwidth}X}
+\toprule
+组件 & 典型场景 & 记忆点 \\
+\midrule
+\code{optim.SGD} & 经典 CNN、需要强正则的任务 & 常配合 momentum；泛化常被认为较稳。 \\
+\code{optim.Adam} & 默认首选、收敛快 & 自适应学习率；注意合理设置 \code{weight\_decay}。 \\
+\code{optim.AdamW} & Transformer、预训练微调 & 将权重衰减与梯度更新解耦，是现代模型常用默认项。 \\
+\code{StepLR} & 固定轮数衰减 & 每隔 \code{step\_size} 个 epoch 乘以 \code{gamma}。 \\
+\code{CosineAnnealingLR} & 训练预算固定时 & 学习率按余弦曲线下降，常有更平滑的后期训练。 \\
+\code{ReduceLROnPlateau} & 监控验证集指标 & 调用 \code{scheduler.step(val\_loss)}，不是简单每轮 step。 \\
+\code{OneCycleLR} & 需要快速训练时 & 通常按 iteration step，而不是按 epoch step。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{lstlisting}
+for x, y in loader:
+    x, y = x.to(device), y.to(device)
+    optimizer.zero_grad()
+    loss = criterion(model(x), y)
+    loss.backward()
+    optimizer.step()
+\end{lstlisting}
+
+\section{设备迁移、保存加载与 API 对照}
+
+\subsection{设备迁移与保存加载}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.23\textwidth}p{0.36\textwidth}X}
+\toprule
+任务 & 推荐写法 & 注意事项 \\
+\midrule
+选择设备 & \code{device = torch.device("cuda" if torch.cuda.is\_available() else "cpu")} & 不要在代码中硬编码必须有 GPU。 \\
+迁移模型 & \code{model.to(device)} & 迁移后新建的张量也要放到同一设备。 \\
+迁移数据 & \code{x = x.to(device)} & \code{to} 通常返回新张量，别忘记接收返回值。 \\
+保存参数 & \code{torch.save(model.state\_dict(), path)} & 最推荐，文件更稳定，不依赖完整类定义的 pickle。 \\
+加载参数 & \code{model.load\_state\_dict(torch.load(path, map\_location=device))} & 先实例化同结构模型，再加载参数。 \\
+保存检查点 & \code{torch.save(\{"model": model.state\_dict(), "optim": optimizer.state\_dict()\}, path)} & 继续训练时同时保存 epoch、优化器、调度器和随机状态更稳。 \\
+切换推理 & \code{model.eval()} 与 \code{torch.no\_grad()} & 前者影响层行为，后者关闭梯度记录，二者不是一回事。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{NumPy 与 Torch API 对照}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{0.25\textwidth}p{0.3\textwidth}X}
+\toprule
+NumPy & PyTorch & 差异提示 \\
+\midrule
+\code{np.array(data)} & \code{torch.tensor(data)} & PyTorch 张量可带梯度和设备信息。 \\
+\code{np.asarray(a)} & \code{torch.as\_tensor(a)} & 可能共享底层内存，修改时要小心。 \\
+\code{np.zeros(shape)} & \code{torch.zeros(shape)} & PyTorch 可直接指定 \code{device}。 \\
+\code{np.random.randn(m,n)} & \code{torch.randn(m, n)} & 随机种子分别由 NumPy 和 Torch 管理。 \\
+\code{a.reshape(...)} & \code{x.reshape(...)} & PyTorch 还要考虑梯度和连续性。 \\
+\code{np.transpose(a, axes)} & \code{x.permute(*dims)} & 两者都只是重排维度语义。 \\
+\code{np.concatenate(list, axis)} & \code{torch.cat(list, dim)} & 参数名从 \code{axis} 变为 \code{dim}。 \\
+\code{np.stack(list, axis)} & \code{torch.stack(list, dim)} & 都会新增维度。 \\
+\code{np.sum(a, axis)} & \code{x.sum(dim)} & PyTorch 常用 \code{keepdim} 保持维度。 \\
+\code{a.astype(np.float32)} & \code{x.to(torch.float32)} 或 \code{x.float()} & PyTorch 的 \code{to} 也可迁移设备。 \\
+\code{a @ b} & \code{x @ y} 或 \code{torch.matmul(x, y)} & 批量矩阵乘法会按高维广播。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{常见坑与排查方式}
+
+\begin{trap}
+\textbf{忘记 \code{optimizer.zero\_grad()}。}
+PyTorch 默认会累加梯度，不清零会把多个 batch 的梯度叠在一起，等价于错误的梯度累积。
+标准顺序是 \code{zero\_grad()}、前向、\code{backward()}、\code{step()}；如果刻意做梯度累积，要按累积步数清零并缩放 loss。
+\end{trap}
+
+\begin{trap}
+\textbf{推理时忘记 \code{model.eval()} 或 \code{torch.no\_grad()}。}
+\code{eval()} 会让 BatchNorm 使用运行统计量、Dropout 停止随机置零；\code{no\_grad()} 会关闭计算图记录，节省显存并加速。
+验证和测试通常两者都要写。
+\end{trap}
+
+\begin{lstlisting}
+model.eval()
+with torch.no_grad():
+    logits = model(x.to(device))
+\end{lstlisting}
+
+\begin{trap}
+\textbf{累加 loss 时未 \code{.item()} 或未 \code{detach()}。}
+如果直接 \code{total\_loss += loss}，可能把每个 batch 的计算图都挂住，导致显存持续增长。
+用于日志时写 \code{total\_loss += loss.item()}；需要保留张量但不要梯度时用 \code{loss.detach()}。
+\end{trap}
+
+\begin{trap}
+\textbf{\code{CrossEntropyLoss} 前又手动 softmax。}
+\code{nn.CrossEntropyLoss} 内部已经包含 \code{log\_softmax} 和负对数似然。
+输入应是 raw logits；手动 softmax 会让数值稳定性变差，也可能让梯度表现异常。
+\end{trap}
+
+\begin{trap}
+\textbf{\code{view} 前忘记 \code{contiguous()}。}
+\code{permute}、\code{transpose} 后得到的张量通常不是连续内存，直接 \code{view} 可能报错。
+可写 \code{x = x.contiguous().view(...)}，或者更常用 \code{x = x.reshape(...)}。
+\end{trap}
+
+\begin{trap}
+\textbf{device 不一致：CPU 与 CUDA 混用。}
+常见报错是模型在 GPU、输入或标签还在 CPU，或者新建的 mask、位置编码默认在 CPU。
+排查时打印 \code{x.device}、\code{y.device} 和 \code{next(model.parameters()).device}。
+\end{trap}
+
+\begin{trap}
+\textbf{Windows 下 \code{DataLoader num\_workers} 的注意事项。}
+Windows 使用 spawn 启动子进程，训练脚本应放在 \code{if \_\_name\_\_ == "\_\_main\_\_":} 保护下。
+调试阶段可先设 \code{num\_workers=0}；确认数据集可 pickle 后再增大 worker 数。
+\end{trap}
+
+\begin{trap}
+\textbf{随机种子与可复现只设一个还不够。}
+通常要同时设置 Python、NumPy、Torch 和 CUDA 随机种子，并处理 cuDNN 的确定性选项。
+注意确定性设置可能降低速度，而且某些算子仍可能不可完全复现。
+\end{trap}
+
+\begin{lstlisting}
+import random
+import numpy as np
+import torch
+
+seed = 42
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+\end{lstlisting}
+
+\begin{trap}
+\textbf{in-place 操作破坏 autograd。}
+带下划线的操作如 \code{relu\_()}、\code{add\_()} 会原地修改张量。
+如果某个中间值还被反向传播需要，原地修改会触发版本号错误；不确定时优先使用非原地写法。
+\end{trap}
+
+\begin{trap}
+\textbf{广播导致维度静默出错。}
+例如预测 \code{[N,1]} 与标签 \code{[N]} 做 MSE，可能广播成 \code{[N,N]} 而不立刻报错。
+训练前断言关键形状：\code{assert pred.shape == target.shape}，尤其是回归、多标签和 mask 场景。
+\end{trap}
+
+\begin{trap}
+\textbf{保存整个模型而不是只存 \code{state\_dict}。}
+\code{torch.save(model, path)} 依赖 Python pickle 和类路径，代码结构一改就可能加载失败。
+生产和面试推荐回答：保存 \code{state\_dict}，加载时重新构造模型，再 \code{load\_state\_dict}。
+\end{trap}
+
+\section{临场速记：面试前五分钟}
+
+\begin{enumerate}
+\item 训练四步：\code{zero\_grad}、forward、\code{backward}、\code{step}。
+\item 验证两步：\code{model.eval()} 加 \code{with torch.no\_grad():}。
+\item 分类 logits 直接喂 \code{CrossEntropyLoss}，不要先 softmax。
+\item 二分类或多标签优先用 \code{BCEWithLogitsLoss}，不要手动 sigmoid 后再喂它。
+\item \code{cat} 是沿已有维拼接，\code{stack} 是新增维拼接。
+\item \code{view} 要连续，\code{reshape} 更省心；\code{permute} 后尤其要注意。
+\item \code{squeeze} 最好指定维度，避免 batch size 为 $1$ 时把 batch 维挤掉。
+\item 新建张量、mask、标签和模型参数必须在同一 device。
+\item 日志 loss 用 \code{loss.item()}，不要把计算图存进列表。
+\item BatchNorm 和 Dropout 的行为由 \code{train()} / \code{eval()} 控制。
+\item 保存模型优先保存 \code{state\_dict}，恢复训练还要保存优化器和 epoch。
+\item 可复现要同时管 Python、NumPy、Torch、CUDA 和 cuDNN。
+\end{enumerate}
+
+\section{章末 quickcard}
+
+\begin{quickcard}
+\textbf{PyTorch 速查口诀}
+\begin{itemize}
+\item 形状先行：每经过一层都能说出 batch、channel、sequence 和 feature 维。
+\item 梯度清楚：训练开图，验证关图；累加数值用 \code{item()}。
+\item 损失匹配：多分类 logits 配 CE，多标签 logits 配 BCEWithLogits。
+\item 设备统一：模型、输入、标签、临时张量都在同一个 device。
+\item 保存稳妥：少存整个对象，多存 \code{state\_dict} 和必要训练状态。
+\item 排坑优先级：shape、dtype、device、train/eval、requires\_grad。
+\end{itemize}
+\end{quickcard}

@@ -1,0 +1,130 @@
+% ============================================================================
+% preamble.tex — 《PyTorch 面试速通》
+% ============================================================================
+
+% --- 中文支持 (XeLaTeX) ---
+\usepackage{ctex}
+\usepackage{fontspec}
+
+% --- 页面布局 ---
+\usepackage[
+  a4paper,
+  top=2.5cm, bottom=2.5cm,
+  left=2.4cm, right=2.4cm
+]{geometry}
+
+% --- 数学 ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{enumitem}
+
+% --- 图表 ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+
+% --- 颜色 ---
+\usepackage{xcolor}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{220,220,220}
+\definecolor{kwcolor}{RGB}{0,0,180}
+\definecolor{strcolor}{RGB}{163,21,21}
+\definecolor{commentcolor}{RGB}{0,128,0}
+\definecolor{numbercolor}{RGB}{128,0,128}
+
+% --- 代码高亮 (listings, 零外部依赖) ---
+\usepackage{listings}
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{kwcolor}\bfseries,
+  stringstyle=\color{strcolor},
+  commentstyle=\color{commentcolor}\itshape,
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=4,
+  columns=flexible,
+  keepspaces=true,
+  xleftmargin=14pt,
+  framexleftmargin=14pt,
+  morekeywords={self,with,as,assert,yield,None,True,False,nn,torch,F},
+}
+\lstset{style=pythonstyle}
+% 纯文本/Shell 代码
+\lstdefinestyle{plainstyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  showstringspaces=false,
+  columns=flexible,
+  xleftmargin=14pt,
+  framexleftmargin=14pt,
+}
+\newcommand{\code}[1]{\lstinline[basicstyle=\ttfamily]|#1|}
+
+% --- 交叉引用与超链接 ---
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=cyan!50!black,
+}
+\usepackage[nameinlink]{cleveref}
+
+% --- 彩色框 (面试题 / 速记 / 坑) ---
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+% 面试题框（蓝）
+\newtcolorbox{interview}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=blue!4, colframe=blue!45!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries, title=面试题, #1
+}
+% 速记卡框（绿）
+\newtcolorbox{quickcard}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=green!4, colframe=green!45!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries, title=面试速记卡, #1
+}
+% 坑/注意框（橙）
+\newtcolorbox{trap}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=10pt, after skip=10pt,
+  colback=orange!5, colframe=orange!55!black,
+  boxrule=0.6pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries, title=常见坑, #1
+}
+% 一句话答案框（灰）
+\newtcolorbox{answer}[1][]{
+  enhanced, breakable, arc=3pt,
+  before skip=8pt, after skip=8pt,
+  colback=gray!6, colframe=gray!45,
+  boxrule=0.6pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries, title=参考答案, #1
+}
+
+% --- 常用数学命令 ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
