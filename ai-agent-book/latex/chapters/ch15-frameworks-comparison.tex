@@ -1,0 +1,660 @@
+\chapter{第十五章：框架横评与选型}
+
+学完多个框架之后，真正让工程师头疼的问题并不是`\texttt{某个 API 怎么写''，而是}`项目到底该选哪一套''。2026 年的现实是：大部分团队不会只看技术能力，还会看招聘难度、文档质量、生产稳定性、预算、对现有技术栈的适配程度。本章的目标不是给出一个绝对冠军，而是给你一套可落地的选型方法。
+
+
+\section{15.1 主流框架总览}
+
+先给出一张高密度对比表。请注意，这不是`\texttt{功能有没有''，而是}`做成生产系统时的真实体感''。
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|p{0.12\textwidth}|}
+\hline
+Feature & LangChain & LlamaIndex & CrewAI & AutoGen & Dify & Coze & Custom \\ \hline
+Learning Curve 学习曲线 & 中 & 中 & 低中 & 中高 & 低 & 低 & 高 \\ \hline
+Flexibility 灵活性 & 高 & 中高 & 中 & 高 & 中 & 中 & 最高 \\ \hline
+Production Readiness 生产成熟度 & 高 & 中高 & 中 & 中 & 高 & 中 & 取决于团队 \\ \hline
+Community 社区活跃度 & 很高 & 高 & 高 & 高 & 高 & 高（中文） & 无社区红利 \\ \hline
+Documentation 文档质量 & 高 & 高 & 中 & 中高 & 中高 & 中 & 自己写 \\ \hline
+Agent Support Agent 支持 & 高 & 中高 & 很高 & 很高 & 中高 & 中高 & 自建 \\ \hline
+RAG Support RAG 支持 & 高 & 很高 & 中 & 中 & 高 & 中 & 自建 \\ \hline
+Multi-agent 多智能体 & 高 & 中 & 很高 & 很高 & 中 & 中 & 自建 \\ \hline
+Observability 可观测性 & 高（配合 LangSmith） & 中 & 中 & 中 & 中高 & 中 & 自建 \\ \hline
+Pricing 成本模式 & 开源 + 外部平台 & 开源 + 外部平台 & 开源 & 开源 & SaaS/私有化 & SaaS & 人力成本高 \\ \hline
+\end{longtable}
+\endgroup
+
+如果把这些框架粗略分类，可以得到：
+
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{编排型框架}：LangChain、AutoGen；
+\item \textbf{数据中心型框架}：LlamaIndex；
+\item \textbf{角色协作型框架}：CrewAI；
+\item \textbf{平台型产品}：Dify、Coze；
+\item \textbf{完全自研}：Custom。
+\end{itemize}
+
+\section{15.2 LangChain：通用编排能力最强，但学习成本不低}
+
+LangChain 的最大优点不是``组件多''，而是\textbf{抽象层完整}。从 Prompt、Model、Parser、Tool 到 Runnable、Graph、Tracing、Serve，它覆盖了从原型到生产的大部分路径。
+
+
+\subsection{适合什么团队？}
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+场景 & 适配度 & 原因 \\ \hline
+需要复杂工具编排 & 高 & LCEL 与 LangGraph 表达力强 \\ \hline
+需要细粒度可观测性 & 高 & LangSmith 生态成熟 \\ \hline
+需要大量自定义逻辑 & 高 & 抽象开放、边界清晰 \\ \hline
+小白快速做一个 Bot & 中 & 初期概念较多，容易迷失 \\ \hline
+\end{longtable}
+\endgroup
+
+它的问题也很明显：概念数量大，版本演进快。很多工程师第一次接触时，容易把 \texttt{prompt | model | parser} 之外的抽象全部混在一起，导致``会抄示例，不会设计系统''。
+
+
+\section{15.3 LlamaIndex：数据优先而不是流程优先}
+
+LlamaIndex 最强的定位是`\texttt{面向数据的 AI 应用框架''。如果 LangChain 的出发点是}\texttt{如何组合组件''，LlamaIndex 的出发点是}`如何组织知识与索引''。
+
+
+\subsection{15.3.1 为什么它在 RAG 上口碑很好？}
+
+因为它对以下环节长期投入很深：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 文档加载（loaders）；
+\item 切分（chunking）；
+\item 索引（indices）；
+\item 检索（retrievers）；
+\item 后处理（post-processors）；
+\item 合成（response synthesis）。
+\end{itemize}
+
+简单说，LlamaIndex 更像``RAG 工程箱''。
+
+
+\subsection{15.3.2 LlamaIndex Workflows}
+
+2025-2026 年它进一步强化了 Workflows（工作流）能力，用事件驱动方式编排多步执行。虽然在通用 Agent 编排上不如 LangGraph 有名，但对``以数据为中心''的项目非常有效。
+
+
+\subsection{15.3.3 LlamaIndex vs LangChain for RAG}
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+维度 & LlamaIndex & LangChain \\ \hline
+文档与索引生态 & 更强 & 强 \\ \hline
+通用工具编排 & 中 & 更强 \\ \hline
+多 Agent 状态机 & 中 & 更强（配合 LangGraph） \\ \hline
+上手做知识库问答 & 快 & 快 \\ \hline
+做复杂企业工作流 & 中高 & 高 \\ \hline
+\end{longtable}
+\endgroup
+
+结论很明确：\textbf{如果你的核心壁垒是知识处理质量，优先认真评估 LlamaIndex；如果你的核心壁垒是流程与工具编排，LangChain 往往更合适。}
+
+
+\section{15.4 CrewAI：把``角色分工''做成第一等公民}
+
+CrewAI 的心智模型非常直观：你不是在写一条链，而是在组织一个``小团队''。
+
+
+典型角色包括：
+
+
+\begin{itemize}[leftmargin=2em]
+\item Researcher：检索与事实收集；
+\item Analyst：分析与归纳；
+\item Writer：输出撰写；
+\item Reviewer：审校与反馈。
+\end{itemize}
+
+\subsection{15.4.1 任务委派与流程类型}
+
+CrewAI 常见流程类型：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+Process & 特点 & 适用场景 \\ \hline
+Sequential 顺序流程 & 任务串行交接 & 报告撰写、需求分析 \\ \hline
+Hierarchical 分层流程 & 管理者分派任务 & 较复杂的角色协作 \\ \hline
+Custom 自定义流程 & 自定义更多控制 & 高级场景 \\ \hline
+\end{longtable}
+\endgroup
+
+它的优势在于表达非常贴近业务角色，适合做演示、原型和中等复杂度协作系统。劣势是当你需要极细粒度状态控制、错误恢复和复杂数据流时，往往还是要自己补很多工程能力。
+
+
+\section{15.5 AutoGen：对话式多智能体的代表}
+
+AutoGen 的代表性思想是：\textbf{让多个 Agent 通过对话协作完成任务}。这与 CrewAI 的``角色任务流''有相似之处，但更强调消息交互。
+
+
+\subsection{15.5.1 GroupChat}
+
+群聊（GroupChat，多智能体群聊）适合：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 方案辩论；
+\item 代码生成 + 执行 + 评审；
+\item 多角色协商。
+\end{itemize}
+
+典型流程是：
+
+
+\begin{codeblock}
+User
+  |
+  v
+Planner Agent <--> Coder Agent <--> Critic Agent
+                      |
+                      v
+                Code Executor
+\end{codeblock}
+
+\subsection{15.5.2 Code Execution}
+
+AutoGen 很适合``模型写代码、执行、再修复''的闭环，因此在科研、自动化脚本、实验性系统中很流行。但在企业生产环境里，你要额外关注：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 执行沙箱隔离；
+\item 成本失控；
+\item 会话过长；
+\item 调试复杂度。
+\end{itemize}
+
+结论：如果你的系统真的需要``多 Agent 对话 + 代码执行''这两个能力，AutoGen 值得重点关注；如果你只是做普通企业问答助手，它可能有些重。
+
+
+\section{15.6 Dify：平台化、低代码、面向交付}
+
+Dify 的核心竞争力不在`\texttt{抽象最先进''，而在}`组织协作与交付效率''。它常见于：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 创业团队快速搭 MVP；
+\item 业务团队自助配置 Bot；
+\item 企业内部做统一 AI 平台入口。
+\end{itemize}
+
+\subsection{Dify 的强项}
+
+\begin{enumerate}[leftmargin=2em]
+\item 可视化工作流；
+\item Prompt 管理；
+\item 知识库与应用管理；
+\item 多租户与权限体系；
+\item 较成熟的 SaaS/私有化路径。
+\end{enumerate}
+
+\subsection{Dify 的边界}
+
+如果你需要：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 深度定制状态机；
+\item 复杂工具调用编排；
+\item 超细粒度性能优化；
+\item 非标准推理链路；
+\end{itemize}
+
+那么平台型产品会逐渐碰到天花板。这时常见策略不是``一刀切替换''，而是：\textbf{80\% 普通应用放在 Dify，20\% 核心 Agent 自研或框架化开发。}
+
+
+\section{15.7 Coze：中文生态与插件市场的现实优势}
+
+Coze 在中文市场的吸引力很强，原因主要有三点：
+
+
+\begin{enumerate}[leftmargin=2em]
+\item 面向中文开发者与产品经理的体验较好；
+\item 插件市场和生态集成丰富；
+\item 在字节系与国内平台协作场景中有天然优势。
+\end{enumerate}
+
+它非常适合内容、运营、客服类场景的快速试错。问题在于：当你的目标从`\texttt{快速上线''转向}`强工程控制、强私有化、强跨系统集成''时，平台能力是否足够就需要严肃评估。
+
+
+\section{15.8 什么时候应该自研（Custom）？}
+
+这是很多资深工程师最关心的问题。自研的诱惑很大，因为你能完全控制：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 调度逻辑；
+\item 缓存；
+\item tracing；
+\item 工具协议；
+\item 成本与性能优化；
+\item 安全策略。
+\end{itemize}
+
+\subsection{15.8.1 优势}
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+优势 & 解释 \\ \hline
+Full control 完全控制 & 能针对业务做极致优化 \\ \hline
+No dependency overhead 无额外框架负担 & 避免版本震荡与黑盒行为 \\ \hline
+Tailored performance 定制性能 & 可做更激进的缓存、批处理、降级 \\ \hline
+\end{longtable}
+\endgroup
+
+\subsection{15.8.2 劣势}
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+劣势 & 解释 \\ \hline
+Maintenance burden 维护负担 & 你要自己维护协议、日志、状态机 \\ \hline
+Reinventing the wheel 重复造轮子 & 很多通用功能要重写 \\ \hline
+Hiring risk 招聘风险 & 新成员需要重新理解体系 \\ \hline
+\end{longtable}
+\endgroup
+
+\subsection{15.8.3 最小可用 Agent 框架需要什么？}
+
+如果你决定自研，至少要具备：
+
+
+\begin{enumerate}[leftmargin=2em]
+\item 消息与上下文抽象；
+\item Prompt 模板与版本管理；
+\item 工具注册与 schema 校验；
+\item 重试、超时、幂等处理；
+\item 状态机或工作流引擎；
+\item tracing、日志、评测；
+\item 缓存、成本统计、限流；
+\item 部署与灰度发布能力。
+\end{enumerate}
+
+如果团队连上面 8 项中的 5 项都没有成熟工程能力，自研大概率会拖慢业务。
+
+
+\section{15.9 决策框架：如何选型}
+
+下面给出一个面试里很好用的决策流程图：
+
+
+\begin{codeblock}
+                 +----------------------+
+                 | 你的核心问题是什么？   |
+                 +----------+-----------+
+                            |
+          +-----------------+------------------+
+          |                                    |
+          v                                    v
+   以知识/RAG为核心                      以流程/工具编排为核心
+          |                                    |
+          v                                    v
+   LlamaIndex / Dify                    LangChain / Agents SDK / Custom
+          |
+          +--------------------------+
+                                     |
+                                     v
+                              是否需要低代码交付？
+                                     |
+                          +----------+----------+
+                          |                     |
+                          v                     v
+                        是 Dify/Coze         否 继续评估
+\end{codeblock}
+
+再把它落到五个现实因素：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+因素 & 倾向选择 \\ \hline
+团队规模 1-3 人 & Dify、Coze、Assistants API \\ \hline
+团队规模 4-10 人且有 Python 工程能力 & LangChain、LlamaIndex、CrewAI \\ \hline
+用例高度复杂、跨多个内部系统 & LangChain + 自定义层 / Custom \\ \hline
+预算紧、想快速验证 & Dify、Coze、轻量自研 \\ \hline
+已有成熟数据平台 & LlamaIndex 或自建 RAG \\ \hline
+\end{longtable}
+\endgroup
+
+\section{15.10 真实案例分析}
+
+\subsection{案例一：中型 SaaS 公司做客服知识助手}
+
+\begin{itemize}[leftmargin=2em]
+\item 团队：3 名后端 + 1 名产品
+\item 目标：6 周上线 FAQ + 工单辅助回复
+\item 选择：Dify
+\item 原因：交付速度快、知识库管理方便、非研发也能参与调试
+\end{itemize}
+
+\subsection{案例二：金融科技公司做投研助理}
+
+\begin{itemize}[leftmargin=2em]
+\item 团队：5 名工程师 + 2 名算法
+\item 目标：文档检索、指标计算、引用审计
+\item 选择：LangChain + LangGraph + LangSmith
+\item 原因：需要细粒度流程控制、严格审计、长链路可观测性
+\end{itemize}
+
+\subsection{案例三：内容平台做多角色选题与文案协作}
+
+\begin{itemize}[leftmargin=2em]
+\item 团队：2 名工程师
+\item 目标：研究员、编辑、审稿人三角色协作
+\item 选择：CrewAI
+\item 原因：角色任务表达直观，原型成本低
+\end{itemize}
+
+\subsection{案例四：研究型团队做代码生成实验}
+
+\begin{itemize}[leftmargin=2em]
+\item 团队：研究工程师为主
+\item 目标：多 Agent 对话、自动执行代码、自我修复
+\item 选择：AutoGen
+\item 原因：对话协作与代码执行闭环更贴合实验场景
+\end{itemize}
+
+\subsection{案例五：大型企业平台团队}
+
+\begin{itemize}[leftmargin=2em]
+\item 团队：10+ 工程师
+\item 目标：统一 AI Agent 平台，服务多个 BU
+\item 选择：平台层 Dify / 自研门户，核心任务流自建或 LangChain 化
+\item 原因：需要兼顾业务方自助与核心链路深度定制
+\end{itemize}
+
+\section{15.11 常见误区}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{误区一：只看 GitHub Stars。} 社区热度重要，但不能代替生产成熟度。
+\item \textbf{误区二：功能越多越好。} 多数团队真正需要的是稳定、可测、可维护。
+\item \textbf{误区三：平台型产品一定不专业。} 对很多业务部门来说，交付速度就是专业。
+\item \textbf{误区四：自研更高级。} 如果没有稳定工程能力，自研常常意味着长期技术债。
+\item \textbf{误区五：一个框架包打天下。} 现实里混合架构非常常见。
+\end{enumerate}
+
+\section{15.12 一个可执行的量化选型方法}
+
+为了避免``团队里谁声音大就选谁喜欢的框架''，建议做一个加权评分表。下面给出一个可落地模板：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.13\textwidth}|p{0.13\textwidth}|p{0.13\textwidth}|p{0.13\textwidth}|p{0.13\textwidth}|p{0.13\textwidth}|p{0.13\textwidth}|}
+\hline
+维度 & 权重 & LangChain & LlamaIndex & CrewAI & Dify & Custom \\ \hline
+开发效率 & 20 & 4 & 4 & 4 & 5 & 2 \\ \hline
+复杂流程适配 & 20 & 5 & 3 & 4 & 2 & 5 \\ \hline
+RAG 质量潜力 & 15 & 4 & 5 & 2 & 4 & 5 \\ \hline
+可观测性 & 10 & 5 & 3 & 3 & 3 & 4 \\ \hline
+招聘与社区 & 10 & 5 & 4 & 4 & 4 & 1 \\ \hline
+私有化与安全 & 10 & 4 & 4 & 4 & 4 & 5 \\ \hline
+长期维护成本 & 15 & 4 & 4 & 3 & 4 & 2 \\ \hline
+\end{longtable}
+\endgroup
+
+假设你是一个 5 人团队，要做中等复杂度企业知识助手，那么可以把每项分数乘以权重，最终得出量化结论。这样做有两个好处：
+
+
+\begin{enumerate}[leftmargin=2em]
+\item 技术评审更客观；
+\item 日后复盘时能解释``为什么当初这样选''。
+\end{enumerate}
+
+很多面试官喜欢问：`\texttt{如果 CTO、产品、后端负责人意见不同，你怎么推动选型？''这时回答}`做加权评分 + 风险清单 + 两周 POC''会非常像真实负责人。
+
+
+\section{15.13 两周 POC 应该验证什么}
+
+POC（Proof of Concept，概念验证）不是为了把系统做完，而是为了尽快识别最大风险。一个高质量 POC 至少要验证：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 真实样本上的回答质量；
+\item 端到端延迟；
+\item 单次请求成本；
+\item 接入内部系统的难度；
+\item 可观测性是否足够；
+\item 产品与业务方是否能参与调优。
+\end{itemize}
+
+建议你在 POC 阶段就准备一张实验表：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+指标 & 目标值 & 结果 \\ \hline
+P95 延迟 & < 6s &  \\ \hline
+单次成本 & < \$0.03 &  \\ \hline
+引用准确率 & > 85\% &  \\ \hline
+工具调用成功率 & > 97\% &  \\ \hline
+新人上手时间 & < 3 天 &  \\ \hline
+\end{longtable}
+\endgroup
+
+这张表看起来朴素，却能极大提升决策效率。很多团队失败的根因，是``POC 成功''的定义从来没有被量化。
+
+
+\section{15.14 迁移策略：框架不是一锤子买卖}
+
+另一个现实问题是：你并不一定从零开始。很多公司已经有旧系统，例如：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 第一版用 Dify 做；
+\item 第二版开始要自定义更多工具；
+\item 第三版出现多 Agent 协作与复杂审批流。
+\end{itemize}
+
+这时最合理的策略往往不是重写，而是\textbf{分阶段迁移}：
+
+
+\subsection{路线一：平台到框架}
+
+\begin{codeblock}
+Dify/Coze MVP
+    |
+    v
+核心链路独立为 LangChain/LangGraph 服务
+    |
+    v
+保留平台承载通用应用，自定义服务承载核心任务
+\end{codeblock}
+
+\subsection{路线二：框架到自研}
+
+\begin{codeblock}
+LangChain/LlamaIndex
+    |
+    v
+逐步抽离 Prompt、Tool、Trace、State 抽象
+    |
+    v
+形成公司内部 Agent SDK
+\end{codeblock}
+
+这种迁移路径的关键思想是：\textbf{先借助外部框架获取速度，再在瓶颈处抽离自己的稳定边界}。它既避免一开始自研过重，也避免长期被外部框架完全锁死。
+
+
+\section{15.15 不同岗位如何看待框架选型}
+
+同一个框架，在不同角色眼中价值完全不同：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+\hline
+角色 & 最关心的事 \\ \hline
+CTO / 技术负责人 & 长期维护、团队招聘、平台风险 \\ \hline
+后端工程师 & 可测试性、可观测性、接口稳定性 \\ \hline
+算法/Agent 工程师 & prompt 迭代速度、评测效率、工具编排能力 \\ \hline
+产品经理 & 上线速度、可视化调试、跨团队协作 \\ \hline
+安全/合规 & 数据边界、私有化能力、审计能力 \\ \hline
+\end{longtable}
+\endgroup
+
+这意味着选型讨论不能只站在``开发舒服不舒服''上。比如 Dify 对产品经理和解决方案团队很友好，但对需要深度调优的后端团队可能约束较多；Custom 对资深工程师很自由，但对业务团队和新成员不友好。
+
+
+成熟工程师在讨论选型时，应该主动把这些利益相关方带进来。面试里如果你能说出``选型不只是技术题，也是组织协作题''，会显得非常成熟。
+
+
+\section{15.16 一个最常见的错误：把框架能力等同于业务能力}
+
+框架只能加速你组织模型、工具和工作流，但不能替代业务理解。举例来说：
+
+
+\begin{itemize}[leftmargin=2em]
+\item 一个医疗问答系统，即使使用最先进框架，如果没有经过审稿流程、风险标注与医生反馈闭环，依然不能上线；
+\item 一个客服 RAG 系统，即使 Dify 上线很快，如果知识库管理混乱、文档过时，也会严重幻觉；
+\item 一个多 Agent 研究系统，即使 AutoGen 很强，如果缺少评测与成本控制，也会变成昂贵的演示品。
+\end{itemize}
+
+因此正确顺序应当是：
+
+
+\begin{enumerate}[leftmargin=2em]
+\item 先定义业务成功标准；
+\item 再定义技术能力缺口；
+\item 最后选择能以最低总成本补齐缺口的框架。
+\end{enumerate}
+
+\section{15.17 组织成熟度与框架选择的关系}
+
+同样一个框架，对不同成熟度团队的效果完全不同。可以把团队粗略分成四档：
+
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+团队成熟度 & 特征 & 推荐方向 \\ \hline
+初创探索期 & 1-2 名工程师，需求频繁变动 & Dify、Coze、Assistants API \\ \hline
+小团队成长期 & 3-6 人，有基础后端能力 & LangChain、LlamaIndex、CrewAI \\ \hline
+中型工程化期 & 6-15 人，开始关注评测、成本、权限 & LangChain + LangGraph / 混合架构 \\ \hline
+平台治理期 & 多业务线复用，平台团队出现 & 平台型产品 + 自定义核心服务 / Custom \\ \hline
+\end{longtable}
+\endgroup
+
+为什么这个维度重要？因为框架不仅是代码工具，也是组织工具。一个没有平台团队的小公司，如果一开始就自研全套 Agent Runtime，极可能把宝贵时间消耗在基础设施上；反过来，一个拥有严格合规要求的大企业，如果把核心工作流完全压在低代码平台上，后面迟早会碰到治理瓶颈。
+
+
+\section{15.18 面试里如何讲``为什么不选某框架''}
+
+很多候选人只会说喜欢什么，不会说为什么不选什么。其实后者更体现判断力。下面给出几个高质量回答模板：
+
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{不选 LangChain}：如果当前需求只是标准知识库问答，且业务团队要频繁自己改流程，那么平台型产品可能更省人力。
+\item \textbf{不选 Dify/Coze}：如果流程中有复杂审批、强审计、私有协议工具调用，低代码平台的控制粒度可能不够。
+\item \textbf{不选 CrewAI}：如果多角色只是表现层需求，但底层其实是固定流程，那么角色化框架未必比状态机更合适。
+\item \textbf{不选 AutoGen}：如果没有明确的多 Agent 对话与代码执行需求，它可能带来额外复杂度和成本。
+\item \textbf{不选 Custom}：如果团队还没有完整的 tracing、eval、tool governance 经验，自研会迅速积累技术债。
+\end{itemize}
+
+这类回答的关键不是``否定某框架''，而是展示你能把框架能力与业务约束对齐。
+
+
+一个非常加分的补充是：说明`\texttt{现在不选''并不等于}`永远不选''。例如一个团队初期可以先用 Dify 快速验证价值，等知识库规模、权限复杂度和审计要求上来后，再逐步把核心链路迁移到 LangChain 或自研服务。这样的回答体现的是阶段性策略，而不是静态判断。
+
+
+从招聘视角看，这种`\texttt{阶段性选型''能力也很重要。企业不一定在招一个会某个框架 API 的人，更希望招一个能在 3 个月、6 个月、12 个月不同阶段给出不同技术决策的人。你如果能讲出}\texttt{先快、后稳、再统一治理''的演进路线，通常会比单纯表态}`我最喜欢某框架''更有说服力。
+
+
+如果你正在准备面试，可以把本章内容直接转化成一页``选型答题卡''：需求类型、团队规模、预算、合规要求、上线周期、推荐框架、放弃理由、迁移路径。这样当面试官抛出开放题时，你就不会停留在泛泛而谈，而能快速给出结构化判断。
+
+
+真正优秀的选型结论，往往不是`\texttt{选了最强框架''，而是}`在当前约束下，用最低总成本做出了最合适的组合''。这也是工程管理和技术判断成熟度的体现。
+
+
+因此，学习框架的最好方式不是死记功能，而是拿同一需求做两到三种实现，再比较交付速度、稳定性、可控性和维护成本。只有比较过，选型判断才会真正长在自己身上。
+
+
+这也是为什么真正成熟的工程师通常不会争论`\texttt{谁最强''，而是先问}`当前阶段最缺的到底是什么''。问题定义清楚了，框架选择反而会变得简单。
+
+
+当你能先定义约束、再选择工具时，选型就从`\texttt{偏好表达''升级成了}`工程决策''。
+
+
+这类决策能力，往往比记住某个框架的 API 更值钱。
+
+
+因为企业最终买单的，始终是正确判断。
+
+
+而正确判断的前提，永远是对场景、团队与约束的清醒认识。
+
+
+这正是框架选型题最想考察的核心能力。
+
+
+会比较的人，通常也更会做取舍。
+
+
+而会取舍，才是真正的工程判断。
+
+
+选型最终考的，始终是判断力。
+
+
+判断力，来自比较，也来自复盘。
+
+
+也来自持续试错后的清醒认识。
+
+
+这才是成熟工程师的底色。
+
+
+\section{本章要点}
+
+\begin{itemize}[leftmargin=2em]
+\item LangChain 强在通用编排与生态完整；LlamaIndex 强在数据与 RAG；CrewAI、AutoGen 强在多智能体协作表达；Dify、Coze 强在平台化交付。
+\item 框架选型首先看核心问题是`\texttt{知识处理''还是}`流程编排''，其次再看团队规模、预算、私有化要求与现有技术栈。
+\item 自研只适合那些对性能、控制、安全和集成有明确刚性要求，且团队具备完整工程能力的场景。
+\item 真正成熟的团队往往采用混合策略：平台解决通用需求，框架或自研解决核心链路。
+\item 面试中，能讲出``为什么这个场景不选某框架''往往比单纯夸优点更能体现判断力。
+\end{itemize}
+
+\section{延伸阅读}
+
+\begin{enumerate}[leftmargin=2em]
+\item LangChain、LlamaIndex、CrewAI、AutoGen 官方文档：重点对比抽象层与可观测性能力。
+\item Dify、Coze 官方案例：关注它们如何服务非研发团队。
+\item 建议亲手做一次``同一需求双实现''：例如用 LangChain 与 Dify 各做一个知识助手，再记录开发时长、可控性、性能与可维护性差异。
+\item 如果准备架构面试，建议练习：给定一个 6 人团队、3 个月周期、预算有限的企业知识助手项目，输出一份完整框架选型报告。
+\end{enumerate}
