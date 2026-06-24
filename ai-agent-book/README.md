@@ -85,6 +85,23 @@
 | 章节 | 标题 | 文件 |
 |------|------|------|
 | 第二十一章 | [Agentic Engineering 实战：大型移动端项目的 AI 工程化体系](./chapter-21-agentic-engineering-practice.md) | `chapter-21-agentic-engineering-practice.md` |
+| 第二十二章 | [AI Agent Tooling Chain 面试速成：从工具调用到工程闭环](./chapter-22-tooling-chain-interview-accelerator.md) | `chapter-22-tooling-chain-interview-accelerator.md` |
+
+---
+
+## Tooling Chain 面试速成索引
+
+如果你只剩一周准备偏 AI Agent tooling chain 的面试，建议按下面顺序读，不要平均用力：
+
+| 目标 | 必读章节 | 你要带走的能力 |
+|------|----------|----------------|
+| 建立最低术语底座 | [第零章](./chapter-00-prerequisites.md)、[第四章](./chapter-04-llm-fundamentals.md) | Token、上下文、模型调用、API 基础 |
+| 讲清 Agent 主链路 | [第八章](./chapter-08-agent-architecture.md)、[第九章](./chapter-09-tool-system.md) | Agent loop、工具注册表、schema、权限、运行时 |
+| 准备 RAG / Memory 追问 | [第七章](./chapter-07-rag.md)、[第十章](./chapter-10-memory.md) | chunk、召回、rerank、短期/长期记忆、上下文压缩 |
+| 准备协议与多 Agent | [第十一章](./chapter-11-multi-agent.md)、[第十二章](./chapter-12-protocols.md) | MCP、A2A、任务交接、协作边界 |
+| 准备框架与部署 | [第十五章](./chapter-15-frameworks-comparison.md)、[第十六章](./chapter-16-deployment.md) | LangGraph/LlamaIndex/Dify 选型、服务化、监控、成本 |
+| 准备系统设计表达 | [第十八章](./chapter-18-interview-system-design.md)、[第二十一章](./chapter-21-agentic-engineering-practice.md) | 需求澄清、架构图、质量门禁、eval 闭环 |
+| 最后总复盘 | [第二十二章](./chapter-22-tooling-chain-interview-accelerator.md) | 把工具调用、RAG、MCP、eval、observability、安全部署串成一条工程主线 |
 
 ---
 
