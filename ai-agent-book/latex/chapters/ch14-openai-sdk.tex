@@ -265,7 +265,7 @@ Schema 错误 & 参数缺失、类型不符 & 严格模式 + 自动重试 1 次 
 \end{longtable}
 \endgroup
 
-一个稳定模式是：\textbf{模型负责决定\texttt{\texttt{@@P0@@}}能不能调用、调用成功后如何回填''。}
+一个稳定模式是：\textbf{模型负责决定“要不要调用”，应用负责决定“能不能调用、调用成功后如何回填”。}
 
 
 \section{14.4 OpenAI Agents SDK：从单 Agent 到多 Agent 协作}
@@ -335,7 +335,7 @@ if __name__ == "__main__":
     print(orchestrate("LangGraph checkpointing"))
 \end{codeblock}
 
-真实 Agents SDK 会提供更标准的 Agent、Tool、Runner 接口，但你必须先理解底层思想：\textbf{Agent 是\texttt{\texttt{@@P0@@@@P1@@}@@P1@@}执行与调度器''。}
+真实 Agents SDK 会提供更标准的 Agent、Tool、Runner 接口，但你必须先理解底层思想：\textbf{Agent 是“带策略的模型包装器”，Tool 是“受控副作用”，Runner 是“执行与调度器”。}
 
 
 \subsection{14.4.3 Handoffs Between Agents}

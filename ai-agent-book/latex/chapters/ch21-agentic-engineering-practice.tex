@@ -55,77 +55,77 @@
 \section{2. 整体架构一览}
 
 \begin{codeblock}
-.claude/                          <- Claude Code 的配置根目录
- agents/                       <- Agent 定义（角色 + 工具 + 知识库）
-    Nova.agent.md             <- 自主编码 agent
-    Arbiter.agent.md          <- PR 质量评审 agent
-    DRI.agent.md              <- 值班管理 agent
-    Arbiter/                  <- Arbiter 的知识库子目录
-       evaluation-flow.md
-       rubric-ios.md
-       rubric-android.md
-       scorecard-template.md
-    DRI/
-        config.json
-        workflows/
-            1-dashboard-monitoring.md
-            2-incident-triage.md
-            ...
-
- skills/                       <- 可组合能力模块
-    pr-risk-evaluate/
-       SKILL.md              <- 核心定义文件
-       guardrails.md         <- 辅助知识
-       evals/                <- 评测用例
-    android-add-feature-flag/
-       SKILL.md
-    ...（40+ skills）
-
- hooks/                        <- 工具调用拦截器
-    pr-review-gate.sh         <- 创建 PR 前检查 review pass
-    pre-push-ci-gate.sh       <- 推送前检查 CI marker
-    swift-lint-on-edit.sh     <- 编辑 Swift 后自动 lint
-    mark-review.sh            <- 记录 review 状态
-
- rules/                        <- 条件加载的编码规范
-    ios-development.md        <- 仅 ios/**/*.swift 时加载
-    android-testing.md        <- 仅 android/**/test/** 时加载
-    pr-format.md              <- 始终加载
-
- evals/                        <- Agent 评测脚本
-    run-nova-eval.py
-    verify-nova-eval.py
-
- resources/                    <- 共享知识文件
-    kusto_telemetry_table_reference.md
-
- commands/                     <- 快捷命令
- settings.json                 <- 权限 + hook 绑定
+.claude/                          ← Claude Code 的配置根目录
+├── agents/                       ← Agent 定义（角色 + 工具 + 知识库）
+│   ├── Nova.agent.md             ← 自主编码 agent
+│   ├── Arbiter.agent.md          ← PR 质量评审 agent
+│   ├── DRI.agent.md              ← 值班管理 agent
+│   ├── Arbiter/                  ← Arbiter 的知识库子目录
+│   │   ├── evaluation-flow.md
+│   │   ├── rubric-ios.md
+│   │   ├── rubric-android.md
+│   │   └── scorecard-template.md
+│   └── DRI/
+│       ├── config.json
+│       └── workflows/
+│           ├── 1-dashboard-monitoring.md
+│           ├── 2-incident-triage.md
+│           └── ...
+│
+├── skills/                       ← 可组合能力模块
+│   ├── pr-risk-evaluate/
+│   │   ├── SKILL.md              ← 核心定义文件
+│   │   ├── guardrails.md         ← 辅助知识
+│   │   └── evals/                ← 评测用例
+│   ├── android-add-feature-flag/
+│   │   └── SKILL.md
+│   └── ...（40+ skills）
+│
+├── hooks/                        ← 工具调用拦截器
+│   ├── pr-review-gate.sh         ← 创建 PR 前检查 review pass
+│   ├── pre-push-ci-gate.sh       ← 推送前检查 CI marker
+│   ├── swift-lint-on-edit.sh     ← 编辑 Swift 后自动 lint
+│   └── mark-review.sh            ← 记录 review 状态
+│
+├── rules/                        ← 条件加载的编码规范
+│   ├── ios-development.md        ← 仅 ios/**/*.swift 时加载
+│   ├── android-testing.md        ← 仅 android/**/test/** 时加载
+│   └── pr-format.md              ← 始终加载
+│
+├── evals/                        ← Agent 评测脚本
+│   ├── run-nova-eval.py
+│   └── verify-nova-eval.py
+│
+├── resources/                    ← 共享知识文件
+│   └── kusto_telemetry_table_reference.md
+│
+├── commands/                     ← 快捷命令
+└── settings.json                 ← 权限 + hook 绑定
 \end{codeblock}
 
 \subsection{数据流}
 
 \begin{codeblock}
 用户请求
-
-
-     意图路由
-  Agent 层    ->   Skill 层
-  (角色决策)                      (能力执行)
-
-
-        调用工具（MCP/CLI/编辑文件）
-
-
-  Hook 层     <- 拦截/增强 ->   Rules 层
-  (质量门禁)                      (编码规范)
-
-
-
-
-  Eval 层      <- 事后验证 agent/skill 输出质量
-  (评测闭环)
-
+    │
+    ▼
+┌─────────────┐     意图路由      ┌──────────────┐
+│  Agent 层   │ ───────────────→ │  Skill 层    │
+│  (角色决策) │                   │  (能力执行)  │
+└─────┬───────┘                   └──────┬───────┘
+      │                                  │
+      │  调用工具（MCP/CLI/编辑文件）      │
+      ▼                                  ▼
+┌─────────────┐                   ┌──────────────┐
+│  Hook 层    │ ←── 拦截/增强 ──→ │  Rules 层    │
+│  (质量门禁) │                   │  (编码规范)  │
+└─────┬───────┘                   └──────────────┘
+      │
+      ▼
+┌─────────────┐
+│  Eval 层    │  ← 事后验证 agent/skill 输出质量
+│  (评测闭环) │
+└─────────────┘
 \end{codeblock}
 
 \bigskip\hrule\bigskip
@@ -134,16 +134,16 @@
 
 \subsection{3.1 Agent 文件结构}
 
-一个 agent 由 \textbf{一个 @@P0@@ 文件} + \textbf{可选的知识库子目录} 组成。
+一个 agent 由 \textbf{一个 \texttt{.agent.md} 文件} + \textbf{可选的知识库子目录} 组成。
 
 
 \begin{codeblock}
 .claude/agents/
- MyAgent.agent.md          <- 主定义文件
- MyAgent/                  <- 知识库目录（可选）
-     workflow-a.md
-     workflow-b.md
-     config.json
+├── MyAgent.agent.md          ← 主定义文件
+└── MyAgent/                  ← 知识库目录（可选）
+    ├── workflow-a.md
+    ├── workflow-b.md
+    └── config.json
 \end{codeblock}
 
 \subsection{3.2 \texttt{.agent.md} 文件格式}
@@ -168,7 +168,7 @@ tools:
 
 ## Instructions
 
-@file:.claude/agents/MyAgent/workflow-a.md    <- 引用外部文件
+@file:.claude/agents/MyAgent/workflow-a.md    ← 引用外部文件
 
 ## Overview
 
@@ -324,14 +324,14 @@ Nova agent 强制要求先创建 todo list 再开始编码。这提供了：
 
 \begin{codeblock}
 .claude/skills/
- my-skill/
-     SKILL.md              <- 核心定义（必须）
-     helper-data.md        <- 辅助知识文件（可选）
-     reference-rules.md    <- 参考规则（可选）
-     evals/                <- 评测用例（强烈推荐，G6 guardrail 要求）
-         eval-001.md
-         eval-002.md
-         ...
+└── my-skill/
+    ├── SKILL.md              ← 核心定义（必须）
+    ├── helper-data.md        ← 辅助知识文件（可选）
+    ├── reference-rules.md    ← 参考规则（可选）
+    └── evals/                ← 评测用例（强烈推荐，G6 guardrail 要求）
+        ├── eval-001.md
+        ├── eval-002.md
+        └── ...
 \end{codeblock}
 
 \subsection{4.3 \texttt{SKILL.md} 文件格式}
@@ -633,7 +633,7 @@ Evaluate PR #XXXXX
 这形成了一个自我进化的闭环：
 
 \begin{codeblock}
-修改 skill -> G6 要求 eval -> 必须先写/更新 eval -> eval 不过不让创建 PR
+修改 skill → G6 要求 eval → 必须先写/更新 eval → eval 不过不让创建 PR
 \end{codeblock}
 
 \subsection{7.4 Eval 运行机制}
@@ -663,7 +663,7 @@ Evaluate PR #XXXXX
 
 \begin{codeblock}
 .claude/rules/ios-development.md
-     手动保持同步
+    ↕ 手动保持同步
 .github/instructions/ios-development.instructions.md
 \end{codeblock}
 
@@ -698,7 +698,7 @@ Filenames pair 1:1. To add a new rule, create both files in the same change.\\
 \subsection{模式 1：Maker-Checker（制造者-检查者）}
 
 \begin{codeblock}
-Nova (maker) -> 写代码 -> Arbiter (checker) -> 评审质量
+Nova (maker) → 写代码 → Arbiter (checker) → 评审质量
 \end{codeblock}
 
 两个 agent 形成分权制衡。Nova 写的 PR 必须经过 Arbiter 评审，就像人类工程师写代码要过 code review。
@@ -708,11 +708,11 @@ Nova (maker) -> 写代码 -> Arbiter (checker) -> 评审质量
 
 \begin{codeblock}
 Nova agent
-   调用 android-add-feature-flag skill
-   调用 android-add-snapshot-test skill
-   自己写业务逻辑
-   调用 pr-quality-check skill
-   调用 create-pr skill
+  ├── 调用 android-add-feature-flag skill
+  ├── 调用 android-add-snapshot-test skill
+  ├── 自己写业务逻辑
+  ├── 调用 pr-quality-check skill
+  └── 调用 create-pr skill
 \end{codeblock}
 
 Agent 不重复发明轮子------复用 skill 完成标准化子任务。
@@ -722,11 +722,11 @@ Agent 不重复发明轮子------复用 skill 完成标准化子任务。
 
 \begin{codeblock}
 创建 PR (action)
-    ^
+    ↑
 pr-review-gate.sh (guard)
-    检查 review-pr ?
-    检查 pr-risk-evaluate ?
-    检查 design-visual-audit ?
+    检查 review-pr ✓?
+    检查 pr-risk-evaluate ✓?
+    检查 design-visual-audit ✓?
 \end{codeblock}
 
 Hook 在 action 前拦截，确保前置条件满足。
@@ -738,10 +738,10 @@ Hook 在 action 前拦截，确保前置条件满足。
 
 
 \begin{codeblock}
-G6  (agentic system)   <- 防止未经测试的 skill 变更
-G12 (iPad coverage)    <- 来自 commit xxxxxxx 的 iPad regression
-G13 (flag collapse)    <- 来自 #XXXXX 的 feature flag bug
-G14 (custom toolbar)   <- 来自 #XXXXX/#XXXXX 的 iOS 26 glass bug
+G6  (agentic system)   ← 防止未经测试的 skill 变更
+G12 (iPad coverage)    ← 来自 commit xxxxxxx 的 iPad regression
+G13 (flag collapse)    ← 来自 #XXXXX 的 feature flag bug
+G14 (custom toolbar)   ← 来自 #XXXXX/#XXXXX 的 iOS 26 glass bug
 \end{codeblock}
 
 这不是凭空设计的规则------每一条都是从血的教训中提炼的。
@@ -766,12 +766,12 @@ G14 (custom toolbar)   <- 来自 #XXXXX/#XXXXX 的 iOS 26 glass bug
 
 \begin{codeblock}
 review-pr skill
-   规则审查（review-rules-*.md）
-   Swarm 并行审查
-      Breaker（找 bug）
-      Exploiter（找安全问题）
-      Inspector（找架构问题）
-   合并去重 -> 发 PM平台 评论
+  ├── 规则审查（review-rules-*.md）
+  ├── Swarm 并行审查
+  │   ├── Breaker（找 bug）
+  │   ├── Exploiter（找安全问题）
+  │   └── Inspector（找架构问题）
+  └── 合并去重 → 发 PM平台 评论
 \end{codeblock}
 
 单一 reviewer 的盲区通过多角色并行审查来弥补。
@@ -940,7 +940,7 @@ Avoid creating lambdas inside composition scope.
 \subsection{[X] 反模式 2：Skill 之间链式引用}
 
 \begin{codeblock}
-SKILL.md -> a.md -> b.md -> c.md    <- Claude 不会跟超过一层
+SKILL.md → a.md → b.md → c.md    ← Claude 不会跟超过一层
 \end{codeblock}
 
 \textbf{解决}：所有引用文件只能从 SKILL.md 直接引用（一层深度）。

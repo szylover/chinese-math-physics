@@ -3,6 +3,9 @@
 % ============================================================================
 \usepackage{ctex}
 \usepackage{fontspec}
+% 等宽字体改用 DejaVu Sans Mono：包含完整 box-drawing(U+2500-257F)与箭头(U+2190-21FF)字形，
+% 修复 ASCII 框图/文件树在原默认字体下框线缺失、图形散架的问题。
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
 \usepackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.2cm,right=2.2cm]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{enumitem}

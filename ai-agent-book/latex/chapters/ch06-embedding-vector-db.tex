@@ -50,14 +50,14 @@ Embedding 模型通常是经过专门训练的 Transformer 编码器或双塔结
 
 \begin{codeblock}
 "Redis 连接池耗尽"
-
-
+        │
+        ▼
 [Tokenizer]
-
-
+        │
+        ▼
 [Embedding Model]
-
-
+        │
+        ▼
 [0.12, -0.87, 0.44, ..., 0.03]   # 1024 维向量
 \end{codeblock}
 
@@ -239,11 +239,11 @@ pgvector & PostgreSQL 扩展 & 单机千万级 & 与关系数据共存、SQL 友
 
 \begin{codeblock}
 query
-
-   compare with vec1
-   compare with vec2
-   compare with vec3
-   ...
+  │
+  ├─ compare with vec1
+  ├─ compare with vec2
+  ├─ compare with vec3
+  └─ ...
 \end{codeblock}
 
 优点：准确率 100\%。
@@ -258,11 +258,11 @@ query
 
 \begin{codeblock}
 全部向量
-
-    cluster A
-    cluster B
-    cluster C
-    cluster D
+   │
+   ├─ cluster A
+   ├─ cluster B
+   ├─ cluster C
+   └─ cluster D
 
 query -> 先找最近的簇 -> 只在部分簇内搜索
 \end{codeblock}
